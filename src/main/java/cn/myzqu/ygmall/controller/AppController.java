@@ -1,8 +1,11 @@
 package cn.myzqu.ygmall.controller;
 
+import cn.myzqu.ygmall.service.AccountService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,11 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by 的川 on 2018/9/6.
  */
 @RestController
-@RequestMapping("/app")
+@RequestMapping("/")
 public class AppController {
-    @GetMapping("/hello")
-    public Result hello(){
-        return ResultVOUtil.success();
+
+    @Autowired
+    private AccountService accountService;
+    @PostMapping("/login")
+    public Result login(String code ,String password){
+        /*
+            正常来说这里判断code格式是手机号码还是邮箱
+            然后根据不同的格式来调用不同的方法
+         */
+        if(accountService.login(code,password)){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("登录失败");
+
     }
 
 

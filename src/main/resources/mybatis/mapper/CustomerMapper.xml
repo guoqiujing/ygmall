@@ -14,12 +14,28 @@
   <sql id="Base_Column_List" >
     id, nick_name, icon, sex, telephone, email, create_time, update_time
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from customer
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByTelephone" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from customer
+    where telephone = #{telephone,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from customer
+    where email = #{email,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from customer
     where id = #{id,jdbcType=VARCHAR}
