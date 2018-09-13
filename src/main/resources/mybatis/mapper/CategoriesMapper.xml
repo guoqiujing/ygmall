@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.myzqu.ygmall.dao.CategoriesMapper">
+  <resultMap id="BaseResultMap" type="cn.myzqu.ygmall.pojo.Categories">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="parent_level" jdbcType="INTEGER" property="parentLevel" />
+    <result column="grand_level" jdbcType="INTEGER" property="grandLevel" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, parent_level, grand_level, status
+  </sql>
+  <select id="findAllCategories" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM categories
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from categories
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from categories
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.Categories">
+    insert into categories (id, name, parent_level, 
+      grand_level, status)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{parentLevel,jdbcType=INTEGER}, 
+      #{grandLevel,jdbcType=INTEGER}, #{status,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.myzqu.ygmall.pojo.Categories">
+    insert into categories
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="parentLevel != null">
+        parent_level,
+      </if>
+      <if test="grandLevel != null">
+        grand_level,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentLevel != null">
+        #{parentLevel,jdbcType=INTEGER},
+      </if>
+      <if test="grandLevel != null">
+        #{grandLevel,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.myzqu.ygmall.pojo.Categories">
+    update categories
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parentLevel != null">
+        parent_level = #{parentLevel,jdbcType=INTEGER},
+      </if>
+      <if test="grandLevel != null">
+        grand_level = #{grandLevel,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.myzqu.ygmall.pojo.Categories">
+    update categories
+    set name = #{name,jdbcType=VARCHAR},
+      parent_level = #{parentLevel,jdbcType=INTEGER},
+      grand_level = #{grandLevel,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
