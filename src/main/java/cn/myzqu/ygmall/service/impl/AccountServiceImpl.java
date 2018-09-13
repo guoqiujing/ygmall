@@ -61,7 +61,7 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public Boolean login(String code, String password) {
+    public Customer login(String code, String password) {
         //根据手机号码查找信息
         Customer customer = customerMapper.selectByTelephone(code);
         if(StringUtils.isEmpty(customer)){
@@ -76,6 +76,6 @@ public class AccountServiceImpl implements AccountService{
         if(!encryptPassword.equals(object.getPassword())){
             throw new CustomException(1,"账号或者密码错误！");
         }
-        return true;
+        return customer;
     }
 }

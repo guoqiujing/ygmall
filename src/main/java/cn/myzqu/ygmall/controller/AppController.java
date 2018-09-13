@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.controller;
 
+import cn.myzqu.ygmall.pojo.Customer;
 import cn.myzqu.ygmall.service.AccountService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.Result;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by 的川 on 2018/9/6.
  */
 @RestController
-@RequestMapping("/")
+@RequestMapping("/app")
 public class AppController {
 
     @Autowired
@@ -24,8 +25,9 @@ public class AppController {
             正常来说这里判断code格式是手机号码还是邮箱
             然后根据不同的格式来调用不同的方法
          */
-        if(accountService.login(code,password)){
-            return ResultVOUtil.success();
+        Customer customer=accountService.login(code,password);
+        if(customer!=null){
+            return ResultVOUtil.success(customer);
         }
         return ResultVOUtil.error("登录失败");
 

@@ -10,6 +10,6 @@ public interface AccountService {
 
     Customer addCustomer(String telephone, String email, String password);
 
-    Boolean login(String code,String password);
+    Customer login(String code,String password);
 
 }
