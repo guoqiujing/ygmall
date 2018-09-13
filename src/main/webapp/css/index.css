@@ -1,0 +1,96 @@
+ body{
+ 	display: flex;
+ 	flex-direction: column;
+ }
+ 
+ div {
+ 	/*border: 1px solid red;*/
+ }
+ 
+ a,a:hover{
+ 	text-decoration:none;
+ 	color: #000000;
+ }
+ .nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: #484848;
+}
+ .navbar-nav > li > a {
+  text-shadow: 0 0 0 rgba(255,255,255,.25);
+  color: #FFFFFF;
+}
+
+ /*顶部信息栏*/
+ 
+ .head {
+ 	display: flex;
+ 	flex-direction: row;
+ 	/*justify-content: space-between;*/
+ 	align-items: center;
+ 	justify-content: center;
+ 	width: 100%;
+ 	margin: 0;
+ 	/*height: 80px;*/
+ 	padding:0;
+ }
+  /*顶部信息栏中间*/
+ .head-center{
+ 	display: flex;
+ 	flex-direction: row;
+ 	align-items: center;
+ 	width: 78%;
+ }
+  /*顶部信息栏中间2*/
+ .head-center2{
+ 	display: flex;
+ 	flex-direction: column;
+ 	width: 78%;
+ }
+/* 居中*/
+ .divcenter {
+ 	display: flex;
+ 	flex-direction: row;
+ 	align-items: center;
+/* 	align-content: center;*/
+ 	justify-content: center;
+ }
+ 
+ /* 居中2*/
+ .divcenter2 {
+ 	display: flex;
+ 	flex-direction: column;
+ 	align-items: center;
+/* 	align-content: center;*/
+ 	justify-content: center;
+ }
+ /* 分居两侧*/
+ .divside {
+ 	display: flex;
+ 	flex-direction: row;
+ 	align-items: center;
+/* 	align-content: center;*/
+ 	justify-content: space-between;
+ }
+  /* 均匀分布*/
+ .divaround {
+ 	display: flex;
+ 	flex-direction: row;
+ 	align-items: center;
+/* 	align-content: center;*/
+ 	justify-content: space-around;
+ }
+ 
+ /*换行*/
+ .divrowre {
+ 	display: flex;
+ 	flex-direction: row;
+ 	flex-wrap:wrap;
+	align-content: space-between;
+ 	justify-content: space-between;
+ }
+ 
+ .hot-img{
+ 	border: 1px solid #DCDCDC;
+ 	box-shadow: 2px 2px 15px #E3E3E3;
+ }
+ 

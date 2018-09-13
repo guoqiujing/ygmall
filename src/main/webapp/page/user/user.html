@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../../css/bootstrap.css" />
+		<link rel="stylesheet" href="../../css/style2.css" />
+		<link rel="stylesheet" href="../../css/user.css" />
+		<link rel="stylesheet" href="../../css/index.css" />
+		<script type="text/javascript" src="../../js/vue.js"></script>
+		<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="../../js/bootstrap.js"></script>
+		
+
+	</head>
+
+	<body style="background-image: url(../../img/rgt_lg.png);overflow-x: hidden;">
+		<div class="container-fluid head" style="border-bottom: 1px solid #DEDEDE; background-color: #F2F2F2;color: #484848;">
+			<div class="container">
+				<div class="row" style="font-size: 12px;padding:5px;">
+					<div class="col-md-2">欢迎来到艺格艺术生用品商城</div>
+					<div class="col-md-1">张三</div>
+					<div class="col-md-1"><a href="login.html">退出</a></div>
+					<!--<div class="col-md-2" style="float: right;">官方微信商城</div>-->
+					<div class="col-md-1" style="float: right;"><a href="user.html">我的艺格</a></div>
+					<div class="col-md-1" style="float: right;">我的收藏</div>
+					<div class="col-md-1" style="float: right;">订单查询</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="head" style="margin: 20px 0 20px 0;">
+			<div class="head-center" style="justify-content: space-between;">
+
+				<div style="margin-right: 0;">
+					<a href="index.html"><img src="../../img/yigeshangchenglogo.png"></a>
+				</div>
+
+				<div class="divcenter">
+					<div class="input-group" style="max-width:400px;min-width:100px;">
+						<input placeholder="水粉颜料" type="text" class="form-control" style="border: 2px solid #987E46;">
+						<span class="input-group-btn">
+		                        <button class="btn btn-default" type="button" style="color: #fff;background-color: #987E46;border: 1px solid #987E46;">搜索</button>
+		                    </span>
+					</div>
+				</div>
+
+				<a href="#" class="divcenter" style="font-size:15px;color: #666;border: 1px solid #E6E6E6;width: 132px;height: 38px;background-color: #F2F2F2;">
+					<img src="../../img/carts.png" style="margin-right: 10px;" /> 购物车
+				</a>
+
+			</div>
+		</div>
+
+		<div class="head" style="background-color: #181818;">
+			<div class="head-center" style="padding: 0;background-color:#181818 ;height: auto;">
+
+				<ul class="nav navbar-nav">
+					<li class="active" style="background-color: #484848;">
+						<a href="#" style="padding: 15px 50px 15px 50px;">热门商品分类</a>
+					</li>
+					<li>
+						<a href="index.html" style="padding: 15px 30px ;">首页</a>
+					</li>
+					<li>
+						<a href="#" style="padding: 15px 30px ;">美术生专区</a>
+					</li>
+					<li>
+						<a href="#" style="padding: 15px 30px ;">音乐生专区</a>
+					</li>
+					<li>
+						<a href="#" style="padding: 15px 30px ;">舞蹈生专区</a>
+					</li>
+				</ul>
+
+			</div>
+		</div>
+		<div  id="app2" class="block clearfix" >
+			<div id="ur_here">
+				<a href="http://www.nahanms.com/">首页</a> <code>&gt;</code>
+				<font class="ufont">个人中心</font>
+			</div>
+			<div class="userl" style="background-color: #fff;">
+				<div class="side-nav my-side">
+					<div class="user-info">
+						<a href="user.php?act=profile">
+							<img src="../../img/nopic.jpg">
+						</a>
+						<p>张三</p>
+					</div>
+					<div class="clearfix"></div>
+					<div class="ueseinfo">
+						<div class="to_hidden">
+
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<dl>
+						<dt>我的艺格</dt>
+						<dd>
+							<a href="user.php?act=order_list">订单中心</a>
+						</dd>
+						<dd>
+							<a href="user.php?act=comment_list">评论晒单</a>
+						</dd>
+						<dd>
+							<a href="user.php?act=group_buy">我的预售</a>
+						</dd>
+						<dt>个人账户</dt>
+						<dd>
+							<a href="user.php?act=profile">个人资料</a>
+						</dd>
+						<dd>
+							<a href="user.php?act=update_password">修改密码</a>
+						</dd>
+						<dd>
+							<a href="user.php?act=address_list">地址管理</a>
+						</dd>
+						<dd>
+							<a href="user.php?act=bonus">优惠券</a>
+						</dd>
+						<dt>售后服务</dt>
+						<dd>
+							<a href="user.php?act=message_list">退款退货</a>
+						</dd>
+
+					</dl>
+
+				</div>
+			</div>
+			<div class="userr"> 
+				<div id="tabline-bar" class="tabline">
+					<h2 class="">全部订单</h2>
+					<h2 class="h2bg">待付款</h2>
+					<h2 class="h2bg">待发货</h2>
+					<h2 class="h2bg">待收货</h2>
+					<h2 class="h2bg">已完成</h2>
+					<h2 class="h2bg">已取消</h2>
+				</div>
+				<div class="clearfix">
+					<table  width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData table table-hover ">
+						<tbody>
+							<tr style="background-color: #F5F5F5;">
+								<th >订单号</th>
+								<th>下单时间</th>
+								<th>订单总金额</th>
+								<th>订单状态</th>
+								<th>操作</th>
+							</tr>
+							<tr v-for="order in orders">
+								<td align="center">
+									<a v-bind:href="order.href" class="f0">{{order.id}}</a>
+								</td>
+								<td align="center">{{order.time}}</td>
+								<td align="center">{{order.money}}</td>
+								<td align="center">{{order.status}}</td>
+								<td align="center">
+									<font class="f6">
+										<a href="user.php?act=order_detail&amp;order_id=13501">付款</a>
+										<a href="user.php?act=cancel_order&amp;order_id=13501&amp;order_sn=2018090288111" onclick="if (!confirm('您确认要取消该订单吗？取消后此订单将视为无效订单')) return false;">取消订单</a>
+									</font>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+
+		</div>
+		<script type="text/javascript" src="../../js/user.js"></script>
+	</body>
+
+</html>

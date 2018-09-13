@@ -1,0 +1,44 @@
+/*导航栏及以上位置*/
+.nav>li>a:hover,
+.nav>li>a:focus {
+	text-decoration: none;
+	background-color: #484848;
+}
+
+.navbar-nav>li>a {
+	text-shadow: 0 0 0 rgba(255, 255, 255, .25);
+	color: #FFFFFF;
+}
+
+.head {
+	display: flex;
+	flex-direction: row;
+	/*justify-content: space-between;*/
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	margin: 0;
+	/*height: 80px;*/
+	padding: 0;
+}
+
+.head-center {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 70%;
+}
+
+.head-center2 {
+	display: flex;
+	flex-direction: column;
+	width: 70%;
+}
+
+.divcenter {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	/* 	align-content: center;*/
+	justify-content: center;
+}

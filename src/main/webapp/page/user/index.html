@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!--<link rel="stylesheet" href="css/bootstrap-theme.css" />-->
+		<link rel="stylesheet" href="../../css/bootstrap.css" />
+		<link rel="stylesheet" href="../../css/index.css" />
+		<script src="../../js/vue.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+		<script src="../../js/bootstrap.js"></script>
+
+		<title></title>
+	</head>
+
+	<body style="background-image: url(../../img/rgt_lg.png);overflow-x: hidden;">
+
+		<div class="container-fluid head" style="border-bottom: 1px solid #DEDEDE; background-color: #F2F2F2;color: #484848;">
+			<div class="container">
+				<div class="row" style="font-size: 12px;padding:5px;">
+					<div class="col-md-2">欢迎来到艺格艺术生用品商城</div>
+					<div class="col-md-1"><a href="login.html">请登录</a></div>
+					<div class="col-md-1"><a href="register.html">免费注册</a></div>
+					<!--<div class="col-md-2" style="float: right;">官方微信商城</div>-->
+					<div class="col-md-1" style="float: right;"><a href="user.html">我的艺格</a></div>
+					<div class="col-md-1" style="float: right;">我的收藏</div>
+					<div class="col-md-1" style="float: right;">订单查询</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="head" style="margin: 20px 0 20px 0;">
+			<div class="head-center" style="justify-content: space-between;">
+
+				<div style="margin-right: 0;">
+					<a href="index.html"><img src="../../img/yigeshangchenglogo.png"></a>
+				</div>
+
+				<div class="divcenter">
+					<div class="input-group" style="max-width:400px;min-width:100px;">
+						<input placeholder="水粉颜料" type="text" class="form-control" style="border: 2px solid #987E46;">
+						<span class="input-group-btn">
+		                        <button class="btn btn-default" type="button" style="color: #fff;background-color: #987E46;border: 1px solid #987E46;">搜索</button>
+		                    </span>
+					</div>
+				</div>
+
+				<a href="#" class="divcenter" style="font-size:15px;color: #666;border: 1px solid #E6E6E6;width: 132px;height: 38px;background-color: #F2F2F2;">
+					<img src="../../img/carts.png" style="margin-right: 10px;" /> 购物车
+				</a>
+
+			</div>
+		</div>
+
+		<div class="head" style="background-color: #181818;">
+			<div class="head-center" style="padding: 0;background-color:#181818 ;height: auto;">
+
+				<ul class="nav navbar-nav">
+					<li class="active" style="background-color: #484848;">
+						<a href="#" style="padding: 15px 50px 15px 50px;">热门商品分类</a>
+					</li>
+					<li>
+						<a href="index.html" style="padding: 15px 30px ;">首页</a>
+					</li>
+					<li>
+						<a href="#" style="padding: 15px 30px ;">美术生专区</a>
+					</li>
+					<li>
+						<a href="#" style="padding: 15px 30px ;">音乐生专区</a>
+					</li>
+					<li>
+						<a href="#" style="padding: 15px 30px ;">舞蹈生专区</a>
+					</li>
+				</ul>
+
+			</div>
+		</div>
+
+		<div class="head" style="height: 452px;">
+			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+				<!--标志点 -->
+				<ol class="carousel-indicators">
+					<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+					<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+					<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+				</ol>
+				<!-- 轮播图片 -->
+				<div class="carousel-inner" role="listbox">
+					<div class="item active">
+						<img src="../../img/1.jpg" alt="..." style="max-width: 1920px; min-width: 1920px; max-height: 452px; min-height: 452px">
+						<div class="carousel-caption">
+
+						</div>
+					</div>
+					<div class="item">
+						<img src="../../img/2.jpg" alt="..." style="max-width: 1920px; min-width: 1920px;max-height: 452px; min-height: 452px">
+						<div class="carousel-caption">
+
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+			<div id="app" class="head-center" style="position:absolute;height: 452px;">
+				<div style="z-index:999;position:absolute;background-color:#FFFFFF;height: 452px;width: 184px;border: 1px solid #DCDCDC;">
+					<div v-for="site in hottype" class="divcenter" style="width: 184px;height: 90px;border-bottom: 1px solid #DCDCDC;">
+						<div style="display:flex;  flex-direction:column;  justify-content:space-around;width: 150px;height: 70px;">
+							<a v-bind:href="site.href1" style="font-size:18px;color: #000;font-weight: bold;">{{site.typename}}</a>
+							<div>
+								<a v-on:click="change" v-bind:href="site.href2" style="color: #484848;">{{site.lowertypename1}}</a>
+								<a v-bind:href="site.href3" style="color: #484848;">{{site.lowertypename2}}</a>
+								<a v-bind:href="site.href4" style="color: #484848;">{{site.lowertypename3}}</a>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<div class="head" style="margin-top: 20px;">
+			<div class="head-center2" style="height: auto;">
+				<div class="divside" style="min-width:1180px;max-width:100%;width:100%;height:50px;font-size: 28px;font-weight:bold;line-height: 50px;">
+					<div>
+						热销推荐
+					</div>
+					<div style="font-size: 20px;font-weight: normal;">
+						<a href="login.html">更多</a>
+					</div>
+					
+				</div>
+				
+				<div class="divside" style="min-width:1180px;max-width:100%;width:100%;height: 240px;">
+					<a  href="goodsdetail.jsp"><img class="hot-img" src="../../img/hot1.jpg" /></a>
+					<a  href="goodsdetail.jsp"><img class="hot-img" src="../../img/hot2.jpg" /></a>
+					<a  href="goodsdetail.jsp"><img class="hot-img" src="../../img/hot3.jpg" /></a>
+					<a  href="goodsdetail.jsp"><img class="hot-img" src="../../img/hot4.jpg" /></a>
+				</div>
+				
+				<div class="divside" style="min-width:1180px;max-width:100%;margin-top:30px;width:100%;height: 240px;">
+					<a  href="goodsdetail.jsp"><img class="hot-img" src="../../img/hot8.jpg" /></a>
+					<a  href="goodsdetail.jsp"><img class="hot-img" src="../../img/hot6.jpg" /></a>
+					<a  href="goodsdetail.jsp"><img class="hot-img" src="../../img/hot7.jpg" /></a>
+					<a  href="goodsdetail.jsp"><img class="hot-img" src="../../img/hot5.jpg" /></a>
+				</div>
+				<br><br>
+				<img style="min-width:1180px;max-width:100%;border: 1px solid #DCDCDC;box-shadow: 2px 2px 15px #E3E3E3;" src="../../img/fake2.jpg" />
+				
+				<div class="divside" style="min-width:1180px;max-width:100%;margin-top:30px;width:100%;height:50px;font-size: 28px;font-weight:bold;line-height: 50px;">
+					<div>
+						美术生用品
+					</div>
+					<div style="font-size: 20px;font-weight: normal;">
+						<a  href="login.html">更多</a>
+					</div>
+				</div>
+				
+				<div class="" style="display:block;min-width:1180px;max-width:100%;height: 482px;">
+					<div style="overflow:hidden;display:block;float:left;">
+						<a href="login.html"><img style="" src="../../img/secaitiandi.png" /></a>
+					</div>
+					<div class="" style="overflow:hidden;display:block;float:right;width: 326px;height: 482px;">
+							<a href="login.html"><img style="margin-bottom:24px;" src="../../img/yanliao.png" /></a>
+							<a href="login.html"><img src="../../img/huabi.png" /></a>
+					</div>
+					<div class="" style="overflow:hidden;display:block;float:right;margin-right:20px;width: 326px;height: 482px;">
+							<a href="login.html"><img style="margin-bottom:24px;" src="../../img/zhilei.png" /></a>
+							<a href="login.html"><img src="../../img/gongju.png" /></a>
+					</div>
+				</div>
+				
+				
+				<div class="divside" style="margin-top:30px;width:100%;height:50px;font-size: 28px;font-weight:bold;line-height: 50px;">
+					<div>
+						音乐生用品
+					</div>
+					<div style="font-size: 20px;font-weight: normal;">
+						<a  href="login.html">更多</a>
+					</div>
+				</div>
+				
+				<div class="" style="display:block;min-width:1180px;max-width:100%;height: 482px;">
+					<div style="overflow:hidden;display:block;float:right;">
+						<a href="login.html"><img style="" src="../../img/dongrenxinxian.png" /></a>
+					</div>
+					<div class="" style="overflow:hidden;display:block;float:left;margin-right:20px;width: 326px;height: 482px;">
+							<a href="login.html"><img style="margin-bottom:24px;" src="../../img/maikefeng.png" /></a>
+							<a href="login.html"><img src="../../img/shujiziliao.png" /></a>
+					</div>
+					<div class="" style="overflow:hidden;display:block;float:left;width: 326px;height: 482px;">
+							<a href="login.html"><img style="margin-bottom:24px;" src="../../img/yueqi.png" /></a>
+							<a href="login.html"><img src="../../img/erji.png" /></a>
+					</div>
+				</div>
+				
+				<div class="divside" style="min-width:1180px;max-width:100%;margin-top:30px;width:100%;height:50px;font-size: 28px;font-weight:bold;line-height: 50px;">
+					<div>
+						舞蹈生用品
+					</div>
+					<div style="font-size: 20px;font-weight: normal;">
+						<a  href="login.html">更多</a>
+					</div>
+				</div>
+				
+				<div class="" style="display:block;min-width:1180px;max-width:100%;height: 482px;">
+					<div style="overflow:hidden;display:block;float:left;">
+						<a href="login.html"><img style="" src="../../img/pianpianqiwu.png" /></a>
+					</div>
+					<div class="" style="overflow:hidden;display:block;float:right;width: 326px;height: 482px;">
+							<a href="login.html"><img style="margin-bottom:24px;" src="../../img/wudaofu.png" /></a>
+							<a href="login.html"><img src="../../img/pinghengdeng.png" /></a>
+					</div>
+					<div class="" style="overflow:hidden;display:block;float:right;margin-right:20px;width: 326px;height: 482px;">
+							<a href="login.html"><img style="margin-bottom:24px;" src="../../img/wudaoqun.png" /></a>
+							<a href="login.html"><img src="../../img/wudaoxie.png" /></a>
+					</div>
+				</div>
+				<br><br>
+				<img style="min-width:1180px;max-width:100%;border: 1px solid #DCDCDC;box-shadow: 2px 2px 15px #E3E3E3;" src="../../img/fake1.jpg" />
+
+			</div>
+
+		</div>
+
+		<script src="../../js/index.js"></script>
+	</body>
+
+</html>
