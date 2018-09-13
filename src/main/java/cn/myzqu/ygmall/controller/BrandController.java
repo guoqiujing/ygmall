@@ -23,7 +23,7 @@ public class BrandController {
     private BrandService brandService;
 
     @PostMapping("/list")
-    public Result findAllBrand(String code, String password) {
+    public Result findAllBrand() {
         /*
 
          */
