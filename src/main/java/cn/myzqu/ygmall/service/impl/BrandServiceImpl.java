@@ -35,4 +35,11 @@ public class BrandServiceImpl implements BrandService{
         int a=brandMapper.deleteByPrimaryKey(id);
         return a;
     }
+
+    @Override
+    public int deleteByIdList(List<Integer> idList){
+        int c=brandMapper.deleteByIdList(idList);
+        return c;
+    }
+
 }

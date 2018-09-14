@@ -29,6 +29,16 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
 
+  <!--批量删除-->
+  <delete id="deleteByIdList" parameterType="java.util.ArrayList">
+    delete from brand
+    where id in
+    <foreach collection="list" item="id"
+             open="(" close=")" index="index" separator=",">
+      #{id}
+    </foreach>
+  </delete>
+
   <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.Brand" >
     insert into brand (id, name, status
       )

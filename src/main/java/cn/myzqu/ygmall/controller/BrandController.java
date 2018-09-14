@@ -7,10 +7,11 @@ import cn.myzqu.ygmall.service.BrandService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class BrandController {
     }
 
     @PostMapping("/delete")
-    public Result deleteBrand(int id){
+    public Result deleteBrand(int id) {
         int a=brandService.deleteBrand(id);
         if(a>0){
             return ResultVOUtil.success();
@@ -50,4 +51,15 @@ public class BrandController {
 
     }
 
+    @PostMapping("/batchDelete")
+    @ResponseBody
+    public Result deleteByIdList(Integer idList[]) {
+        System.out.println(idList[0]);
+        List<Integer> resultList= new ArrayList<>(Arrays.asList(idList));
+        int a=brandService.deleteByIdList(resultList);
+                if(a>0){
+                    return  ResultVOUtil.success();
+                }
+          return ResultVOUtil.error("批量删除失败");
+    }
 }

@@ -177,7 +177,7 @@
 	</footer>
 </div>
 <!-- END WRAPPER -->
-<!-- 添加新用户信息的模态对话框 -->
+<!-- 添加信息的模态对话框 -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -215,7 +215,7 @@
 	</div>
 </div>
 
-<!-- 修改用户信息的模态对话框 -->
+<!-- 修改信息的模态对话框 -->
 <div class="modal fade" id="otherModal" tabindex="-1" role="dialog">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -263,6 +263,10 @@
 <script type="text/javascript" src="../../js/bootstrap-table.js" ></script>
 <script type="text/javascript" src="../../js/bootstrap-table-zh-CN.js"></script>
 <script>
+    var $table = $('#table');
+    var operaEvents;
+
+	//请求全部数据并初始化表格
     function list() {
         $.ajax({
 // 			url:'json/qqq.json',
@@ -270,7 +274,6 @@
             type : "post",
             dataType : "json",
             success : function(value) {
-
                 $('#table').bootstrapTable({
 //         			url:'json/qqq.json',
                     method:'post',
@@ -311,11 +314,10 @@
                         }],
                 });
             }
-
         });
     }
-    var $table = $('#table');
-    var operaEvents;
+
+    //加载网页后的事件
     $().ready(function (){
         list();
     });
@@ -346,10 +348,9 @@
                         console.log(msg);
                         if(msg.code==0){
                             console.log("删除成功");
-//                            $table.bootstrapTable('destroy');
-//                            list();
                             var ids = [row.id];
                             console.log(ids);
+                            //删除一行
                             $table.bootstrapTable('remove', {
                                 field: 'id',
                                 values: ids
@@ -378,12 +379,63 @@
         }
     };
 
-    //    添加新用户按钮功能
+    //    多选删除品牌信息
+    $('#btn_delete').click(function () {
+        var idArray = new Array();
+        //获得选中行
+        var checkedbox= $("#table").bootstrapTable('getSelections');
+        //将选中行数据转成jsonStr
+        var  jsonStr=JSON.stringify(checkedbox);
+        //将jsonStr转成jsonObject对象
+        var jsonObject=jQuery.parseJSON(jsonStr);
+        //接着就可以遍历jsonObject数组对象，取出并操作数据
+        if(jsonObject.length==0){
+            alert("请勾选需要删除的品牌");
+        }
+        else {
+            for(var i=0;i<jsonObject.length;i++){
+                idArray[i] = jsonObject[i].id ;
+            }
+            console.log(idArray);
+            if(confirm("确定要删除吗？")){
+                $.ajax({
+                    type : "POST",
+                    url : "/brand/batchDelete",
+                    data:{
+                        idList:idArray
+                    },
+                    traditional:true,
+                    success : function (msg) {
+                        console.log(msg);
+                        if(msg.code==0){
+                            console.log("删除成功");
+                            //删除多行
+                            $table.bootstrapTable('remove', {
+                                field: 'id',
+                                values: idArray
+                            });
+                        }
+                        else {
+                            alert("删除失败");
+                        }
+                    },
+                    error:function(){
+                        alert("错误");
+                    }
+                });
+            }else{
+                console.log("取消删除");
+            }
+
+        }
+    });
+
+    //    添加新品牌按钮功能
     $('#btn_add').click(function () {
         $("#myModal").modal('show');
     });
 
-    //    添加用户确认按钮
+    //    添加品牌确认按钮
     $('#check').click(function () {
         $.ajax({
             type: "POST",
@@ -395,7 +447,6 @@
             dataType: "json",
             success: function (msg) {
                 if(msg.code==0){
-                    //alert("成功");
                     $('#myModal').modal('hide');
                     $('#brand_name').val("");
                     $('#brand_status').val("");
@@ -403,7 +454,7 @@
                     list();
                 }
                 else {
-                    alert("失败");
+                    alert("添加失败");
                 }
             },
             error: function () {

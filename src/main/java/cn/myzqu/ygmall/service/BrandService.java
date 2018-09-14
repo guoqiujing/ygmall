@@ -17,4 +17,6 @@ public interface BrandService {
     int addBrand(String brandname , Byte brandstatus);
 
     int deleteBrand(int id);
+
+    int deleteByIdList(List<Integer> idList);
 }
