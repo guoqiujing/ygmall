@@ -15,4 +15,6 @@ public interface BrandService {
     List<Brand> findAllBrand();
 
     int addBrand(String brandname , Byte brandstatus);
+
+    int deleteBrand(int id);
 }

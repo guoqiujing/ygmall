@@ -23,10 +23,12 @@
     from brand
   </select>
 
+  <!--根据id删除品牌记录-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from brand
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.Brand" >
     insert into brand (id, name, status
       )

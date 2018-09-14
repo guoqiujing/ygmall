@@ -130,7 +130,7 @@
 					<div class="" style="padding-bottom:0px;">
 
 						<form id="formSearch" class="form-horizontal">
-							<div class="form-group" style="margin-top:15px">
+							<div class="form-group" style="margin-top:0">
 								<label class="control-label col-sm-1" for="txt_search_departmentname">品牌名</label>
 								<div class="col-sm-3">
 									<input type="text" class="form-control" id="txt_search_departmentname">
@@ -156,7 +156,7 @@
 							<button id="btn_edit" type="button" class="btn btn-default">
 								<span style="margin-right: 8px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
 							</button>
-							<button id="btn_delete" type="button" class="btn btn-default">
+							<button id="btn_delete" type="button" class="btn btn-danger">
 								<span style="margin-right: 8px;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
 							</button>
 						</div>
@@ -214,6 +214,47 @@
 		</div>
 	</div>
 </div>
+
+<!-- 修改用户信息的模态对话框 -->
+<div class="modal fade" id="otherModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">编辑信息</h4>
+			</div>
+
+			<div class="modal-body">
+				<form>
+					<div class="form-group">
+						<label for="inti_id" class="control-label">ID:</label>
+						<input type = "text" class=" form-control" id="inti_id" disabled>
+					</div>
+
+					<div class="form-group">
+						<label for="new_name" class="control-label">品牌名:</label>
+						<input type = "text" class = "form-control" id="new_name">
+					</div>
+
+					<div class="form-group">
+						<label for="new_status" class="control-label">状态:</label>
+						<select id="new_status" class="form-control" >
+							<option value="0">未授权</option>
+							<option value="1">已授权</option>
+						</select>
+					</div>
+				</form>
+			</div>
+
+			<div class="modal-footer bg-info">
+				<button type="button" class="btn btn-primary" id="update">确定</button>
+				<button type="button" class="btn green" data-dismiss="modal">取消</button>
+			</div>
+
+		</div>
+	</div>
+</div>
 <!-- Javascript -->
 <script src="assets/vendor/jquery/jquery.min.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -239,6 +280,7 @@
                     cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
                     buttonsAlign:"left",
                     pagination: true,                   //是否显示分页（*）
+                    pageSize:8,
 //                     search:true,
                     //showRefresh: true,                  //是否显示刷新按钮
                     columns:
@@ -248,7 +290,8 @@
                         }, {
                             field: 'id',
                             sortable:true,
-                            title: '品牌编号'
+                            title: '品牌编号',
+                            width: 150
                         }, {
                             field: 'name',
                             sortable:true,
@@ -257,6 +300,14 @@
                             field: 'status',
                             sortable:true,
                             title: '状态'
+                        }, {
+                            field: 'operation',
+                            title: '操作',
+                            width: 150,
+                            align: 'center',
+                            valign: 'middle',
+                            events: operaEvents,
+                            formatter: operaFormatter()
                         }],
                 });
             }
@@ -264,9 +315,68 @@
         });
     }
     var $table = $('#table');
+    var operaEvents;
     $().ready(function (){
         list();
     });
+
+    //    操作列的按钮
+    function operaFormatter(value, row, index) {
+        return [
+            '<a id="editor" href="##" class="glyphicon glyphicon-pencil"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+            '<a id="remove" href="##" class="glyphicon glyphicon-remove"></a>'
+        ].join('')
+    }
+
+    //    操作列的按钮事件（单个删除和修改
+    window.operaEvents = {
+        'click #remove': function (e, value, row, index) {
+			console.log(row);
+            var r=confirm("确认删除吗？");
+            if (r==true)
+            {
+                $.ajax({
+                    type : "POST",
+                    url : "/brand/delete",
+                    data:{
+                        id: row.id
+                    },
+                    dataType:"json",
+                    success : function (msg) {
+                        console.log(msg);
+                        if(msg.code==0){
+                            console.log("删除成功");
+//                            $table.bootstrapTable('destroy');
+//                            list();
+                            var ids = [row.id];
+                            console.log(ids);
+                            $table.bootstrapTable('remove', {
+                                field: 'id',
+                                values: ids
+                            });
+                        }
+                        else {
+                            alert("删除失败");
+                        }
+                    },
+                    error:function(){
+                        console.log("错误");
+                    }
+                });
+            }
+            else
+            {
+                console.log("取消删除");
+            }
+
+        },
+        'click #editor': function (e, value, row, index) {
+            $("#otherModal").modal('show');
+            $('#inti_id').val(row.id);
+            $('#new_name').val(row.name),
+                $('#new_status').val(row.status)
+        }
+    };
 
     //    添加新用户按钮功能
     $('#btn_add').click(function () {
@@ -285,17 +395,12 @@
             dataType: "json",
             success: function (msg) {
                 if(msg.code==0){
-                    alert("成功");
+                    //alert("成功");
                     $('#myModal').modal('hide');
                     $('#brand_name').val("");
                     $('#brand_status').val("");
                     $table.bootstrapTable('destroy');
                     list();
-//                        var opt = {
-//                            url: "/user/findAll",
-//                            silent: true
-//                        };
-//                       $table.bootstrapTable('refresh');
                 }
                 else {
                     alert("失败");

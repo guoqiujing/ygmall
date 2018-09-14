@@ -34,10 +34,20 @@ public class BrandController {
     @PostMapping("/add")
     public Result addBrand(String brandname,Byte brandstatus) {
         int b=brandService.addBrand(brandname,brandstatus);
-        if(b==1){
+        if(b>0){
             return  ResultVOUtil.success();
         }
         return  ResultVOUtil.error("添加品牌失败");
+    }
+
+    @PostMapping("/delete")
+    public Result deleteBrand(int id){
+        int a=brandService.deleteBrand(id);
+        if(a>0){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("删除失败");
+
     }
 
 }

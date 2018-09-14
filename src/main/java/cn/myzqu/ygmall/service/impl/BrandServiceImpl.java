@@ -29,4 +29,10 @@ public class BrandServiceImpl implements BrandService{
         int b=brandMapper.insertSelective(brand);
         return  b;
     }
+
+    @Override
+    public int deleteBrand(int id){
+        int a=brandMapper.deleteByPrimaryKey(id);
+        return a;
+    }
 }
