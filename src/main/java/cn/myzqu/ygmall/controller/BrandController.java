@@ -24,13 +24,20 @@ public class BrandController {
 
     @PostMapping("/list")
     public Result findAllBrand() {
-        /*
-
-         */
         List<Brand> brand = brandService.findAllBrand();
         if (brand.size() > 0) {
             return ResultVOUtil.success(brand);
         }
         return ResultVOUtil.error("查找品牌失败");
     }
+
+    @PostMapping("/add")
+    public Result addBrand(String brandname,Byte brandstatus) {
+        int b=brandService.addBrand(brandname,brandstatus);
+        if(b==1){
+            return  ResultVOUtil.success();
+        }
+        return  ResultVOUtil.error("添加品牌失败");
+    }
+
 }

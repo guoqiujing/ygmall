@@ -39,4 +39,12 @@ public class Brand {
                 ", status=" + status +
                 '}';
     }
+
+    public Brand(String name, Byte status) {
+        this.name = name;
+        this.status = status;
+    }
+
+    public Brand() {
+    }
 }

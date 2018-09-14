@@ -22,4 +22,11 @@ public class BrandServiceImpl implements BrandService{
         List<Brand> brandList = brandMapper.selectAllBrand();
         return brandList;
     }
+
+    @Override
+    public int addBrand(String brandname,Byte brandstatus){
+        Brand brand=new Brand(brandname,brandstatus);
+        int b=brandMapper.insertSelective(brand);
+        return  b;
+    }
 }
