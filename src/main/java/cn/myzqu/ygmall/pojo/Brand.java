@@ -45,6 +45,12 @@ public class Brand {
         this.status = status;
     }
 
+    public Brand(Integer id, String name, Byte status) {
+        this.id = id;
+        this.name = name;
+        this.status = status;
+    }
+
     public Brand() {
     }
 }

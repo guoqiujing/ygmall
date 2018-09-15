@@ -1,6 +1,7 @@
 package cn.myzqu.ygmall.service;
 
 import cn.myzqu.ygmall.pojo.Brand;
+import cn.myzqu.ygmall.vo.BootstrapTableVO;
 
 import java.util.List;
 
@@ -12,11 +13,32 @@ public interface BrandService {
      * 查找并显示所有品牌记录
      * @return
      */
-    List<Brand> findAllBrand();
+    BootstrapTableVO findAllBrand(int pageIndex, int pageSize);
 
-    int addBrand(String brandname , Byte brandstatus);
+    /**
+     * 添加品牌
+     * @param brandName
+     * @param brandStatus
+     * @return
+     */
+    int addBrand(String brandName , Byte brandStatus);
 
+    /**
+     * 删除品牌
+     * @param id
+     * @return
+     */
     int deleteBrand(int id);
 
+    /**
+     * 批量删除品牌
+     * @param idList
+     * @return
+     */
     int deleteByIdList(List<Integer> idList);
+
+    /**
+     * 根据id修改品牌
+     */
+    int modifyById(Brand brand);
 }

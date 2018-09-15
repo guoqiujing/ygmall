@@ -1,15 +1,13 @@
 package cn.myzqu.ygmall.controller;
 
 import cn.myzqu.ygmall.pojo.Brand;
-import cn.myzqu.ygmall.pojo.Customer;
-import cn.myzqu.ygmall.service.AccountService;
 import cn.myzqu.ygmall.service.BrandService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
+import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import cn.myzqu.ygmall.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,24 +21,42 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
+    /**
+     * 查找全部品牌
+     * @return
+     */
     @PostMapping("/list")
-    public Result findAllBrand() {
-        List<Brand> brand = brandService.findAllBrand();
-        if (brand.size() > 0) {
-            return ResultVOUtil.success(brand);
+    public Result findAllBrand(int pageSize,int pageIndex) {
+        System.out.println("每页数据条数："+pageSize);
+        System.out.println("第几页："+pageIndex);
+        BootstrapTableVO bto= brandService.findAllBrand(pageIndex,pageSize);
+        if(bto!=null){
+           return ResultVOUtil.success(bto);
         }
+
         return ResultVOUtil.error("查找品牌失败");
     }
 
+    /**
+     * 添加品牌
+     * @param brandName
+     * @param brandStatus
+     * @return
+     */
     @PostMapping("/add")
-    public Result addBrand(String brandname,Byte brandstatus) {
-        int b=brandService.addBrand(brandname,brandstatus);
+    public Result addBrand(String brandName,Byte brandStatus) {
+        int b=brandService.addBrand(brandName,brandStatus);
         if(b>0){
             return  ResultVOUtil.success();
         }
         return  ResultVOUtil.error("添加品牌失败");
     }
 
+    /**
+     * 删除品牌
+     * @param id
+     * @return
+     */
     @PostMapping("/delete")
     public Result deleteBrand(int id) {
         int a=brandService.deleteBrand(id);
@@ -51,15 +67,36 @@ public class BrandController {
 
     }
 
+    /**
+     * 批量删除品牌
+     * @param idList
+     * @return
+     */
     @PostMapping("/batchDelete")
     @ResponseBody
     public Result deleteByIdList(Integer idList[]) {
-        System.out.println(idList[0]);
         List<Integer> resultList= new ArrayList<>(Arrays.asList(idList));
         int a=brandService.deleteByIdList(resultList);
                 if(a>0){
                     return  ResultVOUtil.success();
                 }
-          return ResultVOUtil.error("批量删除失败");
+        return ResultVOUtil.error("批量删除失败");
+    }
+
+    /**
+     * 根据id修改品牌
+     * @param brandId
+     * @param brandName
+     * @param brandStatus
+     * @return
+     */
+    @PostMapping("/modify")
+    public Result modifyById(Integer brandId, String brandName,Byte brandStatus) {
+        Brand brand=new Brand(brandId,brandName,brandStatus);
+        int b=brandService.modifyById(brand);
+        if(b>0){
+            return  ResultVOUtil.success();
+        }
+        return  ResultVOUtil.error("修改品牌失败");
     }
 }

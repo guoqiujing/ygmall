@@ -82,10 +82,12 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!--根据id修改品牌-->
   <update id="updateByPrimaryKey" parameterType="cn.myzqu.ygmall.pojo.Brand" >
     update brand
     set name = #{name,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 </mapper>
