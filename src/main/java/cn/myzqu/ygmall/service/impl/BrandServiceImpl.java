@@ -34,9 +34,6 @@ public class BrandServiceImpl implements BrandService{
         //把总记录数和某一页的记录装入BootstrapTableVO类
         List<Brand> b=new ArrayList<>();
 
-//        for(int i=0;i<pageSize;i++)
-//            b.add(page.getResult().get(i));
-
         System.out.println(b);
         BootstrapTableVO bto=new BootstrapTableVO(total,brandList);
         System.out.println(bto.toString());
@@ -45,6 +42,7 @@ public class BrandServiceImpl implements BrandService{
         return bto;
     }
 
+    //添加品牌
     @Override
     public int addBrand(String brandName,Byte brandStatus){
         Brand brand=new Brand(brandName,brandStatus);
@@ -52,18 +50,21 @@ public class BrandServiceImpl implements BrandService{
         return  b;
     }
 
+    //单个删除
     @Override
     public int deleteBrand(int id){
         int a=brandMapper.deleteByPrimaryKey(id);
         return a;
     }
 
+    //批量删除
     @Override
     public int deleteByIdList(List<Integer> idList){
         int c=brandMapper.deleteByIdList(idList);
         return c;
     }
 
+    //修改品牌
     @Override
     public int modifyById(Brand brand) {
         int a=brandMapper.updateByPrimaryKey(brand);
