@@ -29,7 +29,7 @@
 	<!-- NAVBAR -->
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="brand">
-			<a href="index.html"><img src="assets/img/yigeguanli.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+			<a href="#"><img src="assets/img/yigeguanli.png" alt="Klorofil Logo" class="img-responsive logo"></a>
 		</div>
 		<div class="container-fluid">
 			<div class="navbar-btn">
@@ -71,10 +71,8 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png" class="img-circle" alt="Avatar"> <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 						<ul class="dropdown-menu">
-							<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-							<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
-							<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-							<li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+							<li><a href="#"><i class="lnr lnr-user"></i> <span>我的信息</span></a></li>
+							<li><a href="#"><i class="lnr lnr-exit"></i> <span>注销</span></a></li>
 						</ul>
 					</li>
 					<!-- <li>
@@ -127,18 +125,18 @@
 		<div class="main-content">
 			<div class="container-fluid">
 				<div class="panel panel-headline" style="padding: 20px;">
-					<div class="" style="padding-bottom:0px;">
+					<div class="" style="padding-bottom:0;">
 
 						<form id="formSearch" class="form-horizontal">
 							<div class="form-group" style="margin-top:0">
-								<label class="control-label col-sm-1" for="txt_search_departmentname">品牌名</label>
+								<label class="control-label col-sm-1" for="txtBrandName">品牌名</label>
 								<div class="col-sm-3">
-									<input type="text" class="form-control" id="txt_search_departmentname">
+									<input type="text" class="form-control" id="txtBrandName">
 								</div>
-								<label class="control-label col-sm-1" for="status">状态</label>
+								<label class="control-label col-sm-1" for="txtStatus">状态</label>
 								<div class="col-sm-3">
 									<!--<input type="text" class="form-control" id="txt_search_statu">-->
-									<select id="status" class="form-control" >
+									<select id="txtStatus" class="form-control" >
 										<option value="">全部</option>
 										<option value="0">未授权</option>
 										<option value="1">已授权</option>
@@ -146,6 +144,7 @@
 								</div>
 								<div class="col-sm-4" style="text-align:left;">
 									<button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+									<button type="button" style="margin-left:50px" id="btn_clean" class="btn btn-default">清空条件</button>
 								</div>
 							</div>
 						</form>
@@ -161,7 +160,6 @@
 								<span style="margin-right: 8px;" class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
 							</button>
 						</div>
-						<!--         <table id="tb_departments"></table> -->
 					</div>
 					<table id="table"></table>
 				</div>
@@ -268,21 +266,20 @@
     var operaEvents;
 
 	//请求全部数据并初始化表格
-    function list() {
-        $.ajax({
-// 			url:'json/qqq.json',
-            url:'http://localhost:8080/brand/list',
-            type : "post",
-            dataType : "json",
-            success : function(value) {
-
-            }
-        });
-    }
+//    function list() {
+//        $.ajax({
+//            url:'http://localhost:8080/brand/list',
+//            type : "post",
+//            dataType : "json",
+//            success : function(value) {
+//
+//            }
+//        });
+//    }
 
     //加载网页后的事件
     $().ready(function (){
-        //list();
+        //初始化表格
         $('#table').bootstrapTable({
             url:"http://localhost:8080/brand/list",//要请求数据的文件路径
             method:'post',
@@ -339,9 +336,9 @@
             //每页多少条数据
             pageSize: params.pageSize,
             //请求第几页
-            pageIndex:params.pageNumber
-//            Name:$('#search_name').val(),
-//            Tel:$('#search_tel').val()
+            pageIndex:params.pageNumber,
+            brandName:$('#txtBrandName').val(),
+            brandStatus:$('#txtStatus').val()
         }
     }
 
@@ -353,7 +350,7 @@
         ].join('')
     }
 
-    //    操作列的按钮事件（单个删除和修改
+    //    操作列的按钮事件（单个删除和修改）
     window.operaEvents = {
         'click #remove': function (e, value, row, index) {
 			console.log(row);
@@ -443,7 +440,7 @@
         }
     });
 
-    //    添加新品牌按钮功能
+    //    添加品牌按钮功能
     $('#btn_add').click(function () {
         $("#myModal").modal('show');
     });
@@ -499,6 +496,21 @@
                 alert("错误");
             }
         });
+    });
+
+    //查询品牌
+    $('#btn_query').click(function () {
+        $table.bootstrapTable('refresh');
+    });
+
+    //清空条件
+    $('#btn_clean').click(function () {
+        if($('#txtBrandName').val()!=""||$('#txtStatus').val()!=""){
+            $('#txtBrandName').val("");
+            $('#txtStatus').val("");
+            $table.bootstrapTable('refresh');
+		}
+
     });
 
 </script>

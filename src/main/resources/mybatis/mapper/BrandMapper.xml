@@ -16,11 +16,18 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <!--查询所有品牌记录-->
-  <select id="selectAllBrand" resultMap="BaseResultMap">
+  <!--查询品牌记录-->
+  <select id="selectBrand" resultMap="BaseResultMap" parameterType="Map">
     select
     <include refid="Base_Column_List" />
     from brand
+    WHERE 1 = 1
+      <if test="brandName!=null and brandName!=''">
+        AND name LIKE '%${brandName}%'
+      </if>
+      <if test="brandStatus!=null">
+        AND status = ${brandStatus}
+      </if>
   </select>
 
   <!--根据id删除品牌记录-->

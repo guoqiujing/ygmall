@@ -11,6 +11,7 @@ import com.github.pagehelper.PageHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 品牌类服务接口实现类
@@ -23,21 +24,17 @@ public class BrandServiceImpl implements BrandService{
     private BrandMapper brandMapper;
 
     @Override
-    public BootstrapTableVO findAllBrand(int pageIndex,int pageSize){
+    public BootstrapTableVO findBrand(Map<String, Object> map, int pageIndex, int pageSize){
         //分页插件
         Page<Brand> page = PageHelper.startPage(pageIndex,pageSize);
-        List<Brand> brandList = brandMapper.selectAllBrand();
+        List<Brand> brandList = brandMapper.selectBrand(map);
         //获取总记录数
         int total = (int)page.getTotal();
         System.out.println("总记录数："+total);
-
         //把总记录数和某一页的记录装入BootstrapTableVO类
-        List<Brand> b=new ArrayList<>();
-
-        System.out.println(b);
         BootstrapTableVO bto=new BootstrapTableVO(total,brandList);
-        System.out.println(bto.toString());
-        if(total<=0) return null;
+        if(total<=0)
+            return null;
 
         return bto;
     }

@@ -4,16 +4,17 @@ import cn.myzqu.ygmall.pojo.Brand;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 小奇冰 on 2018/9/12.
  */
 public interface BrandService {
     /**
-     * 查找并显示所有品牌记录
+     * 查找并显示品牌记录
      * @return
      */
-    BootstrapTableVO findAllBrand(int pageIndex, int pageSize);
+    BootstrapTableVO findBrand(Map<String, Object> map, int pageIndex, int pageSize);
 
     /**
      * 添加品牌

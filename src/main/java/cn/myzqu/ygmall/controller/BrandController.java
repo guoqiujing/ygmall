@@ -8,9 +8,7 @@ import cn.myzqu.ygmall.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by 小奇冰 on 2018/9/12.
@@ -26,10 +24,17 @@ public class BrandController {
      * @return
      */
     @PostMapping("/list")
-    public Result findAllBrand(int pageSize,int pageIndex) {
+    public Result findAllBrand(int pageSize,int pageIndex,String brandName,Byte brandStatus) {
         System.out.println("每页数据条数："+pageSize);
         System.out.println("第几页："+pageIndex);
-        BootstrapTableVO bto= brandService.findAllBrand(pageIndex,pageSize);
+        System.out.println("要查询的品牌名："+brandName);
+        System.out.println("要查询的状态："+brandStatus);
+        //向Map中添加条件
+        Map<String,Object> condition = new HashMap<>();
+        condition.put("brandName",brandName);
+        condition.put("brandStatus",brandStatus);
+
+        BootstrapTableVO bto= brandService.findBrand(condition,pageIndex,pageSize);
         if(bto!=null){
            return ResultVOUtil.success(bto);
         }
