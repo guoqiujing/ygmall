@@ -3,6 +3,7 @@ package cn.myzqu.ygmall.dao;
 import cn.myzqu.ygmall.pojo.Customer;
 
 public interface CustomerMapper {
+
     int deleteByPrimaryKey(String id);
 
     int insert(Customer record);

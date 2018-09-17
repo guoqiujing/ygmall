@@ -1,7 +1,7 @@
 package cn.myzqu.ygmall.service.impl;
 
-import cn.myzqu.ygmall.pojo.Categories;
 import cn.myzqu.ygmall.dao.CategoriesMapper;
+import cn.myzqu.ygmall.pojo.Categories;
 import cn.myzqu.ygmall.service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

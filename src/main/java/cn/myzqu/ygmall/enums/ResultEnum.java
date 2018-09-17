@@ -9,6 +9,7 @@ public enum ResultEnum {
     PARAMETER_ERROR(-2,"哎呀，请求参数错误啦"),
     SQL_ERROR(-3,"哎呀，操作数据异常啦"),
     LOGIN_FAIL(1000,"登录失败，登录信息不正确"),
+    LOGIN_FAIL1(1001,"失败"),
     ;
 
     private Integer code;

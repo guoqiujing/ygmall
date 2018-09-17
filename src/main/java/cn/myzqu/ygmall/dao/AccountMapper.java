@@ -3,6 +3,7 @@ package cn.myzqu.ygmall.dao;
 import cn.myzqu.ygmall.pojo.Account;
 
 public interface AccountMapper {
+
     int deleteByPrimaryKey(String id);
 
     int insert(Account record);

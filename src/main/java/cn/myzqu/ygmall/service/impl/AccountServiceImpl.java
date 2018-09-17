@@ -2,6 +2,7 @@ package cn.myzqu.ygmall.service.impl;
 
 import cn.myzqu.ygmall.dao.AccountMapper;
 import cn.myzqu.ygmall.dao.CustomerMapper;
+import cn.myzqu.ygmall.enums.ResultEnum;
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.pojo.Account;
 import cn.myzqu.ygmall.pojo.Customer;
@@ -29,7 +30,7 @@ public class AccountServiceImpl implements AccountService{
     public Customer addCustomer(String telephone, String email, String password) {
 
         if(StringUtils.isEmpty(telephone)||StringUtils.isEmpty(email)){
-            throw new CustomException(1,"手机号码和邮箱不能为空");
+            throw new CustomException(ResultEnum.LOGIN_FAIL1);
         }
         //检查手机号码是否已经存在
         if(customerMapper.selectByTelephone(telephone)!=null){

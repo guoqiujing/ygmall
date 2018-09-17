@@ -1,7 +1,6 @@
 package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.pojo.Account;
-import cn.myzqu.ygmall.pojo.Customer;
 import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.utils.MD5Utils;
 import lombok.extern.slf4j.Slf4j;
@@ -11,8 +10,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-
-import static org.junit.Assert.*;
 
 /**
  * Created by 的川 on 2018/9/6.
