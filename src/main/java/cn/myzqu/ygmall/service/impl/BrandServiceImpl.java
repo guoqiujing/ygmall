@@ -23,7 +23,7 @@ public class BrandServiceImpl implements BrandService{
     private BrandMapper brandMapper;
 
     @Override
-    public BootstrapTableVO findBrand(Map<String, Object> map, int pageIndex, int pageSize){
+    public BootstrapTableVO findBrand(Map<String, Object> map, Integer pageIndex, Integer pageSize){
         //分页插件
         Page<Brand> page = PageHelper.startPage(pageIndex,pageSize);
         List<Brand> brandList = brandMapper.selectBrand(map);

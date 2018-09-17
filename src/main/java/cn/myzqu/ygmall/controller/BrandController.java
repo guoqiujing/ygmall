@@ -27,7 +27,7 @@ public class BrandController {
      * @return
      */
     @PostMapping("/list")
-    public Result findAllBrand(int pageSize,int pageIndex,String brandName,Byte brandStatus) {
+    public Result findBrand(int pageSize,int pageIndex,String brandName,Byte brandStatus) {
         System.out.println("每页数据条数："+pageSize);
         System.out.println("第几页："+pageIndex);
         System.out.println("要查询的品牌名："+brandName);

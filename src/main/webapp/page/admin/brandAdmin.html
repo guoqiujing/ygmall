@@ -265,23 +265,11 @@
     var $table = $('#table');
     var operaEvents;
 
-	//请求全部数据并初始化表格
-//    function list() {
-//        $.ajax({
-//            url:'http://localhost:8080/brand/list',
-//            type : "post",
-//            dataType : "json",
-//            success : function(value) {
-//
-//            }
-//        });
-//    }
-
     //加载网页后的事件
     $().ready(function (){
         //初始化表格
         $('#table').bootstrapTable({
-            url:"http://localhost:8080/brand/list",//要请求数据的文件路径
+            url:"/brand/list",//要请求数据的文件路径
             method:'post',
             dataType: "json",
             //data: value.data,

@@ -14,7 +14,7 @@ public interface BrandService {
      * 查找并显示品牌记录
      * @return
      */
-    BootstrapTableVO findBrand(Map<String, Object> map, int pageIndex, int pageSize);
+    BootstrapTableVO findBrand(Map<String, Object> map, Integer pageIndex, Integer pageSize);
 
     /**
      * 添加品牌
