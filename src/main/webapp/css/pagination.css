@@ -1,0 +1,48 @@
+.page-bar{
+	/*margin:40px;*/
+	height: 33px;
+	margin-top: 25px;
+}
+.page-bar ul,li{
+	margin: 0;
+	padding: 0;
+
+}
+.page-bar li{
+	list-style: none;
+}
+.page-bar li:first-child>a {
+	margin-left: 0;
+}
+.page-bar a{
+	border: 1px solid #ddd;
+	text-decoration: none;
+	position: relative;
+	float: left;
+	padding: 9px 12px;
+	font-size: 15px;
+	height: 33px;
+	margin-left: 0px;
+	line-height: 100%;
+	color: #B4995D;
+	cursor: pointer;
+	background-color: #fff;
+}
+.page-bar a:hover{
+	background-color: #eee;
+}
+.page-bar a.banClick{
+	cursor:not-allowed;
+}
+.page-bar .active a{
+	color: #fff;
+	cursor: default;
+	background-color: #B4995D;
+	border-color: #B4995D;
+}
+.page-bar i{
+	font-style:normal;
+	color: #B4995D;
+	margin: 0px 4px;
+	font-size: 15px;
+}
