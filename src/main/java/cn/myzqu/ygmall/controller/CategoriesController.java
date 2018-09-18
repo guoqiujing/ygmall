@@ -26,6 +26,50 @@ public class CategoriesController {
         if (categories.size() > 0) {
             return ResultVOUtil.success(categories);
         }
-        return ResultVOUtil.error("查找类别失败");
+        return ResultVOUtil.error("查找所有类别失败");
+    }
+    @PostMapping("/GetCategories_l1")
+    public Result getCategories_l1() {
+        List<Categories> categories = categoriesService.findAllL1Categories();
+        if (categories.size() > 0) {
+            return ResultVOUtil.success(categories);
+        }
+        return ResultVOUtil.error("查找一级类别失败");
+    }
+    @PostMapping("/GetCategories_l23")
+    public Result getCategories_l23(Integer id) {
+        List<Categories> categories = categoriesService.getL23CategoriesById(id);
+        if (categories.size() > 0) {
+            return ResultVOUtil.success(categories);
+        }
+        return ResultVOUtil.error("查找子类别失败");
+    }
+    @PostMapping("/updateCategories")
+    public Result updateCategories(Integer id,String name,Byte status) {
+        Categories categories=new Categories();
+        categories.setId(id);
+        categories.setName(name);
+        categories.setStatus(status);
+        Integer result=categoriesService.updateCategories(categories);
+        if (result==1) {
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("修改类别失败");
+    }
+    @PostMapping("/deleteCategories")
+    public Result deleteCategories(Integer id) {
+        Integer result=categoriesService.deleteCategories(id);
+        if (result==1) {
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("删除类别失败");
+    }
+    @PostMapping("/insertCategories")
+    public Result insertCategories(Categories categories) {
+        Integer result=categoriesService.insertCategories(categories);
+        if (result==1) {
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("插入类别失败");
     }
 }
