@@ -11,21 +11,46 @@
   <sql id="Base_Column_List">
     id, name, parent_level, grand_level, status
   </sql>
+
+<!--bySimon-->
   <select id="findAllCategories" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"></include>
     FROM categories
   </select>
+  <select id="findAllL1Categories" resultMap="BaseResultMap">
+    SELECT id,name,status FROM categories where parent_level is null and grand_level is null
+  </select>
+  <select id="getL23CategoriesById" parameterType="int" resultMap="BaseResultMap">
+    SELECT id,name,status FROM categories WHERE parent_level=#{id}
+  </select>
+
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from categories
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <!--bySimon-->
+  <delete id="deleteCategories" parameterType="int">
+    delete from categories where id=#{id}
+  </delete>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from categories
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <!--bySimon-->
+  <insert id="insertCategories" parameterType="cn.myzqu.ygmall.pojo.Categories">
+    insert into categories values (#{id},#{name},#{parentLevel},#{grandLevel},#{status})
+  </insert>
+
+
   <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.Categories">
     insert into categories (id, name, parent_level, 
       grand_level, status)
@@ -69,6 +94,13 @@
       </if>
     </trim>
   </insert>
+
+
+  <!--bySimon-->
+  <update id="updateCategories" parameterType="cn.myzqu.ygmall.pojo.Categories">
+    update categories set name=#{name},status=#{status} where id=#{id}
+  </update>
+
   <update id="updateByPrimaryKeySelective" parameterType="cn.myzqu.ygmall.pojo.Categories">
     update categories
     <set>

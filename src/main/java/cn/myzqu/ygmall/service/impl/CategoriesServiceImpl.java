@@ -21,4 +21,34 @@ public class CategoriesServiceImpl implements CategoriesService {
         List<Categories> categoriesList=categoriesMapper.findAllCategories();
         return categoriesList;
     }
+
+    @Override
+    public List<Categories> findAllL1Categories() {
+        List<Categories> categoriesList=categoriesMapper.findAllL1Categories();
+        return categoriesList;
+    }
+
+    @Override
+    public List<Categories> getL23CategoriesById(int id) {
+        List<Categories> categoriesList=categoriesMapper.getL23CategoriesById(id);
+        return categoriesList;
+    }
+
+    @Override
+    public Integer updateCategories(Categories categories) {
+        Integer result=categoriesMapper.updateCategories(categories);
+        return result;
+    }
+
+    @Override
+    public Integer deleteCategories(Integer id) {
+        Integer result=categoriesMapper.deleteCategories(id);
+        return result;
+    }
+
+    @Override
+    public Integer insertCategories(Categories categories) {
+        Integer result=categoriesMapper.insertCategories(categories);
+        return result;
+    }
 }

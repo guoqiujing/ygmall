@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<!-- VENDOR CSS -->
 	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../css/bootstrap-table.css">
 	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
 	<!-- MAIN CSS -->
@@ -19,6 +20,16 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/bootstrap.js"></script>
+	<script src="../../js/bootstrap-table.js"></script>
+	<script src="../../js/bootstrap-table-zh-CN.js"></script>
+	<script src="../../js/categories.js"></script>
+	<style>
+		.detail-view .bootstrap-table tr{
+			background:#f0f0ff;
+		}
+	</style>
 </head>
 
 <body>
@@ -124,258 +135,61 @@
 			<!-- MAIN CONTENT -->
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Tables</h3>
-					<div class="row">
-						<div class="col-md-6">
-							<!-- BASIC TABLE -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Basic Table</h3>
-								</div>
-								<div class="panel-body">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>Username</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
+					<div class="panel panel-headline" style="padding: 20px;">
+
+
+
+
+
+						<!--从这里开始-->
+
+
+						<div id="toolbar" class="btn-group">
+							<button onclick="addBaseRow()" data-toggle="modal"
+									data-target="#ModalAdd" type="button" class="btn btn-default">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加一级分类
+							</button>
+						</div>
+						<div style="width: 100%;">
+							<table id="tableLevel12"></table>
+						</div>
+						<!-- ModalLevel3 -->
+						<div class="modal" id="ModalLevel3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="myModalLabel3">三级分类</h4>
+									</div>
+									<div class="modal-body">
+										<table id="tableLevel3"></table>
+									</div>
+									<!--<div class="modal-footer">-->
+										<!--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>-->
+										<!--<button type="button" class="btn btn-primary">添加</button>-->
+									<!--</div>-->
 								</div>
 							</div>
-							<!-- END BASIC TABLE -->
 						</div>
-						<div class="col-md-6">
-							<!-- TABLE NO PADDING -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Table Inside No Padding</h3>
-								</div>
-								<div class="panel-body no-padding">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>Username</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
+						<!-- ModalAdd -->
+						<div class="modal" id="ModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="myModalLabel">添加一级分类</h4>
+									</div>
+									<div class="modal-body">
+										<form class="form-horizontal" id="form_insert"></form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+										<button type="button" onclick="addCategories()" class="btn btn-primary" id="addCategories">添加</button>
+									</div>
 								</div>
 							</div>
-							<!-- END TABLE NO PADDING -->
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<!-- TABLE STRIPED -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Striped Row</h3>
-								</div>
-								<div class="panel-body">
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>Username</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<!-- END TABLE STRIPED -->
-						</div>
-						<div class="col-md-6">
-							<!-- TABLE HOVER -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Hover Row</h3>
-								</div>
-								<div class="panel-body">
-									<table class="table table-hover">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>Username</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<!-- END TABLE HOVER -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<!-- BORDERED TABLE -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Bordered Table</h3>
-								</div>
-								<div class="panel-body">
-									<table class="table table-bordered">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>Username</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<!-- END BORDERED TABLE -->
-						</div>
-						<div class="col-md-6">
-							<!-- CONDENSED TABLE -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Condensed Table</h3>
-								</div>
-								<div class="panel-body">
-									<table class="table table-condensed">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>Username</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<!-- END CONDENSED TABLE -->
-						</div>
+
 					</div>
 				</div>
 			</div>
@@ -391,10 +205,11 @@
 	</div>
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
-	<script src="assets/vendor/jquery/jquery.min.js"></script>
-	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--<script src="assets/vendor/jquery/jquery.min.js"></script>-->
+	<!--<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>-->
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
+
 </body>
 
 </html>
