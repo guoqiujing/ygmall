@@ -304,7 +304,13 @@
                 }, {
                     field: 'status',
                     sortable:true,
-                    title: '状态'
+                    title: '状态',
+                    formatter:function(value, row, index) {
+                        if(value == '0')
+                            return "未授权";
+                        else
+                            return "已授权";
+                    }
                 }, {
                     field: 'operation',
                     title: '操作',
@@ -317,6 +323,8 @@
 
         });
     });
+
+
 
     //请求服务数据时所传参数
     function queryParams(params){

@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 
 	<head>
 		<meta charset="UTF-8">
-		<title></title>
+		<title>订单中心 - 艺格商城</title>
 		<link rel="stylesheet" href="../../css/bootstrap.css" />
 		<link rel="stylesheet" href="../../css/style2.css" />
 		<link rel="stylesheet" href="../../css/user.css" />
 		<link rel="stylesheet" href="../../css/index.css" />
+		<link rel="stylesheet" href="../../css/pagination.css">
 		<script type="text/javascript" src="../../js/vue.js"></script>
 		<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="../../js/jquery.min.js"></script>
 		<script type="text/javascript" src="../../js/bootstrap.js"></script>
-		
+
 
 	</head>
 
@@ -76,7 +78,7 @@
 
 			</div>
 		</div>
-		<div  id="app2" class="block clearfix" >
+		<div   class="block clearfix" >
 			<div id="ur_here">
 				<a href="http://www.nahanms.com/">首页</a> <code>&gt;</code>
 				<font class="ufont">个人中心</font>
@@ -131,15 +133,15 @@
 			</div>
 			<div class="userr"> 
 				<div id="tabline-bar" class="tabline">
-					<h2 class="">全部订单</h2>
+					<h2 class="" >全部订单</h2>
 					<h2 class="h2bg">待付款</h2>
 					<h2 class="h2bg">待发货</h2>
 					<h2 class="h2bg">待收货</h2>
 					<h2 class="h2bg">已完成</h2>
 					<h2 class="h2bg">已取消</h2>
 				</div>
-				<div class="clearfix">
-					<table  width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData table table-hover ">
+				<div class="clearfix" id="app" >
+					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData table table-hover ">
 						<tbody>
 							<tr style="background-color: #F5F5F5;">
 								<th >订单号</th>
@@ -164,12 +166,27 @@
 							</tr>
 						</tbody>
 					</table>
+					<div class="page-bar">
+						<div style="margin: auto;width:450px;">
+						<ul>
+							<li v-if="cur>1"><a v-on:click="cur--,pageClick()">上一页</a></li>
+							<li v-if="cur==1"><a class="banClick">上一页</a></li>
+							<li v-for="index in indexs"  v-bind:class="{ 'active': cur == index}">
+								<a v-on:click="btnClick(index)">{{ index }}</a>
+							</li>
+							<li v-if="cur!=all"><a v-on:click="cur++,pageClick()">下一页</a></li>
+							<li v-if="cur == all"><a class="banClick">下一页</a></li>
+							<li><a>共<i>{{all}}</i>页</a></li>
+						</ul>
+						</div>
+					</div>
 				</div>
 
 			</div>
 
 		</div>
 		<script type="text/javascript" src="../../js/user.js"></script>
+		<script type="text/javascript" src="../../js/pagination.js"></script>
 	</body>
 
 </html>
