@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2018-09-17 17:13:16
+Date: 2018-09-20 15:24:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -104,7 +104,7 @@ CREATE TABLE `brand` (
   `name` varchar(255) NOT NULL COMMENT '品牌名称',
   `status` tinyint(255) NOT NULL COMMENT '品牌状态（1：已授权:0：未授权）',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1087 DEFAULT CHARSET=utf8mb4 COMMENT='品牌表';
+) ENGINE=InnoDB AUTO_INCREMENT=1088 DEFAULT CHARSET=utf8mb4 COMMENT='品牌表';
 
 -- ----------------------------
 -- Records of brand
@@ -113,9 +113,7 @@ INSERT INTO `brand` VALUES ('1000', '青竹', '1');
 INSERT INTO `brand` VALUES ('1001', '玛丽', '0');
 INSERT INTO `brand` VALUES ('1002', '呵呵', '0');
 INSERT INTO `brand` VALUES ('1061', '集合', '0');
-INSERT INTO `brand` VALUES ('1080', '个人', '0');
-INSERT INTO `brand` VALUES ('1081', '发送给', '0');
-INSERT INTO `brand` VALUES ('1082', '黑胡椒', '0');
+INSERT INTO `brand` VALUES ('1080', '个人', '1');
 INSERT INTO `brand` VALUES ('1083', '开个回', '0');
 INSERT INTO `brand` VALUES ('1084', '回电话', '0');
 
@@ -191,7 +189,7 @@ CREATE TABLE `customer` (
 -- ----------------------------
 -- Records of customer
 -- ----------------------------
-INSERT INTO `customer` VALUES ('2d69b37b3ba649479a56a3133552d247', null, null, null, '18820842091', '555@qq.com', '2018-09-12 22:28:00', '2018-09-12 22:28:00');
+INSERT INTO `customer` VALUES ('2d69b37b3ba649479a56a3133552d247', '小奇冰', 'suiBit', '-1', '1815223333', '1234@qq.com', '2018-09-20 10:33:31', '2018-09-20 10:33:31');
 INSERT INTO `customer` VALUES ('afbcdab4bf064502a1b62dd3693f6653', null, null, null, '13690309138', '55@qq.com', '2018-09-13 16:45:45', '2018-09-13 16:45:45');
 
 -- ----------------------------
@@ -431,7 +429,6 @@ CREATE TABLE `spu` (
   `id` varchar(50) CHARACTER SET utf8 NOT NULL COMMENT '货品编号',
   `name` varchar(255) CHARACTER SET utf8 NOT NULL COMMENT '货品名称',
   `category_id` int(11) NOT NULL COMMENT '分类编号',
-  `detail_id` int(11) DEFAULT NULL COMMENT '详情图片编号',
   `brand_id` int(11) NOT NULL COMMENT '品牌编号',
   `createtime` datetime(6) NOT NULL COMMENT '上架时间',
   `sale_count` int(11) NOT NULL DEFAULT '0' COMMENT '销量',
@@ -440,10 +437,8 @@ CREATE TABLE `spu` (
   `attributes_name` varchar(255) NOT NULL COMMENT 'json,存放该货品对应的规格的所有值的字符串，如{“规1”:"a;b;c",“规2”:"1;2;3"}',
   `subtitle` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '商品副标题',
   PRIMARY KEY (`id`),
-  KEY `detail_id` (`detail_id`),
   KEY `brand_id` (`brand_id`),
   KEY `category_id` (`category_id`),
-  CONSTRAINT `spu_ibfk_1` FOREIGN KEY (`detail_id`) REFERENCES `spu_detail` (`id`),
   CONSTRAINT `spu_ibfk_2` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`),
   CONSTRAINT `spu_ibfk_3` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='货品表';
