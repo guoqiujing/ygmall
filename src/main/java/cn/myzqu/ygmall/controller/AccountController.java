@@ -19,6 +19,7 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
+
     @PostMapping("/register")
     @ResponseBody
     public Result register(String telephone, String email, String password){
@@ -28,5 +29,22 @@ public class AccountController {
             return ResultVOUtil.success(customer);
         }
         return ResultVOUtil.error("注册失败");
+    }
+
+    /**
+     * 修改密码
+     * @param id
+     * @param oldPwd
+     * @param newPwd
+     * @return
+     */
+    @PostMapping("/updatePwd")
+    @ResponseBody
+    public Result updatePwd(String id, String oldPwd, String newPwd){
+        int re=accountService.updatePassword(id,oldPwd,newPwd);
+        if(re!=0){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("修改密码失败");
     }
 }

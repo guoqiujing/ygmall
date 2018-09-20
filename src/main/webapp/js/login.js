@@ -4,7 +4,7 @@
 function fun2(){
     $.ajax({
         type: "POST",
-        url: "http://localhost:8080/app/login",
+        url: "/app/login",
         data: {
             code:$("#username").val(),
             password:$("#password").val()

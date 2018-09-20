@@ -7,7 +7,7 @@ $(function(){
         alert($("#email").val())
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/account/register",
+            url: "/account/register",
             data: {
                 telephone:$("#telephone").val(),
                 email:$("#email").val(),

@@ -12,4 +12,6 @@ public interface AccountService {
 
     Customer login(String code,String password);
 
+    int updatePassword(String id, String oldPwd, String newPwd);
+
 }

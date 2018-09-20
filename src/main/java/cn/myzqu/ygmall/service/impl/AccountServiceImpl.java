@@ -79,4 +79,22 @@ public class AccountServiceImpl implements AccountService{
         }
         return customer;
     }
+
+    //修改密码
+    @Override
+    public int updatePassword(String id, String oldPwd, String newPwd){
+        Account account = accountMapper.selectByPrimaryKey(id);
+        //将接收到的密码转为加密密码
+        String encryptPassword = MD5Utils.encrypt(oldPwd,account.getSalt());
+        //将刚加密的密码与数据库中的加密密码对比
+        if(!encryptPassword.equals(account.getPassword())){
+            throw new CustomException(1,"密码错误！");
+        }
+        else{//密码正确，开始修改密码
+            String encryptPwd = MD5Utils.encrypt(newPwd,account.getSalt());
+            Account newAccount=new Account(id,encryptPwd);
+            return accountMapper.updateByPrimaryKeySelective(newAccount);
+        }
+
+    }
 }

@@ -23,6 +23,11 @@ public class Account {
     public Account() {
     }
 
+    public Account(String id, String password) {
+        this.id = id;
+        this.password = password;
+    }
+
     public Account(String id, String password, String salt) {
         this.id = id;
         this.password = password;
