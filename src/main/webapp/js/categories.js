@@ -29,6 +29,12 @@ $().ready(function (){
                         sortable:true,
                         title: '是否启用',
                         class: 'editable',
+                        formatter:function(value,row,index){
+                            if(value=='0')
+                                return "未启用";
+                            else
+                                return "已启用";
+                        }
                     },{
                         title: '操作',
                         field: 'operate',
@@ -76,7 +82,13 @@ $().ready(function (){
                         field: 'status',
                         sortable:true,
                         title: '是否启用',
-                        class: 'editable'
+                        class: 'editable',
+                        formatter:function(value,row,index){
+                            if(value=='0')
+                                return "未启用";
+                            else
+                                return "已启用";
+                        }
                     },{
                         title: '操作',
                         field: 'operate',
@@ -274,7 +286,13 @@ oInit.InitSubTable = function (index, row, $detail) {
                         field: 'status',
                         sortable:true,
                         title: '是否启用',
-                        class: 'editable'
+                        class: 'editable',
+                        formatter:function(value,row,index){
+                            if(value=='0')
+                                return "未启用";
+                            else
+                                return "已启用";
+                        }
                     },{
                         title: '操作',
                         field: 'operate',

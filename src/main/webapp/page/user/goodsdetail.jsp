@@ -1,5 +1,6 @@
 <%--<!DOCTYPE html>--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 
 	<head>
@@ -7,10 +8,16 @@
 		<link rel="stylesheet" href="../../css/bootstrap.css" />
 		<link rel="stylesheet" href="../../css/page-head.css">
 		<link rel="stylesheet" href="../../css/goodsdetail.css" />
+		<script type="text/javascript" src="../../js/vue.js"></script>
 		<script src="../../js/jquery.min.js"></script>
 		<script src="../../js/bootstrap.js"></script>
 		<script src="../../js/goodsdetail.js"></script>
-		<title>JSP Page</title>		
+		<title>JSP Page</title>
+		<style>
+			[v-cloak]{
+				display:none !important;
+			}
+		</style>
 	</head>
 
 	<body>
@@ -18,29 +25,28 @@
 			<div class="container">
 				<div class="row" style="font-size: 12px;padding:5px;">
 					<div class="col-md-2">欢迎来到艺格艺术生用品商城</div>
-					<div class="col-md-1">请登录</div>
-					<div class="col-md-1">免费注册</div>
-					<div class="col-md-1" style="float: right;">我的艺格</div>
+					<div class="col-md-1"><a href="login.html">请登录</a></div>
+					<div class="col-md-1"><a href="register.html">免费注册</a></div>
+					<!--<div class="col-md-2" style="float: right;">官方微信商城</div>-->
+					<div class="col-md-1" style="float: right;"><a href="page/user/user.html">我的艺格</a></div>
 					<div class="col-md-1" style="float: right;">我的收藏</div>
 					<div class="col-md-1" style="float: right;">订单查询</div>
-					<div class="clear"></div> 
 				</div>
 			</div>
 		</div>
 
 		<div class="head" style="margin: 20px 0 20px 0;">
 			<div class="head-center" style="justify-content: space-between;">
-
 				<div style="margin-right: 0;">
-					<img src="../../img/yigeshangchenglogo.png">
+					<a href="index.html"><img src="../../img/yigeshangchenglogo.png"></a>
 				</div>
 
 				<div class="divcenter">
-					<div class="input-group" style="width:400px;">
-						<input type="text" class="form-control" style="border-color: #987E46;">
+					<div class="input-group" style="max-width:400px;min-width:100px;">
+						<input placeholder="水粉颜料" type="text" class="form-control" style="border: 2px solid #987E46;">
 						<span class="input-group-btn">
-		                        <button class="btn btn-default" type="button" style="color: #fff;background-color: #987E46;border-color: #987E46;">搜索</button>
-		                    </span>
+									<button class="btn btn-default" type="button" style="color: #fff;background-color: #987E46;border: 1px solid #987E46;">搜索</button>
+								</span>
 					</div>
 				</div>
 
@@ -52,14 +58,14 @@
 		</div>
 
 		<div class="head" style="background-color: #181818;">
-			<div class="head-center" style="padding: 0;background-color:#181818 ;height: 50px;">
+			<div class="head-center" style="padding: 0;background-color:#181818 ;height: auto;">
 
 				<ul class="nav navbar-nav">
 					<li class="active" style="background-color: #484848;">
 						<a href="#" style="padding: 15px 50px 15px 50px;">热门商品分类</a>
 					</li>
 					<li>
-						<a href="#" style="padding: 15px 30px ;">首页</a>
+						<a href="index.html" style="padding: 15px 30px ;">首页</a>
 					</li>
 					<li>
 						<a href="#" style="padding: 15px 30px ;">美术生专区</a>
@@ -75,22 +81,23 @@
 			</div>
 		</div>
 		<!--商品详情-->
-		<div id="detail-page" style="width:80%;margin: 0 10%;">
-		<!--<div id="detail-page" style="width:80%;position: absolute;left:10%;">-->
+		<div id="detail-page" class="app" v-cloak style="width:80%;margin: 0 10%;">
+			<!--<div id="detail-page" style="width:80%;position: absolute;left:10%;">-->
 		<!--导航-->
 			<div class="" style="padding:1em">
-				<a href="#"><span>首页</span></a>
+				<a href="#"><small>首页</small></a>
 				>
-				<a href="#"><span class="">祖级分类</span></a>
+				<a v-bind:href="categories.grandId+'.jsp'" ><small class="">{{categories.grandName}}</small></a>
 				>
-				<a href="#"><span class="">父级分类</span></a>
+				<a v-bind:href="categories.parentId"><small class="">{{categories.parentName}}</small></a>
 				>
-				<a href="#"><span class="">当前分类</span></a>
+				<a v-bind:href="categories.id"><small class="">{{categories.name}}</small></a>
+				><small>{{orders.spu.name}}</small>
 			</div>
 			<!--商品细节图-->
 			<div style="width:40%;float:left;">
 				<!--大图-->
-				<div class="small-box" id="smallBox">
+				<div class="small-box" id="smallBox" onmouseenter="mouseEnterSmallBox()" onmousemove="mouseMoveSmallBox()" onmouseleave="mouseLeaveSmallBox()">
 					<img src="../../img/detail1.jpg" style="width:100%;height:auto;"/>
 					<div class="tool" id="tool" style="width:50%;height:50%"></div>
 				</div>
@@ -118,75 +125,37 @@
 				<div class="big-box" id="bigBox">
 					<img src="../../img/detail1.jpg" id="bigImg" />
 				</div>
-				<h3>商品名称</h3>
-				<small>商品副标题</small>
+				<h4><strong>{{orders.name}}</strong></h4>
+				<span style="color: #3399ff;">{{orders.spu.subtitle}}</span>
 				<div style="background: url(../../img/img1.png);padding:1em;margin-top:1em;margin-bottom:1em;">
-					<div><span>市场价：</span><span>xxx</span></div>
-					<div><span>艺格价：</span><span>xxx</span></div>
+					<div style="margin-bottom: 5px">市场价：<span><s>¥{{orders.marketPrice}}</s></span></div>
+					<div>艺格价：<span style="font-size:20px;color: #FF4800;">¥{{orders.price}}</span></div>
 				</div>
 				<div>
-		            <div style="color:red;margin-bottom: 1em;">
-		            	<span>正在预售</span>
-					</div>
-					<div style="color:red;margin-bottom: 1em;">
-						<span>正在促销</span>
+		            <div style="color:red;margin-bottom: 1em;font-size: 16px;">
+						<div v-if="orders.status==1">
+							该商品正在进行预售哦！
+						</div>
+						<div v-if="orders.status==2">
+							抱歉，该商品暂时缺货！
+						</div>
+						<div v-if="orders.status==3">
+							抱歉，该商品已下架！
+						</div>
+						<div v-if="orders.status==4">
+							该商品正在进行促销活动哦！
+						</div>
 					</div>
 					<!--成交、评论、好评率-->
 					<div class="goods-sales" style="margin:0.5em 0">
 						<div class="clearfix"></div>
-						<li>成交 <em class="fnum" id="sold_num">5825</em></li>
-						<li>评论 <em class="fnum" id="comment_num">5</em></li>
-						<li class="last">好评率 <em class="fnum">100%<em></em></em></li>
+						<li>成交 <em class="fnum" id="sold_num">{{orders.saleCount}}</em></li>
+						<li>评论 <em class="fnum" id="comment_num">{{orders.spu.commentCount}}</em></li>
+						<li>库存 <em class="fnum">{{orders.inventory}}</em></li>
 						<em class="fnum"><em><div class="clearfix"></div></em></em>
 					</div>
-					<!--款式-->
-					<div style="margin-bottom: 1em;">
-						<div style="float:left;width:15%;padding:0.5em 1em;"><label>款式</label></div>
-						<div style="margin-left:15%;">						
-							<label for="style1" class="style-radio-label">
-								<input type="radio" value="21" id="style1" name="sex" />款式1								
-							</label>				
-							<label for="style2" class="style-radio-label">
-								<input type="radio" value="22" id="style2" name="sex" />款式1								
-							</label>				
-							<label for="style3" class="style-radio-label">
-								<input type="radio" value="23" id="style3" name="sex" />款式1								
-							</label>				
-							<label for="style4" class="style-radio-label">
-								<input type="radio" value="24" id="style4" name="sex" />款式1								
-							</label>				
-							<label for="style5" class="style-radio-label">
-								<input type="radio" value="25" id="style5" name="sex" />款式1								
-							</label>				
-							<label for="style6" class="style-radio-label">
-								<input type="radio" value="26" id="style6" name="sex" />款式1								
-							</label>				
-							<label for="style7" class="style-radio-label">
-								<input type="radio" value="27" id="style7" name="sex" />款式1								
-							</label>
-						</div>
-						<div class="clear"></div> 
-			        </div>
-			        <!--规格-->
-			        <div style="margin-bottom: 1em;">
-			            <div style="float:left;width:15%;padding:0.5em 1em;"><label>规格</label></div>
-			            <div style="margin-left:15%;">
-			            	<label for="format1" class="format-radio-label">
-								<input type="radio" value="q1" id="format1" name="selectformat" />規格1								
-							</label>
-			            	<label for="format2" class="format-radio-label">
-								<input type="radio" value="q2" id="format2" name="selectformat" />規格2								
-							</label>
-			            	<label for="format3" class="format-radio-label">
-								<input type="radio" value="q3" id="format3" name="selectformat" />規格3								
-							</label>
-			            	<label for="format4" class="format-radio-label">
-								<input type="radio" value="q4" id="format4" name="selectformat" />規格4								
-							</label>
-			            </div>
-			            <div class="clear"></div> 
-			        </div>
-			        <!--数量-->
+
+					<span v-html="orders.spu.attributesName"></span>
 			        <div id="shoppingnum" class="clearfix shoppingnum">
 			        	<div style="float:left;width:15%;padding:0em 1em;"><label>数量</label></div>
 						<span class="button" id="goods_buy">
@@ -232,27 +201,19 @@
 				<!--商品详情-->
 				<a name="goods-details" style="display:none">商品详情</a>
 				<div class="goods-details" style="float:right;width:78%;">
-					<!--<a name="goods-details" style="display:none">商品详情</a>-->
 					<!--商品参数摘要-->
 					<div class="goods-params">
 						<div style="margin-bottom: 3em;">品牌名称：
-							<a href="#" class="brand-name">xxxx</a>
+							<a v-bind:href="orders.spu.brandId" class="brand-name">{{orders.spu.params["品牌"]}}</a>
 						</div>
 						<ul class="params-list">
-							<li title="普联TL-WDR5620">商品名称：普联TL-WDR5620</li>
-							<li title="3668211">商品编号：3668211</li>
-							<li title="0.655kg">商品毛重：0.655kg</li>
-							<li title="中国大陆">商品产地：中国大陆</li>
-							<li title="家用路由">类型：家用路由</li>
-							<li title="复杂户型">使用场景：复杂户型</li>
-							<li title="100M以下">LAN口速率：100M以下</li>
-							<li title="游戏竞技，“吃鸡”路由，手游路由，低辐射，5G信号，防蹭网，设置简单">热点：游戏竞技，“吃鸡”路由，手游路由，低辐射，5G信号，防蹭网，设置简单</li>
-							<li title="大户型（90-120㎡）">适用面积：大户型（90-120㎡）</li>
-							<li title="游戏路由">特性：游戏路由</li>
-							<li title="无线路由器，双频路由器，防蹭网，智能路由">功能：无线路由器，双频路由器，防蹭网，智能路由</li>
-							<li title="外置天线">天线：外置天线</li>
-							<li title="1200M">无线速率：1200M</li>
+							<template v-for="(val,key,index) in orders.spu.params" v-if="index<6">
+								<li v-bind:title="val">{{key}}：{{val}}</li>
+							</template>
 						</ul>
+						<div style="margin-bottom: 1em;text-align:right;margin-right: 50px" >
+							<a  href="#goods-format" onclick="detailForward(this)">查看更多参数>></a>
+						</div>
 					</div>
 					<hr>
 					<!--商品图片介绍-->
@@ -275,19 +236,13 @@
 					<div class="blockTitle"><a>规格包装</a></div>
                     <div class="package-list">
 						<dl>
-							<dt>品牌</dt>
-							<dd>华硕（ASUS）-顽石系列</dd>
-							<dt>名称</dt>
-							<dd>华硕（ASUS）-顽石系列</dd>
-							<dt>描述</dt>
-							<dd>FL8000UF</dd>
-							<dt>款式</dt>
-							<dd>深灰色</dd>
-							<dt>规格</dt>
-							<dd>Intel</dd>
+							<template v-for="(val,key) in orders.spu.params" >
+								<dt>{{key}}</dt>
+								<dd>{{val}}</dd>
+							</template>
 						</dl>
 					</div>
-               </div>                	
+               </div>
 				<!--商品评价-->
 				<a name="goods-comment" style="display:none" >商品评价</a>
 				<div class="goods-comment" style="float:right;width:78%;height:500px;">
@@ -362,69 +317,9 @@
 		</div>
 			<div class="footer">
 				<div style="height:500px;color:#FFF">
-					
 				</div>
 			</div>
-    	<!--图片放大器的实现-->
-        <script>
-            /*
-                第一步：当页面加载完后，获取所要操作的节点对象。
-                第二步：为smallBox添加一个鼠标浮动事件
-                            当鼠标浮动到smallBox可视区域的时候，显示出小黄盒子tool
-                            和右边的大盒子（小黄盒子的放大版）bigBox
-                            添加active
-
-                        为smallBox添加一个鼠标离开事件
-                            隐藏小黄盒子和右边的大盒子
-                            去掉active
-
-                第三步：为smallBox添加一个鼠标移动事件
-                        小黄盒子tool要跟着鼠标的坐标移动
-                        右边的大盒子里的图片也跟着指定的比例移动
-            */
-            var smallBox = document.getElementById("smallBox");//小盒子
-            var tool = document.getElementById("tool");//小盒子中的黄色区域
-            var bigBox = document.getElementById("bigBox");//大盒子
-            var bigImg = document.getElementById("bigImg");//放大的图片
-            //鼠标进入小盒子区域内，显示黄色区域和大盒子
-            smallBox.onmouseenter = function(){
-            	$("#bigBox").css("height",$("#smallBox").width());
-                tool.className = "tool active";
-                bigBox.className = "big-box active";
-            }
-            //鼠标离开小盒子区域，不显示黄色区域和大盒子
-            smallBox.onmouseleave = function(){
-                tool.className = "tool";
-                bigBox.className = "big-box";
-            }
-            
-            //鼠标在小盒子内移动
-            smallBox.onmousemove = function(e){
-                var _e = window.event||e;//事件对象
-                //鼠标离页面左侧的距离-存放图片的框左侧离页面左侧的距离-小黄块的一半宽度
-                var x = _e.pageX-$(".small-box").offset().left-tool.offsetWidth/2;//事件对象在小盒子内的横向偏移量
-                var y = _e.pageY-$(".small-box").offset().top-tool.offsetHeight/2;//竖向偏移量
-                if(x<0){
-                    x = 0;//当左偏移出小盒子时，设为0
-                }
-                if(y<0){
-                    y = 0;//当上偏移出小盒子时，设为0
-                }
-                if(x>$("#smallBox").width()-tool.offsetWidth){
-                    x = $("#smallBox").width()-tool.offsetWidth;//当右偏移出小盒子时，设为小盒子的宽度-黄色放大区域宽度
-                }
-                if(y>$("#smallBox").height()-tool.offsetHeight){
-                    y = $("#smallBox").height()-tool.offsetHeight//当下偏移出小盒子时，设为小盒子的高度-黄色放大区域高度
-                }
-                tool.style.left = x + "px";//黄色放大区域距离小盒子左偏距
-                tool.style.top = y + "px";//黄色放大区域距离小盒子上偏距
-                /*因为图片放大了两倍，所以偏移距离也得放大两倍，相当于控制放大图的移动速度*/
-               /*小黄块右移，放大图片的就得相对其所在的div往左移*/
-                bigImg.style.left = -x*2 + "px";
-                bigImg.style.top = -y*2 + "px";
-            }
-        </script>
-    
-		<div class="clear"></div> 
+		<div class="clear"></div>
+		<script src="../../js/goodsdetailVUE.js"></script>
 	</body>
 </html>

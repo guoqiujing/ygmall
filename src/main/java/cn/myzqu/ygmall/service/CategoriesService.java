@@ -1,6 +1,7 @@
 package cn.myzqu.ygmall.service;
 
 import cn.myzqu.ygmall.pojo.Categories;
+import cn.myzqu.ygmall.vo.GoodsCategoriesVO;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  */
 public interface CategoriesService {
     List<Categories> findAllCategories();
+    GoodsCategoriesVO getCompleteCategoriesById(Integer id);
     public List<Categories> findAllL1Categories();
     public List<Categories> getL23CategoriesById(int id);
     public Integer updateCategories(Categories categories);

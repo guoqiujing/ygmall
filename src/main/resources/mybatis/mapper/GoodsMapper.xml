@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.myzqu.ygmall.dao.GoodsMapper" >
+  <resultMap id="BaseResultMap" type="cn.myzqu.ygmall.pojo.Goods" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="SPU_id" property="spuId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="inventory" property="inventory" jdbcType="INTEGER" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="sale_price" property="salePrice" jdbcType="DECIMAL" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="sale_count" property="saleCount" jdbcType="INTEGER" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="attributes" property="attributes" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="Goods_SPU_Map" type="cn.myzqu.ygmall.vo.GoodsDetailVO" extends="BaseResultMap">
+    <association property="spu"  javaType="cn.myzqu.ygmall.pojo.Spu" select="cn.myzqu.ygmall.dao.SpuMapper.selectByPrimaryKey" column="SPU_id">
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, SPU_id, name, inventory, category_id, status, cost, market_price, price, sale_price, 
+    unit, sale_count, note, attributes
+  </sql>
+
+
+
+  <select id="getGoodsAndSPU" resultMap="Goods_SPU_Map" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from goods
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from goods
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.Goods" >
+    insert into goods (id, SPU_id, name, 
+      inventory, category_id, status, 
+      cost, market_price, price, 
+      sale_price, unit, sale_count, 
+      note, attributes)
+    values (#{id,jdbcType=VARCHAR}, #{spuId,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{inventory,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, 
+      #{cost,jdbcType=DECIMAL}, #{marketPrice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, 
+      #{salePrice,jdbcType=DECIMAL}, #{unit,jdbcType=VARCHAR}, #{saleCount,jdbcType=INTEGER}, 
+      #{note,jdbcType=VARCHAR}, #{attributes,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.myzqu.ygmall.pojo.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="spuId != null" >
+        SPU_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="inventory != null" >
+        inventory,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="marketPrice != null" >
+        market_price,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="salePrice != null" >
+        sale_price,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+      <if test="saleCount != null" >
+        sale_count,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="attributes != null" >
+        attributes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="spuId != null" >
+        #{spuId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="inventory != null" >
+        #{inventory,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="marketPrice != null" >
+        #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="salePrice != null" >
+        #{salePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="saleCount != null" >
+        #{saleCount,jdbcType=INTEGER},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="attributes != null" >
+        #{attributes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.myzqu.ygmall.pojo.Goods" >
+    update goods
+    <set >
+      <if test="spuId != null" >
+        SPU_id = #{spuId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="inventory != null" >
+        inventory = #{inventory,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="marketPrice != null" >
+        market_price = #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="salePrice != null" >
+        sale_price = #{salePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="saleCount != null" >
+        sale_count = #{saleCount,jdbcType=INTEGER},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="attributes != null" >
+        attributes = #{attributes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.myzqu.ygmall.pojo.Goods" >
+    update goods
+    set SPU_id = #{spuId,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      inventory = #{inventory,jdbcType=INTEGER},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      status = #{status,jdbcType=TINYINT},
+      cost = #{cost,jdbcType=DECIMAL},
+      market_price = #{marketPrice,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DECIMAL},
+      sale_price = #{salePrice,jdbcType=DECIMAL},
+      unit = #{unit,jdbcType=VARCHAR},
+      sale_count = #{saleCount,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR},
+      attributes = #{attributes,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
