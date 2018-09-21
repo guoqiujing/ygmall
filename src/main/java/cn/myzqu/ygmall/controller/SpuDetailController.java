@@ -19,12 +19,13 @@ import java.util.List;
 public class SpuDetailController {
     @Autowired
     private SpuDetailService spuDetailService;
+
     @PostMapping("/getSpuDetailBySPUId")
     public Result getSpuDetailBySPUId(String spuId){
         List<SpuDetail> spuDetails=spuDetailService.selectBySPUId(spuId);
         if(spuDetails.size()>0){
             return ResultVOUtil.success(spuDetails);
         }
-        return ResultVOUtil.error("查找商品详情图失败");
+        return ResultVOUtil.error("查找商品详情图片失败");
     }
 }
