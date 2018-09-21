@@ -1,36 +1,14 @@
-// function getSPUCategories(categoryId) {
-//     console.log(categoryId);
-//     var that = this;
-//     $.ajax({
-//         type: "POST",
-//         url: "/categories/getCompleteCategoriesById",
-//         data: {
-//             id: categoryId
-//         },
-//         dataType: "json",
-//         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-//         success: function (data) {
-//             if (data.code == 0) {
-//                 console.log("成功");
-//                 that.categories=data.data[0];
-//             }
-//             else {
-//                 alert("查找失败");
-//             }
-//         },
-//         error: function () {
-//             alert("错误");
-//         }
-//     });
-// }
 var page = new Vue({
     // el为vue作用范围
     el: '.app',
     data: {
-        orders: [
-        ],
-        categories:[
-        ],
+        orders: [],
+        categories:[],
+        goodsImgs:[],
+        spuDetail:[],
+        format0:"",
+        format1:"",
+        format2:"",
     },
     //在vue对象创建完成时自动触发的事件
     created: function (data) {
@@ -53,15 +31,15 @@ var page = new Vue({
                 success:function(data){
                     if(data.code==0){
                         that.orders=data.data[0];
+                        var format=that.orders.attributes.split("-");
+                        that.format0=format[0];
+                        that.format1=format[1];
+                        that.format2=format[2];
                         that.getSPUCategories(data.data[0].spu.categoryId);
-                        that.getSPUFormat(data.data[0].spu.attributesName);
+                        // that.getSPUFormat(data.data[0].spu.attributesName);
                         that.orders.spu.params=JSON.parse(that.orders.spu.params);
-                        // var asdf=data.data[0].spu.attributesName;
-                        // for (var qaz in asdf)
-                        // {
-                        //     console.log("---------------------------------------------");
-                        //     console.log(asdf[qaz]);
-                        // }
+                        that.getGoodsImg(object.id);
+                        that.getSpuDetail(that.orders.spu.id);
                     }
                 },
                 error:function(data){
@@ -89,9 +67,9 @@ var page = new Vue({
                 for (var i in temp)
                 {
                     var date2=(new Date()).getTime()+symbol2;
-                    console.log("date2"+date2);
-                    formatDivHTML+= "<label for=\""+date2+"\" class=\"style-radio-label\">" +
-                        "<input type=\"radio\" value=\""+temp[i]+"\" id=\""+date2+"\" name=\""+date1+"\" onclick=\"clickRadio(this)\"/>"+temp[i]+"</label>";
+                    console.log("date2"+date2);                                                     //class=\"style-radio-label\"
+                    formatDivHTML+= "<label for=\""+date2+"\" class=\"style-radio-label\" >" +
+                        "<input v-model=\"sex\" type=\"radio\" value=\""+temp[i]+"\" id=\""+date2+"\" name=\""+date1+"\" onclick=\"clickRadio(this)\"/>"+temp[i]+"</label>";
                     symbol2++;
                 }
                 symbol1++;
@@ -124,24 +102,46 @@ var page = new Vue({
                 }
             });
         },
-
-
-
-
-
         getGoodsImg: function (goodsId) {//获取指定id的类别的id、name，以及其所属父级、祖级的id、name
             var that = this;
             $.ajax({
                 type: "POST",
-                url: "/categories/getCompleteCategoriesById",
+                url: "/goodsImg/getGoodsImgByGoodsId",
                 data: {
-                    id: categoryId
+                    goodsId: goodsId
                 },
                 dataType: "json",
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (data) {
                     if (data.code == 0) {
-                        that.categories=data.data;
+                        that.goodsImgs=data.data;
+                    }
+                    else {
+                        alert("查找失败");
+                    }
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        },
+        createRadioId:function(i){
+            var date=(new Date()).getTime()+1;
+            return date;
+        },
+        getSpuDetail: function (spuId) {//获取指定id的类别的id、name，以及其所属父级、祖级的id、name
+            var that = this;
+            $.ajax({
+                type: "POST",
+                url: "/spuDetail/getSpuDetailBySPUId",
+                data: {
+                    spuId: spuId
+                },
+                dataType: "json",
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (data) {
+                    if (data.code == 0) {
+                        that.spuDetail=data.data;
                     }
                     else {
                         alert("查找失败");

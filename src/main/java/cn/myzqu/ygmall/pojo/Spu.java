@@ -9,8 +9,6 @@ public class Spu {
 
     private Integer categoryId;
 
-    private Integer detailId;
-
     private Integer brandId;
 
     private Date createtime;
@@ -47,14 +45,6 @@ public class Spu {
 
     public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public Integer getDetailId() {
-        return detailId;
-    }
-
-    public void setDetailId(Integer detailId) {
-        this.detailId = detailId;
     }
 
     public Integer getBrandId() {

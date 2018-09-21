@@ -8,9 +8,52 @@ $(function(){
     //     $(this).parent().addClass("checked");
     // });
 })
+
+
+function addSelectedNum(){
+    $(".selectNum").val(parseInt($('.selectNum').val())+parseInt(1));
+}
+function subtractSelectedNum(){
+    $(".selectNum").val(parseInt($('.selectNum').val())-parseInt(1));
+}
+// 规格选框的选中逻辑及样式变化
 function clickRadio(target){
     $("input[type='radio'][name='" + $(target).attr('name') + "']").parent().removeClass("checked")
     $(target).parent().addClass("checked");
+    // $("input[type='radio'][name='format0']").parent().css({"border":"red solid 2px"});//[name='format0']
+    var clickedRadio=$(target).attr('name');
+    if($("input[type='radio'][name='format2']").length!=0){//三种规格的情况
+        if(clickedRadio!="format2"){//如果选中的不是第三种规格，则取消掉位于所选中的规格之后的所有规格的选中状态
+            $(".formatDIV").css({"border":"red solid 2px","padding":"10px"});
+            $(target).parents(".RadioGroupDIV").nextAll().find(".style-radio-label").removeClass("checked");
+            $("#BtnArea button").attr("disabled","true");
+            $("#BtnArea button").css({"background":"#f1f1f1","border":"#b5b3b3 2px dashed","color":"#9a9a9a"});
+        }
+        else{
+            $(".formatDIV").css({"border":"red solid 0px","padding":"0px"});
+            $("#BtnArea button").removeAttr("disabled");
+            $("#BtnArea .btn-buy-now").css({"background":"#F4F0E7","border":"1px solid #B4995D","color":"#484848"});
+            $("#BtnArea .bnt-add-cart").css({"background":"#987E46","border":"0px solid #B4995D","color":"#FFF"});
+        }
+    }
+    else if($("input[type='radio'][name='format1']").length!=0){//两种规格的情况
+        if(clickedRadio!="format1"){//如果选中的不是第二种规格，则取消掉位于所选中的规格之后的所有规格的选中状态
+            $(".formatDIV").css({"border":"red solid 2px","padding":"10px"});
+            $(target).parents(".RadioGroupDIV").nextAll().find(".style-radio-label").removeClass("checked");
+            $("#BtnArea button").attr("disabled","true");
+            $("#BtnArea button").css({"background":"#f1f1f1","border":"#b5b3b3 2px dashed","color":"#9a9a9a"});
+        }
+        else{
+            $(".formatDIV").css({"border":"red solid 0px","padding":"0px"});
+            $("#BtnArea button").removeAttr("disabled");
+            $("#BtnArea .btn-buy-now").css({"background":"#F4F0E7","border":"1px solid #B4995D","color":"#484848"});
+            $("#BtnArea .bnt-add-cart").css({"background":"#987E46","border":"0px solid #B4995D","color":"#FFF"});
+        }
+    }
+    else{//一种规格的情况
+        ;
+    }
+
 }
 /*
  * 鼠标移动到商品细节图小图时，将小图替换到大图位置

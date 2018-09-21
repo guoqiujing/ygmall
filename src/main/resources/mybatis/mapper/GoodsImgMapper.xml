@@ -10,6 +10,17 @@
   <sql id="Base_Column_List" >
     id, goods_id, img_order, img_url
   </sql>
+
+
+
+  <select id="selectByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from goods_img
+    where goods_id = #{goodsId}
+  </select>
+
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

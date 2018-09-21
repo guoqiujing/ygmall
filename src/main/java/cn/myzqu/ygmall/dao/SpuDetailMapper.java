@@ -2,6 +2,8 @@ package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.pojo.SpuDetail;
 
+import java.util.List;
+
 public interface SpuDetailMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface SpuDetailMapper {
     int updateByPrimaryKeySelective(SpuDetail record);
 
     int updateByPrimaryKey(SpuDetail record);
+
+    List<SpuDetail> selectBySPUId(String spuId);
 }

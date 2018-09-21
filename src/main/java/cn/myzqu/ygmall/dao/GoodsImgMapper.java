@@ -2,6 +2,8 @@ package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.pojo.GoodsImg;
 
+import java.util.List;
+
 public interface GoodsImgMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface GoodsImgMapper {
     int updateByPrimaryKeySelective(GoodsImg record);
 
     int updateByPrimaryKey(GoodsImg record);
+
+    List<GoodsImg> selectByGoodsId(String goodsId);
 }

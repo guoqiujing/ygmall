@@ -5,7 +5,6 @@
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="category_id" property="categoryId" jdbcType="INTEGER" />
-    <result column="detail_id" property="detailId" jdbcType="INTEGER" />
     <result column="brand_id" property="brandId" jdbcType="INTEGER" />
     <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
     <result column="sale_count" property="saleCount" jdbcType="INTEGER" />
@@ -15,7 +14,7 @@
     <result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, category_id, detail_id, brand_id, createtime, sale_count, comment_count, 
+    id, name, category_id, brand_id, createtime, sale_count, comment_count,
     params, attributes_name, subtitle
   </sql>
 
@@ -34,7 +33,7 @@
   </delete>
   <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.Spu" >
     insert into spu (id, name, category_id, 
-      detail_id, brand_id, createtime, 
+      brand_id, createtime,
       sale_count, comment_count, params, 
       attributes_name, subtitle)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER}, 
@@ -53,9 +52,6 @@
       </if>
       <if test="categoryId != null" >
         category_id,
-      </if>
-      <if test="detailId != null" >
-        detail_id,
       </if>
       <if test="brandId != null" >
         brand_id,
@@ -124,9 +120,6 @@
       <if test="categoryId != null" >
         category_id = #{categoryId,jdbcType=INTEGER},
       </if>
-      <if test="detailId != null" >
-        detail_id = #{detailId,jdbcType=INTEGER},
-      </if>
       <if test="brandId != null" >
         brand_id = #{brandId,jdbcType=INTEGER},
       </if>
@@ -155,7 +148,6 @@
     update spu
     set name = #{name,jdbcType=VARCHAR},
       category_id = #{categoryId,jdbcType=INTEGER},
-      detail_id = #{detailId,jdbcType=INTEGER},
       brand_id = #{brandId,jdbcType=INTEGER},
       createtime = #{createtime,jdbcType=TIMESTAMP},
       sale_count = #{saleCount,jdbcType=INTEGER},

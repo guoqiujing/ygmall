@@ -98,32 +98,22 @@
 			<div style="width:40%;float:left;">
 				<!--大图-->
 				<div class="small-box" id="smallBox" onmouseenter="mouseEnterSmallBox()" onmousemove="mouseMoveSmallBox()" onmouseleave="mouseLeaveSmallBox()">
-					<img src="../../img/detail1.jpg" style="width:100%;height:auto;"/>
+					<img v-bind:src="goodsImgs[0].imgUrl" style="width:100%;height:auto;"/>
 					<div class="tool" id="tool" style="width:50%;height:50%"></div>
 				</div>
 				<!--小图-->
-				<div class="smallimg" style="width:19%;float:left;padding-top:0.3em;margin-right:1%;" onmousemove="changeimg(this)">
-					<img src="../../img/detail1.jpg" style="width:100%;" />
-				</div>
-				<div class="smallimg" style="width:19%;float:left;padding-top:0.3em;margin-right:1%;" onmousemove="changeimg(this)">
-					<img src="../../img/detail2.jpg" style="width:100%;" />
-				</div>
-				<div class="smallimg" style="width:19%;float:left;padding-top:0.3em;margin-right:1%;" onmousemove="changeimg(this)">
-					<img src="../../img/detail3.jpg" style="width:100%;" />
-				</div>
-				<div class="smallimg" style="width:19%;float:left;padding-top:0.3em;margin-right:1%;" onmousemove="changeimg(this)">
-					<img src="../../img/detail4.jpg" style="width:100%;" />
-				</div>
-				<div class="smallimg" style="width:19%;float:left;padding-top:0.3em;margin-right:1%;" onmousemove="changeimg(this)">
-					<img src="../../img/detail5.jpg" style="width:100%;" />
-				</div>
-				<div class="clear"></div> 
+				<template v-for="(val,key) in goodsImgs" v-if="key<5">
+					<div class="smallimg" style="width:19%;float:left;padding-top:0.3em;margin-right:1%;" onmousemove="changeimg(this)">
+						<img v-bind:src="goodsImgs[key].imgUrl" style="width:100%;" />
+					</div>
+				</template>
+				<div class="clear"></div>
 			</div>
 			<!--商品基本信息：名称、价格、款式等-->
 			<div style="width:58%;float:right;">
 				<!--放大的商品细节图-->
 				<div class="big-box" id="bigBox">
-					<img src="../../img/detail1.jpg" id="bigImg" />
+					<img v-bind:src="goodsImgs[0].imgUrl" id="bigImg" />
 				</div>
 				<h4><strong>{{orders.name}}</strong></h4>
 				<span style="color: #3399ff;">{{orders.spu.subtitle}}</span>
@@ -134,7 +124,7 @@
 				<div>
 		            <div style="color:red;margin-bottom: 1em;font-size: 16px;">
 						<div v-if="orders.status==1">
-							该商品正在进行预售哦！
+							该商品正在预售，请及时预定！
 						</div>
 						<div v-if="orders.status==2">
 							抱歉，该商品暂时缺货！
@@ -143,11 +133,11 @@
 							抱歉，该商品已下架！
 						</div>
 						<div v-if="orders.status==4">
-							该商品正在进行促销活动哦！
+							该商品正在促销，请及时购买！
 						</div>
 					</div>
 					<!--成交、评论、好评率-->
-					<div class="goods-sales" style="margin:0.5em 0">
+					<div class="goods-sales" style="margin:1em 0">
 						<div class="clearfix"></div>
 						<li>成交 <em class="fnum" id="sold_num">{{orders.saleCount}}</em></li>
 						<li>评论 <em class="fnum" id="comment_num">{{orders.spu.commentCount}}</em></li>
@@ -155,25 +145,74 @@
 						<em class="fnum"><em><div class="clearfix"></div></em></em>
 					</div>
 
-					<span v-html="orders.spu.attributesName"></span>
+					<%--动态生成商品规格选框--%>
+					<div class="formatDIV">
+					<template v-for="(val,key,index) in JSON.parse(orders.spu.attributesName)">
+						<div class="RadioGroupDIV" style="margin-bottom: 0.5em;">
+							<div style="float:left;width:13%;padding:0.5em 1em;">
+								<label>{{key}}</label></div>
+							<div style="margin-left:13%;">
+								<template v-for="data,i in val.split(';')" v-if="index==0">
+									<template v-if="format0==data">
+										<label v-bind:for="'format0'+i" class="style-radio-label checked">
+											<input	v-model="format0" type="radio" v-bind:value="data" v-bind:id="'format0'+i" name="format0" onclick="clickRadio(this)">{{data}}
+										</label>
+									</template>
+									<template v-else>
+										<label v-bind:for="'format0'+i" class="style-radio-label">
+											<input	v-model="format0" type="radio" v-bind:value="data" v-bind:id="'format0'+i" name="format0" onclick="clickRadio(this)">{{data}}
+										</label>
+									</template>
+								</template>
+								<template v-for="data,i in val.split(';')" v-if="index==1">
+									<template v-if="format1==data">
+										<label v-bind:for="'format1'+i" class="style-radio-label checked">
+											<input v-model="format1" type="radio" v-bind:value="data" v-bind:id="'format1'+i" name="format1" onclick="clickRadio(this)">{{data}}
+										</label>
+									</template>
+									<template v-else>
+										<label v-bind:for="'format1'+i" class="style-radio-label">
+											<input v-model="format1" type="radio" v-bind:value="data" v-bind:id="'format1'+i" name="format1" onclick="clickRadio(this)">{{data}}
+										</label>
+									</template>
+								</template>
+								<template v-for="data,i in val.split(';')" v-if="index==2">
+									<template v-if="format2==data">
+										<label v-bind:for="'format2'+i" class="style-radio-label checked">
+											<input v-model="format2" type="radio" v-bind:value="data" v-bind:id="'format2'+i" name="format2" onclick="clickRadio(this)">{{data}}
+										</label>
+									</template>
+									<template v-else>
+										<label v-bind:for="'format2'+i" class="style-radio-label">
+											<input v-model="format2" type="radio" v-bind:value="data" v-bind:id="'format2'+i" name="format2" onclick="clickRadio(this)">{{data}}
+										</label>
+									</template>
+								</template>
+								<div class="clear"></div>
+							</div>
+						</div>
+					</template>
+					</div>
+					<%--<span v-html="orders.spu.attributesName"></span>--%>
+
+					<%--购买/加入购物车的商品数量--%>
 			        <div id="shoppingnum" class="clearfix shoppingnum">
 			        	<div style="float:left;width:15%;padding:0em 1em;"><label>数量</label></div>
-						<span class="button" id="goods_buy">
-							<span class="pre">-</span>
-							<span class="color_num">
-								<input type="text" class="color_input isnumber" size="4" value="1" name="color_input" id="alork_num">
-					            <input class="spec_id 01713" type="hidden" value="01713" name="spec_id">
-					            <input class="color_input" type="hidden" value="1" name="number">
-					            <input class="goods_stock" type="hidden" name="goods_stock" id="s_goods_stock" value="672">
-					            <input class="goods_id" type="hidden" name="goods_id" value="1713">                       
-					        </span>
-							<span class="next">+</span>
-						</span>
+						<div class="input-group" style="width:90px">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="subtractSelectedNum()" style="height: 25px;padding: 0px 6px;">-</button>
+							</span>
+							<input type="text" class="form-control selectNum" value="1" style="height: 25px;">
+							<span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="addSelectedNum()" style="height: 25px;padding: 0px 6px;">+</button>
+							</span>
+						</div><!-- /input-group -->
 						<div class="clear"></div> 
 					</div>
+
 					<div id="BtnArea" class="cartboxss">
-						<a class="btn-buy-now" title="立即购买" href="#none" onclick="alork_addcart(1713,1)">立即购买</a>
-						<a id="btn-addCart" class="bnt-add-cart" href="#none" onclick="alork_addcart(1713,0)" title="加入购物车"><span>加入购物车</span></a>
+						<button class="btn-buy-now" title="立即购买" onclick="alert('立即购买')">立即购买</button>
+						<button id="btn-addCart" class="bnt-add-cart" onclick="alert('加入购物车')" title="加入购物车"><span>加入购物车</span></button>
 						<div class="blank20 clearfix"></div>
 					</div>
 			        
@@ -218,17 +257,11 @@
 					<hr>
 					<!--商品图片介绍-->
 					<div class="detail-img" style="text-align: center;">
-						<img src="../../img/dt1.jpg"/>
-						<img src="../../img/dt2.jpg"/>
-						<img src="../../img/dt3.jpg"/>
-						<img src="../../img/dt4.jpg"/>
-						<img src="../../img/dt5.jpg"/>
-						<img src="../../img/dt6.jpg"/>
-						<img src="../../img/dt7.jpg"/>
-						<img src="../../img/dt8.jpg"/>
-						<img src="../../img/dt9.jpg"/>
+						<template v-for="(val,key) in spuDetail">
+							<img v-bind:src="spuDetail[key].imgUrl"/>
+						</template>
 					</div>
-				</div> 	
+				</div>
 			
 				<!--规格包装-->	
 				<a name="goods-format" style="display:none">规格包装</a>
