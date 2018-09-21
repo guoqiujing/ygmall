@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../css/index.css" />
+    <link href="../../css/artstyle.css" rel="stylesheet" type="text/css" />
+
+    <script src="../../js/vue.js"></script>
+    <script src="../../js/jquery.min.js"></script> 
+    <script src="../../js/bootstrap.js"></script>
+    <title></title>
+</head>
+
+<body style="overflow-x: hidden;">
+<div class="container-fluid head" style="border-bottom: 1px solid #DEDEDE; background-color: #F2F2F2;color: #484848;">
+    <div class="container">
+        <div class="row" style="font-size: 12px;padding:5px;">
+            <div class="col-md-2">欢迎来到艺格艺术生用品商城</div>
+            <div class="col-md-1">请登录</div>
+            <div class="col-md-1">免费注册</div>
+            <div class="col-md-1" style="float: right;">我的艺格</div>
+            <div class="col-md-1" style="float: right;">我的收藏</div>
+            <div class="col-md-1" style="float: right;">订单查询</div>
+        </div>
+    </div>
+</div>
+
+<div class="head" style="margin: 20px 0 20px 0;">
+    <div class="head-center" style="justify-content: space-between;">
+
+        <div style="margin-right: 0;">
+            <a href="index.html"><img src="../../img/yigeshangchenglogo.png"></a>
+        </div>
+
+        <div class="divcenter">
+            <div class="input-group" style="width:400px;">
+                <input type="text" class="form-control" style="border-color: #987E46;">
+                <span class="input-group-btn">
+		                        <button class="btn btn-default" type="button" style="color: #fff;background-color: #987E46;border-color: #987E46;">搜索</button>
+		                    </span>
+            </div>
+        </div>
+
+        <a href="#" class="divcenter" style="font-size:15px;color: #666;border: 1px solid #E6E6E6;width: 132px;height: 38px;background-color: #F2F2F2;">
+            <img src="../../img/carts.png" style="margin-right: 10px;" /> 购物车
+        </a>
+
+    </div>
+</div>
+
+<div class="head" style="background-color: #181818;">
+    <div class="head-center" style="padding: 0;background-color:#181818 ;height: 50px;">
+
+        <ul class="nav navbar-nav">
+            <li class="active" style="background-color: #484848;">
+                <a href="#" style="padding: 15px 50px 15px 50px;">热门商品分类</a>
+            </li>
+            <li>
+                <a href="#" style="padding: 15px 30px ;">首页</a>
+            </li>
+            <li>
+                <a href="Art_District.html" style="padding: 15px 30px ;">美术生专区</a>
+            </li>
+            <li>
+                <a href="#" style="padding: 15px 30px ;">音乐生专区</a>
+            </li>
+            <li>
+                <a href="#" style="padding: 15px 30px ;">舞蹈生专区</a>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<div class="head" style="height: 452px;">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!--标志点 -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+        <!-- 轮播图片 -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="../../img/1.jpg" alt="..." style="max-width: 1920px; min-width: 1920px; max-height: 452px; min-height: 452px">
+                <div class="carousel-caption">
+
+                </div>
+            </div>
+            <div class="item">
+                <img src="../../img/2.jpg" alt="..." style="max-width: 1920px; min-width: 1920px;max-height: 452px; min-height: 452px">
+                <div class="carousel-caption">
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div id="app" class="head-center" style="position:absolute;height: 452px;">
+        <div style="z-index:999;position:absolute;background-color:#FFFFFF;height: 452px;width: 184px;border: 1px solid #DCDCDC;">
+            <div v-for="site in hottype" class="divcenter" style="width: 184px;height: 90px;border-bottom: 1px solid #DCDCDC;">
+                <div style="display:flex;  flex-direction:column;  justify-content:space-around;width: 150px;height: 70px;">
+                    <a v-bind:href="site.href1" style="font-size:18px;color: #000;font-weight: bold;">{{site.typename}}</a>
+                    <div>
+                        <a v-bind:href="site.href2" style="color: #484848;">{{site.lowertypename1}}</a>
+                        <a v-bind:href="site.href3" style="color: #484848;">{{site.lowertypename2}}</a>
+                        <a v-bind:href="site.href4" style="color: #484848;">{{site.lowertypename3}}</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="index_category block">
+    <div class="left_menu">
+        <div class="fullSlide_right_ad">
+        </div>
+    </div>
+</div>
+
+<div class="blank30 clearfix"></div>
+
+<div class="block new_books">
+    <div class="book_left f_l">
+        <div class="sale_title main-cont" data-id="1"><strong>新品</strong> </div>
+        <div class="new_goods_list">
+            <div class="tohiden">
+                <div class="big_box">
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank">
+                            <img class="goods_thumb" alt="2017领先教学零零后学画画素描几何静物石膏结构全套正规美术基础教材 张磊" src="../../img/new02.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥62.90</font>
+
+                            <font class="market_s">¥118.80</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank" >2017领先教学零零后学画画素描几何静物石膏结构全套正规美术基础教材 张磊</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 画中话 静物的结构与光影 陈伯尧 周仁超 江振坤" src="../../img/new02.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥36.00</font>
+
+                            <font class="market_s">¥68.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank" >2017 画中话 静物的结构与光影 陈伯尧 周仁超 江振坤</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 画中话 精微2 素描静物 陈伯尧 周仁超" src="../../img/new02.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥41.30</font>
+
+                            <font class="market_s">¥78.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank" >2017 画中话 精微2 素描静物 陈伯尧 周仁超</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 完美教学 简单粗暴-涛哥的绝密速写课件 杨慎修 卢秉涛" src="../../img/new02.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥46.60</font>
+
+                            <font class="market_s">¥88.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank" >2017 完美教学 简单粗暴-涛哥的绝密速写课件 杨慎修 卢秉涛</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 画中话 画境 素描静物照片" src="../../img/new02.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥52.00</font>
+
+                            <font class="market_s">¥98.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank" >2017 画中话 画境 素描静物照片</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 我有我一套 功夫.素描石膏像 孙建" src="../../img/new02.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥41.30</font>
+
+                            <font class="market_s">¥78.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank" >2017 我有我一套 功夫.素描石膏像 孙建</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 POWER+正能 像典图集·速写篇 李沛森" src="../../img/new02.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥51.00</font>
+
+                            <font class="market_s">¥96.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank" >2017 POWER+正能 像典图集·速写篇 李沛森</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank">
+                            <img class="goods_thumb" alt="2017 POWER+正能 像典图集·静物篇 李沛森" src="../../img/new02.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥51.00</font>
+
+                            <font class="market_s">¥96.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 POWER+正能 像典图集·静物篇 李沛森</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="big_box none">
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 POWER+正能 像典图集·头像篇 李沛森" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥51.00</font>
+
+                            <font class="market_s">¥96.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 POWER+正能 像典图集·头像篇 李沛森</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 品博文化 顶尖教学2-素描头像①  黄志勇 黄志红 蔡亚男" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥46.60</font>
+
+                            <font class="market_s">¥88.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 品博文化 顶尖教学2-素描头像① 黄志勇 黄志红 蔡亚男</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank">
+                            <img class="goods_thumb" alt="2017 画中话 构造 素描静物 陈伯尧 周仁超" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥36.00</font>
+
+                            <font class="market_s">¥68.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 画中话 构造 素描静物 陈伯尧 周仁超</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 央美有约 超级临摹·石膏几何体 张承国 王鹏飞 杨孟" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥36.00</font>
+
+                            <font class="market_s">¥68.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 央美有约 超级临摹·石膏几何体 张承国 王鹏飞 杨孟</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 央美有约 超级临摹·石膏头像 张承国 阮辛阅" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥31.00</font>
+
+                            <font class="market_s">¥58.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 央美有约 超级临摹·石膏头像 张承国 阮辛阅</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 央美有约 超级临摹·应试头像 张承国 王会革" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥33.00</font>
+
+                            <font class="market_s">¥62.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 央美有约 超级临摹·应试头像 张承国 王会革</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 央美有约 超级临摹·应试速写 张承国 周子鸿" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥41.30</font>
+
+                            <font class="market_s">¥78.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank" >2017 央美有约 超级临摹·应试速写 张承国 周子鸿</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 央美有约 超级临摹·素描静物 张承国 莫有悦 杨孟" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥41.30</font>
+
+                            <font class="market_s">¥78.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank" >2017 央美有约 超级临摹·素描静物 张承国 莫有悦 杨孟</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="big_box none">
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 央美有约 超级临摹·人物速写 张承国 陈柏全" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥36.00</font>
+
+                            <font class="market_s">¥68.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 央美有约 超级临摹·人物速写 张承国 陈柏全</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank">
+                            <img class="goods_thumb" alt="2017 央美有约 我要上央美·静物素描 张承国 陈奇巧" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥17.00</font>
+
+                            <font class="market_s">¥32.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 央美有约 我要上央美·静物素描 张承国 陈奇巧</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 央美有约 我要上央美·素描头像 张承国 王湛峰" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥17.00</font>
+
+                            <font class="market_s">¥32.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 央美有约 我要上央美·素描头像 张承国 王湛峰</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 央美有约 我要上央美·色彩静物 张承国 冯净"src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥17.00</font>
+
+                            <font class="market_s">¥32.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 央美有约 我要上央美·色彩静物 张承国 冯净</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 央美有约 超级临摹·色彩风向标 张承国 刘利兵" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥36.00</font>
+
+                            <font class="market_s">¥68.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 央美有约 超级临摹·色彩风向标 张承国 刘利兵</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank">
+                            <img class="goods_thumb" alt="2017 品博文化 顶尖教学2/色彩静物① 黄志勇 黄志红 张国政" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥52.00</font>
+
+                            <font class="market_s">¥98.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 品博文化 顶尖教学2/色彩静物① 黄志勇 黄志红 张国政</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank" >
+                            <img class="goods_thumb" alt="2017 品博文化 顶尖教学2-色彩静物③ 黄志勇 黄志红 曹建鼎" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥46.60</font>
+
+                            <font class="market_s">¥88.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 品博文化 顶尖教学2-色彩静物③ 黄志勇 黄志红 曹建鼎</a>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <a style="position:relative; display: inline-block;" target="_blank">
+                            <img class="goods_thumb" alt="2017 画中话 思路-场景速写是这样练成 陈伯尧 周仁超 郭志君" src="../../img/new03.jpg"></a>
+                        <div class="orderinfo">
+                            <font class="shop_s">¥52.00</font>
+
+                            <font class="market_s">¥98.00</font>
+                        </div>
+                        <div class="name">
+                            <a target="_blank">2017 画中话 思路-场景速写是这样练成 陈伯尧 周仁超 郭志君</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="page_list">
+            <div class="list">
+                <a class="page_now"></a>
+                <a class="page_other"></a>
+                <a class="page_other"></a>
+            </div>
+        </div>
+    </div>
+    <div class="f_r right_books">
+        <div class="sale_title"><strong>热销排行</strong></div>
+        <div class="big_box">
+            <div class="toppic">
+                <span>1.</span>
+                <a title="2017 画中话 静物的结构与光影 陈伯尧 周仁超 江振坤"><img class="goodsimg f_l" alt="2017 画中话 静物的结构与光影 陈伯尧 周仁超 江振坤" src="../../img/remen01.jpg"></a>
+                <div class="goodsinfo f_r">
+                    <p>
+                        <a title="2017 画中话 静物的结构与光影 陈伯尧 周仁超 江振坤">2017 画中话 静物的结构与光影 陈伯尧 周仁超 江振坤</a>
+                    </p>
+                    <p>
+                        <font class="shop_s">¥36.00</font>
+                        <font class="market_s">¥68.00</font>
+                    </p>
+
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="topsale">
+                <ul>
+                    <li><span>2.</span>
+                        <a title="2017 画中话 精微2 素描静物 陈伯尧 周仁超">2017 画中话 精微2 素描静</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="topsale">
+                <ul>
+                    <li><span>3.</span>
+                        <a title="2016 画中话 天窗-素描静物2 陈伯尧 周仁超 李彪二">2016 画中话 天窗-素描静物</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="topsale">
+                <ul>
+                    <li><span>4.</span>
+                        <a title="理性教学-从几何到静物 陈虎彪">理性教学-从几何到静物 陈虎彪</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="topsale">
+                <ul>
+                    <li><span>5.</span>
+                        <a title="画中话 入木三分系列：素描静物（下） 陈伯尧 钟伟安 刘旭清">画中话 入木三分系列：素描静物（</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="topsale">
+                <ul>
+                    <li><span>6.</span>
+                        <a title="问题老师教学系列 问题老师-速写1 黄衡" >问题老师教学系列 问题老师-速写</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="topsale">
+                <ul>
+                    <li><span>7.</span>
+                        <a title="画中话 步步教学 素描静物 创意素描 陈伯尧 江振坤">画中话 步步教学 素描静物 创意</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="topsale">
+                <ul>
+                    <li><span>8.</span>
+                        <a title="理性教学 素描静物1 陈虎彪">理性教学 素描静物1 陈虎彪</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="topsale">
+                <ul>
+                    <li><span>9.</span>
+                        <a title="2017 画中话 构造 素描静物 陈伯尧 周仁超">2017 画中话 构造 素描静物</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="blank20"></div>
+    <div data-id="2" class="main-cont" id="sumiao">
+        <div class="ad_cat_top"></div>
+        <div class="cat_header">
+            <div class="cat_title f_l">
+                素描</div>
+            <div class="hotkey f_r">
+                <a >素描几何体</a>
+                <a >素描静物</a>
+                <a >素描石膏像</a>
+                <a >素描头像</a>
+                <a >素描半身像</a>
+                <a >大师素描</a>
+
+                <a >MORE></a>
+            </div>
+        </div>
+        <div class="item-cont clearfix" style="width:1190px">
+
+            <ul>
+                <li>
+                    <a  target="_blank"><img alt="2017领先教学零零后学画画素描几何静物石膏结构全套正规美术基础教材 张磊" src="../../img/sumiao01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥62.90</font>
+                        <font class="market_s">¥118.80</font>
+                        <p class="name">
+                            <a  target="_blank" title="2017领先教学零零后学画画素描几何静物石膏结构全套正规美术基础教材 张磊">2017领先教学零零后学画画素</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 画中话 静物的结构与光影 陈伯尧 周仁超 江振坤" src="../../img/sumiao01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥36.00</font>
+                        <font class="market_s">¥68.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 画中话 静物的结构与光影 陈伯尧 周仁超 江振坤">2017 画中话 静物的结构与</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 画中话 精微2 素描静物 陈伯尧 周仁超" src="../../img/sumiao01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥41.30</font>
+                        <font class="market_s">¥78.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 画中话 精微2 素描静物 陈伯尧 周仁超">2017 画中话 精微2 素描</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 我有我一套 功夫.素描石膏像 孙建" src="../../img/sumiao01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥41.30</font>
+                        <font class="market_s">¥78.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 我有我一套 功夫.素描石膏像 孙建">2017 我有我一套 功夫.素</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2016 画中话 精微-步步教学素描静物 陈伯尧 周仁超 江振坤" src="../../img/sumiao01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥41.30</font>
+                        <font class="market_s">¥78.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2016 画中话 精微-步步教学素描静物 陈伯尧 周仁超 江振坤">2016 画中话 精微-步步教</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2016 画中话 天窗-素描静物2 陈伯尧 周仁超 李彪二" src="../../img/sumiao01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥41.30</font>
+                        <font class="market_s">¥78.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2016 画中话 天窗-素描静物2 陈伯尧 周仁超 李彪二">2016 画中话 天窗-素描静</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="画中话 入木三分系列：素描静物（下） 陈伯尧 钟伟安 刘旭清" src="../../img/sumiao01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥37.00</font>
+                        <font class="market_s">¥78.00</font>
+                        <p class="name">
+                            <a target="_blank" title="画中话 入木三分系列：素描静物（下） 陈伯尧 钟伟安 刘旭清">画中话 入木三分系列：素描静物</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2016 画中话-教辅-素描静物 陈伯尧 周仁超 钟伟安 刘旭清" src="../../img/sumiao01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥36.00</font>
+                        <font class="market_s">¥68.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2016 画中话-教辅-素描静物 陈伯尧 周仁超 钟伟安 刘旭清">2016 画中话-教辅-素描静</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2016 画中话 迎刃而解-素描静物 陈伯尧 周仁超" src="../../img/sumiao01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥36.00</font>
+                        <font class="market_s">¥68.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2016 画中话 迎刃而解-素描静物 陈伯尧 周仁超">2016 画中话 迎刃而解-素</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="完美教学 素描长期 几何形体 素描静物 石膏像 郑重" src="../../img/sumiao01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥75.90</font>
+                        <font class="market_s">¥138.00</font>
+                        <p class="name">
+                            <a target="_blank" title="完美教学 素描长期 几何形体 素描静物 石膏像 郑重">完美教学 素描长期 几何形体 </a>
+                        </p>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div data-id="3" class="main-cont" id="sumiao">
+        <div class="ad_cat_top"></div>
+        <div class="cat_header">
+            <div class="cat_title f_l">
+                色彩</div>
+            <div class="hotkey f_r">
+                <a >色调/色稿</a>
+                <a >色彩静物</a>
+                <a >色彩风景</a>
+                <a >色彩人像</a>
+                <a >大师色彩</a>
+
+                <a >MORE></a>
+            </div>
+        </div>
+        <div class="item-cont clearfix" style="width:1900px;">
+            <ul>
+                <li>
+                    <a  target="_blank"><img alt="2016领先教学-照画不误 速写（三本一套）" src="../../img/secai01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥84.80</font>
+                        <font class="market_s">¥160.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2016领先教学-照画不误 速写（三本一套）">2016领先教学-照画不误 速</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="画中话 色色相关 色彩静物 陈伯尧 潘其栋" src="../../img/secai01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥33.00</font>
+                        <font class="market_s">¥78.00</font>
+                        <p class="name">
+                            <a target="_blank" title="画中话 色色相关 色彩静物 陈伯尧 潘其栋">画中话 色色相关 色彩静物 陈</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 央美有约 超级临摹·色彩突围 张承国 滕佳强" src="../../img/secai01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥47.00</font>
+                        <font class="market_s">¥88.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 央美有约 超级临摹·色彩突围 张承国 滕佳强">2017 央美有约 超级临摹·</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 央美有约 我要上央美-色彩风景 张承国 滕佳强" src="../../img/secai01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥17.00</font>
+                        <font class="market_s">¥32.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 央美有约 我要上央美-色彩风景 张承国 滕佳强">2017 央美有约 我要上央美</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 前线出版 逆战-色彩风暴  王祁 伍坚  余坦腊" src="../../img/secai01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥62.50</font>
+                        <font class="market_s">¥118.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 前线出版 逆战-色彩风暴  王祁 伍坚  余坦腊">2017 前线出版 逆战-色彩</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 前线出版 行者-色调范本  王祁 郭建光" src="../../img/secai01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥40.30</font>
+                        <font class="market_s">¥76.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 前线出版 行者-色调范本  王祁 郭建光">2017 前线出版 行者-色调</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 门道教学 高分色彩系统 黄勇" src="../../img/secai01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥46.00</font>
+                        <font class="market_s">¥86.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 门道教学 高分色彩系统 黄勇">2017 门道教学 高分色彩系</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 主题教学 大道-色彩教学 孔祥涛 陈胡腊" src="../../img/secai01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥51.00</font>
+                        <font class="market_s">¥96.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 主题教学 大道-色彩教学 孔祥涛 陈胡腊">2017 主题教学 大道-色彩</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 魔方文化 东风-静物色调 杨宇辉" src="../../img/secai01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥41.30</font>
+                        <font class="market_s">¥78.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 魔方文化 东风-静物色调 杨宇辉">2017 魔方文化 东风-静物</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 领先教学 照画不误 魔鬼色彩教学体系 色彩静物" src="../../img/secai01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥52.00</font>
+                        <font class="market_s">¥98.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 领先教学 照画不误 魔鬼色彩教学体系 色彩静物">2017 领先教学 照画不误 </a>
+                        </p>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div data-id="4" class="main-cont" id="sumiao">
+        <div class="ad_cat_top"></div>
+        <div class="cat_header">
+            <div class="cat_title f_l">
+                速写</div>
+            <div class="hotkey f_r">
+                <a >线性速写</a>
+                <a >线面速写</a>
+                <a >场景速写</a>
+
+                <a >MORE></a>
+            </div>
+        </div>
+        <div class="item-cont clearfix" style="width:1900px;">
+            <ul>
+                <li>
+                    <a target="_blank"><img alt="2017 完美教学 简单粗暴-涛哥的绝密速写课件 杨慎修 卢秉涛" src="../../img/shuxie01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥46.60</font>
+                        <font class="market_s">¥88.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 完美教学 简单粗暴-涛哥的绝密速写课件 杨慎修 卢秉涛">2017 完美教学 简单粗暴-</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 央美有约 我要上央美-人物速写 张承国 赵浪" src="../../img/shuxie01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥17.00</font>
+                        <font class="market_s">¥32.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 央美有约 我要上央美-人物速写 张承国 赵浪">2017 央美有约 我要上央美</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 好方法 谢军谈速写 谢高淑 谢军 万贤峰" src="../../img/shuxie01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥52.00</font>
+                        <font class="market_s">¥98.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 好方法 谢军谈速写 谢高淑 谢军 万贤峰">2017 好方法 谢军谈速写 </a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 大动态 速写范本全面出击第二季 焕秋" src="../../img/shuxie01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥51.00</font>
+                        <font class="market_s">¥96.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 大动态 速写范本全面出击第二季 焕秋">2017 大动态 速写范本全面</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 前线出版-实用速写1000例 王祁" src="../../img/shuxie01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥52.00</font>
+                        <font class="market_s">¥98.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 前线出版-实用速写1000例 王祁">2017 前线出版-实用速写1</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017尚读 超级课件1.0.人物速写 李贺 张振东" src="../../img/shuxie01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥53.40</font>
+                        <font class="market_s">¥89.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017尚读 超级课件1.0.人物速写 李贺 张振东">2017尚读 超级课件1.0.</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="画中话 2016版入木三分速写上 陈伯尧 周仁超 卜朴" src="../../img/shuxie01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥41.30</font>
+                        <font class="market_s">¥78.00</font>
+                        <p class="name">
+                            <a target="_blank" title="画中话 2016版入木三分速写上 陈伯尧 周仁超 卜朴">画中话 2016版入木三分速写</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="画中话 领跑教学-速写 陈伯尧 张羽" src="../../img/shuxie01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥25.00</font>
+                        <font class="market_s">¥59.00</font>
+                        <p class="name">
+                            <a target="_blank" title="画中话 领跑教学-速写 陈伯尧 张羽">画中话 领跑教学-速写 陈伯尧</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2015版画中话 入木三分：速写（上） 陈伯尧 卜朴" src="../../img/shuxie01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥32.50</font>
+                        <font class="market_s">¥78.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2015版画中话 入木三分：速写（上） 陈伯尧 卜朴">2015版画中话 入木三分：速</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="画中话 独具匠心：速写 陈伯尧 吴为 陇武" src="../../img/shuxie01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥28.50</font>
+                        <font class="market_s">¥68.00</font>
+                        <p class="name">
+                            <a target="_blank" title="画中话 独具匠心：速写 陈伯尧 吴为 陇武">画中话 独具匠心：速写 陈伯尧</a>
+                        </p>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div data-id="5" class="main-cont" id="sumiao">
+        <div class="ad_cat_top"></div>
+        <div class="cat_header">
+            <div class="cat_title f_l">
+                照片</div>
+            <div class="hotkey f_r">
+                <a >头像照片</a>
+                <a >速写照片</a>
+                <a >静物照片</a>
+                <a >石膏照片</a>
+
+                <a >MORE></a>
+            </div>
+        </div>
+        <div class="item-cont clearfix" style="width:1900px;">
+            <ul>
+                <li>
+                    <a target="_blank"><img alt="2017 画中话 画境 素描静物照片" src="../../img/zhaopian01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥52.00</font>
+                        <font class="market_s">¥98.00</font>
+                        <p class="name">
+                            <a  target="_blank" title="2017 画中话 画境 素描静物照片">2017 画中话 画境 素描静</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2016 画中话-联考照片 头像篇 （陈伯尧 周仁超）" src="../../img/zhaopian01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥41.30</font>
+                        <font class="market_s">¥78.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2016 画中话-联考照片 头像篇 （陈伯尧 周仁超）">2016 画中话-联考照片 头</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2016 画中话 联考照片-速写篇 陈伯尧 周仁超" src="../../img/zhaopian01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥41.30</font>
+                        <font class="market_s">¥78.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2016 画中话 联考照片-速写篇 陈伯尧 周仁超">2016 画中话 联考照片-速</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 画中话 基本功2-石膏像照片 陈伯尧 周仁超" src="../../img/zhaopian01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥31.00</font>
+                        <font class="market_s">¥58.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 画中话 基本功2-石膏像照片 陈伯尧 周仁超">2017 画中话 基本功2-石</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 画中话 基本功1-几何体照片 陈伯尧 周仁超" src="../../img/zhaopian01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥15.40</font>
+                        <font class="market_s">¥29.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 画中话 基本功1-几何体照片 陈伯尧 周仁超">2017 画中话 基本功1-几</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 大动态 全素材速写场景照片 焕秋" src="../../img/zhaopian01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥62.50</font>
+                        <font class="market_s">¥118.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 大动态 全素材速写场景照片 焕秋">2017 大动态 全素材速写场</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 大动态 联考双人组合照片 焕秋" src="../../img/zhaopian01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥62.50</font>
+                        <font class="market_s">¥118.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 大动态 联考双人组合照片 焕秋">2017 大动态 联考双人组合</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 画中话 静物坊 色彩静物照片 陈伯尧 周仁超" src="../../img/zhaopian01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥52.00</font>
+                        <font class="market_s">¥98.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 画中话 静物坊 色彩静物照片 陈伯尧 周仁超">2017 画中话 静物坊 色彩</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 好方法 千姿百态-速写照片 谢高淑 刘卫" src="../../img/zhaopian01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥51.00</font>
+                        <font class="market_s">¥96.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 好方法 千姿百态-速写照片 谢高淑 刘卫">2017 好方法 千姿百态-速</a>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <a target="_blank"><img alt="2017 好方法 表现-头像照片 谢高淑 刘卫" src="../../img/zhaopian01.jpg"></a>
+                    <div class="orderinfo">
+                        <font class="shop_s">¥51.00</font>
+                        <font class="market_s">¥96.00</font>
+                        <p class="name">
+                            <a target="_blank" title="2017 好方法 表现-头像照片 谢高淑 刘卫">2017 好方法 表现-头像照</a>
+                        </p>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <img style="border: 1px solid #DCDCDC;box-shadow: 2px 2px 15px #E3E3E3;height: 156px;" src="../../img/fake1.jpg">
+</div>
+<div class="blank20 clearfix"></div>
+<script src="../../js/index.js"></script>
+</body>
+<script>
+    $('.sidebar-login-close').click(function() {
+        $('.sidebar-login-wrap').hide();
+    });
+    $(".sidebar-tabs-mask li").click(function() {
+        var $this = $(this);
+        var i = $this.index();
+        var $a = $this.children("a");
+        if(i < 4) {
+            if($a.hasClass("cur")) {
+                $a.removeClass("cur");
+                $(".sidebar-tabs").animate({
+                    "right": "-234px",
+                    "width": "270px"
+                }, 600);
+                $('.sidebar-login-wrap').hide();
+
+            } else {
+                $a.addClass("cur");
+                $this.siblings("li").children("a").removeClass("cur");
+                $(".sidebar-tabs").animate({
+                    "right": "0px"
+                }, 600);
+                $(".sidebar-plugin").eq(i).show().siblings(".sidebar-plugin").hide();
+                /*	if(i<3){
+                 $('.sidebar-login-wrap').show();
+                 }*/
+                if(i == 1) {
+                    $(".sidebar-tabs").css({
+                        "width": "305px"
+                    });
+                } else {
+                    $(".sidebar-tabs").css({
+                        "width": "270px"
+                    });
+                }
+            }
+            return false;
+        }
+    });
+    $(".sidebar-tabs-mask li.sidebar-tab-message").click(function() {
+        $this.children("a").click();
+
+    })
+</script>
+
+<script type="text/javascript" src="../../js/art.js"></script>
+<script type="text/javascript" src="../../js/Tab.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $('#focus').slideFocus();
+    });
+</script>
+
+</html>
