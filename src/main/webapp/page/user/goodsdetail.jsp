@@ -197,7 +197,7 @@
 
 					<%--购买/加入购物车的商品数量--%>
 			        <div id="shoppingnum" class="clearfix shoppingnum">
-			        	<div style="float:left;width:15%;padding:0em 1em;"><label>数量</label></div>
+			        	<div style="float:left;width:13%;padding:0em 1em;"><label>数量</label></div>
 						<div class="input-group" style="width:90px">
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="button" onclick="subtractSelectedNum()" style="height: 25px;padding: 0px 6px;">-</button>

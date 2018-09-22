@@ -21,6 +21,8 @@ public interface CategoriesMapper {
 
     public List<Categories> findAllL1Categories();
 
+    public List<Categories> findAllL3Categories();
+
     public List<Categories> getL23CategoriesById(int id);
 
     public Integer updateCategories(Categories categories);

@@ -214,28 +214,34 @@ function saveRow(index,mark,id){
     }
     var name = obj.eq(0).find("input").val();
     var status = obj.eq(1).find("input").val();
-    if(name!="undefined"&&status!="undefined"){
-        $(target).bootstrapTable('updateRow', {
-            index: index,
-            row: {
-                name: name,
-                status:status
-            }
-        });
-        $.ajax({
-            type: 'post',
-            url:'/categories/updateCategories',
-            data:{"id":id,"name":name,"status":status},
-            dataType:'json',
-            success:function(value){
-                if(value.code==0){
-                    alert("修改成功");
+    if(status!=0&&status!=1){
+        alert("请输入0或1！\n0：未启用\n1：已启用");
+        window.location.reload();
+    }
+    else {
+        if (name != "undefined" && status != "undefined") {
+            $(target).bootstrapTable('updateRow', {
+                index: index,
+                row: {
+                    name: name,
+                    status: status
                 }
-            },
-            error:function(value){
-                alert("修改失败，请联系管理员。");
-            }
-        });
+            });
+            $.ajax({
+                type: 'post',
+                url: '/categories/updateCategories',
+                data: {"id": id, "name": name, "status": status},
+                dataType: 'json',
+                success: function (value) {
+                    if (value.code == 0) {
+                        alert("修改成功");
+                    }
+                },
+                error: function (value) {
+                    alert("修改失败，请联系管理员。");
+                }
+            });
+        }
     }
     obj.find("input").remove();
 }
