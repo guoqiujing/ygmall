@@ -2,6 +2,7 @@ package cn.myzqu.ygmall.service;
 
 import cn.myzqu.ygmall.vo.GoodsDetailVO;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -9,4 +10,5 @@ import java.util.List;
  */
 public interface GoodsService {
     List<GoodsDetailVO> getGoodsAndSPU(String id);
+    HashMap<String,String> getIdAndAttributes(String spuId);
 }

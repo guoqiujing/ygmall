@@ -27,6 +27,11 @@
   </sql>
 
 
+  <select id="getIdAndAttributes" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select id, attributes
+    from goods
+    where SPU_id = #{spuId,jdbcType=VARCHAR}
+  </select>
 
   <select id="getGoodsAndSPU" resultMap="Goods_SPU_Map" parameterType="java.lang.String" >
     select

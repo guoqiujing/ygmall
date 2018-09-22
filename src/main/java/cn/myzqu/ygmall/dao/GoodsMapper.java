@@ -19,4 +19,6 @@ public interface GoodsMapper {
     int updateByPrimaryKey(Goods record);
 
     List<GoodsDetailVO> getGoodsAndSPU(String id);
+
+    List<Goods> getIdAndAttributes(String spuId);
 }

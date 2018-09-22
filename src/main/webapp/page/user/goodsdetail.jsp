@@ -11,7 +11,7 @@
 		<script type="text/javascript" src="../../js/vue.js"></script>
 		<script src="../../js/jquery.min.js"></script>
 		<script src="../../js/bootstrap.js"></script>
-		<script src="../../js/goodsdetail.js"></script>
+		<%--<script src="../../js/goodsdetail.js"></script>--%>
 		<title>JSP Page</title>
 		<style>
 			[v-cloak]{

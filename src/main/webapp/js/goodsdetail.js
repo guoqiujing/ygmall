@@ -20,7 +20,6 @@ function subtractSelectedNum(){
 function clickRadio(target){
     $("input[type='radio'][name='" + $(target).attr('name') + "']").parent().removeClass("checked")
     $(target).parent().addClass("checked");
-    // $("input[type='radio'][name='format0']").parent().css({"border":"red solid 2px"});//[name='format0']
     var clickedRadio=$(target).attr('name');
     if($("input[type='radio'][name='format2']").length!=0){//三种规格的情况
         if(clickedRadio!="format2"){//如果选中的不是第三种规格，则取消掉位于所选中的规格之后的所有规格的选中状态

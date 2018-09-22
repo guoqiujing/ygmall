@@ -206,7 +206,7 @@
  */
 
 .goods-details .goods-params {
-	border: 1px solid #gray;
+	border: 1px solid gray;
 	padding: 2em 3em;
 	font-size: 12px;
 }
@@ -326,7 +326,11 @@ input[type='radio'] {
 	/*border: 1px solid #987e46;*/
 }
 
-
+/*不可点击的单选按钮*/
+.disclickRadio{
+	color:#b5b3b3;
+	border:#b5b3b3 2px dashed;
+}
 /*
   * 立刻购买、加入购物车按钮
   */
