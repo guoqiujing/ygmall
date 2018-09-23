@@ -1,3 +1,8 @@
+.addItem {
+    display: flex;
+    flex-direction: row;
+}
+
  div {
      /*border: 1px solid red;*/
  }
@@ -22,6 +27,8 @@ th {
  #tabline-bar{
     	margin-bottom: 20px;
     }
+
+
 
 
 

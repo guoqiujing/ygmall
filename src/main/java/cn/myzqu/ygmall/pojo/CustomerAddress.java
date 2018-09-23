@@ -122,4 +122,32 @@ public class CustomerAddress {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    public CustomerAddress(String id, String userId, String receiverName, String province, String city, String county, String detail, String receiverTel, String postalCode, Byte status) {
+        this.id = id;
+        this.userId = userId;
+        this.receiverName = receiverName;
+        this.province = province;
+        this.city = city;
+        this.county = county;
+        this.detail = detail;
+        this.receiverTel = receiverTel;
+        this.postalCode = postalCode;
+        this.status = status;
+    }
+
+    public CustomerAddress(String userId, String receiverName, String province, String city, String county, String detail, String receiverTel, String postalCode, Byte status) {
+        this.userId = userId;
+        this.receiverName = receiverName;
+        this.province = province;
+        this.city = city;
+        this.county = county;
+        this.detail = detail;
+        this.receiverTel = receiverTel;
+        this.postalCode = postalCode;
+        this.status = status;
+    }
+
+    public CustomerAddress() {
+    }
 }

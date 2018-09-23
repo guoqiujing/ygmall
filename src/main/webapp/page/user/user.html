@@ -10,13 +10,14 @@
 		<link rel="stylesheet" href="../../css/user.css" />
 		<link rel="stylesheet" href="../../css/index.css" />
 		<link rel="stylesheet" href="../../css/pagination.css">
+        <link rel="stylesheet" href="../../layer/theme/default/layer.css">
 		<script type="text/javascript" src="../../js/vue.js"></script>
 		<script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
 		<script type="text/javascript" src="../../js/bootstrap.js"></script>
 		<script type="text/javascript" src="../../layer/layer.js"></script>
 
-	</head>
+    </head>
 
 	<body style="background-image: url(../../img/rgt_lg.png);overflow-x: hidden;">
 		<div class="container-fluid head" style="border-bottom: 1px solid #DEDEDE; background-color: #F2F2F2;color: #484848;">
@@ -102,26 +103,27 @@
 						</div>
 					</div>
 					<div class="clearfix"></div>
+                    <!--侧边栏-->
 					<dl>
 						<dt>我的艺格</dt>
 						<dd>
-							<a href="/page/user/user.html?tab=1" v-bind:class="{curs : tab==1}">订单中心</a>
+							<a href="/page/user/user.html?tab=1"  v-bind:class="{curs : tab==1}">订单中心</a>
 						</dd>
 						<dd>
-							<a href="/page/user/user.html?tab=2" v-bind:class="{curs : tab==2}">评论晒单</a>
+							<a href="/page/user/user.html?tab=2"  v-bind:class="{curs : tab==2}">评论晒单</a>
 						</dd>
 						<dd>
-							<a href="#" v-bind:class="{curs : tab==3}">我的预售</a>
+							<a href="/page/user/user.html?tab=3"  v-bind:class="{curs : tab==3}">我的预售</a>
 						</dd>
 						<dt>个人账户</dt>
 						<dd>
-							<a href="/page/user/user.html?tab=4" v-bind:class="{curs : tab==4}">个人资料</a>
+							<a href="/page/user/user.html?tab=4"  v-bind:class="{curs : tab==4}">个人资料</a>
 						</dd>
 						<dd>
-							<a href="/page/user/user.html?tab=5" v-bind:class="{curs : tab==5}">修改密码</a>
+							<a href="/page/user/user.html?tab=5"  v-bind:class="{curs : tab==5}">修改密码</a>
 						</dd>
 						<dd>
-							<a href="/page/user/user.html?tab=6" v-bind:class="{curs : tab==6}">地址管理</a>
+							<a href="/page/user/user.html?tab=6"  v-bind:class="{curs : tab==6||tab=='6_1'}">地址管理</a>
 						</dd>
 
 						<dt>售后服务</dt>
@@ -134,6 +136,7 @@
 				</div>
 			</div>
 			<div class="userr">
+                <!--订单状态tab-->
 				<div id="tabline-bar" class="tabline" v-if="tab==1" v-cloak>
 					<h2 class="">全部订单</h2>
 					<h2 class="h2bg">待付款</h2>
@@ -276,11 +279,116 @@
 						</table>
 					</form>
 				</div>
+                <!--地址管理-->
+                <div class="clearfix" style="_height:1%;" v-if="tab==6||tab=='6_1'||tab=='6_2'" v-cloak>
+                    <div class="title">地址管理</div>
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData">
+                        <tbody><tr><td style="padding-top: 20px;">
+							<!--新增地址的标题-->
+							<div class="address_add" v-if="tab=='6_1'">新增收货地址
+								<span>（带 <em>*</em>均为必填）</span>
+							</div>
+                            <!--修改地址的标题-->
+                            <div class="address_add" v-if="tab=='6_2'">修改收货地址
+                                <span>（带 <em>*</em>均为必填）</span>
+                            </div>
+							<!--新增地址-->
+							<div class="address_pad" v-if="tab=='6_1'||tab=='6_2'">
+								<table border="0" cellpadding="0" cellspacing="0">
+									<form method="post" name="theForm"></form>
+									<tbody><tr>
+										<td class="td_label"><span class="f0">*</span> 姓名：</td>
+										<td align="left"><input v-model="receiverName" name="consignee" type="text" class="inputbg">　<span class="f16">请填写您的真实姓名，最多5个汉字</span></td>
+									</tr>
+									<tr><td class="td_label">配送区域：</td>
+										<td colspan="3" align="left">
+											<select v-model="prov" name="province" id="selProvinces_8"  class="inputbg">
+												<option v-for="option in arr" :value="option.name">
+													{{ option.name }}
+												</option>
+											</select>
+											<select v-model="city" name="city" id="selCities_8"  class="inputbg">
+												<option v-for="option in cityArr" :value="option.name">
+													{{ option.name }}
+												</option>
+											</select>
+											<select v-model="district" v-if="district" name="district" id="selDistricts_8" class="inputbg">
+												<option v-for="option in districtArr" :value="option.name">
+													{{ option.name }}
+												</option>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td class="td_label"><span class="f0">*</span> 街道地址：</td>
+										<td align="left"><input v-model="detail" name="address" class="inputbg" size="60"></td>
+									</tr>
+									<tr>
+										<td class="td_label"><span class="f0">*</span> 手机号码：</td>
+										<td align="left"><input v-model="receiverTel" name="mobile" type="text" class="inputbg">　<span class="f16">如：13888888888，填写正确手机号便于接收发货和收货通知</span></td>
+									</tr>
+									<tr>
+										<td class="td_label">邮政编码：</td>
+										<td align="left"><input v-model="postalCode" name="zipcode" type="text" class="inputbg"></td>
+									</tr>
+									<tr>
+										<td class="td_label">常用地址：</td>
+										<td><input v-model="frequentlyAddress" type="checkbox" name="default" ></td>
+									</tr>
+									<tr>
+										<td align="right"></td>
+										<td colspan="4">
+											<input v-on:click="judgeAddress()" type="button" name="submit" class="bnt_submit" value="保存">
+                                            <input v-on:click="tab='6'" type="button" name="submit" class="bnt_submit" value="取消" style="margin-left: 30px;">
+                                        </td>
+									</tr>
+									</tbody></table>
+							</div>
+							<a href="#" v-on:click="tab='6_1'" style="font-size:14px;font-weight:bold;color:#fff;padding:8px;background-color:#B4995D;margin-left:12px;margin-bottom: 10px;" name="submit" v-if="tab=='6'">新建收货地址</a>
+                            <!--收货地址列表-->
+							<div class="consignee_list" style="margin: 8px auto;" v-if="tab==6">
+                                <dl v-for="(address,index) in addressList" style="height: 125px;background-color: #fff;border-width: 2px" v-cloak>
+                                    <dt style="line-height: 22px;" >
+                                    <div style="display: flex;flex-direction: row;">
+                                        <span style="color: #999;">收货人：</span>
+                                        <p style="color: #666;">{{address.receiverName}}</p>
+                                    </div>
+                                    <div style="display: flex;flex-direction: row;">
+                                        <span style="color: #999;">收货地址：</span>
+                                        <p style="color: #666;">{{address.province}}{{address.city}}{{address.county}} {{address.detail}}</p>
+                                    </div>
+                                    <div style="display: flex;flex-direction: row;">
+                                        <span style="color: #999;">手机号码：</span>
+                                        <p style="color: #666;">{{address.receiverTel}}</p>
+                                    </div>
+                                    <div style="display: flex;flex-direction: row;">
+                                        <span style="color: #999;">邮政编码：</span>
+                                        <p style="color: #666;">{{address.postalCode}}</p>
+                                    </div>
+                                    </dt>
+                                    <dd style="line-height: 22px;">
+                                        <a href="#" v-on:click="selectedAddress=address, tab='6_2', selected()">修改</a>
+                                        &nbsp;|&nbsp;
+                                        <a href="#" v-on:click="askDelete(address.id)">删除</a>
+                                        <br>
+                                        <span v-if="address.status==1">已设为常用地址</span>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </td></tr></tbody></table>
+                </div>
 			</div>
 
 		</div>
 		<script type="text/javascript" src="../../js/user.js"></script>
 		<script type="text/javascript" src="../../js/pagination.js"></script>
-	</body>
 
+	</body>
+<style>
+    body .demo-class .layui-layer-btn .layui-layer-btn0 {
+        border-color: #B4995D;
+        background-color: #B4995D;
+        color: #fff;
+    }
+</style>
 </html>
