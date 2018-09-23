@@ -50,4 +50,15 @@ public class Categories {
     public void setStatus(Byte status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Categories{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", parentLevel=" + parentLevel +
+                ", grandLevel=" + grandLevel +
+                ", status=" + status +
+                '}';
+    }
 }

@@ -19,6 +19,8 @@ public interface CategoriesMapper {
 
     List<Categories> findAllCategories();
 
+    List<Integer> findAllCategoriesId();
+
     public List<Categories> findAllL1Categories();
 
     public List<Categories> findAllL3Categories();

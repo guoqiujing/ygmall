@@ -144,13 +144,13 @@ function addRow(index,id,name){
         $("#ModalAdd .modal-title").html("&nbsp"+name+"&nbsp>");
         $("#ModalAdd form").prepend("<div class='form-group'>"+
             "<label class='col-sm-4 control-label'>上级目录</label><div class='col-sm-5'>"+
-            "<input class='col-sm-5 form-control' disabled='disabled' value='"+name+"'><input style='display:none' name='parent_level' value='"+id+"'>"+
+            "<input class='col-sm-5 form-control' disabled='disabled' value='"+name+"'><input style='display:none' name='parentLevel' value='"+id+"'>"+
             "</div></div>");
         if(mark==2){
             $("#ModalAdd .modal-title").html("&nbsp"+grandName+"&nbsp>&nbsp"+name+"&nbsp>&nbsp");
             $("#ModalAdd form").prepend("<div class='form-group'>"+
                 "<label class='col-sm-4 control-label'>顶级目录</label><div class='col-sm-5'>"+
-                "<input class='col-sm-5 form-control' disabled='disabled' value='"+grandName+"'><input style='display:none' name='grand_level' value='"+grand_level+"'>"+
+                "<input class='col-sm-5 form-control' disabled='disabled' value='"+grandName+"'><input style='display:none' name='grandLevel' value='"+grand_level+"'>"+
                 "</div></div>");
         }
     });
@@ -216,7 +216,6 @@ function saveRow(index,mark,id){
     var status = obj.eq(1).find("input").val();
     if(status!=0&&status!=1){
         alert("请输入0或1！\n0：未启用\n1：已启用");
-        window.location.reload();
     }
     else {
         if (name != "undefined" && status != "undefined") {
@@ -242,8 +241,8 @@ function saveRow(index,mark,id){
                 }
             });
         }
+        obj.find("input").remove();
     }
-    obj.find("input").remove();
 }
 // 字表，显示二级分类
 oInit.InitSubTable = function (index, row, $detail) {
