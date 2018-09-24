@@ -1,3 +1,6 @@
+//获取存在session的用户信息
+var userId = $.myPlugin.getUserId();
+//console.log("用户id："+userId);
 //省市区大全
 var arrAll =
     [
@@ -2005,9 +2008,71 @@ var arrAll =
     ]
 
 //创建Vue实例
+var top=new Vue({
+    el: '#top',
+    data:{
+        userId:userId,//从session获取的用户id
+        user:{}
+    },
+    //创建vue实例之后的事件
+    created: function (){
+        if(this.userId!==null)
+        this.getUserInfo();
+        else{
+            window.location.href="/page/user/login.html";
+        }
+
+    },
+    methods: {
+        //获取用户信息
+        getUserInfo: function() {
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/customer/info",
+                data: {
+                    id:that.userId
+                },
+                dataType: "json",
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code==0){
+                        console.log("成功");
+                        console.log(msg.data);
+                        that.user=msg.data;
+                    }
+                    else {
+                        console.log("查找失败");
+                    }
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        },
+        
+        //注销
+        logout:function () {
+            $.ajax({
+                type: "POST",
+                url: "/app/logout",
+                dataType: "json",
+                success: function(data){
+                    if(data.code==0){
+                        console.log("注销成功")
+                        window.location.href="/page/user/login.html";
+                    }
+                }
+            });
+        }
+    }
+});
+
+//创建Vue实例
 var page = new Vue({
     el: '#app',
     data: {
+        userId:userId,//从session获取的用户id
         all: 8, //总页数
         cur: 1,//当前页码
         tab:1,//选项卡切换标志
@@ -2175,7 +2240,7 @@ var page = new Vue({
                 type: "POST",
                 url: "/customer/info",
                 data: {
-                    id:"2d69b37b3ba649479a56a3133552d247"
+                    id:that.userId
                 },
                 dataType: "json",
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',
@@ -2258,7 +2323,7 @@ var page = new Vue({
                 type: "POST",
                 url: "/account/updatePwd",
                 data: {
-                    id:"2d69b37b3ba649479a56a3133552d247",
+                    id:that.userId,
                     oldPwd:this.oldPwd,
                     newPwd:this.newPwd
                 },
@@ -2289,18 +2354,17 @@ var page = new Vue({
                 type: "POST",
                 url: "/customerAddress/findByUserId",
                 data: {
-                    userId:"2d69b37b3ba649479a56a3133552d247"
+                    userId:that.userId
                 },
                 dataType: "json",
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (msg) {
                     if(msg.code==0){
                         console.log("成功");
-                        //console.log(msg.data);
                         that.addressList=msg.data;
                     }
                     else {
-                        alert("查找失败");
+                        console.log("查找失败");
                     }
                 },
                 error: function () {
@@ -2350,7 +2414,7 @@ var page = new Vue({
                 type: "POST",
                 url: "/customerAddress/add",
                 data: {
-                    userId:"2d69b37b3ba649479a56a3133552d247",
+                    userId:that.userId,
                     receiverName:that.receiverName,//收货人姓名
                     province: that.prov,//省份
                     city: that.city,//城市
@@ -2407,7 +2471,7 @@ var page = new Vue({
                 url: "/customerAddress/update",
                 data: {
                     id:that.selectedAddress.id,
-                    userId:"2d69b37b3ba649479a56a3133552d247",
+                    userId:that.userId,
                     receiverName:that.receiverName,//收货人姓名
                     province: that.prov,//省份
                     city: that.city,//城市

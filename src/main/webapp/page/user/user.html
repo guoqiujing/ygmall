@@ -16,17 +16,18 @@
 		<script type="text/javascript" src="../../js/jquery.min.js"></script>
 		<script type="text/javascript" src="../../js/bootstrap.js"></script>
 		<script type="text/javascript" src="../../layer/layer.js"></script>
+        <script src="../../js/userSession.js"></script>
 
-    </head>
+	</head>
 
 	<body style="background-image: url(../../img/rgt_lg.png);overflow-x: hidden;">
 		<div class="container-fluid head" style="border-bottom: 1px solid #DEDEDE; background-color: #F2F2F2;color: #484848;">
 			<div class="container">
-				<div class="row" style="font-size: 12px;padding:5px;">
+				<div id="top" class="row" style="font-size: 12px;padding:5px;">
 					<div class="col-md-2">欢迎来到艺格艺术生用品商城</div>
-					<div class="col-md-1">张三</div>
+					<div class="col-md-2" v-cloak>用户{{user.telephone}}</div>
 					<div class="col-md-1">
-						<a href="login.html">退出</a>
+						<a href="#" v-on:click="logout()">退出</a>
 					</div>
 					<div class="col-md-1" style="float: right;">
 						<a href="user.html">我的艺格</a>

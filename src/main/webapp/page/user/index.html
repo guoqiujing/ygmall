@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 	<head>
 		<title>首页 - 艺格商城</title>
@@ -11,7 +11,7 @@
 		<script src="../../js/vue.js"></script>
 		<script src="../../js/jquery.min.js"></script>
 		<script src="../../js/bootstrap.js"></script>
-
+        <script src="../../js/userSession.js"></script>
 		<title></title>
 	</head>
 
@@ -19,11 +19,13 @@
 
 		<div class="container-fluid head" style="border-bottom: 1px solid #DEDEDE; background-color: #F2F2F2;color: #484848;">
 			<div class="container">
-				<div class="row" style="font-size: 12px;padding:5px;">
+				<div id="top" class="row" style="font-size: 12px;padding:5px;">
 					<div class="col-md-2">欢迎来到艺格艺术生用品商城</div>
-					<div class="col-md-1"><a href="login.html">请登录</a></div>
-					<div class="col-md-1"><a href="register.html">免费注册</a></div>
-					<!--<div class="col-md-2" style="float: right;">官方微信商城</div>-->
+                    <div class="col-md-2" v-if="userId!=null"><a href="#">用户{{user.telephone}}</a></div>
+                    <div class="col-md-1" v-if="userId!=null"><a href="#" v-on:click="logout()">退出</a></div>
+					<div class="col-md-1" v-if="userId==null"><a href="/page/user/login.html">请登录</a></div>
+					<div class="col-md-1" v-if="userId==null"><a href="/page/user/register.html">免费注册</a></div>
+
 					<div class="col-md-1" style="float: right;"><a href="page/user/user.html">我的艺格</a></div>
 					<div class="col-md-1" style="float: right;">我的收藏</div>
 					<div class="col-md-1" style="float: right;">订单查询</div>
@@ -227,6 +229,7 @@
 		</div>
 
 		<script src="../../js/index.js"></script>
+        <script src="../../js/public.js"></script>
 	</body>
 
 </html>
