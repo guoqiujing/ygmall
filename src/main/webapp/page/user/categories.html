@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="stylesheet" href="../../css/bootstrap.css" />
+		<link rel="stylesheet" href="../../css/page-head.css">
+		<link rel="stylesheet" href="../../css/categories.css">
+		<script type="text/javascript" src="../../js/vue.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+		<script src="../../js/bootstrap.js"></script>
+		<title>商品分类</title>
+	</head>
+
+	<body>
+		<div class="container-fluid head" style="border-bottom: 1px solid #DEDEDE; background-color: #F2F2F2;color: #484848;">
+			<div class="container">
+				<div class="row" style="font-size: 12px;padding:5px;">
+					<div class="col-md-2">欢迎来到艺格艺术生用品商城</div>
+					<div class="col-md-1"><a href="login.html">请登录</a></div>
+					<div class="col-md-1"><a href="register.html">免费注册</a></div>
+					<!--<div class="col-md-2" style="float: right;">官方微信商城</div>-->
+					<div class="col-md-1" style="float: right;"><a href="page/user/user.html">我的艺格</a></div>
+					<div class="col-md-1" style="float: right;">我的收藏</div>
+					<div class="col-md-1" style="float: right;">订单查询</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="head" style="margin: 20px 0 20px 0;">
+			<div class="head-center" style="justify-content: space-between;">
+				<div style="margin-right: 0;">
+					<a href="index.html"><img src="../../img/yigeshangchenglogo.png"></a>
+				</div>
+
+				<div class="divcenter">
+					<div class="input-group" style="max-width:400px;min-width:100px;">
+						<input placeholder="水粉颜料" type="text" class="form-control" style="border: 2px solid #987E46;">
+						<span class="input-group-btn">
+										<button class="btn btn-default" type="button" style="color: #fff;background-color: #987E46;border: 1px solid #987E46;">搜索</button>
+									</span>
+					</div>
+				</div>
+
+				<a href="#" class="divcenter" style="font-size:15px;color: #666;border: 1px solid #E6E6E6;width: 132px;height: 38px;background-color: #F2F2F2;">
+					<img src="../../img/carts.png" style="margin-right: 10px;" /> 购物车
+				</a>
+
+			</div>
+		</div>
+
+		<div class="head" style="background-color: #181818;">
+			<div class="head-center" style="padding: 0;background-color:#181818 ;height: auto;">
+
+				<ul class="nav navbar-nav">
+					<li class="active" style="background-color: #484848;">
+						<a href="#" style="padding: 15px 50px 15px 50px;">热门商品分类</a>
+					</li>
+					<li>
+						<a href="index.html" style="padding: 15px 30px ;">首页</a>
+					</li>
+					<li>
+						<a href="#" style="padding: 15px 30px ;">美术生专区</a>
+					</li>
+					<li>
+						<a href="#" style="padding: 15px 30px ;">音乐生专区</a>
+					</li>
+					<li>
+						<a href="#" style="padding: 15px 30px ;">舞蹈生专区</a>
+					</li>
+				</ul>
+
+			</div>
+		</div>
+		<div id="app">
+			<template v-for="(val,key) in categoriesL1_2">
+				<div class="module-wrap">
+					<span class="category-name-level1 category-name" style="" target="_blank">{{categoriesid_name[key]}}</span>
+					<ul class="category-list" style="border-top:1px solid #987e46;">
+						<template v-for="l2,index in val">
+						<li class="category-list-item">
+							<span class="category-name" target="_blank">{{categoriesid_name[l2]}}</span>
+							<div class="category-items">
+								<template v-for="l3 in categoriesL2_3[l2]">
+									<a class="category-name" href=" " target="_blank">{{categoriesid_name[l3]}}</a>
+								</template>
+							</div>
+						</li>
+						</template>
+					</ul>
+				</div>
+			</template>
+		</div>
+		<script src="../../js/categoriesVUE.js"></script>
+	</body>
+</html>

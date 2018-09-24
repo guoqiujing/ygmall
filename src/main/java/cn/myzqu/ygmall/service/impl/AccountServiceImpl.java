@@ -2,6 +2,7 @@ package cn.myzqu.ygmall.service.impl;
 
 import cn.myzqu.ygmall.dao.AccountMapper;
 import cn.myzqu.ygmall.dao.CustomerMapper;
+import cn.myzqu.ygmall.dto.UserSessionDTO;
 import cn.myzqu.ygmall.enums.ResultEnum;
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.pojo.Account;
@@ -10,6 +11,7 @@ import cn.myzqu.ygmall.service.AccountService;
 import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.utils.MD5Utils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -62,7 +64,7 @@ public class AccountServiceImpl implements AccountService{
     }
 
     @Override
-    public Customer login(String code, String password) {
+    public UserSessionDTO login(String code, String password) {
         //根据手机号码查找信息
         Customer customer = customerMapper.selectByTelephone(code);
         if(StringUtils.isEmpty(customer)){
@@ -77,7 +79,11 @@ public class AccountServiceImpl implements AccountService{
         if(!encryptPassword.equals(object.getPassword())){
             throw new CustomException(1,"账号或者密码错误！");
         }
-        return customer;
+        UserSessionDTO userSessionDTO=new UserSessionDTO();
+        BeanUtils.copyProperties(customer,userSessionDTO);
+        BeanUtils.copyProperties(object,userSessionDTO);
+        System.out.println("全部用户信息"+userSessionDTO);
+        return userSessionDTO;
     }
 
     //修改密码

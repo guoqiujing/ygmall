@@ -7,6 +7,7 @@ package cn.myzqu.ygmall.controller;
 import cn.myzqu.ygmall.pojo.Categories;
 import cn.myzqu.ygmall.service.CategoriesService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
+import cn.myzqu.ygmall.vo.CategoriesVO;
 import cn.myzqu.ygmall.vo.GoodsCategoriesVO;
 import cn.myzqu.ygmall.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,5 +81,13 @@ public class CategoriesController {
             return ResultVOUtil.success(goodsCategoriesVO);
         }
         return ResultVOUtil.error("查找子类别失败");
+    }
+    @PostMapping("/getAllCompleteCategories")
+    public Result getAllCompleteCategories() {
+        CategoriesVO categoriesVO=categoriesService.getAllCompleteCategories();
+        if (categoriesVO!=null) {
+            return ResultVOUtil.success(categoriesVO);
+        }
+        return ResultVOUtil.error("查找类别失败");
     }
 }

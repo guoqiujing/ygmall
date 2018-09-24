@@ -3,10 +3,14 @@ package cn.myzqu.ygmall.service.impl;
 import cn.myzqu.ygmall.dao.CategoriesMapper;
 import cn.myzqu.ygmall.pojo.Categories;
 import cn.myzqu.ygmall.service.CategoriesService;
+import cn.myzqu.ygmall.vo.CategoriesVO;
 import cn.myzqu.ygmall.vo.GoodsCategoriesVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -18,10 +22,53 @@ public class CategoriesServiceImpl implements CategoriesService {
     @Autowired
     private CategoriesMapper categoriesMapper;
 
+    public CategoriesVO getAllCompleteCategories(){
+        CategoriesVO categoriesVO=new CategoriesVO();
+        HashMap<Integer,String> name_map=new HashMap<>();
+        HashMap<Integer,HashSet> l12_map=new HashMap<>();
+        HashMap<Integer,HashSet> l23_map=new HashMap<>();
+        List<Integer> categoriesIds=categoriesMapper.findAllCategoriesId();
+        List<GoodsCategoriesVO> goodsCategoriesVOList=new ArrayList<>();
+        for (Integer tempId:categoriesIds) {
+            GoodsCategoriesVO goodsCategoriesVO=getCompleteCategoriesById(tempId);
+            if(goodsCategoriesVO!=null){
+                goodsCategoriesVOList.add(goodsCategoriesVO);
+                name_map.put(goodsCategoriesVO.getId(),goodsCategoriesVO.getName());
+                name_map.put(goodsCategoriesVO.getParentId(),goodsCategoriesVO.getParentName());
+                name_map.put(goodsCategoriesVO.getGrandId(),goodsCategoriesVO.getGrandName());
+                l12_map.put(goodsCategoriesVO.getGrandId(),new HashSet<>());
+                l23_map.put(goodsCategoriesVO.getParentId(),new HashSet<>());
+            }
+        }
+        HashSet l12_list=new HashSet<>();
+        HashSet l23_list=new HashSet<>();
+        for (GoodsCategoriesVO tempGoodsCategoriesVO:goodsCategoriesVOList) {
+            l12_list=l12_map.get(tempGoodsCategoriesVO.getGrandId());
+            l12_list.add(tempGoodsCategoriesVO.getParentId());
+            l12_map.put(tempGoodsCategoriesVO.getGrandId(),l12_list);
+            l23_list=l23_map.get(tempGoodsCategoriesVO.getParentId());
+            l23_list.add(tempGoodsCategoriesVO.getId());//这句话被执行后，123map的所有key的值就加上了123list
+
+            l23_map.put(tempGoodsCategoriesVO.getParentId(),l23_list);
+        }
+        categoriesVO.setName_map(name_map);
+        categoriesVO.setL12_map(l12_map);
+        categoriesVO.setL23_map(l23_map);
+        return categoriesVO;
+    }
+
+
+    @Override
+    public List<Categories> findAllCategories() {
+        List<Categories> categoriesList=categoriesMapper.findAllCategories();
+        return categoriesList;
+    }
+
+
     public GoodsCategoriesVO getCompleteCategoriesById(Integer id){
         GoodsCategoriesVO goodsCategoriesVO=new GoodsCategoriesVO();
         Categories categories=categoriesMapper.selectByPrimaryKey(id);
-        if(categories.getGrandLevel()!=null){
+        if(categories.getGrandLevel()!=null&&categories.getParentLevel()!=null){
             goodsCategoriesVO.setId(categories.getId());
             goodsCategoriesVO.setName(categories.getName());
             Integer parentId=categories.getParentLevel();
@@ -32,15 +79,9 @@ public class CategoriesServiceImpl implements CategoriesService {
             goodsCategoriesVO.setParentName(parentName);
             goodsCategoriesVO.setGrandId(grandId);
             goodsCategoriesVO.setGrandName(grandName);
+            return goodsCategoriesVO;
         }
-        return goodsCategoriesVO;
-    }
-
-
-    @Override
-    public List<Categories> findAllCategories() {
-        List<Categories> categoriesList=categoriesMapper.findAllCategories();
-        return categoriesList;
+        return null;
     }
 
     @Override

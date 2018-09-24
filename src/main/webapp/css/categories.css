@@ -1,0 +1,81 @@
+ol,ul{
+	list-style: none;
+	padding:0;
+}
+/*
+ * 最外的div
+ */
+.module-wrap{
+	margin: 2% 10%;
+}
+/*
+ * 一级
+ */
+.module-wrap .category-name-level1 {
+    display: block;
+    font-size: 28px;
+    line-height: 24px;
+    padding: 35px 0 15px;
+    /*font-weight: bold;*/
+}
+/*
+ * 二级ul
+ */
+.module-wrap .category-list {
+    padding-top: 10px;
+    /*display: inline-block;*/
+    letter-spacing: normal;
+    vertical-align: top;
+    letter-spacing: -4px;
+}
+/*
+ * 二级ul里面的li
+ */
+.module-wrap .category-list-item {
+    padding: 20px 0;
+    display: inline-block;
+    letter-spacing: normal;
+    vertical-align: top;
+    letter-spacing: -4px;
+    margin-left: 20px;
+    width: 100%;
+}
+/*
+ * 二级的a
+ */
+.module-wrap .category-list-item .category-name {
+    font-size: 23px;
+    margin-right: 10px;
+    padding-top: 1px;
+    width: 68px;
+    letter-spacing: normal;
+    /*font-weight: bold;*/
+    text-decoration: none;
+}
+/*
+ * 三级外的div
+ */
+.module-wrap .category-list-item .category-items {
+    /*height: 44px;*/
+    /*width: 252px;*/
+    /*overflow: hidden;*/
+    /*display: inline-block;*/
+    letter-spacing: normal;
+    vertical-align: top;
+    letter-spacing: -4px;
+}
+/*
+ * 三级
+ */
+.module-wrap .category-list-item .category-items .category-name {
+    font-weight: normal;
+    font-size: 18px;
+    padding: 15px 5px 0px 10px;
+    width: auto;
+    display: inline-block;
+    color: #7d7d7d;
+}
+.module-wrap .category-list-item .category-items .category-name:hover{
+    color:#987e46;
+    font-weight:bold;
+}

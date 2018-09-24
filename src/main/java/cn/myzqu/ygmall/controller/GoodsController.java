@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,5 +27,13 @@ public class GoodsController {
             return ResultVOUtil.success(goodsDetailVO);
         }
         return ResultVOUtil.error("关联查找商品与货品失败");
+    }
+    @PostMapping("/getIdAndAttributesBySpuId")
+    public Result getIdAndAttributesBySpuId(String spuId){
+        HashMap<String,String> hashMap=goodsService.getIdAndAttributes(spuId);
+        if (hashMap.size() > 0) {
+            return ResultVOUtil.success(hashMap);
+        }
+        return ResultVOUtil.error("查找商品属性值与ID失败");
     }
 }

@@ -5,13 +5,10 @@
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>登录我的艺格</title>
+	<title>登录 - 艺格商城</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Template by FreeHTML5.co" />
 	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
-	
-
-  
 
   	<!-- Facebook and Twitter integration -->
 	<meta property="og:title" content=""/>
@@ -24,26 +21,21 @@
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
 
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="shortcut icon" href="favicon.ico">
-
-	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-	
 	<link rel="stylesheet" href="../../css/bootstrap.min.css">
 	<link rel="stylesheet" href="../../css/animate.css">
 	<link rel="stylesheet" href="../../css/style.css">
 	<link rel="stylesheet" href="../../css/index.css">
-		<script src="../../js/jquery.min.js"></script>
-		<script src="../../js/login.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+	<script src="../../js/login.js"></script>
 	</head>
 	<body class="style-2">
 		<div class="container-fluid head" style="border-bottom: 1px solid #DEDEDE; background-color: #F2F2F2;color: #484848;">
 			<div class="container">
-				<div class="row" style="font-size: 12px;padding:5px;">
+				<div id="top" class="row" style="font-size: 12px;padding:5px;">
 					<div class="col-md-2">欢迎来到艺格艺术生用品商城</div>
-					<div class="col-md-1">请登录</div>
-					<div class="col-md-1">免费注册</div>
-					<!--<div class="col-md-2" style="float: right;">官方微信商城</div>-->
+					<div class="col-md-1"><a href="/page/user/login.html">请登录</a></div>
+					<div class="col-md-1"><a href="/page/user/register.html">免费注册</a></div>
+
 					<div class="col-md-1" style="float: right;">我的艺格</div>
 					<div class="col-md-1" style="float: right;">我的收藏</div>
 					<div class="col-md-1" style="float: right;">订单查询</div>
@@ -116,7 +108,7 @@
 						<h2 style="font-size:24px ;font-family:'幼圆';color:#985F0D">您好，欢迎登录 ！</h2>
 						<div class="form-group">
 							<label for="username" class="sr-only">Username</label>
-							<input type="text" class="form-control" id="username" placeholder="艺格账号/手机号" autocomplete="off">
+							<input type="text" class="form-control" id="username" placeholder="手机号/注册邮箱" autocomplete="off">
 						</div>
 						<div class="form-group">
 							<label for="password" class="sr-only">Password</label>
@@ -126,7 +118,7 @@
 							<label for="remember"><input type="checkbox" id="remember"> 记住我</label>
 						</div>
 						<div class="form-group">
-							<p>Not registered? <a href="sign-up2.html" style="color:#987E46">注 册</a> | <a href="forgot2.html" style="color:#987E46">忘记密码?</a></p>
+							<p>没有账号? <a href="./register.html" style="color:#987E46">注 册</a> </p>
 						</div>
 						<div class="form-group">
 							<input type="bottom" value="登 录" class="btn" style="background-color: #987E46;color:white" id="login" onclick="fun2()">

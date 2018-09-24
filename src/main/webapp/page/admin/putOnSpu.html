@@ -14,11 +14,13 @@
 	<link rel="stylesheet" href="assets/css/main.css">
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 	<link rel="stylesheet" href="assets/css/demo.css">
+	<link rel="stylesheet" href="../../css/putOnSpu.css" />
 	<!-- GOOGLE FONTS -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+	<script src="../../js/spuVUE.js"></script>
 </head>
 
 <body>
@@ -93,6 +95,7 @@
 						<li><a href="spuAdmin.html" class=""><i class="lnr lnr-chart-bars"></i> <span>货品信息管理</span></a></li>
 						<li><a href="brandAdmin.html" class=""><i class="lnr lnr-cog"></i> <span>品牌管理</span></a></li>
 						<li><a href="typeAdmin.html" class=""><i class="lnr lnr-alarm"></i> <span>分类管理</span></a></li>
+						<li><a href="attributeAdmin.html" class=""><i class="lnr lnr-alarm"></i> <span>分类规格管理</span></a></li>
 						<li>
 							<a href="#subPages" data-toggle="collapse" class="active"><i class="lnr lnr-file-empty"></i> <span>商品上架</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages" class="collapse active in">
@@ -124,270 +127,151 @@
 			<!-- MAIN CONTENT -->
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Tables</h3>
-					<div class="row">
-						<div class="col-md-6">
-							<!-- BASIC TABLE -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Basic Table</h3>
-								</div>
-								<div class="panel-body">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>Username</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
+
+
+
+
+
+
+
+
+					<form id="spu_form">
+						<div class="panel spuCategories"  style="width: 29%;position: absolute;right: 10px;">
+							<div class="panel-heading" >
+								<h3 class="panel-title " style="text-align: right">请选择货品分类<i class="lnr lnr-arrow-down-circle"></i></h3>
+							</div>
+							<div class="panel-body">
+								<ul class="list-unstyled activity-list">
+									<div class="panel panel-default">
+										<div class="" onclick="collapse(this)">
+											<span class="" style="background: blue;color: white;font-size: 18px;">美术--</span>
+										</div>
+										<div class="panel-body son-panel-body">
+											<div class="" style="font-size: 18px;color:#3e3eff" onclick="collapse(this)">颜料--</div>
+											<div class="panel-body son-panel-body CategoriesRadio">
+												<label for="qqw">
+													<input type="radio" id="qqw" onclick="clickCategoriesRadio(this)" name="CategoriesRadio">
+													美术 > 顔料 > 果冻颜料<span class="glyphicon glyphicon-ok" style="display:none"></span>
+												</label>
+												<label for="qqw1">
+													<input type="radio" id="qqw1" onclick="clickCategoriesRadio(this)" name="CategoriesRadio">
+													美术 > 顔料 > 果冻颜料<span class="glyphicon glyphicon-ok" style="display:none"></span>
+												</label>
+											</div>
+											<div class="" style="font-size: 18px;color:#3e3eff" onclick="collapse(this)">画笔--</div>
+											<div class="panel-body son-panel-body CategoriesRadio">
+												<label for="wqqw">
+													<input type="radio" id="wqqw" onclick="clickCategoriesRadio(this)" name="CategoriesRadio">
+													美术 > 顔料 > 果冻颜料<span class="glyphicon glyphicon-ok" style="display:none"></span>
+												</label>
+												<label for="wqqw1">
+													<input type="radio" id="wqqw1" onclick="clickCategoriesRadio(this)" name="CategoriesRadio">
+													美术 > 顔料 > 果冻颜料<span class="glyphicon glyphicon-ok" style="display:none"></span>
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="panel panel-default">
+										<div class="" onclick="collapse(this)">
+											<span class="" style="background: #f44336;color: white;font-size: 18px;">舞蹈--</span>
+										</div>
+										<div class="panel-body son-panel-body">
+											<div class="" style="font-size: 18px;color:#f44336" onclick="collapse(this)">服饰--</div>
+											<div class="panel-body son-panel-body CategoriesRadio">
+												<label for="aqqw">
+													<input type="radio" id="aqqw" onclick="clickCategoriesRadio(this)" name="CategoriesRadio">
+													舞蹈 > 服饰 > 踢踏舞鞋<span class="glyphicon glyphicon-ok" style="display:none"></span>
+												</label>
+												<label for="aqqw1">
+													<input type="radio" id="aqqw1" onclick="clickCategoriesRadio(this)" name="CategoriesRadio">
+													美术 > 顔料 > 果冻颜料<span class="glyphicon glyphicon-ok" style="display:none"></span>
+												</label>
+											</div>
+										</div>
+									</div>
+							</div>
+						</div>
+
+						<div class="panel"  style="width: 69%;height: auto;">
+							<div class="panel-heading">
+								<h3 class="panel-title">①填写货品基本信息</h3>
+							</div>
+							<div class="panel-body">
+								<div class="form-horizontal">
+									<div class="form-group">
+										<label class="col-sm-3 control-label">SPU名称</label>
+										<div class="col-sm-9">
+											<input class="form-control" placeholder="如：马利牌多色丙烯颜料">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">宣传标语</label>
+										<div class="col-sm-9">
+											<input class="form-control" placeholder="如：安全无毒，色彩艳丽！">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="col-sm-3 control-label">所属品牌</label>
+										<div class="col-sm-9 brandRadio">
+											<label for="test1" class="style-radio-label">
+												<input type="radio" id="test1" name="brandRadio" onclick="clickBrandRadio(this)">名称一
+											</label>
+											<label for="test2" class="style-radio-label">
+												<input type="radio" id="test2" name="brandRadio" onclick="clickBrandRadio(this)">名称一
+											</label>
+											<label for="test3" class="style-radio-label">
+												<input type="radio" id="test3" name="brandRadio" onclick="clickBrandRadio(this)">名称一
+											</label>
+											<label for="test4" class="style-radio-label">
+												<input type="radio" id="test4" name="brandRadio" onclick="clickBrandRadio(this)">名称一
+											</label>
+										</div>
+									</div>
 								</div>
 							</div>
-							<!-- END BASIC TABLE -->
 						</div>
-						<div class="col-md-6">
-							<!-- TABLE NO PADDING -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Table Inside No Padding</h3>
-								</div>
-								<div class="panel-body no-padding">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>Username</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
+
+						<div class="panel"  style="width: 69%;margin-top:8px;height: auto;">
+							<div class="panel-heading">
+								<h3 class="panel-title">②填写货品详细参数</h3>
+							</div>
+							<div class="panel-body">
+								<div class="form-horizontal">
+									<div class="form-group">
+										<div class="col-sm-3">
+											<input class="form-control" placeholder="参数名称：">
+										</div>
+										<div class="col-sm-9">
+											<input class="form-control" placeholder="参数值" alt="0" onfocus="createAttrRow(this)" onblur="ifAttrRow(this)">
+										</div>
+									</div>
 								</div>
 							</div>
-							<!-- END TABLE NO PADDING -->
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<!-- TABLE STRIPED -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Striped Row</h3>
-								</div>
-								<div class="panel-body">
-									<table class="table table-striped">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>Username</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
+					</form>
+
+
+
+					<form id="spudetail_form">
+						<div class="panel"  style="width: 69%;margin-top:8px;height: auto;">
+							<div class="panel-heading">
+								<h3 class="panel-title">③上传货品详情图</h3>
+							</div>
+							<div class="panel-body">
+								<div class="form-horizontal">
 								</div>
 							</div>
-							<!-- END TABLE STRIPED -->
 						</div>
-						<div class="col-md-6">
-							<!-- TABLE HOVER -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Hover Row</h3>
-								</div>
-								<div class="panel-body">
-									<table class="table table-hover">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>Username</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<!-- END TABLE HOVER -->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<!-- BORDERED TABLE -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Bordered Table</h3>
-								</div>
-								<div class="panel-body">
-									<table class="table table-bordered">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>Username</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<!-- END BORDERED TABLE -->
-						</div>
-						<div class="col-md-6">
-							<!-- CONDENSED TABLE -->
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Condensed Table</h3>
-								</div>
-								<div class="panel-body">
-									<table class="table table-condensed">
-										<thead>
-											<tr>
-												<th>#</th>
-												<th>First Name</th>
-												<th>Last Name</th>
-												<th>Username</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>1</td>
-												<td>Steve</td>
-												<td>Jobs</td>
-												<td>@steve</td>
-											</tr>
-											<tr>
-												<td>2</td>
-												<td>Simon</td>
-												<td>Philips</td>
-												<td>@simon</td>
-											</tr>
-											<tr>
-												<td>3</td>
-												<td>Jane</td>
-												<td>Doe</td>
-												<td>@jane</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-							<!-- END CONDENSED TABLE -->
-						</div>
-					</div>
+					</form>
+					<button type="button" class="btn btn-primary" style="min-width: 200px;">提交并上传商品</button>
+					<button type="button" class="btn btn-default" style="width: 200px;">仅提交</button>
 				</div>
 			</div>
 			<!-- END MAIN CONTENT -->
 		</div>
 		<!-- END MAIN -->
 		<div class="clearfix"></div>
-		<footer>
-			<div class="container-fluid">
-				<p class="copyright">Copyright &copy; 2017.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
-			</div>
-		</footer>
 	</div>
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
@@ -395,6 +279,7 @@
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
+	<script src="../../js/spuVUE.js"></script>
 </body>
 
 </html>

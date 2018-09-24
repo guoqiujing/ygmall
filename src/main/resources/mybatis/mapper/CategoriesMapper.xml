@@ -18,8 +18,17 @@
     <include refid="Base_Column_List"></include>
     FROM categories
   </select>
+  <select id="findAllCategoriesId" resultType="int">
+    SELECT id FROM categories
+  </select>
   <select id="findAllL1Categories" resultMap="BaseResultMap">
     SELECT id,name,status FROM categories where parent_level is null and grand_level is null
+  </select>
+  <select id="findAllL3Categories" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM categories
+    where parent_level is not null and grand_level is not null
   </select>
   <select id="getL23CategoriesById" parameterType="int" resultMap="BaseResultMap">
     SELECT id,name,status FROM categories WHERE parent_level=#{id}

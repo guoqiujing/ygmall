@@ -19,7 +19,7 @@ $(function(){
                 console.log("注册成功")
                 else
                     console.log("注册失败")
-                console.log(JSON.stringify(data))
+                //console.log(JSON.stringify(data))
             }
         });
     });

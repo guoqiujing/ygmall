@@ -25,6 +25,16 @@
     from customer_address
     where id = #{id,jdbcType=VARCHAR}
   </select>
+
+  <!--根据用户id查询用户地址-->
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    id, user_id, receiver_name, province, city, county, detail, receiver_tel, postal_code,
+    status
+    from customer_address
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from customer_address
     where id = #{id,jdbcType=VARCHAR}
