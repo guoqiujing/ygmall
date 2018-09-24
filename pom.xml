@@ -128,7 +128,6 @@
             <version>1.8.9</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.aspectj</groupId>
             <artifactId>aspectjweaver</artifactId>
@@ -274,6 +273,20 @@
             <artifactId>lombok</artifactId>
             <version>1.16.18</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!--腾讯云对象存储-->
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos_api</artifactId>
+            <version>5.4.5</version>
+        </dependency>
+
+        <!--图片压缩-->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
         </dependency>
     </dependencies>
 
