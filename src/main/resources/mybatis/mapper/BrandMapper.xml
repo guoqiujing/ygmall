@@ -30,6 +30,13 @@
       </if>
   </select>
 
+  <!--查询全部品牌-->
+    <select id="selectAllBrand" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from brand
+    </select>
+
   <!--根据id删除品牌记录-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from brand

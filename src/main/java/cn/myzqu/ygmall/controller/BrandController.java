@@ -6,10 +6,7 @@ import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import cn.myzqu.ygmall.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -24,6 +21,19 @@ public class BrandController {
 
     /**
      * 查找全部品牌
+     * @return
+     */
+    @GetMapping("/findAll")
+    public Result findAllBrand(){
+        List<Brand> brandList=brandService.findAllBrand();
+        if(brandList==null){
+            return ResultVOUtil.error("找不到品牌记录");
+        }
+        return ResultVOUtil.success(brandList);
+    }
+
+    /**
+     * 根据条件分页查找品牌
      * @return
      */
     @PostMapping("/list")
@@ -41,7 +51,6 @@ public class BrandController {
         if(bto!=null){
            return ResultVOUtil.success(bto);
         }
-
         return ResultVOUtil.error("查找品牌失败");
     }
 

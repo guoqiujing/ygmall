@@ -10,6 +10,13 @@ import java.util.Map;
  * Created by 小奇冰 on 2018/9/12.
  */
 public interface BrandService {
+
+    /**
+     * 查找全部品牌
+     * @return
+     */
+    List<Brand> findAllBrand();
+
     /**
      * 查找并显示品牌记录
      * @return

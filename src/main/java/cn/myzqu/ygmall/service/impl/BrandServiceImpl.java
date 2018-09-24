@@ -22,6 +22,16 @@ public class BrandServiceImpl implements BrandService{
     @Autowired
     private BrandMapper brandMapper;
 
+    //查找全部品牌
+    @Override
+    public List<Brand> findAllBrand(){
+        List<Brand> brandList = brandMapper.selectAllBrand();
+        if(brandList.isEmpty()){
+            return null;
+        }
+        return brandList;
+    }
+
     @Override
     public BootstrapTableVO findBrand(Map<String, Object> map, Integer pageIndex, Integer pageSize){
         //分页插件

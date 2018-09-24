@@ -20,5 +20,7 @@ public interface BrandMapper {
 
     List<Brand> selectBrand(Map<String, Object> map);
 
+    List<Brand> selectAllBrand();
+
     int deleteByIdList(List<Integer> idList);
 }
