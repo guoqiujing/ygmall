@@ -31,14 +31,13 @@ public class FileController {
 
     //测试上传文件在腾讯服务器
     @PostMapping("/qcloud")
-    public Result uploadToQCloud(HttpServletRequest request, @RequestParam("file") MultipartFile files) throws Exception {
+    public Result uploadToQCloud(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception {
         //首先将MultipartFile转为File或InputStream
-        CommonsMultipartFile cf = (CommonsMultipartFile) files;
-        DiskFileItem fi = (DiskFileItem) cf.getFileItem();
-        //会在项目的根目录的临时文件夹下生成一个临时文件 *.tmp
-        File tempFile = fi.getStoreLocation();
+        File tempFile = FileUtil.saveLocal(file,request);
         //调用方法
         String result = Operate.upload(tempFile,new CommentInformation());
+        //在服务器删除tempFile
+        FileUtil.deleteFile(tempFile);
         return ResultVOUtil.success(result);
 
     }
