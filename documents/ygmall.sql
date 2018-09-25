@@ -483,3 +483,28 @@ CREATE TABLE `user_collage` (
 -- ----------------------------
 -- Records of user_collage
 -- ----------------------------
+
+-- ----------------------------
+-- Records of account
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for cart
+-- ----------------------------
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE `cart` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) DEFAULT NULL COMMENT '商品id',
+  `quantity` int(11) DEFAULT NULL COMMENT '数量',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `user_id_index` (`user_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of cart
+-- ----------------------------
+INSERT INTO `cart` VALUES ('1', '5', '18', '1', '2018-09-12 15:24:48', '2018-09-12 15:24:55');
+INSERT INTO `cart` VALUES ('2', '5', '13', '2', '2018-09-12 15:24:06', '2018-09-12 15:24:06');
