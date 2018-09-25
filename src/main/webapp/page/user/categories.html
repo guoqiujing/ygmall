@@ -81,7 +81,7 @@
 							<span class="category-name" target="_blank">{{categoriesid_name[l2]}}</span>
 							<div class="category-items">
 								<template v-for="l3 in categoriesL2_3[l2]">
-									<a class="category-name" href=" " target="_blank">{{categoriesid_name[l3]}}</a>
+									<a class="category-name" v-bind:href="l3" target="_blank">{{categoriesid_name[l3]}}</a>
 								</template>
 							</div>
 						</li>
