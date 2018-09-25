@@ -93,9 +93,11 @@
 				<div class="side-nav my-side">
 					<div class="user-info">
 						<a href="#">
-							<img src="../../img/nopic.jpg">
+							<img v-bind:src="staticUser.icon" style="width: 38px;height: 38px;background-color: #979797;">
 						</a>
-						<p>张三</p>
+                        <div  style="height: 24px;width: 168px;">
+						<p v-cloak>用户{{staticUser.telephone}}</p>
+                        </div>
 					</div>
 					<div class="clearfix"></div>
 					<div class="ueseinfo">
@@ -202,6 +204,13 @@
 				<div class="clearfix" style="_height:1%;" v-if="tab==4" v-cloak>
 					<div class="title">个人资料</div>
 					<form class="form-horizontal" style="border:1px solid #E8E8E8;border-top:0;padding: 20px 250px;background-color: #fff;">
+                        <div class="form-group">
+                            <label for="exampleInputFile" class="col-sm-2 control-label">头像</label>
+                            <div class="col-sm-10">
+                                <img id="userImg" style="height: 48px;width: 48px;margin-bottom: 10px;" v-bind:src="img" v-show="imgShow">
+                                <input type="file" id="exampleInputFile" v-on:change="getFile($event),showImg($event)">
+                            </div>
+                        </div>
 						<div class="form-group">
 							<label for="inputEmail3" class="col-sm-2 control-label">昵称</label>
 							<div class="col-sm-10">
@@ -220,12 +229,7 @@
 								<input v-model="user.telephone" type="text" class="form-control" id="inputPassword3" placeholder="手机号码">
 							</div>
 						</div>
-						<div class="form-group">
-							<label for="exampleInputFile" class="col-sm-2 control-label">头像</label>
-							<div class="col-sm-10">
-								<input type="file" id="exampleInputFile">
-							</div>
-						</div>
+
 						<div class="form-group">
 							<label for="exampleInputFile" class="col-sm-2 control-label">性别</label>
 							<div class="col-sm-10">
@@ -243,7 +247,7 @@
 
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<input v-on:click="updateUserInfo()" type="button" class="btn" style="color:#fff;background-color: #B4995D;" value="确认修改">
+								<input v-on:click="uploadImg()" type="button" class="btn" style="color:#fff;background-color: #B4995D;" value="确认修改">
 							</div>
 						</div>
 					</form>

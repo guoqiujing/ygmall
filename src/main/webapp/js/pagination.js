@@ -1,6 +1,6 @@
 //获取存在session的用户信息
 var userId = $.myPlugin.getUserId();
-//console.log("用户id："+userId);
+
 //省市区大全
 var arrAll =
     [
@@ -2021,7 +2021,6 @@ var top=new Vue({
         else{
             window.location.href="/page/user/login.html";
         }
-
     },
     methods: {
         //获取用户信息
@@ -2038,7 +2037,7 @@ var top=new Vue({
                 success: function (msg) {
                     if(msg.code==0){
                         console.log("成功");
-                        console.log(msg.data);
+                        //console.log(msg.data);
                         that.user=msg.data;
                     }
                     else {
@@ -2046,7 +2045,7 @@ var top=new Vue({
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    console.log("错误");
                 }
             });
         },
@@ -2103,6 +2102,7 @@ var page = new Vue({
 	      }
     	],//订单列表
         user:{},//用户信息
+        staticUser:{},//静态不可变用户信息
 
         oldPwd:'',//原密码
         newPwd:'',//新密码
@@ -2123,7 +2123,13 @@ var page = new Vue({
         frequentlyAddress:false,//是否为常用地址（转换用）
         addressStatus:0,//是否为常用地址
 
-        selectedAddress:{}
+        selectedAddress:{},//准备修改的地址
+
+        file:'',//要上传的图片文件
+
+        img:'',
+
+        imgShow:true
     },
 
     //监听每次数据的修改
@@ -2167,6 +2173,7 @@ var page = new Vue({
     //创建vue实例之后的事件
 	created: function (){
         console.log("vue:"+GetQueryString("tab"));
+        this.getUserInfo();
         if(GetQueryString("tab")!==null){
             this.tab=GetQueryString("tab");
         }
@@ -2249,13 +2256,15 @@ var page = new Vue({
                         console.log("成功");
                         console.log(msg.data);
                         that.user=msg.data;
+                        that.staticUser=msg.data;
+                        that.img=msg.data.icon;
                     }
                     else {
-                        alert("查找失败");
+                        console.log("查找失败");
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    console.log("错误");
                 }
             });
         },
@@ -2285,6 +2294,77 @@ var page = new Vue({
                     }
                     else {
                         alert("查找失败");
+                    }
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        },
+
+        //改变图片
+        getFile:function (event) {
+            if(event.target.files){
+                this.file = event.target.files[0];
+            }
+            else{
+                this.file='';
+            }
+            console.log(this.file);
+        },
+
+        //图片预览
+        showImg:function (event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            var that=this;
+            if(file&&event.target.files){
+                reader.onload = function (e) {
+                    // js 方法：
+                    // var img = document.getElementById("userImg");
+                    // img.src = e.target.result;
+                    that.img=e.target.result;
+                };
+                this.imgShow=true;
+                reader.readAsDataURL(file)
+            }
+           else{
+                this.imgShow=false;
+            }
+        },
+
+        //上传图片
+        uploadImg:function () {
+            //阻止元素发生默认的行为
+            event.preventDefault();
+            var formData = new FormData();
+            formData.append("file", this.file);
+            //formData.append("file2", this.file);
+            var that=this;
+            if(that.file===''){
+                that.updateUserInfo();
+            }
+            else
+            $.ajax({
+                type: "POST",
+                url: "/files/local",
+                data: formData,
+                contentType:false,
+                processData:false,
+                mimeType:"multipart/form-data",
+                dataType: "json",
+                success: function (msg) {
+                    console.log(msg);
+                    if(msg.code==0){
+                        console.log("上传成功");
+                        console.log("图片地址："+msg.data);
+                        //将返回的图片地址赋值给本地icon
+                        that.user.icon=msg.data;
+                        //上传图片、获取图片地址后，执行修改用户信息的方法
+                        that.updateUserInfo();
+                    }
+                    else {
+                        layer.msg('上传失败', {time: 2000});
                     }
                 },
                 error: function () {
