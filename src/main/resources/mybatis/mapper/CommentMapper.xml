@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.myzqu.ygmall.dao.CommentMapper" >
+  <resultMap id="BaseResultMap" type="cn.myzqu.ygmall.pojo.Comment" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_img" property="userImg" jdbcType="VARCHAR" />
+    <result column="goods_score" property="goodsScore" jdbcType="TINYINT" />
+    <result column="service_score" property="serviceScore" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="comment_img" property="commentImg" jdbcType="VARCHAR" />
+    <result column="additional_comment" property="additionalComment" jdbcType="VARCHAR" />
+    <result column="additional_comment_img" property="additionalCommentImg" jdbcType="VARCHAR" />
+    <result column="additional_comment_time" property="additionalCommentTime" jdbcType="VARCHAR" />
+    <result column="format_and_style" property="formatAndStyle" jdbcType="VARCHAR" />
+    <result column="display" property="display" jdbcType="TINYINT" />
+    <result column="comment_status" property="commentStatus" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, goods_id, order_id, user_id, user_name, user_img, goods_score, service_score, 
+    create_time, comment, comment_img, additional_comment, additional_comment_img, additional_comment_time, 
+    format_and_style, display, comment_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from comment
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <!--查询评论-->
+  <select id="selectComment" resultMap="BaseResultMap" parameterType="Map">
+    select
+    <include refid="Base_Column_List" />
+    from comment
+    WHERE 1=1
+      <if test="goodsScore!=null">
+        AND goods_score = ${goodsScore}
+      </if>
+      <if test="commentStatus!=null">
+        AND comment_status = ${commentStatus}
+      </if>
+  </select>
+
+  <!--根据id删除评论-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from comment
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.Comment" >
+    insert into comment (id, goods_id, order_id, 
+      user_id, user_name, user_img, 
+      goods_score, service_score, create_time, 
+      comment, comment_img, additional_comment, 
+      additional_comment_img, additional_comment_time, 
+      format_and_style, display, comment_status
+      )
+    values (#{id,jdbcType=VARCHAR}, #{goodsId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userImg,jdbcType=VARCHAR}, 
+      #{goodsScore,jdbcType=TINYINT}, #{serviceScore,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{comment,jdbcType=VARCHAR}, #{commentImg,jdbcType=VARCHAR}, #{additionalComment,jdbcType=VARCHAR}, 
+      #{additionalCommentImg,jdbcType=VARCHAR}, #{additionalCommentTime,jdbcType=VARCHAR}, 
+      #{formatAndStyle,jdbcType=VARCHAR}, #{display,jdbcType=TINYINT}, #{commentStatus,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.myzqu.ygmall.pojo.Comment" >
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userImg != null" >
+        user_img,
+      </if>
+      <if test="goodsScore != null" >
+        goods_score,
+      </if>
+      <if test="serviceScore != null" >
+        service_score,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="commentImg != null" >
+        comment_img,
+      </if>
+      <if test="additionalComment != null" >
+        additional_comment,
+      </if>
+      <if test="additionalCommentImg != null" >
+        additional_comment_img,
+      </if>
+      <if test="additionalCommentTime != null" >
+        additional_comment_time,
+      </if>
+      <if test="formatAndStyle != null" >
+        format_and_style,
+      </if>
+      <if test="display != null" >
+        display,
+      </if>
+      <if test="commentStatus != null" >
+        comment_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userImg != null" >
+        #{userImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsScore != null" >
+        #{goodsScore,jdbcType=TINYINT},
+      </if>
+      <if test="serviceScore != null" >
+        #{serviceScore,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="commentImg != null" >
+        #{commentImg,jdbcType=VARCHAR},
+      </if>
+      <if test="additionalComment != null" >
+        #{additionalComment,jdbcType=VARCHAR},
+      </if>
+      <if test="additionalCommentImg != null" >
+        #{additionalCommentImg,jdbcType=VARCHAR},
+      </if>
+      <if test="additionalCommentTime != null" >
+        #{additionalCommentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="formatAndStyle != null" >
+        #{formatAndStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="display != null" >
+        #{display,jdbcType=TINYINT},
+      </if>
+      <if test="commentStatus != null" >
+        #{commentStatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.myzqu.ygmall.pojo.Comment" >
+    update comment
+    <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userImg != null" >
+        user_img = #{userImg,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsScore != null" >
+        goods_score = #{goodsScore,jdbcType=TINYINT},
+      </if>
+      <if test="serviceScore != null" >
+        service_score = #{serviceScore,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="commentImg != null" >
+        comment_img = #{commentImg,jdbcType=VARCHAR},
+      </if>
+      <if test="additionalComment != null" >
+        additional_comment = #{additionalComment,jdbcType=VARCHAR},
+      </if>
+      <if test="additionalCommentImg != null" >
+        additional_comment_img = #{additionalCommentImg,jdbcType=VARCHAR},
+      </if>
+      <if test="additionalCommentTime != null" >
+        additional_comment_time = #{additionalCommentTime,jdbcType=VARCHAR},
+      </if>
+      <if test="formatAndStyle != null" >
+        format_and_style = #{formatAndStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="display != null" >
+        display = #{display,jdbcType=TINYINT},
+      </if>
+      <if test="commentStatus != null" >
+        comment_status = #{commentStatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="cn.myzqu.ygmall.pojo.Comment" >
+    update comment
+    set goods_id = #{goodsId,jdbcType=VARCHAR},
+    order_id = #{orderId,jdbcType=VARCHAR},
+    user_id = #{userId,jdbcType=VARCHAR},
+    user_name = #{userName,jdbcType=VARCHAR},
+    user_img = #{userImg,jdbcType=VARCHAR},
+    goods_score = #{goodsScore,jdbcType=TINYINT},
+    service_score = #{serviceScore,jdbcType=TINYINT},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    comment = #{comment,jdbcType=VARCHAR},
+    comment_img = #{commentImg,jdbcType=VARCHAR},
+    additional_comment = #{additionalComment,jdbcType=VARCHAR},
+    additional_comment_img = #{additionalCommentImg,jdbcType=VARCHAR},
+    additional_comment_time = #{additionalCommentTime,jdbcType=VARCHAR},
+    format_and_style = #{formatAndStyle,jdbcType=VARCHAR},
+    display = #{display,jdbcType=TINYINT},
+    comment_status = #{commentStatus,jdbcType=TINYINT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!--根据id隐藏评论-->
+  <update id="updateDisplayByPrimaryKey" parameterType="cn.myzqu.ygmall.pojo.Comment" >
+    update comment
+    set display = #{display,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+   </update>
+
+  <!--批量隐藏-->
+  <update id="updateByIdList" parameterType="java.util.ArrayList">
+    update comment
+    set display='0'
+    where id in
+    <foreach collection="list" item="id"
+             open="(" close=")" index="index" separator=",">
+      #{id}
+    </foreach>
+  </update>
+</mapper>
