@@ -17,6 +17,7 @@
     <result column="note" property="note" jdbcType="VARCHAR" />
     <result column="attributes" property="attributes" jdbcType="VARCHAR" />
   </resultMap>
+
   <resultMap id="Goods_SPU_Map" type="cn.myzqu.ygmall.vo.GoodsDetailVO" extends="BaseResultMap">
     <association property="spu"  javaType="cn.myzqu.ygmall.pojo.Spu" select="cn.myzqu.ygmall.dao.SpuMapper.selectByPrimaryKey" column="SPU_id">
     </association>
