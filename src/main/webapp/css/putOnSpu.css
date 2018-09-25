@@ -21,18 +21,24 @@ input[type="radio"]{
     font-weight: bold;
 }
 .CategoriesRadio .checked {
-    background: #456;
-    border: 1px #000 solid;
+    background: #3c763d;
+    /*border: 1px #000 solid;*/
     color: white;
     font-weight: bold;
 }
+/*使商品分类开始处于合上状态*/
 .son-panel-body{
     display: none;
 }
 
 label{
     font-weight: normal;
+    display: block;
 }
-.panel .panel-body{
+.spuCategories .panel-body{
     padding-right: 0px;
+}
+#brandVUE{
+    height: 100px;
+    overflow: hidden;
 }

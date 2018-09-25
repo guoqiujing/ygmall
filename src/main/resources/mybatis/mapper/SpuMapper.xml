@@ -31,16 +31,23 @@
     delete from spu
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+
+
+
   <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.Spu" >
     insert into spu (id, name, category_id, 
       brand_id, createtime,
       sale_count, comment_count, params, 
       attributes_name, subtitle)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER}, 
-      #{detailId,jdbcType=INTEGER}, #{brandId,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{brandId,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
       #{saleCount,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, #{params,jdbcType=VARCHAR}, 
       #{attributesName,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR})
   </insert>
+
+
+
+
   <insert id="insertSelective" parameterType="cn.myzqu.ygmall.pojo.Spu" >
     insert into spu
     <trim prefix="(" suffix=")" suffixOverrides="," >

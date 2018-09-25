@@ -14,13 +14,14 @@
 	<link rel="stylesheet" href="assets/css/main.css">
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 	<link rel="stylesheet" href="assets/css/demo.css">
+	<!--<link rel="stylesheet" href="../../css/bootstrapValidator.min.css" />-->
+	<!--<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">-->
 	<link rel="stylesheet" href="../../css/putOnSpu.css" />
 	<!-- GOOGLE FONTS -->
 	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
-	<script src="../../js/spuVUE.js"></script>
 </head>
 
 <body>
@@ -136,60 +137,33 @@
 
 
 					<form id="spu_form">
-						<div class="panel spuCategories"  style="width: 29%;position: absolute;right: 10px;">
+						<div id="app" class="panel spuCategories"  style="width: 29%;position: absolute;right: 10px;">
 							<div class="panel-heading" >
 								<h3 class="panel-title " style="text-align: right">请选择货品分类<i class="lnr lnr-arrow-down-circle"></i></h3>
 							</div>
 							<div class="panel-body">
 								<ul class="list-unstyled activity-list">
-									<div class="panel panel-default">
-										<div class="" onclick="collapse(this)">
-											<span class="" style="background: blue;color: white;font-size: 18px;">美术--</span>
-										</div>
-										<div class="panel-body son-panel-body">
-											<div class="" style="font-size: 18px;color:#3e3eff" onclick="collapse(this)">颜料--</div>
-											<div class="panel-body son-panel-body CategoriesRadio">
-												<label for="qqw">
-													<input type="radio" id="qqw" onclick="clickCategoriesRadio(this)" name="CategoriesRadio">
-													美术 > 顔料 > 果冻颜料<span class="glyphicon glyphicon-ok" style="display:none"></span>
-												</label>
-												<label for="qqw1">
-													<input type="radio" id="qqw1" onclick="clickCategoriesRadio(this)" name="CategoriesRadio">
-													美术 > 顔料 > 果冻颜料<span class="glyphicon glyphicon-ok" style="display:none"></span>
-												</label>
+									<template v-for="(val,key) in categoriesL1_2">
+										<div class="panel panel-default">
+											<div onclick="collapse(this)">
+												<span class="" style="background: blue;color: white;font-size: 18px;">{{categoriesid_name[key]}}--</span>
 											</div>
-											<div class="" style="font-size: 18px;color:#3e3eff" onclick="collapse(this)">画笔--</div>
-											<div class="panel-body son-panel-body CategoriesRadio">
-												<label for="wqqw">
-													<input type="radio" id="wqqw" onclick="clickCategoriesRadio(this)" name="CategoriesRadio">
-													美术 > 顔料 > 果冻颜料<span class="glyphicon glyphicon-ok" style="display:none"></span>
-												</label>
-												<label for="wqqw1">
-													<input type="radio" id="wqqw1" onclick="clickCategoriesRadio(this)" name="CategoriesRadio">
-													美术 > 顔料 > 果冻颜料<span class="glyphicon glyphicon-ok" style="display:none"></span>
-												</label>
+											<div class="panel-body son-panel-body">
+												<template v-for="l2,index in val">
+													<div class="" style="font-size: 17px;color:#3e3eff" onclick="collapse(this)">{{categoriesid_name[l2]}}--</div>
+													<div class="panel-body son-panel-body CategoriesRadio">
+													<template v-for="l3,i in categoriesL2_3[l2]">
+														<label v-bind:for="key+index+'_'+i">
+															<input type="radio" v-bind:id="key+index+'_'+i" onclick="clickCategoriesRadio(this)" name="categoryId" v-bind:value="l3">
+															{{categoriesid_name[key]}} > {{categoriesid_name[l2]}} > {{categoriesid_name[l3]}}<span class="glyphicon glyphicon-ok" style="display:none"></span>
+														</label>
+													</template>
+													</div>
+												</template>
 											</div>
 										</div>
-									</div>
-
-									<div class="panel panel-default">
-										<div class="" onclick="collapse(this)">
-											<span class="" style="background: #f44336;color: white;font-size: 18px;">舞蹈--</span>
-										</div>
-										<div class="panel-body son-panel-body">
-											<div class="" style="font-size: 18px;color:#f44336" onclick="collapse(this)">服饰--</div>
-											<div class="panel-body son-panel-body CategoriesRadio">
-												<label for="aqqw">
-													<input type="radio" id="aqqw" onclick="clickCategoriesRadio(this)" name="CategoriesRadio">
-													舞蹈 > 服饰 > 踢踏舞鞋<span class="glyphicon glyphicon-ok" style="display:none"></span>
-												</label>
-												<label for="aqqw1">
-													<input type="radio" id="aqqw1" onclick="clickCategoriesRadio(this)" name="CategoriesRadio">
-													美术 > 顔料 > 果冻颜料<span class="glyphicon glyphicon-ok" style="display:none"></span>
-												</label>
-											</div>
-										</div>
-									</div>
+									</template>
+								</ul>
 							</div>
 						</div>
 
@@ -202,31 +176,25 @@
 									<div class="form-group">
 										<label class="col-sm-3 control-label">SPU名称</label>
 										<div class="col-sm-9">
-											<input class="form-control" placeholder="如：马利牌多色丙烯颜料">
+											<input class="form-control inputname" name="name" placeholder="如：马利牌多色丙烯颜料">
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label">宣传标语</label>
 										<div class="col-sm-9">
-											<input class="form-control" placeholder="如：安全无毒，色彩艳丽！">
+											<input class="form-control inputsubtitle" name="subtitle" placeholder="如：安全无毒，色彩艳丽">
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="col-sm-3 control-label">所属品牌</label>
-										<div class="col-sm-9 brandRadio">
-											<label for="test1" class="style-radio-label">
-												<input type="radio" id="test1" name="brandRadio" onclick="clickBrandRadio(this)">名称一
-											</label>
-											<label for="test2" class="style-radio-label">
-												<input type="radio" id="test2" name="brandRadio" onclick="clickBrandRadio(this)">名称一
-											</label>
-											<label for="test3" class="style-radio-label">
-												<input type="radio" id="test3" name="brandRadio" onclick="clickBrandRadio(this)">名称一
-											</label>
-											<label for="test4" class="style-radio-label">
-												<input type="radio" id="test4" name="brandRadio" onclick="clickBrandRadio(this)">名称一
-											</label>
+										<div class="col-sm-9 brandRadio" id="brandVUE">
+											<template v-for="(val,key) in allBrand">
+												<label v-bind:for="val.id" class="style-radio-label">
+													<input type="radio" v-bind:id="val.id" v-bind:value="val.id" name="brandId" onclick="clickBrandRadio(this)">{{val.name}}
+												</label>
+											</template>
 										</div>
+										<a href="javascript:void(0)" onclick="showAllBrand(this)" style="margin-left: 90%">展开所有</a>
 									</div>
 								</div>
 							</div>
@@ -240,10 +208,10 @@
 								<div class="form-horizontal">
 									<div class="form-group">
 										<div class="col-sm-3">
-											<input class="form-control" placeholder="参数名称：">
+											<input class="form-control attrName" name="attrName" placeholder="参数名称：">
 										</div>
 										<div class="col-sm-9">
-											<input class="form-control" placeholder="参数值" alt="0" onfocus="createAttrRow(this)" onblur="ifAttrRow(this)">
+											<input class="form-control attrValue" name="attrValue" placeholder="参数值" alt="0" onfocus="createAttrRow(this)" onblur="ifAttrRow(this)">
 										</div>
 									</div>
 								</div>
@@ -264,8 +232,8 @@
 							</div>
 						</div>
 					</form>
-					<button type="button" class="btn btn-primary" style="min-width: 200px;">提交并上传商品</button>
-					<button type="button" class="btn btn-default" style="width: 200px;">仅提交</button>
+					<button type="button" class="btn btn-primary" style="min-width: 200px;" onclick="submitAnd(0)">提交并上传商品</button>
+					<button type="button" class="btn btn-default" style="width: 200px;" onclick="submitAnd(1)">仅提交</button>
 				</div>
 			</div>
 			<!-- END MAIN CONTENT -->
@@ -275,11 +243,16 @@
 	</div>
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
+	<script type="text/javascript" src="../../js/vue.js"></script>
 	<script src="assets/vendor/jquery/jquery.min.js"></script>
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
+	<!--<script src="https://unpkg.com/element-ui/lib/index.js"></script>-->
 	<script src="../../js/spuVUE.js"></script>
+	<script src="../../js/categoriesVUE.js"></script>
+	<script src="../../js/bootstrapValidator.min.js"></script>
+
 </body>
 
 </html>
