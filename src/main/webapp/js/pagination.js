@@ -2122,17 +2122,14 @@ var page = new Vue({
         postalCode:'',//邮政编码
         frequentlyAddress:false,//是否为常用地址（转换用）
         addressStatus:0,//是否为常用地址
-
-        selectedAddress:{},//准备修改的地址
+        selectedAddress:{},//准备修改的收货地址
 
         file:'',//要上传的图片文件
-
-        img:'',
-
-        imgShow:true
+        img:'',//头像图片预览图
+        imgShow:true//是否显示预览图，默认显示
     },
 
-    //监听每次数据的修改
+    //监听每次数据的修改，并执行修改后的方法
     watch: {
         cur: function(oldValue , newValue){
             console.log(arguments);
@@ -2178,11 +2175,11 @@ var page = new Vue({
             this.tab=GetQueryString("tab");
         }
         if(this.tab==='4'){
-            console.log("个人资料");
-            this.getUserInfo();
+            //console.log("个人资料");
+            //this.getUserInfo();
         }
         if(this.tab==='6'){
-            console.log("收货地址");
+            //console.log("收货地址");
             this.getAddress();
         }
 	},
@@ -2302,15 +2299,17 @@ var page = new Vue({
             });
         },
 
-        //改变图片
+        //改变选择的图片时
         getFile:function (event) {
+            //如果图片文件不为空，给本地file赋值为接收的图片
             if(event.target.files){
                 this.file = event.target.files[0];
             }
+            //图片文件为空，给本地file赋空值
             else{
                 this.file='';
             }
-            console.log(this.file);
+            //console.log(this.file);
         },
 
         //图片预览
@@ -2339,8 +2338,8 @@ var page = new Vue({
             event.preventDefault();
             var formData = new FormData();
             formData.append("file", this.file);
-            //formData.append("file2", this.file);
             var that=this;
+            //如果接收到的文件为空，不上传图片，直接修改用户信息
             if(that.file===''){
                 that.updateUserInfo();
             }
@@ -2349,9 +2348,9 @@ var page = new Vue({
                 type: "POST",
                 url: "/files/qCloud/userInfo",
                 data: formData,
-                contentType:false,
-                processData:false,
-                mimeType:"multipart/form-data",
+                contentType:false,// 不设置Content-Type请求头，因为formData自带请求格式
+                processData:false,// 不处理发送的数据
+                mimeType:"multipart/form-data",//文件后缀名
                 dataType: "json",
                 success: function (msg) {
                     console.log(msg);
