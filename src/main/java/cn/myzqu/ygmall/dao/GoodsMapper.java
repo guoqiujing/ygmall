@@ -4,6 +4,7 @@ import cn.myzqu.ygmall.pojo.Goods;
 import cn.myzqu.ygmall.vo.GoodsDetailVO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface GoodsMapper {
     int deleteByPrimaryKey(String id);
@@ -21,4 +22,11 @@ public interface GoodsMapper {
     List<GoodsDetailVO> getGoodsAndSPU(String id);
 
     List<Goods> getIdAndAttributes(String spuId);
+
+    Integer putOffBySpuId(String spuId);
+
+    Integer putOffById(String id);
+
+    List<Goods> getAllPutOff(Map<String,Object> map);
+
 }

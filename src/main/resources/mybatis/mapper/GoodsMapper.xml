@@ -34,6 +34,16 @@
     where SPU_id = #{spuId,jdbcType=VARCHAR}
   </select>
 
+  <select id="getAllPutOff" resultMap="BaseResultMap">
+    select id, name, sale_count from goods
+    <where>
+      status!=3
+      <if test="name!=null and name!=''">
+        AND name LIKE '%${name}%'
+      </if>
+    </where>
+  </select>
+
   <select id="getGoodsAndSPU" resultMap="Goods_SPU_Map" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
@@ -154,6 +164,17 @@
       </if>
     </trim>
   </insert>
+
+
+  <update id="putOffBySpuId" parameterType="String">
+    update goods set status=3 where SPU_id=#{spuId}
+  </update>
+
+  <update id="putOffById" parameterType="String">
+    update goods set status=3 where id=#{id}
+  </update>
+
+
   <update id="updateByPrimaryKeySelective" parameterType="cn.myzqu.ygmall.pojo.Goods" >
     update goods
     <set >

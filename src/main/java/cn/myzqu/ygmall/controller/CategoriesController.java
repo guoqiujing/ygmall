@@ -22,7 +22,7 @@ import java.util.List;
 public class CategoriesController {
     @Autowired
     private CategoriesService categoriesService;
-    @PostMapping("/findAll")
+    @PostMapping("/findAll")  //√
     public Result findAllCategories() {
         List<Categories> categories = categoriesService.findAllCategories();
         if (categories.size() > 0) {
@@ -30,7 +30,7 @@ public class CategoriesController {
         }
         return ResultVOUtil.error("查找所有类别失败");
     }
-    @PostMapping("/GetCategories_l1")
+    @PostMapping("/GetCategories_l1")  //√
     public Result getCategories_l1() {
         List<Categories> categories = categoriesService.findAllL1Categories();
         if (categories.size() > 0) {
@@ -38,7 +38,7 @@ public class CategoriesController {
         }
         return ResultVOUtil.error("查找一级类别失败");
     }
-    @PostMapping("/GetCategories_l23")
+    @PostMapping("/GetCategories_l23")  //√
     public Result getCategories_l23(Integer id) {
         List<Categories> categories = categoriesService.getL23CategoriesById(id);
         if (categories.size() > 0) {
@@ -46,7 +46,7 @@ public class CategoriesController {
         }
         return ResultVOUtil.error("查找子类别失败");
     }
-    @PostMapping("/updateCategories")
+    @PostMapping("/updateCategories")  //√
     public Result updateCategories(Integer id,String name,Byte status) {
         Categories categories=new Categories();
         categories.setId(id);
@@ -58,7 +58,7 @@ public class CategoriesController {
         }
         return ResultVOUtil.error("修改类别失败");
     }
-    @PostMapping("/deleteCategories")
+    @PostMapping("/deleteCategories")  //√
     public Result deleteCategories(Integer id) {
         Integer result=categoriesService.deleteCategories(id);
         if (result==1) {
@@ -66,7 +66,7 @@ public class CategoriesController {
         }
         return ResultVOUtil.error("删除类别失败");
     }
-    @PostMapping("/insertCategories")
+    @PostMapping("/insertCategories")  //√
     public Result insertCategories(Categories categories) {
         Integer result=categoriesService.insertCategories(categories);
         if (result==1) {
@@ -74,7 +74,7 @@ public class CategoriesController {
         }
         return ResultVOUtil.error("插入类别失败");
     }
-    @PostMapping("/getCompleteCategoriesById")
+    @PostMapping("/getCompleteCategoriesById")  //√
     public Result getCompleteCategoriesById(Integer id) {
         GoodsCategoriesVO goodsCategoriesVO=categoriesService.getCompleteCategoriesById(id);
         if (goodsCategoriesVO!=null) {
@@ -82,7 +82,7 @@ public class CategoriesController {
         }
         return ResultVOUtil.error("查找子类别失败");
     }
-    @PostMapping("/getAllCompleteCategories")
+    @PostMapping("/getAllCompleteCategories")  //√
     public Result getAllCompleteCategories() {
         CategoriesVO categoriesVO=categoriesService.getAllCompleteCategories();
         if (categoriesVO!=null) {

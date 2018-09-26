@@ -21,7 +21,7 @@ import java.util.List;
 public class AttributeController {
     @Autowired
     private AttributeService attributeService;
-    @PostMapping("/getCategoriesAttributeByCategoryId")
+    @PostMapping("/getCategoriesAttributeByCategoryId")  //√
     public Result getCategoriesAttributeByCategoryId(Integer categoryId){
         CategoriesAttributeVO categoriesAttributeVO=attributeService.getCategoriesAttributeByCategoryId(categoryId);
         if (categoriesAttributeVO!=null) {
@@ -29,7 +29,7 @@ public class AttributeController {
         }
         return ResultVOUtil.error("查找类别规格信息失败");
     }
-    @PostMapping("/getAllCategoriesAttribute")
+    @PostMapping("/getAllCategoriesAttribute")  //√
     public Result getAllCategoriesAttribute(){
         List<CategoriesAttributeVO> categoriesAttributeVOs=attributeService.getAllCategoriesAttribute();
         if (categoriesAttributeVOs.size()>0) {
@@ -37,7 +37,7 @@ public class AttributeController {
         }
         return ResultVOUtil.error("查找所有类别规格失败");
     }
-    @PostMapping("/deleteAttributeByCategoryId")
+    @PostMapping("/deleteAttributeByCategoryId")  //√
     public Result deleteAttributeByCategoryId(Integer categoryId){
         Integer result=attributeService.deleteByCategoryId(categoryId);
         if (result!=0) {
@@ -45,7 +45,7 @@ public class AttributeController {
         }
         return ResultVOUtil.error("删除类别规格失败");
     }
-    @PostMapping("/insertAttribute")
+    @PostMapping("/insertAttribute")  //√
     public Result insertAttribute(Attribute attribute){
         Integer result=attributeService.insertAttribute(attribute);
         if (result==1) {
