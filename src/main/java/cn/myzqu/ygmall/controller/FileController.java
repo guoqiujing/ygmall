@@ -2,6 +2,7 @@ package cn.myzqu.ygmall.controller;
 
 import cn.myzqu.ygmall.qcloud.cos.CommentInformation;
 import cn.myzqu.ygmall.qcloud.cos.Operate;
+import cn.myzqu.ygmall.qcloud.cos.UserInformation;
 import cn.myzqu.ygmall.utils.FileUtil;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.Result;
@@ -42,6 +43,17 @@ public class FileController {
 
     }
 
+    //用户头像上传到腾讯服务器
+    @PostMapping("/qCloud/userInfo")
+    public Result uploadUserIcon(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception {
+        //首先将MultipartFile转为File或InputStream
+        File tempFile = FileUtil.saveLocal(file,request);
+        //调用方法
+        String result = Operate.upload(tempFile,new UserInformation());
+        //在服务器删除tempFile
+        FileUtil.deleteFile(tempFile);
+        return ResultVOUtil.success(result);
 
+    }
 
 }

@@ -2347,7 +2347,7 @@ var page = new Vue({
             else
             $.ajax({
                 type: "POST",
-                url: "/files/local",
+                url: "/files/qCloud/userInfo",
                 data: formData,
                 contentType:false,
                 processData:false,
@@ -2364,7 +2364,7 @@ var page = new Vue({
                         that.updateUserInfo();
                     }
                     else {
-                        layer.msg('上传失败', {time: 2000});
+                        layer.msg('上传图片失败', {time: 2000});
                     }
                 },
                 error: function () {

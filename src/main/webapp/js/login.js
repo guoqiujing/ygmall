@@ -11,7 +11,7 @@ function fun2(){
         },
         dataType: "json",
         success: function(data){
-            console.log("成功");
+            console.log("登录成功");
             window.location.href="/page/user/index.html";
         }
     });
