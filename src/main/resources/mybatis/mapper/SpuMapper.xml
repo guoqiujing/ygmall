@@ -19,8 +19,17 @@
   </sql>
 
 
+  <select id="selectIdAndName" resultMap="BaseResultMap" parameterType="Map">
+    select id,createtime,name from spu
+   <where>
+    <if test="name!=null and name!=''">
+      AND name LIKE '%${name}%'
+    </if>
+   </where>
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from spu
     where id = #{id,jdbcType=VARCHAR}
@@ -118,6 +127,9 @@
       </if>
     </trim>
   </insert>
+
+
+
   <update id="updateByPrimaryKeySelective" parameterType="cn.myzqu.ygmall.pojo.Spu" >
     update spu
     <set >

@@ -1,6 +1,6 @@
 //获取存在session的用户信息
 var userId = $.myPlugin.getUserId();
-//console.log("用户id："+userId);
+
 //省市区大全
 var arrAll =
     [
@@ -2021,7 +2021,6 @@ var top=new Vue({
         else{
             window.location.href="/page/user/login.html";
         }
-
     },
     methods: {
         //获取用户信息
@@ -2038,7 +2037,7 @@ var top=new Vue({
                 success: function (msg) {
                     if(msg.code==0){
                         console.log("成功");
-                        console.log(msg.data);
+                        //console.log(msg.data);
                         that.user=msg.data;
                     }
                     else {
@@ -2046,7 +2045,7 @@ var top=new Vue({
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    console.log("错误");
                 }
             });
         },
@@ -2103,6 +2102,7 @@ var page = new Vue({
 	      }
     	],//订单列表
         user:{},//用户信息
+        staticUser:{},//静态不可变用户信息
 
         oldPwd:'',//原密码
         newPwd:'',//新密码
@@ -2122,11 +2122,14 @@ var page = new Vue({
         postalCode:'',//邮政编码
         frequentlyAddress:false,//是否为常用地址（转换用）
         addressStatus:0,//是否为常用地址
+        selectedAddress:{},//准备修改的收货地址
 
-        selectedAddress:{}
+        file:'',//要上传的图片文件
+        img:'',//头像图片预览图
+        imgShow:true//是否显示预览图，默认显示
     },
 
-    //监听每次数据的修改
+    //监听每次数据的修改，并执行修改后的方法
     watch: {
         cur: function(oldValue , newValue){
             console.log(arguments);
@@ -2167,15 +2170,16 @@ var page = new Vue({
     //创建vue实例之后的事件
 	created: function (){
         console.log("vue:"+GetQueryString("tab"));
+        this.getUserInfo();
         if(GetQueryString("tab")!==null){
             this.tab=GetQueryString("tab");
         }
         if(this.tab==='4'){
-            console.log("个人资料");
-            this.getUserInfo();
+            //console.log("个人资料");
+            //this.getUserInfo();
         }
         if(this.tab==='6'){
-            console.log("收货地址");
+            //console.log("收货地址");
             this.getAddress();
         }
 	},
@@ -2249,13 +2253,15 @@ var page = new Vue({
                         console.log("成功");
                         console.log(msg.data);
                         that.user=msg.data;
+                        that.staticUser=msg.data;
+                        that.img=msg.data.icon;
                     }
                     else {
-                        alert("查找失败");
+                        console.log("查找失败");
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    console.log("错误");
                 }
             });
         },
@@ -2285,6 +2291,79 @@ var page = new Vue({
                     }
                     else {
                         alert("查找失败");
+                    }
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        },
+
+        //改变选择的图片时
+        getFile:function (event) {
+            //如果图片文件不为空，给本地file赋值为接收的图片
+            if(event.target.files){
+                this.file = event.target.files[0];
+            }
+            //图片文件为空，给本地file赋空值
+            else{
+                this.file='';
+            }
+            //console.log(this.file);
+        },
+
+        //图片预览
+        showImg:function (event) {
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            var that=this;
+            if(file&&event.target.files){
+                reader.onload = function (e) {
+                    // js 方法：
+                    // var img = document.getElementById("userImg");
+                    // img.src = e.target.result;
+                    that.img=e.target.result;
+                };
+                this.imgShow=true;
+                reader.readAsDataURL(file)
+            }
+           else{
+                this.imgShow=false;
+            }
+        },
+
+        //上传图片
+        uploadImg:function () {
+            //阻止元素发生默认的行为
+            event.preventDefault();
+            var formData = new FormData();
+            formData.append("file", this.file);
+            var that=this;
+            //如果接收到的文件为空，不上传图片，直接修改用户信息
+            if(that.file===''){
+                that.updateUserInfo();
+            }
+            else
+            $.ajax({
+                type: "POST",
+                url: "/files/qCloud/userInfo",
+                data: formData,
+                contentType:false,// 不设置Content-Type请求头，因为formData自带请求格式
+                processData:false,// 不处理发送的数据
+                mimeType:"multipart/form-data",//文件后缀名
+                dataType: "json",
+                success: function (msg) {
+                    console.log(msg);
+                    if(msg.code==0){
+                        console.log("上传成功");
+                        console.log("图片地址："+msg.data);
+                        //将返回的图片地址赋值给本地icon
+                        that.user.icon=msg.data;
+                        //上传图片、获取图片地址后，执行修改用户信息的方法
+                        that.updateUserInfo();
+                    }
+                    else {
+                        layer.msg('上传图片失败', {time: 2000});
                     }
                 },
                 error: function () {

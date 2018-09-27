@@ -19,8 +19,8 @@ import java.util.List;
 public class GoodsImgController {
     @Autowired
     private GoodsImgService goodsImgService;
-    @PostMapping("/getGoodsImgByGoodsId")
-    public Result getGoodsImgByGoodsId(String goodsId){
+    @PostMapping("/getGoodsImgByGoodsId")  //√
+        public Result getGoodsImgByGoodsId(String goodsId){
         List<GoodsImg> goodsImgs=goodsImgService.selectByGoodsId(goodsId);
         if (goodsImgs.size() > 0) {
             return ResultVOUtil.success(goodsImgs);
