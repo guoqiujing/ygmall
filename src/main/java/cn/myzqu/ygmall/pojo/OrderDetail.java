@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -26,7 +27,7 @@ public class OrderDetail {
     private Integer count;
 
     private Byte status;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
 }
