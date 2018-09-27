@@ -36,19 +36,7 @@ public class BuyerOrderController {
     //创建订单
     @PostMapping("/create")
     public ResultVO create(OrderForm orderForm) {
-
-        OrderDTO orderDTO = OrderForm2OrderDTOConverter.convert(orderForm);
-        if (CollectionUtils.isEmpty(orderDTO.getOrderDetailList())) {
-            log.error("【创建订单】购物车不能为空");
-            throw new SellException(ResultEnum.CART_EMPTY);
-        }
-
-        OrderDTO createResult = orderService.create(orderDTO);
-
-        Map<String, String> map = new HashMap<>();
-        map.put("orderId", createResult.getOrderId());
-
-        return ResultVOUtil.success(map);
+        return null;
     }
 
     //用户获取订单列表
