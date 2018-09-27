@@ -493,7 +493,7 @@ CREATE TABLE `user_collage` (
 -- ----------------------------
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
-  `id` varchar(50) NOT NULL AUTO_INCREMENT,
+  `id` varchar(50) NOT NULL,
   `user_id` varchar(50) NOT NULL,
   `product_id` int(11) DEFAULT NULL COMMENT '商品id',
   `quantity` int(11) DEFAULT NULL COMMENT '数量',
