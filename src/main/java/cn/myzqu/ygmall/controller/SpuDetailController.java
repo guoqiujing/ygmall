@@ -28,4 +28,12 @@ public class SpuDetailController {
         }
         return ResultVOUtil.error("查找商品详情图片失败");
     }
+    @PostMapping("/insert")
+    public Result insert(String spuId,String urlList){
+        Integer result= spuDetailService.insert(spuId,urlList);
+        if(result==1){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("新增商品详情图片失败");
+    }
 }

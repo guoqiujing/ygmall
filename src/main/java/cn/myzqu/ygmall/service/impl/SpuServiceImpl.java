@@ -43,7 +43,7 @@ public class SpuServiceImpl implements SpuService{
             return null;
         return bto;
     }
-    public int insert(String name,Integer categoryId,Integer brandId,String attrNamesArray[],String attrValuesArray[],String subtitle) throws ParseException {
+    public int insert(String spuId,String name,Integer categoryId,Integer brandId,String attrNamesArray[],String attrValuesArray[],String subtitle) throws ParseException {
         HashMap<String,String> hashMap=new HashMap<>();
         for(int i=0;i<attrNamesArray.length;i++){
             hashMap.put(attrNamesArray[i],attrValuesArray[i]);
@@ -51,7 +51,7 @@ public class SpuServiceImpl implements SpuService{
         SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String params=JSON.toJSONString(hashMap);
         Spu spu=new Spu();
-        spu.setId(KeyUtil.getUUID());
+        spu.setId(spuId);
         spu.setParams(params);
         spu.setBrandId(brandId);
         spu.setCategoryId(categoryId);

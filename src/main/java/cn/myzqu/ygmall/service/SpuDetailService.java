@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface SpuDetailService {
     List<SpuDetail> selectBySPUId(String spuId);
+    public Integer insert(String spuId,String urlList);
 }

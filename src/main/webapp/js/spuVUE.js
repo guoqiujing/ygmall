@@ -84,8 +84,9 @@ function submitAnd(mark){
                 dataType: 'json',
                 success: function (data) {
                     if (data.code == 0) {
+                        pageImg.uploadImg(data.data);
                         alert("提交成功");
-                        window.location.href=mark;
+                        // window.location.href=mark;
                     }
                 },
                 error: function (data) {
@@ -172,3 +173,105 @@ var page = new Vue({
     }
 })
 
+var pageImg = new Vue({
+    el: '#spudetail_form',
+    data: {
+        file: [],//要上传的图片文件
+        img: '',//头像图片预览图
+        imgArray: [],//头像图片预览图
+        imgShow: true//是否显示预览图，默认显示
+    },
+    methods: {
+        //改变选择的图片时
+        getFile: function (event) {
+            //如果图片文件不为空，给本地file赋值为接收的图片
+            var putOnFiles=event.target.files;
+            if (putOnFiles) {
+                this.file=[];
+                for(var i=0;i<putOnFiles.length;i++)
+                    this.file.push(event.target.files[i]);
+            }
+            //图片文件为空，给本地file赋空值
+            else {
+                this.file = '';
+            }
+            //console.log(this.file);
+        },
+        //图片预览
+        showImg: function (event) {
+            var file = event.target.files;
+            var reader = new FileReader();
+            var that = this;
+            if (file && event.target.files) {
+                for(var i=0;i<file.length;i++) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file[i]);
+                    reader.onload = function (e) {
+                        that.imgArray.push(e.target.result);
+                    }
+                }
+                $("#fileLabel").removeClass("unchexkedFileInput");
+                $("#fileLabel").addClass("btn");
+                $("#fileLabel").css({"display":"block","width":"100px"});
+                $("#fileLabel").html("重新上传");
+            }
+            else {
+                this.imgShow = false;
+            }
+        },
+        //上传图片
+        uploadImg: function (spuId) {
+            //阻止元素发生默认的行为
+            // event.preventDefault();
+            var that=this;
+            var formData = new FormData();
+            for(var i=0;i<this.file.length;i++) {
+                formData.append("files", this.file[i]);
+            }
+            $.ajax({
+                type: "POST",
+                url: "/files/qCloud/goodsInfo",
+                data: formData,
+                contentType: false,// 不设置Content-Type请求头，因为formData自带请求格式
+                processData: false,// 不处理发送的数据
+                mimeType: "multipart/form-data",//文件后缀名
+                dataType: "json",
+                success: function (msg) {
+                    console.log(msg);
+                    if (msg.code == 0) {
+                        console.log("上传至服务器成功");
+                        console.log("图片地址：" + msg.data);
+                        var as=that.saveImgToDB(spuId,msg.data+"");
+                        if(as==1)
+                            alert("上传图片失败");
+                        //将返回的图片地址赋值给本地icon
+                    }
+                    else {
+                        layer.msg('上传图片失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        },
+        saveImgToDB:function(spuId,urls){
+            console.log("urlList:"+urls);
+            $.ajax({
+                url:'/spuDetail/insert',
+                data:{spuId:spuId,urlList:urls},
+                dataType:'json',
+                type:'post',
+                success:function(data){
+                    if(data.code==0)
+                        return 0;
+                    else
+                        return 1;
+                },
+                error:function(){
+                    return 1;
+                }
+            })
+        }
+    }
+})

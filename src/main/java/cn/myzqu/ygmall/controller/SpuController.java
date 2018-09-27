@@ -2,6 +2,7 @@ package cn.myzqu.ygmall.controller;
 
 import cn.myzqu.ygmall.pojo.Spu;
 import cn.myzqu.ygmall.service.SpuService;
+import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import cn.myzqu.ygmall.vo.Result;
@@ -26,9 +27,10 @@ public class SpuController {
     private SpuService spuService;
     @PostMapping("/createSPU")
     public Result createSPU(String name, Integer categoryId, Integer brandId, String attrNamesArray[], String attrValuesArray[], String subtitle) throws ParseException {
-        Integer result=spuService.insert(name,categoryId,brandId,attrNamesArray,attrValuesArray,subtitle);
-        if(result==1){
-            return ResultVOUtil.success();
+        String spuId= KeyUtil.getUUID();
+        Integer result=spuService.insert(spuId,name,categoryId,brandId,attrNamesArray,attrValuesArray,subtitle);
+       if(result==1){
+            return ResultVOUtil.success(spuId);
         }
         return ResultVOUtil.error("新增货品信息失败");
     }

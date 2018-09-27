@@ -22,6 +22,11 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+	<style>
+		.unchexkedFileInput{
+			padding: 80px 0;width: 100%; height: 200px;border: 2px dashed #aeaeae;background: #eaeaea;font-size: 20px;color: #8f8f8f;
+		}
+	</style>
 </head>
 
 <body>
@@ -229,6 +234,15 @@
 							</div>
 							<div class="panel-body">
 								<div class="form-horizontal">
+									<template v-for="val,index in imgArray">
+										<img id="userImg" style="width: 20%;margin: 10px;" v-bind:src="val" v-show="imgShow">
+									</template>
+									<!--此处为图片上传-->
+									<label id="fileLabel" for="exampleInputFile" class=" btn btn-default unchexkedFileInput" >
+										点击上传图片
+									</label>
+									<input type="file" id="exampleInputFile" v-on:change="getFile($event),showImg($event)" multiple="multiple" accept="image/*" style="display: none">
+									<!--<input v-on:click="uploadImg()" type="button" class="btn" style="color:#fff;background-color: #B4995D;" value="上传">-->
 								</div>
 							</div>
 						</div>
