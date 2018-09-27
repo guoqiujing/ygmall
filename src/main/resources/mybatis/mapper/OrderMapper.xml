@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.myzqu.ygmall.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="cn.myzqu.ygmall.pojo.Order" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="goods_total_money" property="goodsTotalMoney" jdbcType="DECIMAL" />
+    <result column="carriage" property="carriage" jdbcType="DECIMAL" />
+    <result column="real_total_money" property="realTotalMoney" jdbcType="DECIMAL" />
+    <result column="receiver_name" property="receiverName" jdbcType="VARCHAR" />
+    <result column="receiver_tel" property="receiverTel" jdbcType="VARCHAR" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="county" property="county" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="order_remarks" property="orderRemarks" jdbcType="VARCHAR" />
+    <result column="attributes" property="attributes" jdbcType="TINYINT" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <resultMap id="OrderDetailResultMap" extends="BaseResultMap" type="cn.myzqu.ygmall.pojo.Order" >
+    <collection property="orderDetails" ofType="cn.myzqu.ygmall.pojo.OrderAlter">
+      <id column="id" property="id" jdbcType="VARCHAR" />
+      <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+      <result column="user_id" property="userId" jdbcType="VARCHAR" />
+      <result column="goods_number" property="goodsNumber" jdbcType="VARCHAR" />
+      <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+      <result column="format_and_style" property="formatAndStyle" jdbcType="VARCHAR" />
+      <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
+      <result column="price" property="price" jdbcType="DECIMAL" />
+      <result column="count" property="count" jdbcType="INTEGER" />
+      <result column="status" property="status" jdbcType="TINYINT" />
+      <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </collection>
+
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, user_id, goods_total_money, carriage, real_total_money, receiver_name, receiver_tel, 
+    province, city, county, detail, order_remarks, attributes, status, create_time
+  </sql>
+
+  <select id="selectOrderDetailByCustomerId" resultMap="OrderDetailResultMap" parameterType="java.lang.String" >
+    select `order`.* ,
+            order_detail.goods_number,
+            order_detail.goods_name,
+            order_detail.market_price,
+            order_detail.price,
+            order_detail.count
+    from   order_detail ,`order`
+    where `order`.user_id = #{id,jdbcType=VARCHAR}
+    and `order`.id = order_detail.order_id
+    ORDER BY `order`.create_time
+  </select>
+
+  <select id="selectOrderDetailByCustomerIdAndStatus" resultMap="OrderDetailResultMap" parameterType="java.lang.String" >
+    select `order`.* ,
+    order_detail.goods_number,
+    order_detail.goods_name,
+    order_detail.market_price,
+    order_detail.price,
+    order_detail.count
+    from   order_detail ,`order`
+    where `order`.user_id = #{id,jdbcType=VARCHAR}
+    and `order`.id = order_detail.order_id
+    and `order`.status = #{status,jdbcType=TINYINT}
+    ORDER BY `order`.create_time
+  </select>
+
+
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from order
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.String" >
+    delete from order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.Order" >
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="goodsTotalMoney != null" >
+        goods_total_money,
+      </if>
+      <if test="carriage != null" >
+        carriage,
+      </if>
+      <if test="realTotalMoney != null" >
+        real_total_money,
+      </if>
+      <if test="receiverName != null" >
+        receiver_name,
+      </if>
+      <if test="receiverTel != null" >
+        receiver_tel,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="city != null" >
+        city,
+      </if>
+      <if test="county != null" >
+        county,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="orderRemarks != null" >
+        order_remarks,
+      </if>
+      <if test="attributes != null" >
+        attributes,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTotalMoney != null" >
+        #{goodsTotalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="carriage != null" >
+        #{carriage,jdbcType=DECIMAL},
+      </if>
+      <if test="realTotalMoney != null" >
+        #{realTotalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="receiverName != null" >
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverTel != null" >
+        #{receiverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="orderRemarks != null" >
+        #{orderRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="attributes != null" >
+        #{attributes,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateById" parameterType="cn.myzqu.ygmall.pojo.Order" >
+    update order
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTotalMoney != null" >
+        goods_total_money = #{goodsTotalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="carriage != null" >
+        carriage = #{carriage,jdbcType=DECIMAL},
+      </if>
+      <if test="realTotalMoney != null" >
+        real_total_money = #{realTotalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="receiverName != null" >
+        receiver_name = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverTel != null" >
+        receiver_tel = #{receiverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null" >
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        county = #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=VARCHAR},
+      </if>
+      <if test="orderRemarks != null" >
+        order_remarks = #{orderRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="attributes != null" >
+        attributes = #{attributes,jdbcType=TINYINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+</mapper>
