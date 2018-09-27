@@ -30,12 +30,16 @@
     delete from spu_detail
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+
   <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.SpuDetail" >
-    insert into spu_detail (id, spu_id, img_order, 
-      img_url)
-    values (#{id,jdbcType=INTEGER}, #{spuId,jdbcType=VARCHAR}, #{imgOrder,jdbcType=INTEGER}, 
+    insert into spu_detail (spu_id, img_order, img_url)
+    values (#{spuId,jdbcType=VARCHAR}, #{imgOrder,jdbcType=INTEGER},
       #{imgUrl,jdbcType=VARCHAR})
   </insert>
+
+
+
   <insert id="insertSelective" parameterType="cn.myzqu.ygmall.pojo.SpuDetail" >
     insert into spu_detail
     <trim prefix="(" suffix=")" suffixOverrides="," >

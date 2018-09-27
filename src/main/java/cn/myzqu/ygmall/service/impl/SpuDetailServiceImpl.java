@@ -20,4 +20,19 @@ public class SpuDetailServiceImpl implements SpuDetailService {
         List<SpuDetail> spuDetails=spuDetailMapper.selectBySPUId(spuId);
         return spuDetails;
     }
+    public Integer insert(String spuId,String urlList) {
+        String[] urls=urlList.split(",");
+        int i;
+        for(i=0;i<urls.length;i++){
+            SpuDetail spuDetail=new SpuDetail();
+            spuDetail.setImgOrder(i);
+            spuDetail.setImgUrl(urls[i]);
+            spuDetail.setSpuId(spuId);
+            if(spuDetailMapper.insert(spuDetail)!=1)
+                break;
+        }
+        if(i!=urls.length)
+            return null;
+        return 1;
+    }
 }

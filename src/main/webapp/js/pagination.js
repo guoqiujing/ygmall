@@ -2299,6 +2299,17 @@ var page = new Vue({
             });
         },
 
+
+
+
+
+
+
+
+
+
+
+// 从这里开始
         //改变选择的图片时
         getFile:function (event) {
             //如果图片文件不为空，给本地file赋值为接收的图片
