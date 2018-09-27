@@ -150,4 +150,22 @@ public class CustomerAddress {
 
     public CustomerAddress() {
     }
+
+    @Override
+    public String toString() {
+        return "CustomerAddress{" +
+                "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", receiverName='" + receiverName + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", county='" + county + '\'' +
+                ", detail='" + detail + '\'' +
+                ", receiverTel='" + receiverTel + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }

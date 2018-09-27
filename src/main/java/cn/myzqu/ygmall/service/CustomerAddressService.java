@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface CustomerAddressService {
 
+    CustomerAddress findById(String id);
+
     List<CustomerAddress> findByUserId(String userId);
 
     int addAddress(CustomerAddress customerAddress);

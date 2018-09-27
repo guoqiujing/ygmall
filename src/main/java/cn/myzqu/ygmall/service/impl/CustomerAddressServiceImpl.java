@@ -19,6 +19,16 @@ public class CustomerAddressServiceImpl implements CustomerAddressService{
     private CustomerAddressMapper customerAddressMapper;
 
     /**
+     * 根据id查找收货地址
+     * @param id
+     * @return
+     */
+    @Override
+    public CustomerAddress findById(String id){
+        return customerAddressMapper.selectByPrimaryKey(id);
+    }
+
+    /**
      * 根据用户id查找收货地址
      * @param userId
      * @return

@@ -21,6 +21,20 @@ public class CustomerAddressController {
     private CustomerAddressService customerAddressService;
 
     /**
+     * 根据id查找收货地址
+     * @param id
+     * @return
+     */
+    @PostMapping("/findById")
+    public Result findById(String id){
+        CustomerAddress customerAddress=customerAddressService.findById(id);
+        if(customerAddress!=null){
+            return ResultVOUtil.success(customerAddress);
+        }
+        return ResultVOUtil.error("找不到该收货地址");
+    }
+
+    /**
      * 根据用户id查找收货地址
      * @param userId
      * @return
