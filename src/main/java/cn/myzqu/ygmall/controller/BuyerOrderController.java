@@ -36,13 +36,17 @@ public class BuyerOrderController {
     //创建订单
     @PostMapping("/create")
     public ResultVO create(OrderForm orderForm) {
+
+        //获取收货地址
+        orderForm.getAddress();
+        //获取购物车Json，将购物车Json转为实体类
         return null;
     }
 
     //用户获取订单列表
     @GetMapping("/list/{id}")
     public Result list(@PathVariable("id") String id,
-                       @RequestParam(value = "status", defaultValue = "0") Integer status,
+                       @RequestParam(value = "status", defaultValue = "-1") Integer status,
                        @RequestParam(value = "page", defaultValue = "0") Integer page,
                        @RequestParam(value = "size", defaultValue = "10") Integer size) {
         if (StringUtils.isEmpty(id)) {
@@ -62,8 +66,7 @@ public class BuyerOrderController {
             pageDTO = orderService.selectOrderDetailByCustomerId(id,page,size);
         }
         if(pageDTO!=null){
-            BootstrapTableVO bootstrapTableVO =  new BootstrapTableVO(pageDTO.getTotal(),pageDTO.getRows());
-            return ResultVOUtil.success(bootstrapTableVO);
+            return ResultVOUtil.success(pageDTO);
         }
         return ResultVOUtil.error("暂时没有数据哦！");
     }
