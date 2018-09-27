@@ -61,8 +61,10 @@ function putOff(id){
             data:{id:id},
             dataType:"json",
             success:function(value){
-                if(value.code==0)
+                if(value.code==0) {
                     alert("操作成功！");
+                    window.location.href = "/page/admin/putOffGoods.html";
+                }
                 else
                     alert("操作失败！");
             },

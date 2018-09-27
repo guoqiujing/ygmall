@@ -23,6 +23,8 @@ public class Spu {
 
     private String subtitle;
 
+    private Byte status;
+
     public String getId() {
         return id;
     }
@@ -101,5 +103,13 @@ public class Spu {
 
     public void setSubtitle(String subtitle) {
         this.subtitle = subtitle == null ? null : subtitle.trim();
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 }

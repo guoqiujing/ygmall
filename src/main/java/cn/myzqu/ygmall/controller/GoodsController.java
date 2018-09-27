@@ -38,6 +38,12 @@ public class GoodsController {
         }
         return ResultVOUtil.error("查找商品属性值与ID失败");
     }
+
+    /**
+     * 根据货品id下架商品
+     * @param spuId
+     * @return
+     */
     @PostMapping("/putOffBySpuId")
     public Result putOffBySpuId(String spuId){
         Integer result=goodsService.putOffBySpuId(spuId);

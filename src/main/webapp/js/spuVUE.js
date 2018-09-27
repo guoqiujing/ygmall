@@ -86,7 +86,7 @@ function submitAnd(mark){
                     if (data.code == 0) {
                         pageImg.uploadImg(data.data);
                         alert("提交成功");
-                        // window.location.href=mark;
+                        window.location.href=mark;
                     }
                 },
                 error: function (data) {

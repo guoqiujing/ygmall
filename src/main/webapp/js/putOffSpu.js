@@ -64,13 +64,15 @@ function putOff(id){
     var r=confirm("该操作将下架此货品下的所有商品！是否确定下架？");
     if (r==true) {
         $.ajax({
-            url:"/goods/putOffBySpuId",
+            url:"/spu/putOff",
             type:"post",
-            data:{spuId:id},
+            data:{id:id},
             dataType:"json",
             success:function(value){
-                if(value.code==0)
+                if(value.code==0) {
                     alert("操作成功！");
+                    window.location.href = "/page/admin/putOffSpu.html";
+                }
                 else
                     alert("操作失败！");
             },
