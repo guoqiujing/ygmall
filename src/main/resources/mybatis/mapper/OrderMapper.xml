@@ -49,12 +49,12 @@
             order_detail.price,
             order_detail.count
     from   order_detail ,`order`
-    where `order`.user_id = #{id,jdbcType=VARCHAR}
+    where `order`.user_id = #{customerId,jdbcType=VARCHAR}
     and `order`.id = order_detail.order_id
     ORDER BY `order`.create_time
   </select>
 
-  <select id="selectOrderDetailByCustomerIdAndStatus" resultMap="OrderDetailResultMap" parameterType="java.lang.String" >
+  <select id="selectOrderDetailByCustomerIdAndStatus" resultMap="OrderDetailResultMap" >
     select `order`.* ,
     order_detail.goods_number,
     order_detail.goods_name,
@@ -62,7 +62,7 @@
     order_detail.price,
     order_detail.count
     from   order_detail ,`order`
-    where `order`.user_id = #{id,jdbcType=VARCHAR}
+    where `order`.user_id = #{customerId,jdbcType=VARCHAR}
     and `order`.id = order_detail.order_id
     and `order`.status = #{status,jdbcType=TINYINT}
     ORDER BY `order`.create_time

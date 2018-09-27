@@ -1,6 +1,7 @@
 package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.pojo.Order;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,6 +18,6 @@ public interface OrderMapper {
 
     List<Order> selectOrderDetailByCustomerId(String customerId);
 
-    List<Order> selectOrderDetailByCustomerIdAndStatus(String customerId,Byte status);
+    List<Order> selectOrderDetailByCustomerIdAndStatus(@Param("customerId") String customerId, @Param("status") Byte status);
 
 }

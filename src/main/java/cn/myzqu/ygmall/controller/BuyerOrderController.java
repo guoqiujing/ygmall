@@ -65,6 +65,6 @@ public class BuyerOrderController {
             BootstrapTableVO bootstrapTableVO =  new BootstrapTableVO(pageDTO.getTotal(),pageDTO.getRows());
             return ResultVOUtil.success(bootstrapTableVO);
         }
-        return ResultVOUtil.error("请求失败！");
+        return ResultVOUtil.error("暂时没有数据哦！");
     }
 }

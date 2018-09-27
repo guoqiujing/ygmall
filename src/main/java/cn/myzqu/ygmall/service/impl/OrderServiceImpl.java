@@ -8,6 +8,7 @@ import cn.myzqu.ygmall.service.OrderService;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
