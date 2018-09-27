@@ -8,9 +8,11 @@ import lombok.Data;
 @Data
 public class OrderForm {
 
-    //订单地址id
+    //获取地址id
+    private String address;
 
-    //购物车，Json：商品id,商品数量,
+    //购物车串，Json封装信息过来
+    private String items;
 
 
 }
