@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.myzqu.ygmall.dao.ReplyCommentMapper" >
+  <resultMap id="BaseResultMap" type="cn.myzqu.ygmall.pojo.ReplyComment" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="reply_id" property="replyId" jdbcType="VARCHAR" />
+    <result column="reply_name" property="replyName" jdbcType="VARCHAR" />
+    <result column="reply_content" property="replyContent" jdbcType="VARCHAR" />
+    <result column="reply_time" property="replyTime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, reply_id, reply_name, reply_content, reply_time, content, creat_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from reply_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <!--根据评论ID查找回复-->
+  <select id="selectByCommentId" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from reply_comment
+    where reply_id = #{commentId,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from reply_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.ReplyComment" >
+    insert into reply_comment (id, reply_id, reply_name, 
+      reply_content, reply_time, content, 
+      creat_time)
+    values (#{id,jdbcType=VARCHAR}, #{replyId,jdbcType=VARCHAR}, #{replyName,jdbcType=VARCHAR}, 
+      #{replyContent,jdbcType=VARCHAR}, #{replyTime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, 
+      #{creatTime,jdbcType=TIMESTAMP})
+  </insert>
+  <!--插入回复或者追评回复-->
+  <insert id="insertSelective" parameterType="cn.myzqu.ygmall.pojo.ReplyComment" >
+    insert into reply_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="replyId != null" >
+        reply_id,
+      </if>
+      <if test="replyName != null" >
+        reply_name,
+      </if>
+      <if test="replyContent != null" >
+        reply_content,
+      </if>
+      <if test="replyTime != null" >
+        reply_time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="replyId != null" >
+        #{replyId,jdbcType=VARCHAR},
+      </if>
+      <if test="replyName != null" >
+        #{replyName,jdbcType=VARCHAR},
+      </if>
+      <if test="replyContent != null" >
+        #{replyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="replyTime != null" >
+        #{replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!--根据回复id插入追评回复-->
+  <update id="updateByPrimaryKeySelective" parameterType="cn.myzqu.ygmall.pojo.ReplyComment" >
+    update reply_comment
+    <set >
+      <if test="replyId != null" >
+        reply_id = #{replyId,jdbcType=VARCHAR},
+      </if>
+      <if test="replyName != null" >
+        reply_name = #{replyName,jdbcType=VARCHAR},
+      </if>
+      <if test="replyContent != null" >
+        reply_content = #{replyContent,jdbcType=VARCHAR},
+      </if>
+      <if test="replyTime != null" >
+        reply_time = #{replyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.myzqu.ygmall.pojo.ReplyComment" >
+    update reply_comment
+    set reply_id = #{replyId,jdbcType=VARCHAR},
+      reply_name = #{replyName,jdbcType=VARCHAR},
+      reply_content = #{replyContent,jdbcType=VARCHAR},
+      reply_time = #{replyTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
