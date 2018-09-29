@@ -199,6 +199,7 @@ var pageImg = new Vue({
         },
         //图片预览
         showImg: function (event) {
+            $("#showImgDiv").html("");
             var file = event.target.files;
             var reader = new FileReader();
             var that = this;
