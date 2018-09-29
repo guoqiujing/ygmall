@@ -37,6 +37,16 @@ public class Comment {
 
     private Byte commentStatus;
 
+    private  ReplyComment replyComment;
+
+    public ReplyComment getReplyComment() {
+        return replyComment;
+    }
+
+    public void setReplyComment(ReplyComment replyComment) {
+        this.replyComment = replyComment;
+    }
+
     public String getId() {
         return id;
     }

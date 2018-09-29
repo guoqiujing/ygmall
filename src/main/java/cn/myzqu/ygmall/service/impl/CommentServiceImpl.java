@@ -1,6 +1,7 @@
 package cn.myzqu.ygmall.service.impl;
 
 import cn.myzqu.ygmall.dao.CommentMapper;
+import cn.myzqu.ygmall.dto.CommentDTO;
 import cn.myzqu.ygmall.pojo.Comment;
 import cn.myzqu.ygmall.service.CommentService;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
@@ -54,4 +55,22 @@ public class CommentServiceImpl implements CommentService{
         int c=commentMapper.updateByIdList(idList);
         return c;
     }
+
+    @Override
+    public Comment findCommentReply(String id){
+        Comment comment=commentMapper.getCommentReply(id);
+        return comment;
+    }
+
+    public Comment findComment(String id){
+        Comment comment=commentMapper.selectByPrimaryKey(id);
+        return comment;
+    }
+
+   /* public CommentDTO modifyStatusById(String id,Byte commentStatus){
+        int a=commentMapper.updateStatusById(id,commentStatus);
+        if(a>0)
+            return null;
+        return null;
+    }*/
 }
