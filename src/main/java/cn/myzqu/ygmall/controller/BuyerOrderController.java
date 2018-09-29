@@ -52,7 +52,7 @@ public class BuyerOrderController {
     @GetMapping("/info/{id}")
     public Result info(@PathVariable("id") String id){
         if(StringUtils.isEmpty(id)){
-            log.error("【查询订单列表】id为空");
+            log.error("【查询订单】id为空");
             throw new CustomException(1,"id为空");
         }
         Order order = orderService.selectById(id);
