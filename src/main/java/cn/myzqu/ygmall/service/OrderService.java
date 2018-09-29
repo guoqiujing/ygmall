@@ -11,8 +11,7 @@ import com.github.pagehelper.Page;
 public interface OrderService {
 
     Boolean add();
-
-    PageDTO selectOrderDetailByCustomerId(String customerId, Integer pageIndex, Integer pageSize);
+    Order selectById(String id);
     PageDTO selectOrderDetailByCustomerId(String customerId, Byte status,Integer pageIndex, Integer pageSize);
-
+    PageDTO selectByCustomerId(String customerId, Byte status,Integer pageIndex, Integer pageSize);
 }

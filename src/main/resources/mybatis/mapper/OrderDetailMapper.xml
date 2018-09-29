@@ -18,27 +18,28 @@
     id, order_id, user_id, goods_number, goods_name, format_and_style, market_price, 
     price, count, status, create_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  select
+  <include refid="Base_Column_List" />
+  from order_detail
+  where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
     <include refid="Base_Column_List" />
     from order_detail
-    where id = #{id,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+
+  <delete id="deleteById" parameterType="java.lang.String" >
     delete from order_detail
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+
+
   <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.OrderDetail" >
-    insert into order_detail (id, order_id, user_id, 
-      goods_number, goods_name, format_and_style, 
-      market_price, price, count, 
-      status, create_time)
-    values (#{id,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
-      #{goodsNumber,jdbcType=VARCHAR}, #{goodsName,jdbcType=VARCHAR}, #{formatAndStyle,jdbcType=VARCHAR}, 
-      #{marketPrice,jdbcType=DECIMAL}, #{price,jdbcType=DECIMAL}, #{count,jdbcType=INTEGER}, 
-      #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.myzqu.ygmall.pojo.OrderDetail" >
     insert into order_detail
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -111,7 +112,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.myzqu.ygmall.pojo.OrderDetail" >
+
+  <update id="updateById" parameterType="cn.myzqu.ygmall.pojo.OrderDetail" >
     update order_detail
     <set >
       <if test="orderId != null" >
@@ -147,18 +149,5 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.myzqu.ygmall.pojo.OrderDetail" >
-    update order_detail
-    set order_id = #{orderId,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR},
-      goods_number = #{goodsNumber,jdbcType=VARCHAR},
-      goods_name = #{goodsName,jdbcType=VARCHAR},
-      format_and_style = #{formatAndStyle,jdbcType=VARCHAR},
-      market_price = #{marketPrice,jdbcType=DECIMAL},
-      price = #{price,jdbcType=DECIMAL},
-      count = #{count,jdbcType=INTEGER},
-      status = #{status,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+
 </mapper>

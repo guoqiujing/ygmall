@@ -20,4 +20,5 @@ public interface OrderMapper {
 
     List<Order> selectOrderDetailByCustomerIdAndStatus(@Param("customerId") String customerId, @Param("status") Byte status);
 
+    List<Order> selectByCustomerId(@Param("customerId") String customerId, @Param("status") Byte status);
 }

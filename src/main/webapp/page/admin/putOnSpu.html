@@ -234,15 +234,19 @@
 							</div>
 							<div class="panel-body">
 								<div class="form-horizontal">
+									<div id="showImgDiv" class="col-sm-12">
 									<template v-for="val,index in imgArray">
 										<img id="userImg" style="width: 20%;margin: 10px;" v-bind:src="val" v-show="imgShow">
 									</template>
+									</div>
 									<!--此处为图片上传-->
-									<label id="fileLabel" for="exampleInputFile" class=" btn btn-default unchexkedFileInput" >
-										点击上传图片
-									</label>
-									<input type="file" id="exampleInputFile" v-on:change="getFile($event),showImg($event)" multiple="multiple" accept="image/*" style="display: none">
-									<!--<input v-on:click="uploadImg()" type="button" class="btn" style="color:#fff;background-color: #B4995D;" value="上传">-->
+									<div class="col-sm-12">
+										<label id="fileLabel" for="exampleInputFile" class=" btn btn-default unchexkedFileInput" >
+											点击上传图片
+										</label>
+										<input type="file" id="exampleInputFile" v-on:change="getFile($event),showImg($event)" multiple="multiple" accept="image/*" style="display: none">
+									</div>
+										<!--<input v-on:click="uploadImg()" type="button" class="btn" style="color:#fff;background-color: #B4995D;" value="上传">-->
 								</div>
 							</div>
 						</div>

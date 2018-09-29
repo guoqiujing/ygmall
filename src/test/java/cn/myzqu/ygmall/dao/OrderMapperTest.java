@@ -26,8 +26,18 @@ public class OrderMapperTest {
 
     @Test
     public void selectOrderDetailByCustomerId() throws Exception {
-        String customerId = "1001";
+        String customerId = "f81986cd58214b2b9cc2815ecdd95d3e";
         List<Order> orderList = orderMapper.selectOrderDetailByCustomerId(customerId);
+        Iterator it = orderList.iterator();
+        while (it.hasNext()){
+            System.out.println(it.next().toString());
+        }
+    }
+
+    @Test
+    public void selectOrderDetailByCustomerIdAndStatus() throws Exception {
+        String customerId = "f81986cd58214b2b9cc2815ecdd95d3e";
+        List<Order> orderList = orderMapper.selectOrderDetailByCustomerIdAndStatus(customerId,null);
         Iterator it = orderList.iterator();
         while (it.hasNext()){
             System.out.println(it.next().toString());

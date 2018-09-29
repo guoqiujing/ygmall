@@ -122,7 +122,7 @@ public class FileUtil {
      * @param saveFilePath 目标文件地址
      * @return
      */
-    public static void compress(File file,String saveFilePath) throws Exception{
+    public void compress(File file,String saveFilePath) throws Exception{
         //
         //根据情况进行图片压缩
         if(file.length() >= 0.5*1024*1024){
@@ -143,7 +143,7 @@ public class FileUtil {
      * @param file
      * @throws Exception
      */
-    public static void compress(File file) throws Exception{
+    public void compress(File file) throws Exception{
         //根据情况进行图片压缩
         if(file.length() >= 0.5*1024*1024){
             //大于500k的情况，压缩0.5

@@ -61,6 +61,9 @@
     delete from goods
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+
+
+
   <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.Goods" >
     insert into goods (id, SPU_id, name, 
       inventory, category_id, status, 
@@ -73,6 +76,7 @@
       #{salePrice,jdbcType=DECIMAL}, #{unit,jdbcType=VARCHAR}, #{saleCount,jdbcType=INTEGER}, 
       #{note,jdbcType=VARCHAR}, #{attributes,jdbcType=VARCHAR})
   </insert>
+
   <insert id="insertSelective" parameterType="cn.myzqu.ygmall.pojo.Goods" >
     insert into goods
     <trim prefix="(" suffix=")" suffixOverrides="," >

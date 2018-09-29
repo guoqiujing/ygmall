@@ -22,12 +22,12 @@ $().ready(function (){
         },
         columns:
             [{
-                field: 'id',
-                title: '编号'
-            },{
                 field: 'name',
                 title: '名称'
             }, {
+                field: 'id',
+                title: '编号'
+            },{
                 field: 'createtime',
                 title: '创建时间',
                 formatter:function(value,row,index){
@@ -48,8 +48,6 @@ $().ready(function (){
 
 // 请求服务数据时所传参数
 function queryParams(params){
-    console.log("111111");
-        console.log($('#searchInput').val());
     return{
         //每页多少条数据
         pageSize: params.pageSize,

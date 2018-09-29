@@ -4,6 +4,7 @@ import cn.myzqu.ygmall.dao.GoodsMapper;
 import cn.myzqu.ygmall.pojo.Goods;
 import cn.myzqu.ygmall.pojo.Spu;
 import cn.myzqu.ygmall.service.GoodsService;
+import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import cn.myzqu.ygmall.vo.GoodsDetailVO;
 import com.github.pagehelper.Page;
@@ -22,6 +23,14 @@ import java.util.Map;
 public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
+    /**
+     * 创建新商品（商品上架时调用）
+     */
+    public Integer createNew(Goods goods){
+        goods.setId(KeyUtil.getUUID());
+        Integer integer=goodsMapper.insertSelective(goods);
+        return integer;
+    }
     @Override
     public List<GoodsDetailVO> getGoodsAndSPU(String id) {
         List<GoodsDetailVO> goodsDetailVO=goodsMapper.getGoodsAndSPU(id);

@@ -2,16 +2,18 @@ package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.pojo.OrderDetail;
 
+import java.util.List;
+
 public interface OrderDetailMapper {
-    int deleteByPrimaryKey(String id);
+
+    int deleteById(String id);
 
     int insert(OrderDetail record);
 
-    int insertSelective(OrderDetail record);
+    OrderDetail selectById(String id);
 
-    OrderDetail selectByPrimaryKey(String id);
+    List<OrderDetail> selectByOrderId(String orderId);
 
-    int updateByPrimaryKeySelective(OrderDetail record);
+    int updateById(OrderDetail record);
 
-    int updateByPrimaryKey(OrderDetail record);
 }

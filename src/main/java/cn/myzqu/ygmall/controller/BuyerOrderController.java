@@ -6,6 +6,7 @@ import cn.myzqu.ygmall.enums.OrderStatusEnum;
 import cn.myzqu.ygmall.enums.ResultEnum;
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.form.OrderForm;
+import cn.myzqu.ygmall.pojo.Order;
 import cn.myzqu.ygmall.service.OrderService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
@@ -43,6 +44,24 @@ public class BuyerOrderController {
         return null;
     }
 
+    /**
+     * 根据订单id查询订单详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/info/{id}")
+    public Result info(@PathVariable("id") String id){
+        if(StringUtils.isEmpty(id)){
+            log.error("【查询订单】id为空");
+            throw new CustomException(1,"id为空");
+        }
+        Order order = orderService.selectById(id);
+        if(order!=null){
+            return ResultVOUtil.success(order);
+        }
+        return ResultVOUtil.error("暂时没有订单");
+    }
+
     //用户获取订单列表
     @GetMapping("/list/{id}")
     public Result list(@PathVariable("id") String id,
@@ -62,8 +81,8 @@ public class BuyerOrderController {
                 OrderStatusEnum.OBLIGATION.getCode().equals(status)) {
             pageDTO = orderService.selectOrderDetailByCustomerId(id, new Byte(status.toString()), page, size);
         }else{
-            //查询所有
-            pageDTO = orderService.selectOrderDetailByCustomerId(id,page,size);
+            //查询所有,状态为空表示查询所有
+            pageDTO = orderService.selectOrderDetailByCustomerId(id,null,page,size);
         }
         if(pageDTO!=null){
             return ResultVOUtil.success(pageDTO);

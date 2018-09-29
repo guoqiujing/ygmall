@@ -21,7 +21,7 @@
 
   <resultMap id="OrderDetailResultMap" extends="BaseResultMap" type="cn.myzqu.ygmall.pojo.Order" >
     <collection property="orderDetails" ofType="cn.myzqu.ygmall.pojo.OrderDetail">
-      <id column="id" property="id" jdbcType="VARCHAR" />
+      <id column="order_detail_id" property="id" jdbcType="VARCHAR" />
       <result column="order_id" property="orderId" jdbcType="VARCHAR" />
       <result column="user_id" property="userId" jdbcType="VARCHAR" />
       <result column="goods_number" property="goodsNumber" jdbcType="VARCHAR" />
@@ -43,6 +43,7 @@
 
   <select id="selectOrderDetailByCustomerId" resultMap="OrderDetailResultMap" parameterType="java.lang.String" >
     select `order`.* ,
+            order_detail.id as order_detail_id,
             order_detail.goods_number,
             order_detail.goods_name,
             order_detail.market_price,
@@ -56,6 +57,7 @@
 
   <select id="selectOrderDetailByCustomerIdAndStatus" resultMap="OrderDetailResultMap" >
     select `order`.* ,
+    order_detail.id as order_detail_id,
     order_detail.goods_number,
     order_detail.goods_name,
     order_detail.market_price,
@@ -64,10 +66,26 @@
     from   order_detail ,`order`
     where `order`.user_id = #{customerId,jdbcType=VARCHAR}
     and `order`.id = order_detail.order_id
-    and `order`.status = #{status,jdbcType=TINYINT}
+    <where>
+      <if test="status!=null">
+        and `order`.status = #{status,jdbcType=TINYINT}
+      </if>
+    </where>
     ORDER BY `order`.create_time
   </select>
 
+  <select id="selectByCustomerId" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from order
+    where `order`.user_id = #{customerId,jdbcType=VARCHAR}
+    <where>
+      <if test="status!=null">
+        and `order`.status = #{status,jdbcType=TINYINT}
+      </if>
+    </where>
+    ORDER BY `order`.create_time
+  </select>
 
 
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
