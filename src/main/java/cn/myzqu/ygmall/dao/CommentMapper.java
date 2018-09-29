@@ -23,4 +23,8 @@ public interface CommentMapper {
     List<Comment> selectComment(Map<String, Object> map);
 
     int  updateByIdList(List<Integer> idList);
+
+    Comment getCommentReply(String id);
+
+    /*int updateStatusById(String id,Byte commentStatus);*/
 }
