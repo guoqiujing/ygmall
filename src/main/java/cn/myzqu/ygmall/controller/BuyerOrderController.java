@@ -6,6 +6,7 @@ import cn.myzqu.ygmall.enums.OrderStatusEnum;
 import cn.myzqu.ygmall.enums.ResultEnum;
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.form.OrderForm;
+import cn.myzqu.ygmall.pojo.Order;
 import cn.myzqu.ygmall.service.OrderService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
@@ -41,6 +42,24 @@ public class BuyerOrderController {
         orderForm.getAddress();
         //获取购物车Json，将购物车Json转为实体类
         return null;
+    }
+
+    /**
+     * 根据订单id查询订单详情
+     * @param id
+     * @return
+     */
+    @GetMapping("/info/{id}")
+    public Result info(@PathVariable("id") String id){
+        if(StringUtils.isEmpty(id)){
+            log.error("【查询订单列表】id为空");
+            throw new CustomException(1,"id为空");
+        }
+        Order order = orderService.selectById(id);
+        if(order!=null){
+            return ResultVOUtil.success(order);
+        }
+        return ResultVOUtil.error("暂时没有订单");
     }
 
     //用户获取订单列表

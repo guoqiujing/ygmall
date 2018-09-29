@@ -35,6 +35,11 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+    @Override
+    public Order selectById(String id) {
+        return orderMapper.selectById(id);
+    }
+
 
     @Override
     public PageDTO selectOrderDetailByCustomerId(String customerId, Byte status, Integer pageIndex, Integer pageSize) {
