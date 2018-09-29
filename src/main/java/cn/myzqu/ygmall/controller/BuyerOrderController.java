@@ -79,10 +79,10 @@ public class BuyerOrderController {
                 OrderStatusEnum.DAISHOUHUO.getCode().equals(status)||
                 OrderStatusEnum.DONE.getCode().equals(status)||
                 OrderStatusEnum.OBLIGATION.getCode().equals(status)) {
-            pageDTO = orderService.selectOrderDetailByCustomerId(id, new Byte(status.toString()), page, size);
+            pageDTO = orderService.selectByCustomerId(id, new Byte(status.toString()), page, size);
         }else{
             //查询所有,状态为空表示查询所有
-            pageDTO = orderService.selectOrderDetailByCustomerId(id,null,page,size);
+            pageDTO = orderService.selectByCustomerId(id,null,page,size);
         }
         if(pageDTO!=null){
             return ResultVOUtil.success(pageDTO);
