@@ -16,7 +16,4 @@ public interface ReplyCommentMapper {
     int updateByPrimaryKey(ReplyComment record);
 
     ReplyComment selectByCommentId(String commentId);
-
-    int updateContentById(ReplyComment record);
-
 }
