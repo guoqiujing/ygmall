@@ -30,6 +30,7 @@ public class SpuDetailController {
     }
     @PostMapping("/insert")
     public Result insert(String spuId,String urlList){
+        System.out.println("urlList--------------------"+urlList);
         Integer result= spuDetailService.insert(spuId,urlList);
         if(result==1){
             return ResultVOUtil.success();

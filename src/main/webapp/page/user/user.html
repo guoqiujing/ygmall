@@ -141,12 +141,12 @@
 			<div class="userr">
                 <!--订单状态tab-->
 				<div id="tabline-bar" class="tabline" v-if="tab==1" v-cloak>
-					<h2 class="">全部订单</h2>
-					<h2 class="h2bg">待付款</h2>
-					<h2 class="h2bg">待发货</h2>
-					<h2 class="h2bg">待收货</h2>
-					<h2 class="h2bg">已完成</h2>
-					<h2 class="h2bg">已取消</h2>
+					<h2 class="" v-on:click="orderTab=-1">全部订单</h2>
+					<h2 class="h2bg" v-on:click="orderTab=0">待付款</h2>
+					<h2 class="h2bg" v-on:click="orderTab=1">待发货</h2>
+					<h2 class="h2bg" v-on:click="orderTab=2">待收货</h2>
+					<h2 class="h2bg" v-on:click="orderTab=3">已完成</h2>
+					<h2 class="h2bg" v-on:click="orderTab=4">已取消</h2>
 				</div>
 				<!--订单中心-->
 				<div class="clearfix" v-if="tab==1" v-cloak>
@@ -163,14 +163,16 @@
 								<td align="center">
 									<a v-bind:href="order.href" class="f0">{{order.id}}</a>
 								</td>
-								<td align="center">{{order.time}}</td>
-								<td align="center">{{order.money}}</td>
-								<td align="center">{{order.status}}</td>
+								<td align="center">{{order.createTime}}</td>
+								<td align="center">{{order.realTotalMoney}}</td>
+								<td align="center" v-if="order.status==0">待付款</td>
+                                <td align="center" v-if="order.status==1">待发货</td>
+                                <td align="center" v-if="order.status==2">待收货</td>
+                                <td align="center" v-if="order.status==3">已完成</td>
+                                <td align="center" v-if="order.status==4">已取消</td>
 								<td align="center">
-									<font class="f6">
-										<a href="user.php?act=order_detail&amp;order_id=13501">付款</a>
-										<a href="user.php?act=cancel_order&amp;order_id=13501&amp;order_sn=2018090288111" onclick="if (!confirm('您确认要取消该订单吗？取消后此订单将视为无效订单')) return false;">取消订单</a>
-									</font>
+										<a href="#">付款</a>
+										<a href="#">取消订单</a>
 								</td>
 							</tr>
 						</tbody>

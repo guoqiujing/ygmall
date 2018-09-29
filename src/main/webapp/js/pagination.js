@@ -2074,33 +2074,9 @@ var page = new Vue({
         userId:userId,//从session获取的用户id
         all: 8, //总页数
         cur: 1,//当前页码
-        tab:1,//选项卡切换标志
-        orders:[
-	      { id: '2018090288111' , time:'2018-09-03' , money:'78.00' ,status:'待付款',
-	      	href:'index.html' 
-	      },
-	      { id: '2018090288585' , time:'2018-09-02' , money:'144.00' ,status:'待付款',
-	      	href:'index.html' 
-	      },
-	      { id: '2018090288987' , time:'2018-09-01' , money:'255.00' ,status:'待付款',
-	      	href:'index.html' 
-	      },
-	      { id: '2018090288123' , time:'2018-09-01' , money:'366.00' ,status:'待付款',
-	      	href:'index.html' 
-	      },
-	      { id: '2018090285674' , time:'2018-09-01' , money:'55.00' ,status:'待付款',
-	      	href:'index.html' 
-	      },
-	      { id: '2018090285674' , time:'2018-09-01' , money:'55.00' ,status:'待付款',
-	      	href:'index.html' 
-	      },
-	      { id: '2018090285674' , time:'2018-09-01' , money:'55.00' ,status:'待付款',
-	      	href:'index.html' 
-	      },
-	      { id: '2018090285674' , time:'2018-09-01' , money:'55.00' ,status:'待付款',
-	      	href:'index.html' 
-	      }
-    	],//订单列表
+        tab:'1',//左边选项卡切换标志
+        orderTab:-1,//订单状态选项卡
+        orders:[],//订单列表
         user:{},//用户信息
         staticUser:{},//静态不可变用户信息
 
@@ -2133,6 +2109,7 @@ var page = new Vue({
     watch: {
         cur: function(oldValue , newValue){
             console.log(arguments);
+
         },
 
         prov: function () {
@@ -2165,18 +2142,26 @@ var page = new Vue({
                 this.frequentlyAddress=false;
                 this.addressStatus=0;
             }
+        },
+
+        orderTab:function () {
+            console.log(this.orderTab);
+            this.cur=1;
         }
     },
     //创建vue实例之后的事件
 	created: function (){
         console.log("vue:"+GetQueryString("tab"));
-        this.getUserInfo();
+        if(this.userId!==null)
+            this.getUserInfo();
+        else{
+            window.location.href="/page/user/login.html";
+        }
         if(GetQueryString("tab")!==null){
             this.tab=GetQueryString("tab");
         }
-        if(this.tab==='4'){
-            //console.log("个人资料");
-            //this.getUserInfo();
+        if(this.tab==='1'){
+            this.getOrders();
         }
         if(this.tab==='6'){
             //console.log("收货地址");
@@ -2197,8 +2182,34 @@ var page = new Vue({
             layer.msg(text, {time: 2000});
         },
 
+        //获取此用户的订单
+        getOrders:function () {
+            var that=this;
+            $.ajax({
+                type: "GET",
+                url: "/buyer/order/list/"+that.userId+"?status="+that.orderTab+"&page="+that.cur+"&size="+8,
+                dataType: "json",
+                contentType:'application/json;charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        console.log("成功");
+                        console.log(msg.data);
+                        that.orders=msg.data.rows;
+                        that.all=msg.data.pageNum;
+                    }
+                    else {
+                        console.log("查找失败");
+                    }
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        },
+
         //点击订单页面页码
         btnClick: function(data){//页码点击事件
+            console.log(data);
             var that=this;
             $.ajax({
                 type: "POST",
@@ -2212,13 +2223,10 @@ var page = new Vue({
                 dataType: "json",
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (msg) {
-                    if(msg.code==0){
-                        console.log("成功")
-                        // if(msg.data.total/8==0)
-                        //     that.all=1;
-                        // else
-                        //     that.all=msg.data.total/8+1;
-                        console.log(msg.data.rows)
+                    if(msg.code===0){
+                        console.log("成功");
+                        console.log(msg.data.rows);
+                        that.orders=msg.data.rows;
                     }
                     else {
                         alert("查找失败");
@@ -2228,7 +2236,7 @@ var page = new Vue({
                     alert("错误");
                 }
             });
-            if(data != this.cur){
+            if(data !== this.cur){
                 this.cur = data
             }
         },
@@ -2290,7 +2298,7 @@ var page = new Vue({
                         });
                     }
                     else {
-                        alert("查找失败");
+                        alert("修改失败");
                     }
                 },
                 error: function () {
@@ -2299,17 +2307,6 @@ var page = new Vue({
             });
         },
 
-
-
-
-
-
-
-
-
-
-
-// 从这里开始
         //改变选择的图片时
         getFile:function (event) {
             //如果图片文件不为空，给本地file赋值为接收的图片
@@ -2346,16 +2343,16 @@ var page = new Vue({
         //上传图片
         uploadImg:function () {
             //阻止元素发生默认的行为
-            event.preventDefault();
+            //event.preventDefault();
             var formData = new FormData();
             formData.append("file", this.file);
             var that=this;
             //如果接收到的文件为空，不上传图片，直接修改用户信息
-            if(that.file===''){
+            if(that.file===''||that.file===undefined){
                 that.updateUserInfo();
             }
             else
-            $.ajax({
+                $.ajax({
                 type: "POST",
                 url: "/files/qCloud/userInfo",
                 data: formData,
@@ -2365,13 +2362,17 @@ var page = new Vue({
                 dataType: "json",
                 success: function (msg) {
                     console.log(msg);
-                    if(msg.code==0){
+                    if(msg.code===0){
                         console.log("上传成功");
                         console.log("图片地址："+msg.data);
                         //将返回的图片地址赋值给本地icon
+                        console.log("图片："+msg.data.substring(61));
                         that.user.icon=msg.data;
                         //上传图片、获取图片地址后，执行修改用户信息的方法
                         that.updateUserInfo();
+                    }
+                    else if(msg.code===1){
+                        layer.msg('上传文件不能大于4M', {time: 2500});
                     }
                     else {
                         layer.msg('上传图片失败', {time: 2000});

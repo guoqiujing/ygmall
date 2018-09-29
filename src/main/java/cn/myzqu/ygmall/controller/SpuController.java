@@ -34,6 +34,14 @@ public class SpuController {
         }
         return ResultVOUtil.error("新增货品信息失败");
     }
+
+    /**
+     * 获取所有未下架的货品的id、name、createtime、category_id
+     * @param pageSize
+     * @param pageIndex
+     * @param searchInput
+     * @return
+     */
     @PostMapping("/findAllIdAndName")
     public Result selectAllIdAndName(int pageSize,int pageIndex,String searchInput){
         BootstrapTableVO bto=spuService.selectIdAndName(pageSize,pageIndex,searchInput);
@@ -42,4 +50,13 @@ public class SpuController {
         }
         return ResultVOUtil.error("获取所有货品id、name失败");
     }
+    @PostMapping("/putOff")
+    public Result putOffById(String id){
+        Integer result=spuService.putOff(id);
+        if(result==1){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("下架商品失败");
+    }
+
 }

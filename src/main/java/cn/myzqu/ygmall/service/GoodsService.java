@@ -11,6 +11,7 @@ import java.util.List;
  * Created by Simon on 2018/9/19.
  */
 public interface GoodsService {
+    public Integer createNew(Goods goods);
     List<GoodsDetailVO> getGoodsAndSPU(String id);
     HashMap<String,String> getIdAndAttributes(String spuId);
     public Integer putOffBySpuId(String spuId);

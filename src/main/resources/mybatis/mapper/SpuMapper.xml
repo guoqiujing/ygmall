@@ -12,16 +12,18 @@
     <result column="params" property="params" jdbcType="VARCHAR" />
     <result column="attributes_name" property="attributesName" jdbcType="VARCHAR" />
     <result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, category_id, brand_id, createtime, sale_count, comment_count,
-    params, attributes_name, subtitle
+    params, attributes_name, subtitle,status
   </sql>
 
 
   <select id="selectIdAndName" resultMap="BaseResultMap" parameterType="Map">
-    select id,createtime,name from spu
+    select id,createtime,name,category_id from spu
    <where>
+     status=0
     <if test="name!=null and name!=''">
       AND name LIKE '%${name}%'
     </if>
@@ -47,11 +49,11 @@
     insert into spu (id, name, category_id, 
       brand_id, createtime,
       sale_count, comment_count, params, 
-      attributes_name, subtitle)
+      attributes_name, subtitle,status)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{categoryId,jdbcType=INTEGER}, 
       #{brandId,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP},
       #{saleCount,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, #{params,jdbcType=VARCHAR}, 
-      #{attributesName,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR})
+      #{attributesName,jdbcType=VARCHAR}, #{subtitle,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT})
   </insert>
 
 
@@ -90,6 +92,9 @@
       <if test="subtitle != null" >
         subtitle,
       </if>
+      <if test="status != null" >
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -124,6 +129,9 @@
       </if>
       <if test="subtitle != null" >
         #{subtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -160,6 +168,9 @@
       <if test="subtitle != null" >
         subtitle = #{subtitle,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -173,7 +184,8 @@
       comment_count = #{commentCount,jdbcType=INTEGER},
       params = #{params,jdbcType=VARCHAR},
       attributes_name = #{attributesName,jdbcType=VARCHAR},
-      subtitle = #{subtitle,jdbcType=VARCHAR}
+      subtitle = #{subtitle,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

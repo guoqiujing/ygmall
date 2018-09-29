@@ -493,9 +493,9 @@ CREATE TABLE `user_collage` (
 -- ----------------------------
 DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `product_id` int(11) DEFAULT NULL COMMENT '商品id',
+  `id` varchar(50) NOT NULL,
+  `user_id` varchar(50) NOT NULL,
+  `product_id` varchar(50)  DEFAULT NULL COMMENT '商品id',
   `quantity` int(11) DEFAULT NULL COMMENT '数量',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',

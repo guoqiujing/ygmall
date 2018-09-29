@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.service.impl;
 
+import cn.myzqu.ygmall.dao.GoodsMapper;
 import cn.myzqu.ygmall.dao.SpuMapper;
 import cn.myzqu.ygmall.pojo.Brand;
 import cn.myzqu.ygmall.pojo.Spu;
@@ -23,6 +24,8 @@ import java.util.*;
 public class SpuServiceImpl implements SpuService{
     @Autowired
     private SpuMapper spuMapper;
+    @Autowired
+    private GoodsMapper goodsMapper;
     @Override
     public Spu selectByPrimaryKey(String id) {
         Spu spu=spuMapper.selectByPrimaryKey(id);
@@ -62,6 +65,17 @@ public class SpuServiceImpl implements SpuService{
         spu.setCommentCount(0);
         spu.setSaleCount(0);
         spu.setAttributesName("");
+        Byte b=0;
+        spu.setStatus(b);
         return spuMapper.insert(spu);
+    }
+    public Integer putOff(String id){
+        Spu spu=new Spu();
+        spu.setId(id);
+        Byte b=1;
+        spu.setStatus(b);
+        Integer result=spuMapper.updateByPrimaryKeySelective(spu);
+        goodsMapper.putOffBySpuId(id);
+        return result;
     }
 }

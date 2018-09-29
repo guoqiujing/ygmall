@@ -27,9 +27,9 @@ input[type="radio"]{
     font-weight: bold;
 }
 /*使商品分类开始处于合上状态*/
-.son-panel-body{
-    display: none;
-}
+/*.son-panel-body{*/
+    /*display: none;*/
+/*}*/
 
 label{
     font-weight: normal;

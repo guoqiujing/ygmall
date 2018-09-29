@@ -14,4 +14,5 @@ public interface SpuService {
     Spu selectByPrimaryKey(String id);
     public int insert(String spuId,String name,Integer categoryId,Integer brandId,String[] attrNamesArray,String[] attrValuesArray,String subtitle) throws ParseException;
     public BootstrapTableVO selectIdAndName(int pageSize, int pageIndex, String searchInput);
+    public Integer putOff(String id);
 }

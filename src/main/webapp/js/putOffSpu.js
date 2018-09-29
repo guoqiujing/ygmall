@@ -22,12 +22,12 @@ $().ready(function (){
         },
         columns:
             [{
-                field: 'id',
-                title: '编号'
-            },{
                 field: 'name',
                 title: '名称'
             }, {
+                field: 'id',
+                title: '编号'
+            },{
                 field: 'createtime',
                 title: '创建时间',
                 formatter:function(value,row,index){
@@ -48,8 +48,6 @@ $().ready(function (){
 
 // 请求服务数据时所传参数
 function queryParams(params){
-    console.log("111111");
-        console.log($('#searchInput').val());
     return{
         //每页多少条数据
         pageSize: params.pageSize,
@@ -64,13 +62,15 @@ function putOff(id){
     var r=confirm("该操作将下架此货品下的所有商品！是否确定下架？");
     if (r==true) {
         $.ajax({
-            url:"/goods/putOffBySpuId",
+            url:"/spu/putOff",
             type:"post",
-            data:{spuId:id},
+            data:{id:id},
             dataType:"json",
             success:function(value){
-                if(value.code==0)
+                if(value.code==0) {
                     alert("操作成功！");
+                    window.location.href = "/page/admin/putOffSpu.html";
+                }
                 else
                     alert("操作失败！");
             },

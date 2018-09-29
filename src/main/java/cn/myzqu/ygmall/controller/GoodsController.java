@@ -38,6 +38,12 @@ public class GoodsController {
         }
         return ResultVOUtil.error("查找商品属性值与ID失败");
     }
+
+    /**
+     * 根据货品id下架商品
+     * @param spuId
+     * @return
+     */
     @PostMapping("/putOffBySpuId")
     public Result putOffBySpuId(String spuId){
         Integer result=goodsService.putOffBySpuId(spuId);
@@ -60,5 +66,12 @@ public class GoodsController {
             return ResultVOUtil.success(bto);
         }
         return ResultVOUtil.error("获取商品失败");
+    }
+    @PostMapping("/create")
+    public Result create(Goods goods){
+        Integer result=goodsService.createNew(goods);
+        if(result==1)
+            return ResultVOUtil.success();
+        return ResultVOUtil.error("上架商品失败");
     }
 }

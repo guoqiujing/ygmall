@@ -86,7 +86,7 @@ function submitAnd(mark){
                     if (data.code == 0) {
                         pageImg.uploadImg(data.data);
                         alert("提交成功");
-                        // window.location.href=mark;
+                        window.location.href=mark;
                     }
                 },
                 error: function (data) {
@@ -199,6 +199,7 @@ var pageImg = new Vue({
         },
         //图片预览
         showImg: function (event) {
+            $("#showImgDiv").html("");
             var file = event.target.files;
             var reader = new FileReader();
             var that = this;
