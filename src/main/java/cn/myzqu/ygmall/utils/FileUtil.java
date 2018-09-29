@@ -15,6 +15,8 @@ import java.io.File;
 public class FileUtil {
 
     private final static Logger logger = LoggerFactory.getLogger(FileUtil.class);
+
+
     /**
      * 删除
      * @param files
@@ -123,7 +125,6 @@ public class FileUtil {
      * @return
      */
     public void compress(File file,String saveFilePath) throws Exception{
-        //
         //根据情况进行图片压缩
         if(file.length() >= 0.5*1024*1024){
             //大于500k的情况，压缩0.5

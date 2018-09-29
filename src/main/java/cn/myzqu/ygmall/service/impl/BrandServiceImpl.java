@@ -44,7 +44,6 @@ public class BrandServiceImpl implements BrandService{
         BootstrapTableVO bto=new BootstrapTableVO(total,brandList);
         if(total<=0)
             return null;
-
         return bto;
     }
 

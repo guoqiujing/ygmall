@@ -22,7 +22,7 @@ import java.util.List;
 public class GoodsController {
     @Autowired
     private GoodsService goodsService;
-    @PostMapping("/getCompleteGoodsById")  //√
+    @PostMapping("/getCompleteGoodsById")
     public Result getGoodsAndSPU(String id){
         List<GoodsDetailVO> goodsDetailVO=goodsService.getGoodsAndSPU(id);
         if (goodsDetailVO.size() > 0) {

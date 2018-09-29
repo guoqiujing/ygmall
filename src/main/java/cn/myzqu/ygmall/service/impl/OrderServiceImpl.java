@@ -35,11 +35,12 @@ public class OrderServiceImpl implements OrderService {
         return null;
     }
 
+
     @Override
-    public PageDTO selectOrderDetailByCustomerId(String customerId, Integer pageIndex, Integer pageSize) {
+    public PageDTO selectOrderDetailByCustomerId(String customerId, Byte status, Integer pageIndex, Integer pageSize) {
         //分页插件
         Page<Order> page = PageHelper.startPage(pageIndex,pageSize);
-        List<Order> orders = orderMapper.selectOrderDetailByCustomerId(customerId);
+        List<Order> orders = orderMapper.selectOrderDetailByCustomerIdAndStatus(customerId,status);
         //获取总记录数
         int total = (int)page.getTotal();
         System.out.println("总记录数："+total);
@@ -49,10 +50,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public PageDTO selectOrderDetailByCustomerId(String customerId, Byte status, Integer pageIndex, Integer pageSize) {
+    public PageDTO selectByCustomerId(String customerId, Byte status, Integer pageIndex, Integer pageSize) {
         //分页插件
         Page<Order> page = PageHelper.startPage(pageIndex,pageSize);
-        List<Order> orders = orderMapper.selectOrderDetailByCustomerIdAndStatus(customerId,status);
+        List<Order> orders = orderMapper.selectByCustomerId(customerId,status);
         //获取总记录数
         int total = (int)page.getTotal();
         System.out.println("总记录数："+total);

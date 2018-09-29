@@ -12,7 +12,6 @@ public interface OrderService {
 
     Boolean add();
 
-    PageDTO selectOrderDetailByCustomerId(String customerId, Integer pageIndex, Integer pageSize);
     PageDTO selectOrderDetailByCustomerId(String customerId, Byte status,Integer pageIndex, Integer pageSize);
-
+    PageDTO selectByCustomerId(String customerId, Byte status,Integer pageIndex, Integer pageSize);
 }
