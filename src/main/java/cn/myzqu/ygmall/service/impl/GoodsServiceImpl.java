@@ -27,7 +27,6 @@ public class GoodsServiceImpl implements GoodsService {
      * 创建新商品（商品上架时调用）
      */
     public Integer createNew(Goods goods){
-        goods.setId(KeyUtil.getUUID());
         Integer integer=goodsMapper.insertSelective(goods);
         return integer;
     }

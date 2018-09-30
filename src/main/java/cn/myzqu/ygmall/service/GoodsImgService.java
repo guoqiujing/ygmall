@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface GoodsImgService {
     List<GoodsImg> selectByGoodsId(String goodsId);
-
+    public Integer insert(String spuId,String urlList);
 }

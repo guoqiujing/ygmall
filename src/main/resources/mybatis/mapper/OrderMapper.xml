@@ -76,7 +76,7 @@
   <select id="selectByCustomerId" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
-    from order
+    from `order`
     where `order`.user_id = #{customerId,jdbcType=VARCHAR}
     <where>
       <if test="status!=null">
@@ -90,17 +90,17 @@
   <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
-    from order
+    from `order`
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
   <delete id="deleteById" parameterType="java.lang.String" >
-    delete from order
+    delete from `order`
     where id = #{id,jdbcType=VARCHAR}
   </delete>
 
   <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.Order" >
-    insert into order
+    insert into `order`
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -198,7 +198,7 @@
   </insert>
 
   <update id="updateById" parameterType="cn.myzqu.ygmall.pojo.Order" >
-    update order
+    update `order`
     <set >
       <if test="userId != null" >
         user_id = #{userId,jdbcType=VARCHAR},

@@ -2,6 +2,7 @@ package cn.myzqu.ygmall.controller;
 
 import cn.myzqu.ygmall.pojo.Goods;
 import cn.myzqu.ygmall.service.GoodsService;
+import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import cn.myzqu.ygmall.vo.GoodsDetailVO;
@@ -69,9 +70,11 @@ public class GoodsController {
     }
     @PostMapping("/create")
     public Result create(Goods goods){
+        String goodsId= KeyUtil.getUUID();
+        goods.setId(goodsId);
         Integer result=goodsService.createNew(goods);
         if(result==1)
-            return ResultVOUtil.success();
+            return ResultVOUtil.success(goodsId);
         return ResultVOUtil.error("上架商品失败");
     }
 }

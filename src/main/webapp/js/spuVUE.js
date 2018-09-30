@@ -45,10 +45,6 @@ function showAllBrand(target){
 }
 
 function submitAnd(mark){
-    if(mark==0)
-        mark="/page/admin/putOnGoods.html";
-    else
-        mark="/page/admin/putOnSpu.html";
     var name=$(".inputname").val();
     var subtitle=$(".inputsubtitle").val();
     var brandId=$("input[name='brandId']:checked").val();
@@ -57,6 +53,10 @@ function submitAnd(mark){
     var attrValues=$(".attrValue");
     var attrNamesArray=[];
     var attrValuesArray=[];
+    if(mark==0)
+        mark="/page/admin/putOnGoods.html?categoryId="+categoryId+"&name="+name+"&spuId=";
+    else
+        mark="/page/admin/putOnSpu.html";
     for(var i=0;i<attrNames.size();i++) {
         if(attrNames[i].value.trim()!=""&&attrValues[i].value.trim()!=""){
             attrNamesArray.push(attrNames[i].value.trim());
@@ -86,7 +86,7 @@ function submitAnd(mark){
                     if (data.code == 0) {
                         pageImg.uploadImg(data.data);
                         alert("提交成功");
-                        window.location.href=mark;
+                        window.location.href=mark+data.data;
                     }
                 },
                 error: function (data) {

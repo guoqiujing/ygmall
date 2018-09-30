@@ -61,7 +61,7 @@ var page = new Vue({
             if (that.comment.additionalComment != null) {
                 that.addFlag = true;
             }
-            /* console.log(that.addFlag);*/
+            console.log(that.addFlag);
         },
         //根据评论ID获取回复以及追评回复
         getReply: function () {
@@ -75,15 +75,16 @@ var page = new Vue({
                 dataType: "json",
                 contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (msg) {
-                    /*console.log(msg)*/
+                    console.log(msg)
                     if (msg.code == 0) {
-                        console.log("成功");
+                        console.log(that.replyConFlag);
                         console.log(msg.data);
                         that.reply = msg.data;
                         that.judgereply();
                     }
-                    else {
-                        /*alert("查找失败");*/
+                    else {//商家没有进行回复
+                        that.replyConFlag=false;
+                        that.conFlag=false;
                     }
                 },
                 error: function () {
@@ -101,35 +102,6 @@ var page = new Vue({
             if (that.reply.content != null) {
                 that.conFlag = true;
             }
-            /*console.log(that.replyConFlag);
-             console.log(that.conFlag);*/
-        },
-        //查看评论详情
-        getCommentReply: function () {
-            var that = this;
-            $.ajax({
-                type: "POST",
-                url: "/comment/commentInfo",
-                data: {
-                    id: that.commentId
-                },
-                dataType: "json",
-                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-                success: function (msg) {
-                    /*console.log(msg)*/
-                    if (msg.code == 0) {
-                        console.log("成功");
-                        console.log(msg.data);
-                        that.comment = msg.data;
-                    }
-                    else {
-                        /*alert("查找失败");*/
-                    }
-                },
-                error: function () {
-                    alert("错误");
-                }
-            })
         },
         //点击模态框中的回复
         replyCon: function () {
@@ -257,6 +229,32 @@ var page = new Vue({
                     alert("错误");
                 }
             });
-        }
+        },
+        /*updateStatus:function () {
+            var that = this;
+            $.ajax({
+                type: "POST",
+                url: "/comment/updateStatus",
+                data: {
+                    id: that.commentId,
+                    commentStatus:1
+                },
+                dataType: "json",
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    if (msg.code == 0) {
+                        console.log("成功");
+                        console.log(msg.data);
+                        window.location.href = "/page/admin/commentAdmin.html";
+                    }
+                    else {
+                        alert("更改回复状态成功");
+                    }
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        }*/
     },
 })

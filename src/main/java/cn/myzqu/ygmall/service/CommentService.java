@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.service;
 
+import cn.myzqu.ygmall.dto.CommentDTO;
 import cn.myzqu.ygmall.pojo.Comment;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 
@@ -27,4 +28,27 @@ public interface CommentService {
      * @return
      */
     int updateDisplayByIdList(List<Integer> idList);
+
+    /**
+     * 根据评论id查找评论及回复
+     * @param id
+     * @return
+     */
+    Comment findCommentReply(String id);
+
+    /**
+     *根据评论id查询评论
+     *  @param id
+     * @return
+     */
+    Comment findComment(String id);
+
+
+    /**
+     *根据评论id更新回复状态
+     *  @param id
+     * @param commentStatus
+     * @return
+     */
+    /*CommentDTO modifyStatusById(String id,Byte commentStatus);*/
 }

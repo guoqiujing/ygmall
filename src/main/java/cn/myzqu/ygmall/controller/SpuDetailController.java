@@ -35,6 +35,6 @@ public class SpuDetailController {
         if(result==1){
             return ResultVOUtil.success();
         }
-        return ResultVOUtil.error("新增商品详情图片失败");
+        return ResultVOUtil.error("添加商品详情图片失败");
     }
 }

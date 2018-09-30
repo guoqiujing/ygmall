@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.controller;
 
+import cn.myzqu.ygmall.dto.CommentDTO;
 import cn.myzqu.ygmall.pojo.Comment;
 import cn.myzqu.ygmall.service.CommentService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
@@ -67,4 +68,35 @@ public class CommentController {
         }
         return ResultVOUtil.error("批量隐藏失败");
     }
+
+    @PostMapping("/commentAndreplyInfo")
+    @ResponseBody
+    public Result getCommentAndReplyInfoById(String id){
+        System.out.println(id);
+        Comment comment=commentService.findCommentReply(id);
+        if(comment!=null){
+            return ResultVOUtil.success(comment);
+        }
+        return ResultVOUtil.error("找不到该评论");
+    }
+
+    @PostMapping("/commentInfo")
+    @ResponseBody
+    public Result getCommentInfoById(String id){
+        System.out.println(id);
+        Comment comment=commentService.findComment(id);
+        if(comment!=null){
+            return ResultVOUtil.success(comment);
+        }
+        return ResultVOUtil.error("找不到该评论");
+    }
+
+    /*@PostMapping("/updateStatus")
+    @ResponseBody
+    public Result updateStatusById(String id,String commentStatus){
+        System.out.println(id);
+        CommentDTO commentDTO=null;
+        commentDTO=commentService.modifyStatusById();
+        return ResultVOUtil.error("更新回复状态失败!");
+    }*/
 }

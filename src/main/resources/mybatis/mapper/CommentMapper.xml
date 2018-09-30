@@ -20,6 +20,34 @@
     <result column="display" property="display" jdbcType="TINYINT" />
     <result column="comment_status" property="commentStatus" jdbcType="TINYINT" />
   </resultMap>
+  <resultMap id="Comment_Reply_Map" type="cn.myzqu.ygmall.pojo.Comment">
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_img" property="userImg" jdbcType="VARCHAR" />
+    <result column="goods_score" property="goodsScore" jdbcType="TINYINT" />
+    <result column="service_score" property="serviceScore" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="comment_img" property="commentImg" jdbcType="VARCHAR" />
+    <result column="additional_comment" property="additionalComment" jdbcType="VARCHAR" />
+    <result column="additional_comment_img" property="additionalCommentImg" jdbcType="VARCHAR" />
+    <result column="additional_comment_time" property="additionalCommentTime" jdbcType="VARCHAR" />
+    <result column="format_and_style" property="formatAndStyle" jdbcType="VARCHAR" />
+    <result column="display" property="display" jdbcType="TINYINT" />
+    <result column="comment_status" property="commentStatus" jdbcType="TINYINT" />
+    <association property="replyComment" javaType="cn.myzqu.ygmall.pojo.ReplyComment">
+      <id column="id" property="id" jdbcType="VARCHAR" />
+      <result column="reply_id" property="replyId" jdbcType="VARCHAR" />
+      <result column="reply_name" property="replyName" jdbcType="VARCHAR" />
+      <result column="reply_content" property="replyContent" jdbcType="VARCHAR" />
+      <result column="reply_time" property="replyTime" jdbcType="TIMESTAMP" />
+      <result column="content" property="content" jdbcType="VARCHAR" />
+      <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    </association>
+  </resultMap>
   <sql id="Base_Column_List" >
     id, goods_id, order_id, user_id, user_name, user_img, goods_score, service_score, 
     create_time, comment, comment_img, additional_comment, additional_comment_img, additional_comment_time, 
@@ -30,6 +58,13 @@
     <include refid="Base_Column_List" />
     from comment
     where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <!--根据评论id查询评论以及回复-->
+  <select id="getCommentReply" resultMap="Comment_Reply_Map" parameterType="java.lang.String">
+    select c.comment,c.additional_comment,r.reply_content,r.content
+    from comment c,reply_comment r
+    where c.id=#{id,jdbcType=VARCHAR} and c.id=r.reply_id
   </select>
 
   <!--查询评论-->
@@ -269,5 +304,12 @@
              open="(" close=")" index="index" separator=",">
       #{id}
     </foreach>
+  </update>
+
+  <!--根据评论id更改回复状态-->
+  <update id="updateStatusById">
+    update comment
+    set comment_status={#commentStatus}
+    where id={#id}
   </update>
 </mapper>
