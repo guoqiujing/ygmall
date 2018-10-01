@@ -22,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +38,7 @@ public class BuyerOrderController {
     private OrderService orderService;
 
     @Autowired
+
     private OrderAlterService orderAlterService;
 
     //创建订单
@@ -78,9 +80,9 @@ public class BuyerOrderController {
             log.error("【查询订单】id为空");
             throw new CustomException(1,"id为空");
         }
-        OrderAlter orderAlter = orderAlterService.selectByOrderId(id);
-        if(orderAlter!=null){
-            return ResultVOUtil.success(orderAlter);
+        List<OrderAlter>  orderAlters = orderAlterService.selectByOrderId(id);
+        if(orderAlters.size()>0){
+            return ResultVOUtil.success(orderAlters);
         }
         return ResultVOUtil.error("该订单暂时无进度");
     }

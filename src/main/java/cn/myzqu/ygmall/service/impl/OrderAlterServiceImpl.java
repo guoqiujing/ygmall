@@ -6,6 +6,8 @@ import cn.myzqu.ygmall.service.OrderAlterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by 的川 on 2018/10/1.
  */
@@ -16,7 +18,7 @@ public class OrderAlterServiceImpl implements OrderAlterService{
     private OrderAlterMapper orderAlterMapper;
 
     @Override
-    public OrderAlter selectByOrderId(String orderId) {
+    public List<OrderAlter> selectByOrderId(String orderId) {
         return orderAlterMapper.selectByOrderId(orderId);
     }
 }

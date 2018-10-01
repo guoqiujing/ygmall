@@ -2,6 +2,8 @@ package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.pojo.OrderAlter;
 
+import java.util.List;
+
 public interface OrderAlterMapper {
 
     int deleteByPrimaryKey(String id);
@@ -10,7 +12,7 @@ public interface OrderAlterMapper {
 
     OrderAlter selectByPrimaryKey(String id);
 
-    OrderAlter selectByOrderId(String orderId);
+    List<OrderAlter> selectByOrderId(String orderId);
 
     int updateByPrimaryKey(OrderAlter record);
 }
