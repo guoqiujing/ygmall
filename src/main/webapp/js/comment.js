@@ -149,7 +149,7 @@ var page = new Vue({
                 layer.msg('只能回复一次！!', {time: 2000});
             }
         },
-        addReply: function () {
+        addReply: function () {//添加回复
             var that = this;
             $.ajax({
                 type: "POST",
@@ -164,21 +164,21 @@ var page = new Vue({
                     if (msg.code == 0) {
                         console.log("成功");
                         console.log(msg.data);
-                        window.location.href = "/page/admin/commentAdmin.html";
+                        that.updateStatus();
                     }
                     else {
                         alert("回复失败");
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    alert("回复评论错误");
                 }
             });
         },
         clean: function () {
             this.replyContent = '';
         },
-        addContent: function () {
+        addContent: function () {//添加追评回复
             var that = this;
             $.ajax({
                 type: "POST",
@@ -193,14 +193,14 @@ var page = new Vue({
                     if (msg.code == 0) {
                         console.log("成功");
                         console.log(msg.data);
-                        window.location.href = "/page/admin/commentAdmin.html";
+                        that.updateStatus();
                     }
                     else {
                         alert("回复追评失败");
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    alert("添加追评错误");
                 }
             });
         },
@@ -219,18 +219,18 @@ var page = new Vue({
                     if (msg.code == 0) {
                         console.log("成功");
                         console.log(msg.data);
-                        window.location.href = "/page/admin/commentAdmin.html";
+                        that.updateStatus();
                     }
                     else {
                         alert("回复追评失败");
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    alert("追评错误");
                 }
             });
         },
-        /*updateStatus:function () {
+        updateStatus:function () {
             var that = this;
             $.ajax({
                 type: "POST",
@@ -248,13 +248,13 @@ var page = new Vue({
                         window.location.href = "/page/admin/commentAdmin.html";
                     }
                     else {
-                        alert("更改回复状态成功");
+                        alert("更改回复状态失败");
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    alert("更新状态错误");
                 }
             });
-        }*/
+        }
     },
 })

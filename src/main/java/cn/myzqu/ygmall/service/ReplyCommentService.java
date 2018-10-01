@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.service;
 
+import cn.myzqu.ygmall.dto.ReplyCommentDTO;
 import cn.myzqu.ygmall.pojo.ReplyComment;
 
 /**
@@ -8,9 +9,9 @@ import cn.myzqu.ygmall.pojo.ReplyComment;
 public interface ReplyCommentService {
     ReplyComment findReplyComment(String id);
 
-    ReplyComment addReply(String commentId,String replyContent);
+    int addReply(ReplyComment replyComment);
 
-    ReplyComment addContent(String commentId,String content);
+    int updateContent(ReplyComment replyComment);
 
-    ReplyComment updateContent(String id,String content);
+    int addContent(ReplyCommentDTO replyCommentDTO);
 }

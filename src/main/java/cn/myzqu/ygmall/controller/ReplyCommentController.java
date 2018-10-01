@@ -1,7 +1,9 @@
 package cn.myzqu.ygmall.controller;
 
+import cn.myzqu.ygmall.dto.ReplyCommentDTO;
 import cn.myzqu.ygmall.pojo.ReplyComment;
 import cn.myzqu.ygmall.service.ReplyCommentService;
+import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,6 @@ public class ReplyCommentController {
         return ResultVOUtil.error("找不到该评论的回复");
     }
 
-
     /**
      *添加回复
      *  @param commentId
@@ -44,13 +45,14 @@ public class ReplyCommentController {
     @PostMapping("/addReply")
     @ResponseBody
     public Result addReply(String commentId,String replyContent){
-        ReplyComment replyComment=replyCommentService.addReply(commentId,replyContent);
-        if(replyComment!=null){
-            return ResultVOUtil.success(replyComment);
-        }
-        return ResultVOUtil.error("回复失败");
+       String id=KeyUtil.getUUID();
+       ReplyComment replyComment=new ReplyComment(id,commentId,replyContent);
+       int r=replyCommentService.addReply(replyComment);
+       if(r<=0){
+           return ResultVOUtil.error("回复失败");
+       }
+        return  ResultVOUtil.success();
     }
-
 
     /**
      * 添加追评回复
@@ -61,21 +63,25 @@ public class ReplyCommentController {
     @PostMapping("/addContent")
     @ResponseBody
     public Result addContent(String commentId,String content){
-        ReplyComment replyComment=replyCommentService.addContent(commentId,content);
-        if(replyComment!=null){
-            return ResultVOUtil.success(replyComment);
+        String id= KeyUtil.getUUID();
+        ReplyCommentDTO replyCommentDTO=new ReplyCommentDTO(id,commentId,content);
+        int r=replyCommentService.addContent(replyCommentDTO);
+        if(r<=0){
+            return  ResultVOUtil.error("添加追评回复失败");
         }
-        return null;
+        return  ResultVOUtil.success();
     }
 
     @PostMapping("/updateContent")
     @ResponseBody
     public Result updateContent(String id,String content){
         System.out.println(id);
-        ReplyComment replyComment=replyCommentService.updateContent(id,content);
-        if(replyComment!=null){
-            return ResultVOUtil.success(replyComment);
+        ReplyComment replyComment=new ReplyComment(id,content);
+        int r=replyCommentService.updateContent(replyComment);
+        if(r<=0){
+            return  ResultVOUtil.error("更改追评回复错误");
+
         }
-        return null;
+        return ResultVOUtil.success();
     }
 }

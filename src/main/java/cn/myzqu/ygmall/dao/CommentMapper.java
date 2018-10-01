@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.dao;
 
+import cn.myzqu.ygmall.dto.CommentDTO;
 import cn.myzqu.ygmall.pojo.Comment;
 
 import java.util.List;
@@ -24,7 +25,5 @@ public interface CommentMapper {
 
     int  updateByIdList(List<Integer> idList);
 
-    Comment getCommentReply(String id);
-
-    /*int updateStatusById(String id,Byte commentStatus);*/
+    int updateStatusById(CommentDTO record);
 }

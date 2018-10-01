@@ -30,13 +30,6 @@ public interface CommentService {
     int updateDisplayByIdList(List<Integer> idList);
 
     /**
-     * 根据评论id查找评论及回复
-     * @param id
-     * @return
-     */
-    Comment findCommentReply(String id);
-
-    /**
      *根据评论id查询评论
      *  @param id
      * @return
@@ -46,9 +39,8 @@ public interface CommentService {
 
     /**
      *根据评论id更新回复状态
-     *  @param id
-     * @param commentStatus
+     *  @param commentDTO
      * @return
      */
-    /*CommentDTO modifyStatusById(String id,Byte commentStatus);*/
+   int modifyStatusById(CommentDTO commentDTO);
 }
