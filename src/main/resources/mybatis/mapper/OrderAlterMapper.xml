@@ -8,26 +8,33 @@
     <result column="operator" property="operator" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
+
   <sql id="Base_Column_List" >
     id, entry_id, state, operator, create_time
   </sql>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from order_alter
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <!--根据订单id查询订单进度-->
+  <select id="selectByOrderId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from order_alter
+    where entry_id = #{orderId,jdbcType=VARCHAR}
+    order by create_time
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from order_alter
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+
+
   <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.OrderAlter" >
-    insert into order_alter (id, entry_id, state, 
-      operator, create_time)
-    values (#{id,jdbcType=VARCHAR}, #{entryId,jdbcType=VARCHAR}, #{state,jdbcType=TINYINT}, 
-      #{operator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="cn.myzqu.ygmall.pojo.OrderAlter" >
     insert into order_alter
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -64,7 +71,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.myzqu.ygmall.pojo.OrderAlter" >
+
+  <update id="updateByPrimaryKey" parameterType="cn.myzqu.ygmall.pojo.OrderAlter" >
     update order_alter
     <set >
       <if test="entryId != null" >
@@ -82,12 +90,5 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.myzqu.ygmall.pojo.OrderAlter" >
-    update order_alter
-    set entry_id = #{entryId,jdbcType=VARCHAR},
-      state = #{state,jdbcType=TINYINT},
-      operator = #{operator,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
+
 </mapper>

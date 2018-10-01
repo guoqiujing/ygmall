@@ -7,6 +7,8 @@ import cn.myzqu.ygmall.enums.ResultEnum;
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.form.OrderForm;
 import cn.myzqu.ygmall.pojo.Order;
+import cn.myzqu.ygmall.pojo.OrderAlter;
+import cn.myzqu.ygmall.service.OrderAlterService;
 import cn.myzqu.ygmall.service.OrderService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
@@ -34,6 +36,9 @@ public class BuyerOrderController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private OrderAlterService orderAlterService;
+
     //创建订单
     @PostMapping("/create")
     public ResultVO create(OrderForm orderForm) {
@@ -60,6 +65,24 @@ public class BuyerOrderController {
             return ResultVOUtil.success(order);
         }
         return ResultVOUtil.error("暂时没有订单");
+    }
+
+    /**
+     * 根据订单id获取订单进度
+     * @param id
+     * @return
+     */
+    @GetMapping("/alter/{id}")
+    public Result getOrderAlter(@PathVariable("id") String id){
+        if(StringUtils.isEmpty(id)){
+            log.error("【查询订单】id为空");
+            throw new CustomException(1,"id为空");
+        }
+        OrderAlter orderAlter = orderAlterService.selectByOrderId(id);
+        if(orderAlter!=null){
+            return ResultVOUtil.success(orderAlter);
+        }
+        return ResultVOUtil.error("该订单暂时无进度");
     }
 
     //用户获取订单列表
