@@ -7,6 +7,7 @@ import cn.myzqu.ygmall.service.CommentService;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import java.util.Map;
  * Created by CC on 2018/9/20.
  */
 @Service
+@Slf4j
 public class CommentServiceImpl implements CommentService{
 
     @Autowired
@@ -57,20 +59,14 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Comment findCommentReply(String id){
-        Comment comment=commentMapper.getCommentReply(id);
-        return comment;
-    }
-
     public Comment findComment(String id){
         Comment comment=commentMapper.selectByPrimaryKey(id);
         return comment;
     }
 
-   /* public CommentDTO modifyStatusById(String id,Byte commentStatus){
-        int a=commentMapper.updateStatusById(id,commentStatus);
-        if(a>0)
-            return null;
-        return null;
-    }*/
+    @Override
+    public int modifyStatusById(CommentDTO commentDTO){
+        int c=commentMapper.updateStatusById(commentDTO);
+        return c;
+    }
 }

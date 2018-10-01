@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.dao;
 
+import cn.myzqu.ygmall.dto.ReplyCommentDTO;
 import cn.myzqu.ygmall.pojo.ReplyComment;
 
 public interface ReplyCommentMapper {
@@ -16,4 +17,6 @@ public interface ReplyCommentMapper {
     int updateByPrimaryKey(ReplyComment record);
 
     ReplyComment selectByCommentId(String commentId);
+
+    int insertContent(ReplyCommentDTO replyCommentDTO);
 }

@@ -29,23 +29,13 @@ public class Comment {
 
     private String additionalCommentImg;
 
-    private String additionalCommentTime;
+    private Date additionalCommentTime;
 
     private String formatAndStyle;
 
     private Byte display;
 
     private Byte commentStatus;
-
-    private  ReplyComment replyComment;
-
-    public ReplyComment getReplyComment() {
-        return replyComment;
-    }
-
-    public void setReplyComment(ReplyComment replyComment) {
-        this.replyComment = replyComment;
-    }
 
     public String getId() {
         return id;
@@ -151,12 +141,12 @@ public class Comment {
         this.additionalCommentImg = additionalCommentImg == null ? null : additionalCommentImg.trim();
     }
 
-    public String getAdditionalCommentTime() {
+    public Date getAdditionalCommentTime() {
         return additionalCommentTime;
     }
 
-    public void setAdditionalCommentTime(String additionalCommentTime) {
-        this.additionalCommentTime = additionalCommentTime == null ? null : additionalCommentTime.trim();
+    public void setAdditionalCommentTime(Date additionalCommentTime) {
+        this.additionalCommentTime = additionalCommentTime;
     }
 
     public String getFormatAndStyle() {
@@ -196,4 +186,5 @@ public class Comment {
         this.goodsScore = goodsScore;
         this.commentStatus = commentStatus;
     }
+
 }

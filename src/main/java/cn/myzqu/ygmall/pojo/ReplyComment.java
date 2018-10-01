@@ -82,13 +82,6 @@ public class ReplyComment {
         this.replyContent = replyContent;
     }
 
-    public ReplyComment(String id, String replyId, String content, Date creatTime) {
-        this.id = id;
-        this.replyId = replyId;
-        this.content = content;
-        this.creatTime = creatTime;
-    }
-
     public ReplyComment(String id, String content) {
         this.id = id;
         this.content = content;

@@ -69,17 +69,6 @@ public class CommentController {
         return ResultVOUtil.error("批量隐藏失败");
     }
 
-    @PostMapping("/commentAndreplyInfo")
-    @ResponseBody
-    public Result getCommentAndReplyInfoById(String id){
-        System.out.println(id);
-        Comment comment=commentService.findCommentReply(id);
-        if(comment!=null){
-            return ResultVOUtil.success(comment);
-        }
-        return ResultVOUtil.error("找不到该评论");
-    }
-
     @PostMapping("/commentInfo")
     @ResponseBody
     public Result getCommentInfoById(String id){
@@ -91,12 +80,17 @@ public class CommentController {
         return ResultVOUtil.error("找不到该评论");
     }
 
-    /*@PostMapping("/updateStatus")
+    @PostMapping("/updateStatus")
     @ResponseBody
-    public Result updateStatusById(String id,String commentStatus){
+    public Result updateStatusById(String id,Byte commentStatus){
         System.out.println(id);
-        CommentDTO commentDTO=null;
-        commentDTO=commentService.modifyStatusById();
-        return ResultVOUtil.error("更新回复状态失败!");
-    }*/
+        System.out.println(commentStatus);
+        CommentDTO commentDTO=new CommentDTO(id,commentStatus);
+        int c=commentService.modifyStatusById(commentDTO);
+        System.out.println(c);
+        if(c<=0){
+            return ResultVOUtil.error("更改状态失败");
+        }
+        return ResultVOUtil.success();
+    }
 }
