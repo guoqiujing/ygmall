@@ -89,6 +89,7 @@
 				<a href="/page/user/index.html">首页</a> <code>&gt;</code>
 				<font class="ufont">个人中心</font>
 			</div>
+            <!--左边栏-->
 			<div class="userl" style="background-color: #fff;">
 				<div class="side-nav my-side">
 					<div class="user-info">
@@ -115,9 +116,6 @@
 						<dd>
 							<a href="/page/user/user.html?tab=2"  v-bind:class="{curs : tab==2}">评论晒单</a>
 						</dd>
-						<dd>
-							<a href="/page/user/user.html?tab=3"  v-bind:class="{curs : tab==3}">我的预售</a>
-						</dd>
 						<dt>个人账户</dt>
 						<dd>
 							<a href="/page/user/user.html?tab=4"  v-bind:class="{curs : tab==4}">个人资料</a>
@@ -138,6 +136,7 @@
 
 				</div>
 			</div>
+            <!--右边内容部分-->
 			<div class="userr">
                 <!--订单状态tab-->
 				<div id="tabline-bar" class="tabline" v-if="tab==1" v-cloak>
@@ -149,7 +148,7 @@
 					<h2 class="h2bg" v-on:click="orderTab=4">已取消</h2>
 				</div>
 				<!--订单中心-->
-				<div class="clearfix" v-if="tab==1" v-cloak>
+				<div class="clearfix" style="height: 365px;position: relative;display: flex;flex-direction: column;align-items: center;" v-if="tab==1" v-cloak>
 					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData table table-hover ">
 						<tbody>
 							<tr style="background-color: #F5F5F5;">
@@ -171,13 +170,16 @@
                                 <td align="center" v-if="order.status==3">已完成</td>
                                 <td align="center" v-if="order.status==4">已取消</td>
 								<td align="center">
-										<a href="#">付款</a>
-										<a href="#">取消订单</a>
+										<a v-bind:href="'/page/user/user.html?tab=1_2&orderId='+order.id">查看详情</a>
+										<a href="#" v-if="order.status==0">&nbsp;&nbsp;付款</a>
+                                        <a href="#" v-if="order.status==2">&nbsp;&nbsp;确认收货</a>
+										<a href="#" v-if="order.status!=3&&order.status!=4">&nbsp;&nbsp;取消订单</a>
 								</td>
 							</tr>
 						</tbody>
 					</table>
-					<div class="page-bar">
+                    <!--分页-->
+					<div class="page-bar" style="position: absolute;bottom: 0;" v-if="all>1">
 						<div style="margin: auto;width:450px;">
 							<ul v-cloak>
 								<li v-if="cur>1">
@@ -202,7 +204,100 @@
 						</div>
 					</div>
 				</div>
-				<!--个人资料-->
+				<!--查看订单详情-->
+                <div class="clearfix" style="position: relative;display: flex;flex-direction: column;align-items: start;" v-if="tab=='1_2'" v-cloak>
+                    <!--返回按钮-->
+                    <a href="/page/user/user.html?tab=1" style="font-size:14px;font-weight:bold;color:#717171;padding:4px;margin-bottom: 6px;" name="submit" v-if="tab=='1_2'"><code style="background-color: rgba(0,0,0,0);">&lt;　</code>返回订单列表</a>
+                    <!--订单内容-->
+                    <div class="order-detail-div">
+                        <div class="order-detail-panel">
+                            <h4>收货人信息</h4>
+                            <div class="order-detail">
+                                <span>收货人：</span>
+                                <div>{{selectedOrder.receiverName}}</div>
+                            </div>
+                            <div class="order-detail">
+                                <span>地址：</span>
+                                <div>{{selectedOrder.province+selectedOrder.city+selectedOrder.county+selectedOrder.detail}}</div>
+                            </div>
+                            <div class="order-detail">
+                                <span>手机号码：</span>
+                                <div>{{selectedOrder.receiverTel}}</div>
+                            </div>
+                        </div>
+                        <div class="order-detail-panel">
+                            <h4>配送信息</h4>
+                            <div class="order-detail">
+                                <span>配送方式：</span>
+                                <div>普通快递</div>
+                            </div>
+                            <div class="order-detail">
+                                <span>运费：</span>
+                                <div>¥{{selectedOrder.carriage.toFixed(2)}}</div>
+                            </div>
+                            <div class="order-detail">
+                                <span>送货日期：</span>
+                                <div>2018-03-27</div>
+                            </div>
+                        </div>
+                        <div class="order-detail-panel" style="border-right-width: 0;">
+                            <h4>付款信息</h4>
+                            <div class="order-detail">
+                                <span>付款时间：</span>
+                                <div>2018-03-26 13:47:28</div>
+                            </div>
+                            <div class="order-detail">
+                                <span>商品总额：</span>
+                                <div>¥{{selectedOrder.goodsTotalMoney.toFixed(2)}}</div>
+                            </div>
+                            <div class="order-detail">
+                                <span>应支付金额：</span>
+                                <div>¥{{selectedOrder.realTotalMoney.toFixed(2)}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData table table-hover ">
+                        <tbody>
+                        <tr style="background-color: #F5F5F5;">
+                            <th>商品</th>
+                            <th>商品编号</th>
+                            <th>单价</th>
+                            <th>商品数量</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr style="height: 70px;" v-for="good in orderDetails" v-cloak>
+                            <td style="vertical-align: middle;width: 400px;text-align: center;color: #333;padding: 20px 40px;">{{good.goodsName}}</td>
+                            <td align="center" style="vertical-align: middle;">
+                                <a v-bind:href="good.id" class="f0">{{good.id}}</a>
+                            </td>
+                            <td style="vertical-align: middle;color: #333;" align="center">¥{{good.price.toFixed(2)}}</td>
+                            <td style="vertical-align: middle;color: #333;" align="center">{{good.count}}</td>
+                            <td style="vertical-align: middle;color: #333;" align="center">
+                                <a href="#" v-on:click="">申请售后</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="goods-total">
+                        <ul>
+                            <li>
+                                <span class="label">商品总额：</span>
+                                <span class="txt">¥{{selectedOrder.goodsTotalMoney.toFixed(2)}}</span>
+                            </li>
+                            <li>
+                                <span class="label">运　　费：</span>
+                                <span class="txt">
+                	                        ¥{{selectedOrder.carriage.toFixed(2)}}
+                                </span>
+                            </li>
+                            <li class="ftx-01">
+                                <span class="label" style="color: #e4393c;">应付总额：</span>
+                                <span class="txt count">¥{{selectedOrder.realTotalMoney.toFixed(2)}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--个人资料-->
 				<div class="clearfix" style="_height:1%;" v-if="tab==4" v-cloak>
 					<div class="title">个人资料</div>
 					<form class="form-horizontal" style="border:1px solid #E8E8E8;border-top:0;padding: 20px 250px;background-color: #fff;">
@@ -211,7 +306,8 @@
                             <div class="col-sm-10">
 								<img id="userImg" style="height: 48px;width: 48px;margin-bottom: 10px;" v-bind:src="img" v-show="imgShow">
                                 <!--此处为图片上传-->
-								<input type="file" id="exampleInputFile" v-on:change="getFile($event),showImg($event)">
+								<input style="display: none;" type="file" id="exampleInputFile" v-on:change="getFile($event),showImg($event)">
+                                <input onclick="exampleInputFile.click()" type="button" class="btn" style="color:#6c6c6c;background-color: #e0e0e0;font-size: 12px;padding: 4px 8px;border:1px solid #afafaf;" value="选择图片">
                             </div>
                         </div>
 						<div class="form-group">
@@ -388,9 +484,24 @@
 			</div>
 
 		</div>
+        <div style="margin: 120px auto 0 auto; width:100%;background-color: #fff;text-align: center;">
+		    <img src="../../img/xuanchuankouhao.png" style="margin: 0 auto;width: 1195px; height: 132px;">
+        </div>
+        <div class="nav_botttom" style="background-color:#000;margin-top: 0;color:#fff;">
+            <div class="block">
+                <div class="footlinks f_l">
+                    <a rel="nofollow" href="#" title="关于呐喊" target="_blank">关于呐喊</a> |
+                    <a rel="nofollow" href="#" title="反馈建议">反馈建议</a> |
+                    <a href="#" target="_blank">网站地图</a>
+                </div>
+                <div class="copyright f_r">
+
+                    ©2018 艺格商城
+                </div>
+            </div>
+        </div>
 		<script type="text/javascript" src="../../js/user.js"></script>
 		<script type="text/javascript" src="../../js/pagination.js"></script>
-
 	</body>
 <style>
     body .demo-class .layui-layer-btn .layui-layer-btn0 {

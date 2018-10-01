@@ -20,4 +20,19 @@ public class GoodsImgServiceImpl implements GoodsImgService {
         List<GoodsImg> goodsImgs=goodsImgMapper.selectByGoodsId(goodsId);
         return goodsImgs;
     }
+    public Integer insert(String goodsId,String urlList) {
+        String[] urls=urlList.split(",");
+        int i;
+        for(i=0;i<urls.length;i++){
+            GoodsImg goodsImg=new GoodsImg();
+            goodsImg.setImgOrder(i);
+            goodsImg.setImgUrl(urls[i]);
+            goodsImg.setGoodsId(goodsId);
+            if(goodsImgMapper.insert(goodsImg)!=1)
+                break;
+        }
+        if(i!=urls.length)
+            return null;
+        return 1;
+    }
 }

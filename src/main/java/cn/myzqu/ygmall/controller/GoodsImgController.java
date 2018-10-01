@@ -27,4 +27,12 @@ public class GoodsImgController {
         }
         return ResultVOUtil.error("查找商品图片失败");
     }
+    @PostMapping("/insert")
+    public Result insert(String goodsId,String urlList){
+        Integer result= goodsImgService.insert(goodsId,urlList);
+        if(result==1){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("添加商品细节图失败");
+    }
 }

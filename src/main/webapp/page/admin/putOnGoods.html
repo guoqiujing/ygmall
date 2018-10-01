@@ -145,7 +145,7 @@
 						<span class="glyphicon glyphicon-ok" style="border-radius: 1em;border: 1px solid #099800;font-size: 4em;padding: 0.2em;color: #4fb149;"></span>
 							<h2>2018 画中话 境界-素描静物 陈伯尧 周仁超 唐智源</h2>
 					</div>
-					<div class="panel selectSpu">
+					<div class="panel selectSpu" style="min-height: 170px">
 						<div class="panel-heading" >
 							<h3 class="panel-title ">①请选择对应货品</h3>
 						</div>
@@ -172,66 +172,71 @@
 							<h3 class="panel-title ">②请完善商品信息</h3>
 						</div>
 						<div class="panel-body">
-							<form class="form-horizontal" id="goodsForm1">
+
+
+
+							<form class="form-horizontal" id="goodsForm1" alt="1">
 								<input name="spuId" class="spuId nodisplay">
 								<input name="name" class="name nodisplay">
 								<input name="categoryId" class="categoryId nodisplay">
+								<input name="attributes" class="attributes nodisplay">
+								<input name="saleCount" class="saleCount nodisplay" value="0">
 								<div class="form-group">
-									<div id="showImgDiv" class="col-sm-12" style="margin-bottom: 10px;">
+									<div id="" class="col-sm-12 showImgDiv" style="margin-bottom: 10px;">
 										<template v-for="val,index in imgArray">
 											<img class="col-sm-2" v-bind:src="val" v-show="imgShow" style="display:block">
 										</template>
 									</div>
-									<label for="inputFile" class="col-sm-2 control-label">上传照片</label>
-									<div class="col-sm-10">
-										<label for="inputFile" class="btn btn-default fileBtn">上传照片</label>
-										<input type="file" id="inputFile" style="display:none" v-on:change="getFile($event),showImg($event)" multiple="multiple" accept="image/*">
+									<label class="col-sm-2 control-label">上传照片</label>
+									<div class="col-sm-10 labelInput">
+										<label for="labelInput1" class="btn btn-default fileBtn">上传照片</label>
+										<input id="labelInput1" type="file" style="display:none" onchange="getFile(event),showImg(event,this)" multiple="multiple" accept="image/*">
 									</div>
 								</div>
 								<div class="form-group nodisplay" id="attributesDiv1"></div>
 								<div class="form-group nodisplay" id="attributesDiv"></div>
 								<div class="form-group">
-									<label for="statusinput" class="col-sm-2 control-label">商品状态</label>
+									<label class="col-sm-2 control-label">商品状态</label>
 									<div class="col-sm-3">
-										<select name="status" class="form-control status" id="statusinput" onchange="changeSale()">
+										<select name="status" class="form-control status" onchange="changeSale(this)">
 											<option value="0">在售</option>
 											<option value="1">预售</option>
 											<option value="4">促销</option>
 										</select>
 									</div>
-									<label for="unitinput" class="col-sm-2 control-label">计数单位</label>
+									<label class="col-sm-2 control-label">计数单位</label>
 									<div class="col-sm-3">
-										<input name="unit" type="email" class="form-control unit" id="unitinput" placeholder="">
+										<input name="unit" type="email" class="form-control unit" placeholder="">
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="costinput" class="col-sm-2 control-label">成本价</label>
+									<label class="col-sm-2 control-label">成本价</label>
 									<div class="col-sm-3">
-										<input name="cost" type="email" class="form-control cost" id="costinput" placeholder="">
+										<input name="cost" type="email" class="form-control cost" placeholder="">
 									</div>
-									<label for="marketPriceinput" class="col-sm-2 control-label">市场价</label>
+									<label class="col-sm-2 control-label">市场价</label>
 									<div class="col-sm-3">
-										<input name="marketPrice" type="email" class="form-control marketPrice" id="marketPriceinput" placeholder="">
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="priceinput" class="col-sm-2 control-label">艺格价</label>
-									<div class="col-sm-3">
-										<input name="price" type="email" class="form-control price" id="priceinput" placeholder="">
-									</div>
-									<label for="salePriceinput" class="col-sm-2 control-label">促销价</label>
-									<div class="col-sm-3">
-										<input name="salePrice" class="form-control salePrice" id="salePriceinput" disabled>
+										<input name="marketPrice" type="email" class="form-control marketPrice" placeholder="">
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="saleCountinput" class="col-sm-2 control-label">库存</label>
+									<label class="col-sm-2 control-label">艺格价</label>
 									<div class="col-sm-3">
-										<input name="saleCount" type="text" class="form-control" id="saleCountinput">
+										<input name="price" type="email" class="form-control price" placeholder="">
 									</div>
-									<label for="noteinput" class="col-sm-2 control-label">备注</label>
+									<label class="col-sm-2 control-label">促销价</label>
 									<div class="col-sm-3">
-										<input name="note" type="text" class="form-control note" id="noteinput">
+										<input name="salePrice" class="form-control salePrice" disabled>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">库存</label>
+									<div class="col-sm-3">
+										<input name="inventory" type="text" class="form-control">
+									</div>
+									<label class="col-sm-2 control-label">备注</label>
+									<div class="col-sm-3">
+										<input name="note" type="text" class="form-control note">
 									</div>
 								</div>
 							</form>
@@ -240,6 +245,7 @@
 						<button type="button" class="glyphicon glyphicon-plus col-sm-12" onclick="addGoodsForm()"></button>
 					</div>
 				</form>
+				<button type="button" class="btn btn-primary col-sm-2" onclick="submitAll()">提交</button>
 			</div>
 		</div>
 		<!-- END MAIN CONTENT -->

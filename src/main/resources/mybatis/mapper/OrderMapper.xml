@@ -33,7 +33,6 @@
       <result column="status" property="status" jdbcType="TINYINT" />
       <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </collection>
-
   </resultMap>
 
   <sql id="Base_Column_List" >
@@ -79,11 +78,9 @@
     <include refid="Base_Column_List" />
     from `order`
     where `order`.user_id = #{customerId,jdbcType=VARCHAR}
-    <where>
       <if test="status!=null">
         and `order`.status = #{status,jdbcType=TINYINT}
       </if>
-    </where>
     ORDER BY `order`.create_time
   </select>
 
