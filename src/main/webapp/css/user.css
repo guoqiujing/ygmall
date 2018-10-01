@@ -28,7 +28,92 @@ th {
     	margin-bottom: 20px;
     }
 
+ /*订单详情内容面板*/
+ .order-detail-div{
+     display:flex;
+     flex-direction: row;
+     width: 100%;
+     margin-bottom: 30px;
+     background-color: #fff;
+     border: 1px solid #B4995D;
+     border-top-width: 4px;
+ }
 
+ /*订单详情内容单个面板*/
+ .order-detail-panel{
+     display:flex;
+     flex-direction: column;
+     width: 33.33%;
+     padding: 15px 18px;
+     border-right: 1px solid #eee;
+ }
+
+ .order-detail-panel>h4{
+     font-size: 18px;
+     line-height: 24px;
+     margin-bottom: 10px;
+ }
+
+ .order-detail{
+     font-size: 12px;
+     line-height: 24px;
+ }
+
+.order-detail>span{
+    width: 84px;float: left;
+}
+
+.order-detail>div{
+    width: 200px;float: left;
+}
+
+.goods-total {
+    display: block;
+    padding: 20px;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #e8e8e8;
+    border-top-width: 0;
+}
+
+.goods-total ul {
+    float: right;
+}
+
+.goods-total li {
+    display: block;
+    line-height: 28px;
+}
+
+.ftx-01, .ftx01 {
+    color: #e4393c;
+}
+.goods-total .label {
+    float: left;
+    width: 500px;
+    text-align: right;
+
+    display: inline;
+    padding: 0;
+    font-size: 12px;
+    font-weight:normal;
+    line-height: 28px;
+    color: #666;
+}
+
+.goods-total .txt {
+    float: left;
+    width: 130px;
+    text-align: right;
+    font-family: verdana;
+}
+
+
+
+.goods-total .count {
+    font-size: 18px;
+    font-weight: 700;
+}
 
 
 

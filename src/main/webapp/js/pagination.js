@@ -2077,6 +2077,9 @@ var page = new Vue({
         tab:'1',//左边选项卡切换标志
         orderTab:-1,//订单状态选项卡
         orders:[],//订单列表
+        orderId:'',//url参数，用于请求订单
+        selectedOrder:{},//要查看的订单
+        orderDetails:[],//订单详情列表
         user:{},//用户信息
         staticUser:{},//静态不可变用户信息
 
@@ -2107,9 +2110,8 @@ var page = new Vue({
 
     //监听每次数据的修改，并执行修改后的方法
     watch: {
-        cur: function(oldValue , newValue){
-            console.log(arguments);
-
+        cur: function(){
+            this.getOrders();
         },
 
         prov: function () {
@@ -2131,6 +2133,7 @@ var page = new Vue({
         },
 
         tab:function () {
+            console.log(this.tab);
             if(this.tab==='6_1'||this.tab==='6'){
                 this.receiverName='';
                 this.prov= '北京';
@@ -2144,14 +2147,21 @@ var page = new Vue({
             }
         },
 
+        // 订单状态选项卡变化时，请求新数据
         orderTab:function () {
             console.log(this.orderTab);
             this.cur=1;
+            this.getOrders();
+        },
+
+        orderId:function () {
+            console.log(this.orderId);
         }
     },
     //创建vue实例之后的事件
 	created: function (){
         console.log("vue:"+GetQueryString("tab"));
+        //判断用户是否已经登录
         if(this.userId!==null)
             this.getUserInfo();
         else{
@@ -2160,11 +2170,16 @@ var page = new Vue({
         if(GetQueryString("tab")!==null){
             this.tab=GetQueryString("tab");
         }
+        //跳转到查看订单详情页面
+        if(GetQueryString("orderId")!==null){
+            this.orderId=GetQueryString("orderId");
+            this.getOrdersByOrderId();
+            this.getOrderDetails();
+        }
         if(this.tab==='1'){
             this.getOrders();
         }
         if(this.tab==='6'){
-            //console.log("收货地址");
             this.getAddress();
         }
 	},
@@ -2192,13 +2207,15 @@ var page = new Vue({
                 contentType:'application/json;charset=UTF-8',
                 success: function (msg) {
                     if(msg.code===0){
-                        console.log("成功");
+                        console.log("订单查找成功");
                         console.log(msg.data);
                         that.orders=msg.data.rows;
-                        that.all=msg.data.pageNum;
+                        that.all=msg.data.pages;
                     }
                     else {
-                        console.log("查找失败");
+                        console.log("订单查找失败");
+                        that.orders=[];
+                        that.all=1;
                     }
                 },
                 error: function () {
@@ -2208,34 +2225,8 @@ var page = new Vue({
         },
 
         //点击订单页面页码
-        btnClick: function(data){//页码点击事件
-            console.log(data);
-            var that=this;
-            $.ajax({
-                type: "POST",
-                url: "/brand/list",
-                data: {
-                    pageSize:8,
-                    pageIndex:data,
-                    brandName: "",
-                    brandStatus:null
-                },
-                dataType: "json",
-                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
-                success: function (msg) {
-                    if(msg.code===0){
-                        console.log("成功");
-                        console.log(msg.data.rows);
-                        that.orders=msg.data.rows;
-                    }
-                    else {
-                        alert("查找失败");
-                    }
-                },
-                error: function () {
-                    alert("错误");
-                }
-            });
+        btnClick: function(data){
+            //console.log(data);
             if(data !== this.cur){
                 this.cur = data
             }
@@ -2243,6 +2234,54 @@ var page = new Vue({
 
         pageClick: function(){
             //console.log('现在在'+this.cur+'页');
+        },
+
+        //根据订单id查询该订单信息
+        getOrdersByOrderId:function () {
+            var that=this;
+            $.ajax({
+                type: "GET",
+                url: "/buyer/order/info/"+that.orderId,
+                dataType: "json",
+                contentType:'application/json;charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        console.log("订单查找成功");
+                        console.log(msg.data);
+                        that.selectedOrder=msg.data;
+                    }
+                    else {
+                        console.log("订单查找失败");
+                    }
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
+        },
+
+        //根据订单id查询订单详情列表
+        getOrderDetails:function () {
+            var that=this;
+            $.ajax({
+                type: "GET",
+                url: "/buyer/order/detail/list/"+that.orderId,
+                dataType: "json",
+                contentType:'application/json;charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        console.log("订单详情查找成功");
+                        console.log(msg.data);
+                        that.orderDetails=msg.data;
+                    }
+                    else {
+                        console.log("订单详情查找失败");
+                    }
+                },
+                error: function () {
+                    alert("错误");
+                }
+            });
         },
 
         //获取用户信息
@@ -2258,14 +2297,14 @@ var page = new Vue({
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (msg) {
                     if(msg.code==0){
-                        console.log("成功");
-                        console.log(msg.data);
+                        console.log("获取用户信息成功");
+                        //console.log(msg.data);
                         that.user=msg.data;
                         that.staticUser=msg.data;
                         that.img=msg.data.icon;
                     }
                     else {
-                        console.log("查找失败");
+                        console.log("查找用户信息失败");
                     }
                 },
                 error: function () {
@@ -2290,8 +2329,9 @@ var page = new Vue({
                 dataType: "json",
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (msg) {
+                    layer.closeAll('loading');
                     if(msg.code==0){
-                        console.log("成功");
+                        console.log("修改成功");
                         layer.msg('修改成功', {
                             time: 900
                         }, function(){
@@ -2344,6 +2384,7 @@ var page = new Vue({
         uploadImg:function () {
             //阻止元素发生默认的行为
             //event.preventDefault();
+            layer.load(2);
             var formData = new FormData();
             formData.append("file", this.file);
             var that=this;
@@ -2372,13 +2413,16 @@ var page = new Vue({
                         that.updateUserInfo();
                     }
                     else if(msg.code===1){
+                        layer.closeAll('loading');
                         layer.msg('上传文件不能大于4M', {time: 2500});
                     }
                     else {
+                        layer.closeAll('loading');
                         layer.msg('上传图片失败', {time: 2000});
                     }
                 },
                 error: function () {
+                    layer.closeAll('loading');
                     alert("错误");
                 }
             });
@@ -2699,5 +2743,5 @@ function GetQueryString(name)
 {
     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
-    if(r!=null)return  decodeURI(r[2]); return null;
+    if(r!==null)return  decodeURI(r[2]); return null;
 }
