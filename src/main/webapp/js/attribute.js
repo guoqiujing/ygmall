@@ -59,7 +59,9 @@ function formatterOperate(value, row, index){
 }
 // 编辑
 function editRow(index){
-    var str="#tableAttribute>tbody>tr:nth-child("+ (index+1) +") td.editable";
+    console.log(index);
+    // var str="#tableAttribute>tbody>tr:nth-child("+ (index+1) +") td.editable";
+    var str="#tableAttribute>tbody>tr[data-index='"+index+"'] td.editable";
     $(str).each(function(){
         var value = $(this).text();
         $(this).html("<input value='"+value+"'>");
@@ -103,7 +105,7 @@ function insertArrtibute(categoryId,name){
 }
 // 保存修改
 function saveRow(index,categoryId){
-    var obj=$("#tableAttribute>tbody>tr:nth-child("+ (index+1) +") td.editable");
+    var obj=$("#tableAttribute>tbody>tr[data-index='"+index+"'] td.editable");
     var del=true,insert1=true,insert2=true,insert0=true;
     var attribute0 = obj.eq(0).find("input").val();
     var attribute1 = obj.eq(1).find("input").val();
