@@ -63,7 +63,6 @@
 
 		<div class="head" style="background-color: #181818;">
 			<div class="head-center" style="padding: 0;background-color:#181818 ;height: auto;">
-
 				<ul class="nav navbar-nav">
 					<li class="active" style="background-color: #484848;">
 						<a href="#" style="padding: 15px 50px 15px 50px;">热门商品分类</a>
@@ -81,7 +80,6 @@
 						<a href="#" style="padding: 15px 30px ;">舞蹈生专区</a>
 					</li>
 				</ul>
-
 			</div>
 		</div>
 		<div id="app" class="block clearfix">
@@ -94,7 +92,7 @@
 				<div class="side-nav my-side">
 					<div class="user-info">
 						<a href="#">
-							<img v-bind:src="staticUser.icon" style="width: 38px;height: 38px;background-color: #979797;">
+							<img v-bind:src="staticUser.icon" style="width: 38px;height: 38px;">
 						</a>
                         <div  style="height: 24px;width: 168px;">
 						<p v-cloak>用户{{staticUser.telephone}}</p>
@@ -173,7 +171,7 @@
 										<a v-bind:href="'/page/user/user.html?tab=1_2&orderId='+order.id">查看详情</a>
 										<a href="#" v-if="order.status==0">&nbsp;&nbsp;付款</a>
                                         <a href="#" v-if="order.status==2">&nbsp;&nbsp;确认收货</a>
-										<a href="#" v-if="order.status!=3&&order.status!=4">&nbsp;&nbsp;取消订单</a>
+										<a href="#" v-if="order.status!=2&&order.status!=3&&order.status!=4">&nbsp;&nbsp;取消订单</a>
 								</td>
 							</tr>
 						</tbody>
@@ -208,6 +206,117 @@
                 <div class="clearfix" style="position: relative;display: flex;flex-direction: column;align-items: start;" v-if="tab=='1_2'" v-cloak>
                     <!--返回按钮-->
                     <a href="/page/user/user.html?tab=1" style="font-size:14px;font-weight:bold;color:#717171;padding:4px;margin-bottom: 6px;" name="submit" v-if="tab=='1_2'"><code style="background-color: rgba(0,0,0,0);">&lt;　</code>返回订单列表</a>
+                    <!--订单流程图-->
+                    <div class="order-detail-div">
+                        <div class="order-detail-panel" style="width:250px;height: 160px;justify-content: flex-start;align-items: center;">
+                            <div style="margin-bottom: 28px;">
+                                <span style="color: #787878;font-size: 14px;">订单号：{{selectedOrder.id}}</span>
+                            </div>
+                            <div>
+								<span style="font: 700 24px/34px 'Microsoft YaHei';color: #B4995D;" v-if="orderState==0">待付款</span>
+                                <span style="font: 700 24px/34px 'Microsoft YaHei';color: #B4995D;" v-if="orderState==1">待发货</span>
+								<span style="font: 700 24px/34px 'Microsoft YaHei';color: #B4995D;" v-if="orderState==2">待收货</span>
+								<span style="font: 700 24px/34px 'Microsoft YaHei';color: #B4995D;" v-if="orderState==3">完成</span>
+								<span style="font: 700 24px/34px 'Microsoft YaHei';color: #B4995D;" v-if="orderState==4">已取消</span>
+                            </div>
+                        </div>
+                        <div style="display: flex;flex-direction: column;justify-content: center; width: 100%;">
+                            <div style="display: flex;flex-direction:row;width: 100%;height: 120px;padding: 0 20px;justify-content:  center;">
+                                <!--提交订单-->
+                                <div style="display: flex;flex-direction:column;align-items:center;height: 100%;">
+									<div style="display: flex;flex-direction:column;align-items:center;justify-content: center;width: 50px;height: 50px;">
+										<img src="../../img/putorder.png">
+									</div>
+                                    <div style="font-size: 14px;margin-top: 5px;">
+                                        提交订单
+                                    </div>
+                                    <div>
+                                        {{selectedOrder.createTime.substring(0,10)}}
+                                    </div>
+									<div>
+										{{selectedOrder.createTime.substring(11)}}
+									</div>
+                                </div>
+                                <!--箭头-->
+                                <div style="height: 100%;padding: 16px 0;" v-if="process_put!=''">
+									    <img src="../../img/proce.png">
+                                </div>
+                                <!--付款状态-->
+								<div style="display: flex;flex-direction:column;align-items:center;height: 100%;">
+                                    <div style="display: flex;flex-direction:column;align-items:center;justify-content: center;width: 50px;height: 50px;">
+                                        <img src="../../img/nopay.png" v-if="process_pay==''&&process_cancel==''">
+                                        <img src="../../img/pay.png" v-if="process_pay!=''||process_cancel!=''">
+                                    </div>
+                                    <div style="font-size: 14px;margin-top: 5px;" v-if="process_pay==''">
+                                        等待付款
+                                    </div>
+									<div style="font-size: 14px;margin-top: 5px;" v-if="process_pay!=''">
+										付款成功
+									</div>
+									<div v-if="process_pay!=''">
+										{{process_pay.createTime.substring(0,10)}}
+									</div>
+									<div v-if="process_pay!=''">
+										{{process_pay.createTime.substring(11)}}
+									</div>
+								</div>
+                                <!--箭头-->
+                                <div style="height: 100%;padding: 16px 0;" v-if="process_pay!=''">
+                                    <img src="../../img/proce.png">
+                                </div>
+                                <!--等待发收货-->
+                                <div style="display: flex;flex-direction:column;align-items:center;height: 100%;" v-if="process_pay!=''">
+                                    <div style="display: flex;flex-direction:column;align-items:center;justify-content: center;width: 50px;height: 50px;">
+                                        <img src="../../img/notout.png" v-if="process_pay!=''&&process_send==''&&process_cancel==''">
+                                        <img src="../../img/nosend.png" v-if="process_send!=''&&process_done==''">
+                                        <img src="../../img/sended.png" v-if="process_send!=''&&process_done!=''">
+                                        <img src="../../img/send.png" v-if="process_pay!=''&&process_send==''&&process_cancel!=''">
+                                    </div>
+                                    <div style="font-size: 14px;margin-top: 5px;" v-if="process_pay!=''&&process_send==''">
+                                        等待发货
+                                    </div>
+                                    <div style="font-size: 14px;margin-top: 5px;" v-if="process_send!=''">
+                                        已发货
+                                    </div>
+                                    <div v-if="process_send!=''">
+                                        {{process_send.createTime.substring(0,10)}}
+                                    </div>
+                                    <div v-if="process_send!=''">
+                                        {{process_send.createTime.substring(11)}}
+                                    </div>
+                                </div>
+                                <!--箭头-->
+                                <div style="height: 100%;padding: 16px 0;" v-if="process_done!=''||process_cancel!=''">
+                                    <img src="../../img/proce.png">
+                                </div>
+                                <!--完成或取消-->
+                                <div style="display: flex;flex-direction:column;align-items:center;height: 100%;">
+                                    <div style="display: flex;flex-direction:column;align-items:center;justify-content: center;width: 50px;height: 50px;">
+                                        <img src="../../img/done.png" v-if="process_done!=''">
+                                        <img src="../../img/cancel.png" v-if="process_cancel!=''">
+                                    </div>
+                                    <div style="font-size: 14px;margin-top: 5px;" v-if="process_done!=''">
+                                        完成
+                                    </div>
+                                    <div style="font-size: 14px;margin-top: 5px;" v-if="process_cancel!=''">
+                                        已取消
+                                    </div>
+                                    <div v-if="process_done!=''">
+                                        {{process_done.createTime.substring(0,10)}}
+                                    </div>
+                                    <div v-if="process_done!=''">
+                                        {{process_done.createTime.substring(11)}}
+                                    </div>
+                                    <div v-if="process_cancel!=''">
+                                        {{process_cancel.createTime.substring(0,10)}}
+                                    </div>
+                                    <div v-if="process_cancel!=''">
+                                        {{process_cancel.createTime.substring(11)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!--订单内容-->
                     <div class="order-detail-div">
                         <div class="order-detail-panel">
@@ -228,23 +337,26 @@
                         <div class="order-detail-panel">
                             <h4>配送信息</h4>
                             <div class="order-detail">
-                                <span>配送方式：</span>
-                                <div>普通快递</div>
-                            </div>
-                            <div class="order-detail">
                                 <span>运费：</span>
                                 <div>¥{{selectedOrder.carriage.toFixed(2)}}</div>
                             </div>
                             <div class="order-detail">
-                                <span>送货日期：</span>
-                                <div>2018-03-27</div>
+                                <span>发货日期：</span>
+                                <div v-if="process_send!=''">{{process_send.createTime.substring(0,10)}}</div>
+                                <div v-if="process_send==''">- -</div>
+                            </div>
+                            <div class="order-detail">
+                                <span>收货日期：</span>
+                                <div v-if="process_done!=''">{{process_done.createTime.substring(0,10)}}</div>
+                                <div v-if="process_done==''">- -</div>
                             </div>
                         </div>
                         <div class="order-detail-panel" style="border-right-width: 0;">
                             <h4>付款信息</h4>
                             <div class="order-detail">
                                 <span>付款时间：</span>
-                                <div>2018-03-26 13:47:28</div>
+                                <div v-if="process_pay!=''">{{process_pay.createTime}}</div>
+                                <div v-if="process_pay==''">- -</div>
                             </div>
                             <div class="order-detail">
                                 <span>商品总额：</span>
@@ -256,6 +368,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--订单商品列表-->
                     <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData table table-hover ">
                         <tbody>
                         <tr style="background-color: #F5F5F5;">
@@ -273,11 +386,12 @@
                             <td style="vertical-align: middle;color: #333;" align="center">¥{{good.price.toFixed(2)}}</td>
                             <td style="vertical-align: middle;color: #333;" align="center">{{good.count}}</td>
                             <td style="vertical-align: middle;color: #333;" align="center">
-                                <a href="#" v-on:click="">申请售后</a>
+                                <a href="#" v-on:click="" v-if="process_done!=''">申请售后</a>
                             </td>
                         </tr>
                         </tbody>
                     </table>
+                    <!--商品总结-->
                     <div class="goods-total">
                         <ul>
                             <li>

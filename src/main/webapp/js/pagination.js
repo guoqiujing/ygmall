@@ -2035,7 +2035,7 @@ var top=new Vue({
                 dataType: "json",
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (msg) {
-                    if(msg.code==0){
+                    if(msg.code===0){
                         console.log("成功");
                         //console.log(msg.data);
                         that.user=msg.data;
@@ -2057,7 +2057,7 @@ var top=new Vue({
                 url: "/app/logout",
                 dataType: "json",
                 success: function(data){
-                    if(data.code==0){
+                    if(data.code===0){
                         console.log("注销成功")
                         window.location.href="/page/user/login.html";
                     }
@@ -2080,6 +2080,12 @@ var page = new Vue({
         orderId:'',//url参数，用于请求订单
         selectedOrder:{},//要查看的订单
         orderDetails:[],//订单详情列表
+        process_put:'',//订单流程：提交订单
+        process_pay:'',//订单流程：付款
+        process_send:'',//订单流程：发货
+        process_done:'',//订单流程：完成
+        process_cancel:'',//订单流程：取消
+        orderState:-1,//订单状态
         user:{},//用户信息
         staticUser:{},//静态不可变用户信息
 
@@ -2175,6 +2181,7 @@ var page = new Vue({
             this.orderId=GetQueryString("orderId");
             this.getOrdersByOrderId();
             this.getOrderDetails();
+            this.getOrderChangeList();
         }
         if(this.tab==='1'){
             this.getOrders();
@@ -2219,7 +2226,7 @@ var page = new Vue({
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    console.log("错误");
                 }
             });
         },
@@ -2255,7 +2262,7 @@ var page = new Vue({
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    console.log("错误");
                 }
             });
         },
@@ -2279,7 +2286,56 @@ var page = new Vue({
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    console.log("错误");
+                }
+            });
+        },
+
+        //根据订单id查询订单状态变更列表
+        getOrderChangeList:function () {
+            var that=this;
+            $.ajax({
+                type: "GET",
+                url: "/buyer/order/alter/"+that.orderId,
+                dataType: "json",
+                contentType:'application/json;charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        console.log("订单变更列表查找成功");
+                        console.log(msg.data);
+                        for(var i=0;i<msg.data.length;i++){
+                            if(msg.data[i].state===0){
+                                that.process_put=msg.data[i];
+                                that.orderState=0;
+                            }
+                            if(msg.data[i].state===1){
+                                that.process_pay=msg.data[i];
+                                if(that.orderState<1)
+                                    that.orderState=1;
+                            }
+                            if(msg.data[i].state===2){
+                                that.process_send=msg.data[i];
+                                if(that.orderState<2)
+                                    that.orderState=2;
+                            }
+                            if(msg.data[i].state===3){
+                                that.process_done=msg.data[i];
+                                if(that.orderState<3)
+                                that.orderState=3;
+                            }
+                            if(msg.data[i].state===4){
+                                that.process_cancel=msg.data[i];
+                                if(that.orderState<4)
+                                that.orderState=4;
+                            }
+                        }
+                    }
+                    else {
+                        console.log("订单变更列表查找失败");
+                    }
+                },
+                error: function () {
+                    console.log("错误");
                 }
             });
         },
@@ -2296,9 +2352,8 @@ var page = new Vue({
                 dataType: "json",
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (msg) {
-                    if(msg.code==0){
+                    if(msg.code===0){
                         console.log("获取用户信息成功");
-                        //console.log(msg.data);
                         that.user=msg.data;
                         that.staticUser=msg.data;
                         that.img=msg.data.icon;
@@ -2308,7 +2363,7 @@ var page = new Vue({
                     }
                 },
                 error: function () {
-                    console.log("错误");
+                    layer.msg('发生错误', {time: 900});
                 }
             });
         },
@@ -2330,19 +2385,16 @@ var page = new Vue({
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (msg) {
                     layer.closeAll('loading');
-                    if(msg.code==0){
+                    if(msg.code===0){
                         console.log("修改成功");
-                        layer.msg('修改成功', {
-                            time: 900
-                        }, function(){
-                        });
+                        layer.msg('修改成功', {time: 900});
                     }
                     else {
-                        alert("修改失败");
+                        layer.msg('修改失败', {time: 900});
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    layer.msg('发生错误', {time: 900});
                 }
             });
         },
@@ -2423,7 +2475,7 @@ var page = new Vue({
                 },
                 error: function () {
                     layer.closeAll('loading');
-                    alert("错误");
+                    layer.msg('发生错误', {time: 2000});
                 }
             });
         },
@@ -2465,19 +2517,19 @@ var page = new Vue({
                 dataType: "json",
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (msg) {
-                    if(msg.code==0){
+                    if(msg.code===0){
                         console.log("成功");
                         layer.msg('修改成功', {time: 2000});
                         that.oldPwd="";
                         that.newPwd="";
                         that.reNewPwd="";
                     }
-                    else if(msg.code==1){
+                    else if(msg.code===1){
                         layer.msg('原密码输入错误', {time: 1500});
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    layer.msg('发生错误', {time: 2000});
                 }
             });
         },
@@ -2494,16 +2546,16 @@ var page = new Vue({
                 dataType: "json",
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (msg) {
-                    if(msg.code==0){
+                    if(msg.code===0){
                         console.log("成功");
                         that.addressList=msg.data;
                     }
                     else {
-                        console.log("查找失败");
+                        layer.msg('查找失败', {time: 2000});
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    layer.msg('发生错误', {time: 2000});
                 }
             });
         },
@@ -2568,11 +2620,11 @@ var page = new Vue({
                         window.location.href="/page/user/user.html?tab=6";
                     }
                     else {
-                        alert("增加失败");
+                        layer.msg('增加失败', {time: 2000});
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    layer.msg('发生错误', {time: 2000});
                 }
             });
         },
@@ -2619,17 +2671,17 @@ var page = new Vue({
                 dataType: "json",
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (msg) {
-                    if(msg.code==0){
+                    if(msg.code===0){
                         console.log("成功");
                         layer.msg('修改成功', {time: 2000});
                         window.location.href="/page/user/user.html?tab=6";
                     }
                     else {
-                        alert("修改失败");
+                        layer.msg('修改失败', {time: 2000});
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    layer.msg('发生错误', {time: 2000});
                 }
             });
         },
@@ -2659,17 +2711,17 @@ var page = new Vue({
                 dataType: "json",
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',
                 success: function (msg) {
-                    if(msg.code==0){
+                    if(msg.code===0){
                         console.log("成功");
                         layer.msg('删除成功', {time: 2000});
                         window.location.href="/page/user/user.html?tab=6";
                     }
                     else {
-                        alert("删除失败");
+                        layer.msg('删除失败', {time: 2000});
                     }
                 },
                 error: function () {
-                    alert("错误");
+                    layer.msg('发生错误', {time: 2000});
                 }
             });
         },
