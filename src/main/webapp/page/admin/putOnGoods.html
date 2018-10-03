@@ -182,15 +182,15 @@
 								<input name="attributes" class="attributes nodisplay">
 								<input name="saleCount" class="saleCount nodisplay" value="0">
 								<div class="form-group">
-									<div id="" class="col-sm-12 showImgDiv" style="margin-bottom: 10px;">
-										<template v-for="val,index in imgArray">
-											<img class="col-sm-2" v-bind:src="val" v-show="imgShow" style="display:block">
-										</template>
-									</div>
+									<!--<div id="" class="col-sm-12 showImgDiv" style="margin-bottom: 10px;">-->
+										<!--<template v-for="val,index in imgArray" >-->
+											<!--<img class="col-sm-2" v-bind:src="val" v-show="imgShow" style="display:block">-->
+										<!--</template>-->
+									<!--</div>-->
 									<label class="col-sm-2 control-label">上传照片</label>
 									<div class="col-sm-10 labelInput">
-										<label for="labelInput1" class="btn btn-default fileBtn">上传照片</label>
-										<input id="labelInput1" type="file" style="display:none" onchange="getFile(event),showImg(event,this)" multiple="multiple" accept="image/*">
+										<!--<label for="labelInput1" class="btn btn-default fileBtn">上传照片</label>-->
+										<input id="labelInput1" type="file" style="" onchange="getFile(event),page.showImg(event,this)" multiple="multiple" accept="image/*">
 									</div>
 								</div>
 								<div class="form-group nodisplay" id="attributesDiv1"></div>

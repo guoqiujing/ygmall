@@ -140,12 +140,12 @@ function  changeName(target){
 // 点击添加按钮，添加一个商品表单
 function addGoodsForm(){
     clickNum++;
+    page.addNum=clickNum;
     var newid="goodsForm"+clickNum;
     $("#createGoods .panel-body").append("<form class='form-horizontal' id="+newid+" alt='"+clickNum+"'>"+newGoodsForm+"</form><hr>");
     changeIdAndFor(newid,clickNum);
 }
 function changeIdAndFor(id,num){
-    console.log($("#"+id+" .labelInput label"));
     $("#"+id+" .labelInput label").attr("for","labelInput"+num);
     $("#"+id+" .labelInput input").attr("id","labelInput"+num);
     $(".spuId").val($(".spuId").eq(0).val());
@@ -225,47 +225,23 @@ function getFile(event) {
 var page = new Vue({
     el: '#putOnGoods',
     data: {
+        addNum:"",
         files:[],
         file: [],//要上传的图片文件
-        imgArrays: [],
         imgArray: [],//头像图片预览图
-        imgShow: true//是否显示预览图，默认显示
+        imgArrays:[],//头像图片预览图
+        imgShow: true,//是否显示预览图，默认显示
     },
     methods: {
-        // //改变选择的图片时
-        // getFile: function (event) {
-        //     //如果图片文件不为空，给本地file赋值为接收的图片
-        //     console.log("alei?");
-        //     var index=parseInt(event.target.id.substring(10))-parseInt(1);
-        //     var putOnFiles=event.target.files;
-        //     if (putOnFiles) {
-        //         $(".fileBtn").html("重新上传");
-        //         this.file=[];
-        //         if(putOnFiles.length>5){
-        //             alert("每个商品最多只能上传5张图片！");
-        //         }
-        //         else {
-        //             for (var i = 0; i < putOnFiles.length; i++)
-        //                 this.file.push(event.target.files[i]);
-        //             this.files[index]=this.file ;
-        //             console.log("getfile:"+index);
-        //         }
-        //     }
-        //     //图片文件为空，给本地file赋空值
-        //     else {
-        //         this.file = '';
-        //     }
-        // },
         //图片预览
         showImg: function (event,target) {
-            console.log("qwqwqwqwqw:"+target);
-            console.log("qwqwqwqwqw:"+target.parents("form").attr("id"));
-            console.log("qwqwqwqwqw:"+target.html());
-            $(".showImgDiv").html("");
+            var formId=$(target).parents("form").attr("id");
+            var index=parseInt($(target).parents("form").attr("alt"))-parseInt(1);
+            console.log(index);
+            $("#"+formId+" .showImgDiv").html("");
             var file = event.target.files;
             var reader = new FileReader();
             var that = this;
-            console.log(file.length);
             if (file && event.target.files&&file.length<6) {
                 for(var i=0;i<file.length;i++) {
                     var reader = new FileReader();
