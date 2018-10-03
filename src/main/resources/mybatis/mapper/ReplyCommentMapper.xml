@@ -41,7 +41,7 @@
       #{replyContent,jdbcType=VARCHAR}, #{replyTime,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR}, 
       #{creatTime,jdbcType=TIMESTAMP})
   </insert>
-  <!--插入回复或者追评回复-->
+  <!--插入回复或追评回复-->
   <insert id="insertSelective" parameterType="cn.myzqu.ygmall.pojo.ReplyComment" >
     insert into reply_comment
     <trim prefix="(" suffix=")" suffixOverrides="," >

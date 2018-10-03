@@ -58,8 +58,12 @@ var page = new Vue({
         //判断是否有追评
         judgeadd: function () {
             var that = this;
+            console.log(that.comment.additionalComment);
             if (that.comment.additionalComment != null) {
                 that.addFlag = true;
+            }
+            else{
+                that.addFlag = false;
             }
             console.log(that.addFlag);
         },

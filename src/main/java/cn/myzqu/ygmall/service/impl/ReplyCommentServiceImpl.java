@@ -1,16 +1,11 @@
 package cn.myzqu.ygmall.service.impl;
 
 import cn.myzqu.ygmall.dao.ReplyCommentMapper;
-import cn.myzqu.ygmall.dto.ReplyCommentDTO;
 import cn.myzqu.ygmall.pojo.ReplyComment;
 import cn.myzqu.ygmall.service.ReplyCommentService;
-import cn.myzqu.ygmall.utils.DateUtil;
-import cn.myzqu.ygmall.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 /**
  * Created by CC on 2018/9/27.
@@ -36,8 +31,8 @@ public class ReplyCommentServiceImpl implements ReplyCommentService{
     }
     //添加追评回复
     @Override
-    public int addContent(ReplyCommentDTO replyCommentDTO){
-        int r=replyCommentMapper.insertContent(replyCommentDTO);
+    public int addContent(ReplyComment replyComment){
+        int r=replyCommentMapper.insertSelective(replyComment);
         return r;
     }
 

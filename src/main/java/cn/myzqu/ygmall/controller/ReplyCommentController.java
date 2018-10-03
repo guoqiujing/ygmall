@@ -1,6 +1,5 @@
 package cn.myzqu.ygmall.controller;
 
-import cn.myzqu.ygmall.dto.ReplyCommentDTO;
 import cn.myzqu.ygmall.pojo.ReplyComment;
 import cn.myzqu.ygmall.service.ReplyCommentService;
 import cn.myzqu.ygmall.utils.KeyUtil;
@@ -64,8 +63,11 @@ public class ReplyCommentController {
     @ResponseBody
     public Result addContent(String commentId,String content){
         String id= KeyUtil.getUUID();
-        ReplyCommentDTO replyCommentDTO=new ReplyCommentDTO(id,commentId,content);
-        int r=replyCommentService.addContent(replyCommentDTO);
+        ReplyComment replyComment=new ReplyComment();
+        replyComment.setId(id);
+        replyComment.setReplyId(commentId);
+        replyComment.setContent(content);
+        int r=replyCommentService.addContent(replyComment);
         if(r<=0){
             return  ResultVOUtil.error("添加追评回复失败");
         }

@@ -1,6 +1,5 @@
 package cn.myzqu.ygmall.service;
 
-import cn.myzqu.ygmall.dto.ReplyCommentDTO;
 import cn.myzqu.ygmall.pojo.ReplyComment;
 
 /**
@@ -13,5 +12,5 @@ public interface ReplyCommentService {
 
     int updateContent(ReplyComment replyComment);
 
-    int addContent(ReplyCommentDTO replyCommentDTO);
+    int addContent(ReplyComment replyComment);
 }
