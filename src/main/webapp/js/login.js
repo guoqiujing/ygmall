@@ -1,6 +1,4 @@
-/**
- * Created by 小奇冰 on 2018/9/6.
- */
+//登录
 function fun2(){
     $.ajax({
         type: "POST",
