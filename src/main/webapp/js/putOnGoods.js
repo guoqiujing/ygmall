@@ -148,6 +148,13 @@ function addGoodsForm(){
 function changeIdAndFor(id,num){
     $("#"+id+" .labelInput label").attr("for","labelInput"+num);
     $("#"+id+" .labelInput input").attr("id","labelInput"+num);
+    $("#"+id+" .unit").val($("#goodsForm1 .unit").val());
+    $("#"+id+" .cost").val($("#goodsForm1 .cost").val());
+    $("#"+id+" .marketPrice").val($("#goodsForm1 .marketPrice").val());
+    $("#"+id+" .price").val($("#goodsForm1 .price").val());
+    $("#"+id+" .salePrice").val($("#goodsForm1 .salePrice").val());
+    $("#"+id+" .inventory").val($("#goodsForm1 .inventory").val());
+    $("#"+id+" .note").val($("#goodsForm1 .note").val());
     $(".spuId").val($(".spuId").eq(0).val());
     $(".categoryId").val($(".categoryId").eq(0).val());
 }
@@ -178,9 +185,9 @@ function submitAll(){
             dataType:'json',
             async:false,
             success:function(value){
+                $(".loadingWrap").removeClass();
                 if(value.code==0){
                     var re=page.uploadImg(value.data,i);
-                    console.log("uploadImg:"+re);
                     if(re==0){
                         successNum++;
                     }
@@ -189,7 +196,14 @@ function submitAll(){
                     console.log("第"+i+"次提交失败！");
             },
             error:function(){
+                $(".loadingWrap").removeClass();
                 console.log("第"+i+"次请求失败");
+            },
+            beforeSend: function(){
+                $('<div class="loadingWrap"></div>').appendTo("body");
+            },
+            complete: function(){
+                $(".loadingWrap").removeClass();
             }
         })
     }
@@ -272,6 +286,7 @@ var page = new Vue({
                 dataType: "json",
                 async:false,
                 success: function (msg) {
+                    $(".loadingWrap").removeClass();
                     if (msg.code == 0) {
                         console.log("上传至服务器成功");
                         console.log("图片地址：" + msg.data);
@@ -286,7 +301,14 @@ var page = new Vue({
                     }
                 },
                 error: function () {
+                    $(".loadingWrap").removeClass();
                     alert("错误");
+                },
+                beforeSend: function(){
+                    $('<div class="loadingWrap"></div>').appendTo("body");
+                },
+                complete: function(){
+                    $(".loadingWrap").removeClass();
                 }
             });
             return a;

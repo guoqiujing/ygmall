@@ -24,6 +24,20 @@
 		.nodisplay{
 			display:none;
 		}
+		.loadingWrap{
+			position:fixed;
+			top:0;
+			left:0;
+			width:100%;
+			height:100%;
+			z-index:300;
+			background-image:url(../../img/loading.gif);
+			background-repeat:no-repeat;
+			background-position:center center;
+			background-color:#000;
+			background-color:rgba(0,0,0,0.3);
+			filter:alpha(opacity=40);
+		}
 	</style>
 </head>
 
@@ -206,23 +220,23 @@
 									</div>
 									<label class="col-sm-2 control-label">计数单位</label>
 									<div class="col-sm-3">
-										<input name="unit" type="email" class="form-control unit" placeholder="">
+										<input name="unit" class="form-control unit" placeholder="">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label">成本价</label>
 									<div class="col-sm-3">
-										<input name="cost" type="email" class="form-control cost" placeholder="">
+										<input name="cost" class="form-control cost" placeholder="">
 									</div>
 									<label class="col-sm-2 control-label">市场价</label>
 									<div class="col-sm-3">
-										<input name="marketPrice" type="email" class="form-control marketPrice" placeholder="">
+										<input name="marketPrice" class="form-control marketPrice" placeholder="">
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label">艺格价</label>
 									<div class="col-sm-3">
-										<input name="price" type="email" class="form-control price" placeholder="">
+										<input name="price" class="form-control price" placeholder="">
 									</div>
 									<label class="col-sm-2 control-label">促销价</label>
 									<div class="col-sm-3">
@@ -232,7 +246,7 @@
 								<div class="form-group">
 									<label class="col-sm-2 control-label">库存</label>
 									<div class="col-sm-3">
-										<input name="inventory" type="text" class="form-control">
+										<input name="inventory" type="text" class="form-control inventory">
 									</div>
 									<label class="col-sm-2 control-label">备注</label>
 									<div class="col-sm-3">
