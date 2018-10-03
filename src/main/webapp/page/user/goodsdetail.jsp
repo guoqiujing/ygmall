@@ -27,7 +27,6 @@
 					<div class="col-md-2">欢迎来到艺格艺术生用品商城</div>
 					<div class="col-md-1"><a href="login.html">请登录</a></div>
 					<div class="col-md-1"><a href="register.html">免费注册</a></div>
-					<!--<div class="col-md-2" style="float: right;">官方微信商城</div>-->
 					<div class="col-md-1" style="float: right;"><a href="page/user/user.html">我的艺格</a></div>
 					<div class="col-md-1" style="float: right;">我的收藏</div>
 					<div class="col-md-1" style="float: right;">订单查询</div>
@@ -141,7 +140,7 @@
 						<div class="clearfix"></div>
 						<li>成交 <em class="fnum" id="sold_num">{{orders.saleCount}}</em></li>
 						<li>评论 <em class="fnum" id="comment_num">{{orders.spu.commentCount}}</em></li>
-						<li>库存 <em class="fnum">{{orders.inventory}}</em></li>
+						<li style="border-right: none;">库存 <em class="fnum">{{orders.inventory}}</em></li>
 						<em class="fnum"><em><div class="clearfix"></div></em></em>
 					</div>
 
@@ -149,7 +148,7 @@
 					<div class="formatDIV">
 					<template v-for="(val,key,index) in JSON.parse(orders.spu.attributesName)">
 						<div class="RadioGroupDIV" style="margin-bottom: 0.5em;">
-							<div style="float:left;width:13%;padding:0.5em 1em;">
+							<div style="float:left;width:14%;padding:0.5em 1em;">
 								<label>{{key}}</label></div>
 							<div style="margin-left:13%;">
 								<template v-for="data,i in val.split(';')" v-if="index==0">
@@ -197,8 +196,8 @@
 
 					<%--购买/加入购物车的商品数量--%>
 			        <div id="shoppingnum" class="clearfix shoppingnum">
-			        	<div style="float:left;width:13%;padding:0em 1em;"><label>数量</label></div>
-						<div class="input-group" style="width:90px">
+			        	<div style="float:left;width:14%;padding:0em 1em;"><label>数量</label></div>
+						<div class="input-group" style="width:90px;z-index: -1;">
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="button" onclick="subtractSelectedNum()" style="height: 25px;padding: 0px 6px;">-</button>
 							</span>
@@ -258,7 +257,7 @@
 					<!--商品图片介绍-->
 					<div class="detail-img" style="text-align: center;">
 						<template v-for="(val,key) in spuDetail">
-							<img v-bind:src="spuDetail[key].imgUrl"/>
+							<img v-bind:src="spuDetail[key].imgUrl" style="width:100%"/>
 						</template>
 					</div>
 				</div>
@@ -349,7 +348,7 @@
 			<div class="clear"></div> 
 		</div>
 			<div class="footer">
-				<div style="height:500px;color:#FFF">
+				<div style="height:300px;color:#FFF">
 				</div>
 			</div>
 		<div class="clear"></div>

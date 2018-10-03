@@ -48,6 +48,7 @@ function submitAnd(mark){
     var name=$(".inputname").val();
     var subtitle=$(".inputsubtitle").val();
     var brandId=$("input[name='brandId']:checked").val();
+    var brandName=$("input[name='brandId']:checked").next().html();
     var categoryId=$("input[name='categoryId']:checked").val();
     var attrNames=$(".attrName");
     var attrValues=$(".attrValue");
@@ -63,6 +64,8 @@ function submitAnd(mark){
             attrValuesArray.push(attrValues[i].value.trim());
         }
     }
+    attrNamesArray.push("品牌");
+    attrValuesArray.push(brandName);
     $('#spu_form').data('bootstrapValidator').validate();
     if(!$('#spu_form').data('bootstrapValidator').isValid()){
         return ;

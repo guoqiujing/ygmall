@@ -10,46 +10,8 @@ function clickRadio(target){
     $("input[type='radio'][name='" + $(target).attr('name') + "']").parent().removeClass("checked")
     $(target).parent().addClass("checked");
     var clickedRadio=$(target).attr('name');
-
     $(target).parents(".RadioGroupDIV").nextAll().find("input[type='radio']").parent().addClass("disclickRadio");//修改单选按钮样式为“不可点击
     $(target).parents(".RadioGroupDIV").nextAll().find("input[type='radio']").attr("disabled","disabled");
-
-    if($(target).attr("name")=="format0") {//如果点击的是第一级规格
-        partName1 = $(target).val();
-        var radioGroup2 = $(target).parents(".RadioGroupDIV").next().find(".style-radio-label");//取得第二组规格单选按钮
-        for (var i=0;i<radioGroup2.size();i++) {
-            var tempRadio=$(radioGroup2[i]).find("input");
-            partName2=tempRadio.val();
-            for(var key in page.formatCombination) {
-                if(key.indexOf(partName1+"-"+partName2)==0){
-                    tempRadio.removeAttr("disabled");
-                    tempRadio.parent().removeClass("disclickRadio");
-                }
-            }
-        }
-    }
-    if($(target).attr("name")=="format1") {//如果点击的是第二级规格
-        partName1 = $("input[name='format0']:checked").val();
-        partName2 = $(target).val();
-        var radioGroup3 = $(target).parents(".RadioGroupDIV").next().find(".style-radio-label");//取得第三组规格单选按钮
-        for (var i=0;i<radioGroup3.size();i++) {
-            var tempRadio=$(radioGroup3[i]).find("input");//单选按钮组里的第i个单选按钮
-            partName3=tempRadio.val();
-            for(var key in page.formatCombination) {
-                if(key.indexOf(partName1+"-"+partName2+"-"+partName3)==0){
-                    tempRadio.removeAttr("disabled");
-                    tempRadio.parent().removeClass("disclickRadio");
-                }
-            }
-        }
-    }
-    if($(target).attr("name")=="format2") {//如果点击的是第三级规格，跳转到新的商品页面
-        partName1 = $("input[name='format0']:checked").val();
-        partName2 = $("input[name='format1']:checked").val();
-        partName3 = $("input[name='format2']:checked").val();
-        var newGoodsId=page.formatCombination[partName1 + "-" + partName2 + "-" + partName3];
-        window.location.href='../user/goodsdetail.jsp?id='+newGoodsId;
-    }
     if($("input[type='radio'][name='format2']").length!=0){//三种规格的情况
         if(clickedRadio!="format2"){//如果选中的不是第三种规格，则取消掉位于所选中的规格之后的所有规格的选中状态
             $(".formatDIV").css({"border":"red solid 2px","padding":"10px"});
@@ -63,7 +25,44 @@ function clickRadio(target){
             $("#BtnArea .btn-buy-now").css({"background":"#F4F0E7","border":"1px solid #B4995D","color":"#484848"});
             $("#BtnArea .bnt-add-cart").css({"background":"#987E46","border":"0px solid #B4995D","color":"#FFF"});
         }
+        if($(target).attr("name")=="format0") {//如果点击的是第一级规格
+            partName1 = $(target).val();
+            var radioGroup2 = $(target).parents(".RadioGroupDIV").next().find(".style-radio-label");//取得第二组规格单选按钮
+            for (var i=0;i<radioGroup2.size();i++) {//遍历第三组规格并组合成属性字符串，与该货品所有的商品的属性字符串对比，不存在的就将按钮设为灰色
+                var tempRadio=$(radioGroup2[i]).find("input");
+                partName2=tempRadio.val();
+                for(var key in page.formatCombination) {
+                    if(key.indexOf(partName1+"-"+partName2)==0){
+                        tempRadio.removeAttr("disabled");
+                        tempRadio.parent().removeClass("disclickRadio");
+                    }
+                }
+            }
+        }
+        if($(target).attr("name")=="format1") {//如果点击的是第二级规格
+            partName1 = $("input[name='format0']:checked").val();
+            partName2 = $(target).val();
+            var radioGroup3 = $(target).parents(".RadioGroupDIV").next().find(".style-radio-label");//取得第三组规格单选按钮
+            for (var i=0;i<radioGroup3.size();i++) {
+                var tempRadio=$(radioGroup3[i]).find("input");//单选按钮组里的第i个单选按钮
+                partName3=tempRadio.val();
+                for(var key in page.formatCombination) {
+                    if(key.indexOf(partName1+"-"+partName2+"-"+partName3)==0){
+                        tempRadio.removeAttr("disabled");
+                        tempRadio.parent().removeClass("disclickRadio");
+                    }
+                }
+            }
+        }
+        if($(target).attr("name")=="format2") {//如果点击的是第三级规格，跳转到新的商品页面
+            partName1 = $("input[name='format0']:checked").val();
+            partName2 = $("input[name='format1']:checked").val();
+            partName3 = $("input[name='format2']:checked").val();
+            var newGoodsId=page.formatCombination[partName1 + "-" + partName2 + "-" + partName3];
+            window.location.href='../user/goodsdetail.jsp?id='+newGoodsId;
+        }
     }
+
     else if($("input[type='radio'][name='format1']").length!=0){//两种规格的情况
         if(clickedRadio!="format1"){//如果选中的不是第二种规格，则取消掉位于所选中的规格之后的所有规格的选中状态
             $(".formatDIV").css({"border":"red solid 2px","padding":"10px"});
@@ -77,9 +76,35 @@ function clickRadio(target){
             $("#BtnArea .btn-buy-now").css({"background":"#F4F0E7","border":"1px solid #B4995D","color":"#484848"});
             $("#BtnArea .bnt-add-cart").css({"background":"#987E46","border":"0px solid #B4995D","color":"#FFF"});
         }
+        if($(target).attr("name")=="format0") {//如果点击的是第一级规格
+            partName1 = $(target).val();
+            var radioGroup2 = $(target).parents(".RadioGroupDIV").next().find(".style-radio-label");//取得第三组规格单选按钮
+            for (var i=0;i<radioGroup2.size();i++) {
+                var tempRadio=$(radioGroup2[i]).find("input");//单选按钮组里的第i个单选按钮
+                partName2=tempRadio.val();
+                for(var key in page.formatCombination) {
+                    if(key.indexOf(partName1+"-"+partName2)==0){
+                        tempRadio.removeAttr("disabled");
+                        tempRadio.parent().removeClass("disclickRadio");
+                    }
+                }
+            }
+        }
+        if($(target).attr("name")=="format1") {//如果点击的是第二级规格，跳转到新的商品页面
+            partName1 = $("input[name='format0']:checked").val();
+            partName2 = $("input[name='format1']:checked").val();
+            var newGoodsId=page.formatCombination[partName1 + "-" + partName2 ];
+            window.location.href='../user/goodsdetail.jsp?id='+newGoodsId;
+        }
     }
+
+
     else{//一种规格的情况
-        ;
+        if($(target).attr("name")=="format0") {
+            partName1 = $("input[name='format0']:checked").val();
+            var newGoodsId=page.formatCombination[partName1];
+            window.location.href='../user/goodsdetail.jsp?id='+newGoodsId;
+        }
     }
 }
 /*
@@ -236,13 +261,15 @@ var page = new Vue({
                 success:function(data){
                     if(data.code==0){
                         that.orders=data.data[0];
-                        console.log(that.orders);
                         var format=that.orders.attributes.split("-");
-                        that.format0=format[0];
-                        that.format1=format[1];
-                        that.format2=format[2];
+                        that.format0=format[0]!=null?format[0].split(";")[0]:format[0];
+                        that.format1=format[1]!=null?format[1].split(";")[0]:format[1];
+                        that.format2=format[2]!=null?format[2].split(";")[0]:format[2];
                         that.getSPUCategories(data.data[0].spu.categoryId);
                         // that.getSPUFormat(data.data[0].spu.attributesName);
+                        console.log(that.orders.spu.params);
+                        console.log(object.id);
+                        console.log(that.orders.spu.id);
                         that.orders.spu.params=JSON.parse(that.orders.spu.params);
                         that.getGoodsImg(object.id);
                         that.getSpuDetail(that.orders.spu.id);
@@ -256,36 +283,36 @@ var page = new Vue({
     },
     // 方法
     methods: {
-        getSPUFormat:function(attributesName){//对保存SPU规格的json进行处理
-            var that = this;
-            var attributesName =JSON.parse(attributesName);//{"规格":"单本;整套","款式":"礼盒版;精装版"};// {"55":"1a","70":"0","80":"2","60":"2"};
-            var strlll="";
-            var symbol1=1;
-            var symbol2=1;
-            for (var prop in attributesName)
-            {
-                var temp=attributesName[prop];//将SPU的规格json的每个键对应的值
-                temp=temp.split(";");//进行字符串分割
-                var formatDivHTML="<div style=\"margin-bottom: 1em;\">" +
-                "<div style=\"float:left;width:15%;padding:0.5em 1em;\"><label>"+prop+"</label></div>" +
-                "<div style=\"margin-left:15%;\">" ;
-                var date1=(new Date()).getTime()+symbol1;
-                console.log("date1"+date1);
-                for (var i in temp)
-                {
-                    var date2=(new Date()).getTime()+symbol2;
-                    console.log("date2"+date2);                                                     //class=\"style-radio-label\"
-                    formatDivHTML+= "<label for=\""+date2+"\" class=\"style-radio-label\" >" +
-                        "<input v-model=\"sex\" type=\"radio\" value=\""+temp[i]+"\" id=\""+date2+"\" name=\""+date1+"\" onclick=\"clickRadio(this)\"/>"+temp[i]+"</label>";
-                    symbol2++;
-                }
-                symbol1++;
-                formatDivHTML+="</div><div class=\"clear\"></div></div>";
-                attributesName[prop]=formatDivHTML;//并将分割结果（数组）赋值回相应的key
-                strlll+=formatDivHTML;
-            }
-            that.orders.spu.attributesName=strlll;
-        },
+        // getSPUFormat:function(attributesName){//对保存SPU规格的json进行处理
+        //     var that = this;
+        //     var attributesName =JSON.parse(attributesName);//{"规格":"单本;整套","款式":"礼盒版;精装版"};// {"55":"1a","70":"0","80":"2","60":"2"};
+        //     var strlll="";
+        //     var symbol1=1;
+        //     var symbol2=1;
+        //     for (var prop in attributesName)
+        //     {
+        //         var temp=attributesName[prop];//将SPU的规格json的每个键对应的值
+        //         temp=temp.split(";");//进行字符串分割
+        //         var formatDivHTML="<div style=\"margin-bottom: 1em;\">" +
+        //         "<div style=\"float:left;width:15%;padding:0.5em 1em;\"><label>"+prop+"</label></div>" +
+        //         "<div style=\"margin-left:15%;\">" ;
+        //         var date1=(new Date()).getTime()+symbol1;
+        //         console.log("date1"+date1);
+        //         for (var i in temp)
+        //         {
+        //             var date2=(new Date()).getTime()+symbol2;
+        //             console.log("date2"+date2);                                                     //class=\"style-radio-label\"
+        //             formatDivHTML+= "<label for=\""+date2+"\" class=\"style-radio-label\" >" +
+        //                 "<input v-model=\"sex\" type=\"radio\" value=\""+temp[i]+"\" id=\""+date2+"\" name=\""+date1+"\" onclick=\"clickRadio(this)\"/>"+temp[i]+"</label>";
+        //             symbol2++;
+        //         }
+        //         symbol1++;
+        //         formatDivHTML+="</div><div class=\"clear\"></div></div>";
+        //         attributesName[prop]=formatDivHTML;//并将分割结果（数组）赋值回相应的key
+        //         strlll+=formatDivHTML;
+        //     }
+        //     that.orders.spu.attributesName=strlll;
+        // },
         getFormatCombination:function(spuId){//对保存SPU规格的json进行处理
             var that = this;
             $.ajax({

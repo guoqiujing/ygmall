@@ -68,6 +68,10 @@ public class AttributeServiceImpl implements AttributeService {
             return result;
         }
     }
+    public List<Attribute> selectByCategoryId(Integer categoryId){
+        List<Attribute> attributeList=attributeMapper.selectByCategoryId(categoryId);
+        return attributeList;
+    }
 
     public Integer insertAttribute(Attribute attribute){
         Integer result=attributeMapper.insert(attribute);

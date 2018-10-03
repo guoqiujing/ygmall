@@ -1,14 +1,18 @@
 package cn.myzqu.ygmall.service.impl;
 
 import cn.myzqu.ygmall.dao.GoodsMapper;
+import cn.myzqu.ygmall.dao.SpuMapper;
 import cn.myzqu.ygmall.pojo.Goods;
 import cn.myzqu.ygmall.pojo.Spu;
 import cn.myzqu.ygmall.service.GoodsService;
 import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import cn.myzqu.ygmall.vo.GoodsDetailVO;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.shiro.crypto.hash.Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +27,24 @@ import java.util.Map;
 public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
+    @Autowired
+    private SpuMapper spuMapper;
     /**
      * 创建新商品（商品上架时调用）
      */
     public Integer createNew(Goods goods){
         Integer integer=goodsMapper.insertSelective(goods);
+        Spu spu=spuMapper.selectByPrimaryKey(goods.getSpuId());
+       JSONObject jsonObject=JSON.parseObject(spu.getAttributesName());
+        String array[]=goods.getAttributes().split("-");
+        for(String f:array){
+            String format[]=f.split(";");
+            String tempName=format[1].substring(4);
+            String tempVal=jsonObject.get(tempName).toString().length()>0?jsonObject.get(tempName)+";"+format[0]:format[0];
+            jsonObject.put(tempName,tempVal);
+        }
+        spu.setAttributesName(JSON.toJSONString(jsonObject));
+        spuMapper.updateByPrimaryKeySelective(spu);
         return integer;
     }
     @Override
@@ -60,7 +77,14 @@ public class GoodsServiceImpl implements GoodsService {
         HashMap<String,String> hashMap=new HashMap<>();
         List<Goods> goodsList=goodsMapper.getIdAndAttributes(spuId);
         for(int i=0;i<goodsList.size();i++){
-            hashMap.put(goodsList.get(i).getAttributes(),goodsList.get(i).getId());
+            String attr[]=goodsList.get(i).getAttributes().split("-");
+            String targetAttr="";
+            for(String a:attr){
+                String attr2[]=a.split(";");
+                targetAttr+=attr2[0]+"-";
+            }
+            targetAttr=targetAttr.substring(0,targetAttr.length()-1);
+            hashMap.put(targetAttr,goodsList.get(i).getId());
         }
         return hashMap;
     }

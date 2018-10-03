@@ -117,16 +117,25 @@ function  changeName(target){
     var f0="";
     var f1="";
     var f2="";
+    var f00="";
+    var f11="";
+    var f22="";
     var currentFormId=$(target).parents("form").attr("id");
-    if($("#"+currentFormId+" .attribute0").length>0)
-        f0=$("#"+currentFormId+" .attribute0").eq(0).val();
-    if($("#"+currentFormId+" .attribute1").length>0)
-        f1="-"+$("#"+currentFormId+" .attribute1").eq(0).val();
-    if($("#"+currentFormId+" .attribute2").length>0)
-        f2="-"+$("#"+currentFormId+" .attribute2").eq(0).val();
+    if($("#"+currentFormId+" .attribute0").length>0) {
+        f0 = $("#" + currentFormId + " .attribute0").eq(0).val();
+        f00 = f0 + ";" + $("#" + currentFormId + " .attribute0").parents(".form-group").find("label").html();
+    }
+    if($("#"+currentFormId+" .attribute1").length>0) {
+        f1 = "-" + $("#" + currentFormId + " .attribute1").eq(0).val();
+        f11= f1+ ";" +$("#" + currentFormId + " .attribute1").parents(".form-group").find("label").html() ;
+    }
+    if($("#"+currentFormId+" .attribute2").length>0) {
+        f2 = "-" + $("#" + currentFormId + " .attribute2").eq(0).val();
+        f22= f2+ ";" +$("#" + currentFormId + " .attribute2").parent().prev().html() ;
+    }
     $("#"+currentFormId+" .name").eq(0).val(oldname+" "+f0+f1+f2);
-    $("#"+currentFormId+" .attributes").val(f0+f1+f2);
-
+    $("#"+currentFormId+" .attributes").val(f00+f11+f22);
+    console.log(f00+f11+f22);
 }
 // 点击添加按钮，添加一个商品表单
 function addGoodsForm(){
@@ -161,11 +170,11 @@ function submitAll(){
     var successNum=0;
     for(var i=0;i<allForm.length;i++){
         var formid=allForm.eq(i).attr("id");
-        var formDara=$("#"+formid).serialize();
+        var formData=$("#"+formid).serialize();
         $.ajax({
             url:'/goods/create',
             type:'post',
-            data:formDara,
+            data:formData,
             dataType:'json',
             async:false,
             success:function(value){
@@ -184,7 +193,6 @@ function submitAll(){
             }
         })
     }
-    console.log("successNum:"+successNum);
     if(successNum==allForm.length){
         alert("已成功提交！");
         window.location.href="/page/admin/putOnGoods.html";

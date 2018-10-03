@@ -1,7 +1,9 @@
 package cn.myzqu.ygmall.service.impl;
 
+import cn.myzqu.ygmall.dao.AttributeMapper;
 import cn.myzqu.ygmall.dao.GoodsMapper;
 import cn.myzqu.ygmall.dao.SpuMapper;
+import cn.myzqu.ygmall.pojo.Attribute;
 import cn.myzqu.ygmall.pojo.Brand;
 import cn.myzqu.ygmall.pojo.Spu;
 import cn.myzqu.ygmall.service.SpuService;
@@ -26,10 +28,16 @@ public class SpuServiceImpl implements SpuService{
     private SpuMapper spuMapper;
     @Autowired
     private GoodsMapper goodsMapper;
+    @Autowired
+    private AttributeMapper attributeMapper;
     @Override
     public Spu selectByPrimaryKey(String id) {
         Spu spu=spuMapper.selectByPrimaryKey(id);
         return spu;
+    }
+    public Integer updateByPrimaryKeySelective(Spu spu){
+        Integer result=spuMapper.updateByPrimaryKeySelective(spu);
+        return result;
     }
     public BootstrapTableVO selectIdAndName(int pageSize,int pageIndex,String searchInput){
         Page<Spu> page = PageHelper.startPage(pageIndex,pageSize);
@@ -53,7 +61,13 @@ public class SpuServiceImpl implements SpuService{
         }
         SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String params=JSON.toJSONString(hashMap);
+        List<Attribute> attributeList=attributeMapper.selectByCategoryId(categoryId);
+        HashMap<String,Object> attributesName=new HashMap<>();
+        for(Attribute attribute : attributeList){
+            attributesName.put(attribute.getName(),"");
+        }
         Spu spu=new Spu();
+        spu.setAttributesName(JSON.toJSONString(attributesName));
         spu.setId(spuId);
         spu.setParams(params);
         spu.setBrandId(brandId);
@@ -64,7 +78,6 @@ public class SpuServiceImpl implements SpuService{
         spu.setSubtitle(subtitle);
         spu.setCommentCount(0);
         spu.setSaleCount(0);
-        spu.setAttributesName("");
         Byte b=0;
         spu.setStatus(b);
         return spuMapper.insert(spu);

@@ -34,6 +34,14 @@ public class SpuController {
         }
         return ResultVOUtil.error("新增货品信息失败");
     }
+    @PostMapping("/updateSPU")
+    public Result updateSPU(Spu spu){
+        Integer result=spuService.updateByPrimaryKeySelective(spu);
+        if(result==1){
+            return ResultVOUtil.success(result);
+        }
+        return ResultVOUtil.error("修改货品信息失败");
+    }
 
     /**
      * 获取所有未下架的货品的id、name、createtime、category_id

@@ -196,7 +196,7 @@
 										<div class="col-sm-9 brandRadio" id="brandVUE">
 											<template v-for="(val,key) in allBrand">
 												<label v-bind:for="val.id" class="style-radio-label">
-													<input type="radio" v-bind:id="val.id" v-bind:value="val.id" name="brandId" onclick="clickBrandRadio(this)">{{val.name}}
+													<input type="radio" v-bind:id="val.id" v-bind:value="val.id" name="brandId" onclick="clickBrandRadio(this)" /><span>{{val.name}}</span>
 												</label>
 											</template>
 										</div>
