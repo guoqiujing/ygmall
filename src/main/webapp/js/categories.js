@@ -173,6 +173,7 @@ function delRow(index,id){
             data:{"id":id},
             dataType:'json',
             success:function(value){
+                $(".loadingWrap").removeClass();
                 if(value.code==0){
                     alert("已成功删除");
                     window.location.reload();
@@ -181,7 +182,14 @@ function delRow(index,id){
                     alert("删除失败");
             },
             error:function(value){
+                $(".loadingWrap").removeClass();
                 alert("删除失败");
+            },
+            beforeSend: function(){
+                $('<div class="loadingWrap"></div>').appendTo("body");
+            },
+            complete: function(){
+                $(".loadingWrap").removeClass();
             }
         });
     }
@@ -232,12 +240,20 @@ function saveRow(index,mark,id){
                 data: {"id": id, "name": name, "status": status},
                 dataType: 'json',
                 success: function (value) {
+                    $(".loadingWrap").removeClass();
                     if (value.code == 0) {
                         alert("修改成功");
                     }
                 },
                 error: function (value) {
+                    $(".loadingWrap").removeClass();
                     alert("修改失败，请联系管理员。");
+                },
+                beforeSend: function(){
+                    $('<div class="loadingWrap"></div>').appendTo("body");
+                },
+                complete: function(){
+                    $(".loadingWrap").removeClass();
                 }
             });
         }
@@ -330,12 +346,20 @@ function addCategories(){
         data:formdata,
         dataType:"json",
         success:function(data){
+            $(".loadingWrap").removeClass();
             alert("success");
             window.location.reload();
         },
         error:function(data){
+            $(".loadingWrap").removeClass();
             alert("error");
             window.location.reload();
+        },
+        beforeSend: function(){
+            $('<div class="loadingWrap"></div>').appendTo("body");
+        },
+        complete: function(){
+            $(".loadingWrap").removeClass();
         }
     });
 }

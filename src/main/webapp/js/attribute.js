@@ -76,12 +76,20 @@ function deleteArrtibute(categoryId){
         dataType: 'json',
         async:false,
         success:function(value){
+            $(".loadingWrap").removeClass();
             if(value.code!=0){
                 del=false;
             }
         },
         error: function (value) {
+            $(".loadingWrap").removeClass();
             del = false;
+        },
+        beforeSend: function(){
+            $('<div class="loadingWrap"></div>').appendTo("body");
+        },
+        complete: function(){
+            $(".loadingWrap").removeClass();
         }
     })
 }
@@ -94,12 +102,20 @@ function insertArrtibute(categoryId,name){
         dataType:'json',
         async:false,
         success:function(value){
+            $(".loadingWrap").removeClass();
             if(value.code!=0){
               insert0=false;
             }
         },
         error:function(value){
+            $(".loadingWrap").removeClass();
             insert0=false;
+        },
+        beforeSend: function(){
+            $('<div class="loadingWrap"></div>').appendTo("body");
+        },
+        complete: function(){
+            $(".loadingWrap").removeClass();
         }
     });
 }
@@ -113,9 +129,6 @@ function saveRow(index,categoryId){
     var boolean0=Boolean(attribute0.trim().length!=0&&attribute0.trim()!="-");
     var boolean1=Boolean(attribute1.trim().length!=0&&attribute1.trim()!="-");
     var boolean2=Boolean(attribute2.trim().length!=0&&attribute2.trim()!="-");
-    console.log(boolean0);
-    console.log(boolean1);
-    console.log(boolean2);
     if(boolean0||boolean1||boolean2) {
         deleteArrtibute(categoryId);
         if(boolean0){

@@ -86,6 +86,7 @@ function submitAnd(mark){
                 },
                 dataType: 'json',
                 success: function (data) {
+                    $(".loadingWrap").removeClass();
                     if (data.code == 0) {
                         pageImg.uploadImg(data.data);
                         alert("提交成功");
@@ -93,7 +94,14 @@ function submitAnd(mark){
                     }
                 },
                 error: function (data) {
+                    $(".loadingWrap").removeClass();
                     alert("提交失败！");
+                },
+                beforeSend: function(){
+                    $('<div class="loadingWrap"></div>').appendTo("body");
+                },
+                complete: function(){
+                    $(".loadingWrap").removeClass();
                 }
             });
             $('#spu_form').submit();
@@ -242,7 +250,7 @@ var pageImg = new Vue({
                 dataType: "json",
                 async:false,
                 success: function (msg) {
-                    console.log(formData);
+                    $(".loadingWrap").removeClass();
                     if (msg.code == 0) {
                         console.log("上传至服务器成功");
                         console.log("图片地址：" + msg.data);
@@ -256,8 +264,15 @@ var pageImg = new Vue({
                     }
                 },
                 error: function () {
+                    $(".loadingWrap").removeClass();
                     console.log(formData);
                     alert("错误");
+                },
+                beforeSend: function(){
+                    $('<div class="loadingWrap"></div>').appendTo("body");
+                },
+                complete: function(){
+                    $(".loadingWrap").removeClass();
                 }
             });
         },
@@ -269,13 +284,21 @@ var pageImg = new Vue({
                 dataType:'json',
                 type:'post',
                 success:function(data){
+                    $(".loadingWrap").removeClass();
                     if(data.code==0)
                         return 0;
                     else
                         return 1;
                 },
                 error:function(){
+                    $(".loadingWrap").removeClass();
                     return 1;
+                },
+                beforeSend: function(){
+                    $('<div class="loadingWrap"></div>').appendTo("body");
+                },
+                complete: function(){
+                    $(".loadingWrap").removeClass();
                 }
             })
         }
