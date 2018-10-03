@@ -240,8 +240,9 @@ var pageImg = new Vue({
                 processData: false,// 不处理发送的数据
                 mimeType: "multipart/form-data",//文件后缀名
                 dataType: "json",
+                async:false,
                 success: function (msg) {
-                    console.log(msg);
+                    console.log(formData);
                     if (msg.code == 0) {
                         console.log("上传至服务器成功");
                         console.log("图片地址：" + msg.data);
@@ -255,6 +256,7 @@ var pageImg = new Vue({
                     }
                 },
                 error: function () {
+                    console.log(formData);
                     alert("错误");
                 }
             });
