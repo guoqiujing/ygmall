@@ -193,7 +193,7 @@
 					</template>
 					</div>
 					<%--<span v-html="orders.spu.attributesName"></span>--%>
-
+					{{overVForMain()}}
 					<%--购买/加入购物车的商品数量--%>
 			        <div id="shoppingnum" class="clearfix shoppingnum">
 			        	<div style="float:left;width:14%;padding:0em 1em;"><label>数量</label></div>

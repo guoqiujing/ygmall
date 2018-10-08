@@ -1,14 +1,30 @@
+
 function addSelectedNum(){
     $(".selectNum").val(parseInt($('.selectNum').val())+parseInt(1));
 }
 function subtractSelectedNum(){
     $(".selectNum").val(parseInt($('.selectNum').val())-parseInt(1));
 }
+function changeRadio(partName,radioGroup){
+    for (var i=0;i<radioGroup.size();i++) {//遍历第三组规格并组合成属性字符串，与该货品所有的商品的属性字符串对比，不存在的就将按钮设为灰色
+        var tempRadio=$(radioGroup[i]).find("input");
+        var partName2=tempRadio.val();
+        for(var key in page.formatCombination) {
+            if(key.indexOf(partName+"-"+partName2)==0){
+
+                $(radioGroup[i]).find("input[value='"+partName2+"']").removeAttr("disabled");
+                $(radioGroup[i]).find("input[value='"+partName2+"']").parent().removeClass("disclickRadio");
+                // tempRadio.removeAttr("disabled");
+                // tempRadio.parent().removeClass("disclickRadio");
+            }
+        }
+    }
+}
 // 规格选框的选中逻辑及样式变化
 function clickRadio(target){
     var partName1="",partName2="",partName3="";
-    $("input[type='radio'][name='" + $(target).attr('name') + "']").parent().removeClass("checked")
-    $(target).parent().addClass("checked");
+    $("input[type='radio'][name='" + $(target).attr('name') + "']").parent().removeClass("checked");//移除所有规格选框的选中状态
+    $(target).parent().addClass("checked");//给当前点击的选框所在的label添加选中样式
     var clickedRadio=$(target).attr('name');
     $(target).parents(".RadioGroupDIV").nextAll().find("input[type='radio']").parent().addClass("disclickRadio");//修改单选按钮样式为“不可点击
     $(target).parents(".RadioGroupDIV").nextAll().find("input[type='radio']").attr("disabled","disabled");
@@ -28,31 +44,15 @@ function clickRadio(target){
         if($(target).attr("name")=="format0") {//如果点击的是第一级规格
             partName1 = $(target).val();
             var radioGroup2 = $(target).parents(".RadioGroupDIV").next().find(".style-radio-label");//取得第二组规格单选按钮
-            for (var i=0;i<radioGroup2.size();i++) {//遍历第三组规格并组合成属性字符串，与该货品所有的商品的属性字符串对比，不存在的就将按钮设为灰色
-                var tempRadio=$(radioGroup2[i]).find("input");
-                partName2=tempRadio.val();
-                for(var key in page.formatCombination) {
-                    if(key.indexOf(partName1+"-"+partName2)==0){
-                        tempRadio.removeAttr("disabled");
-                        tempRadio.parent().removeClass("disclickRadio");
-                    }
-                }
-            }
+            changeRadio(partName1,radioGroup2);
         }
         if($(target).attr("name")=="format1") {//如果点击的是第二级规格
             partName1 = $("input[name='format0']:checked").val();
             partName2 = $(target).val();
+            var radioGroup2 = $(target).parents(".RadioGroupDIV").next().find(".style-radio-label");//取得第二组规格单选按钮
             var radioGroup3 = $(target).parents(".RadioGroupDIV").next().find(".style-radio-label");//取得第三组规格单选按钮
-            for (var i=0;i<radioGroup3.size();i++) {
-                var tempRadio=$(radioGroup3[i]).find("input");//单选按钮组里的第i个单选按钮
-                partName3=tempRadio.val();
-                for(var key in page.formatCombination) {
-                    if(key.indexOf(partName1+"-"+partName2+"-"+partName3)==0){
-                        tempRadio.removeAttr("disabled");
-                        tempRadio.parent().removeClass("disclickRadio");
-                    }
-                }
-            }
+            changeRadio(partName1,radioGroup2);
+            changeRadio(partName1+"-"+partName2,radioGroup3);
         }
         if($(target).attr("name")=="format2") {//如果点击的是第三级规格，跳转到新的商品页面
             partName1 = $("input[name='format0']:checked").val();
@@ -97,8 +97,6 @@ function clickRadio(target){
             window.location.href='../user/goodsdetail.jsp?id='+newGoodsId;
         }
     }
-
-
     else{//一种规格的情况
         if($(target).attr("name")=="format0") {
             partName1 = $("input[name='format0']:checked").val();
@@ -168,7 +166,6 @@ function detailForward(target){
 function mouseEnterSmallBox(){
     var tool = document.getElementById("tool");//小盒子中的黄色区域
     var bigBox = document.getElementById("bigBox");//大盒子
-    console.log("jinlaile");
     $("#bigBox").css("height",$("#smallBox").width());
     tool.className = "tool active";
     bigBox.className = "big-box active";
@@ -267,9 +264,6 @@ var page = new Vue({
                         that.format2=format[2]!=null?format[2].split(";")[0]:format[2];
                         that.getSPUCategories(data.data[0].spu.categoryId);
                         // that.getSPUFormat(data.data[0].spu.attributesName);
-                        console.log(that.orders.spu.params);
-                        console.log(object.id);
-                        console.log(that.orders.spu.id);
                         that.orders.spu.params=JSON.parse(that.orders.spu.params);
                         that.getGoodsImg(object.id);
                         that.getSpuDetail(that.orders.spu.id);
@@ -280,9 +274,60 @@ var page = new Vue({
                     alert("找不到该商品！");
                 }
             })
+
     },
     // 方法
     methods: {
+        overVForMain:function(){
+            var partName1 = $("input[name='format0']:checked").val();
+            var partName2 = $("input[name='format1']:checked").val();
+            var partName3 = $("input[name='format2']:checked").val();
+            if($("input[type='radio'][name='format2']").length!=0) {//三种规格的情况
+                $(".RadioGroupDIV").eq(2).find("input[type='radio']").parent().addClass("disclickRadio");//修改单选按钮样式为“不可点击
+                $(".RadioGroupDIV").eq(2).find("input[type='radio']").attr("disabled","disabled");
+                var radioGroup3 = $(".RadioGroupDIV").eq(2).find(".style-radio-label");//取得第三组规格单选按钮
+                for (var i=0;i<radioGroup3.size();i++) {//遍历第三组规格并组合成属性字符串，与该货品所有的商品的属性字符串对比，不存在的就将按钮设为灰色
+                    for(var key in page.formatCombination) {
+                        partName3=$(radioGroup3[i]).find("input").val();
+                        console.log(partName1+"-"+partName2+"-"+partName3);
+                        if(key.indexOf(partName1+"-"+partName2+"-"+partName3)==0){
+                            $(radioGroup3[i]).find("input").removeAttr("disabled");
+                            $(radioGroup3[i]).find("input").parent().removeClass("disclickRadio");
+                        }
+                    }
+                }
+            }
+            else if($("input[type='radio'][name='format1']").length!=0) {//两种规格的情况
+                $(".RadioGroupDIV").eq(1).find("input[type='radio']").parent().addClass("disclickRadio");//修改单选按钮样式为“不可点击
+                $(".RadioGroupDIV").eq(1).find("input[type='radio']").attr("disabled","disabled");
+                var radioGroup2 = $(".RadioGroupDIV").eq(1).find(".style-radio-label");//取得第三组规格单选按钮
+                for (var i=0;i<radioGroup2.size();i++) {//遍历第三组规格并组合成属性字符串，与该货品所有的商品的属性字符串对比，不存在的就将按钮设为灰色
+                    for(var key in page.formatCombination) {
+                        partName2=$(radioGroup2[i]).find("input").val();
+                        if(key.indexOf(partName1+"-"+partName2)==0){
+                            $(radioGroup2[i]).find("input").removeAttr("disabled");
+                            $(radioGroup2[i]).find("input").parent().removeClass("disclickRadio");
+                        }
+                    }
+                }
+            }
+            else{
+                $(".RadioGroupDIV").eq(0).find("input[type='radio']").parent().addClass("disclickRadio");//修改单选按钮样式为“不可点击
+                $(".RadioGroupDIV").eq(0).find("input[type='radio']").attr("disabled","disabled");
+                var radioGroup1 = $(".RadioGroupDIV").eq(0).find(".style-radio-label");//取得第三组规格单选按钮
+                for (var i=0;i<radioGroup1.size();i++) {//遍历第三组规格并组合成属性字符串，与该货品所有的商品的属性字符串对比，不存在的就将按钮设为灰色
+                    for(var key in page.formatCombination) {
+                        partName1=$(radioGroup1[i]).find("input").val();
+                        if(key.indexOf(partName1)==0){
+                            $(radioGroup1[i]).find("input").removeAttr("disabled");
+                            $(radioGroup1[i]).find("input").parent().removeClass("disclickRadio");
+                        }
+                    }
+                }
+
+            }
+
+        },
         // getSPUFormat:function(attributesName){//对保存SPU规格的json进行处理
         //     var that = this;
         //     var attributesName =JSON.parse(attributesName);//{"规格":"单本;整套","款式":"礼盒版;精装版"};// {"55":"1a","70":"0","80":"2","60":"2"};
@@ -381,10 +426,6 @@ var page = new Vue({
                     alert("错误");
                 }
             });
-        },
-        createRadioId:function(i){
-            var date=(new Date()).getTime()+1;
-            return date;
         },
         getSpuDetail: function (spuId) {//获取指定id的类别的id、name，以及其所属父级、祖级的id、name
             var that = this;
