@@ -269,9 +269,12 @@ var page = new Vue({
                         that.getSpuDetail(that.orders.spu.id);
                         that.getFormatCombination(that.orders.spu.id);
                     }
+                    else{
+                        window.location.href="../404.html";
+                    }
                 },
                 error:function(data){
-                    alert("找不到该商品！");
+                    window.location.href="../404.html";
                 }
             })
 
