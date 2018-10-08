@@ -96,7 +96,7 @@
 			<!--商品细节图-->
 			<div style="width:40%;float:left;">
 				<!--大图-->
-				<div class="small-box" id="smallBox" onmouseenter="mouseEnterSmallBox()" onmousemove="mouseMoveSmallBox()" onmouseleave="mouseLeaveSmallBox()">
+				<div class="small-box" id="smallBox" onmouseenter="mouseEnterSmallBox(event)" onmousemove="mouseMoveSmallBox(event)" onmouseleave="mouseLeaveSmallBox(event)">
 					<img v-bind:src="goodsImgs[0].imgUrl" style="width:100%;height:auto;"/>
 					<div class="tool" id="tool" style="width:50%;height:50%"></div>
 				</div>
