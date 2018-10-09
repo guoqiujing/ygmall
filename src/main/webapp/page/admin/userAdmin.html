@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh">
+
+<head>
+    <title>用户管理 - 艺格管理系统</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="../../css/bootstrap-table.css" >
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/vendor/linearicons/style.css">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/demo.css">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+</head>
+
+<body>
+<!-- WRAPPER -->
+<div id="wrapper">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="brand">
+            <a href="#"><img src="assets/img/yigeguanli.png" alt="Klorofil Logo" class="img-responsive logo"></a>
+        </div>
+        <div class="container-fluid">
+            <div class="navbar-btn">
+                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+            </div>
+            <form class="navbar-form navbar-left">
+                <!--<div class="input-group">
+                    <input type="text" value="" class="form-control" placeholder="Search dashboard...">
+                    <span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+                </div>-->
+            </form>
+            <div class="navbar-btn navbar-btn-right">
+            </div>
+            <div id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <!--<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+                            <i class="lnr lnr-alarm"></i>
+                            <span class="badge bg-danger">5</span>
+                        </a>-->
+                        <ul class="dropdown-menu notifications">
+                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
+                            <li><a href="#" class="more">See all notifications</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Help</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>-->
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Basic Use</a></li>
+                            <li><a href="#">Working With Data</a></li>
+                            <li><a href="#">Security</a></li>
+                            <li><a href="#">Troubleshooting</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png" class="img-circle" alt="Avatar"> <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="lnr lnr-user"></i> <span>我的信息</span></a></li>
+                            <li><a href="#"><i class="lnr lnr-exit"></i> <span>注销</span></a></li>
+                        </ul>
+                    </li>
+                    <!-- <li>
+                        <a class="update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- END NAVBAR -->
+    <!-- LEFT SIDEBAR -->
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+                <ul class="nav">
+                    <li><a href="dataAnalysis.html" class=""><i class="lnr lnr-home"></i> <span>数据分析</span></a></li>
+                    <li><a href="userAdmin.html" class="active"><i class="lnr lnr-users"></i> <span>用户信息管理</span></a></li>
+                    <li><a href="goodsAdmin.html" class=""><i class="lnr lnr-code"></i> <span>商品信息管理</span></a></li>
+                    <li><a href="spuAdmin.html" class=""><i class="lnr lnr-chart-bars"></i> <span>货品信息管理</span></a></li>
+                    <li><a href="brandAdmin.html" class=""><i class="lnr lnr-cog"></i> <span>品牌管理</span></a></li>
+                    <li><a href="typeAdmin.html" class=""><i class="lnr lnr-alarm"></i> <span>分类管理</span></a></li>
+                    <li><a href="attributeAdmin.html" class=""><i class="lnr lnr-alarm"></i> <span>分类规格管理</span></a></li>
+                    <li>
+                        <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>商品上架</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subPages" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="putOnSpu.html" class="">上架新货品</a></li>
+                                <li><a href="putOnGoods.html" class="">上架新商品</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>商品下架</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subPages2" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="putOffSpu.html" class="">下架新货品</a></li>
+                                <li><a href="putOffGoods.html" class="">下架新商品</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="deliverGoods.html" class=""><i class="lnr lnr-dice"></i> <span>商品发货</span></a></li>
+                    <li><a href="commentAdmin.html" class=""><i class="lnr lnr-pencil"></i> <span>评价管理</span></a></li>
+                    <li><a href="auditAdmin.html" class=""><i class="lnr lnr-text-format"></i> <span>审核管理</span></a></li>
+                    <li><a href="refundAdmin.html" class=""><i class="lnr lnr-linearicons"></i> <span>退款管理</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- END LEFT SIDEBAR -->
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="panel panel-headline" style="padding: 20px;">
+                    <div class="" style="padding-bottom:0;">
+
+                        <form id="formSearch" class="form-horizontal">
+                            <div class="form-group" style="margin-top:0">
+                                <label class="control-label col-sm-1" for="txtNickName">昵称</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" id="txtNickName">
+                                </div>
+                                <label class="control-label col-sm-1" for="txtSex">性别</label>
+                                <div class="col-sm-2">
+                                    <!--<input type="text" class="form-control" id="txt_search_statu">-->
+                                    <select id="txtSex" class="form-control" >
+                                        <option value="">全部</option>
+                                        <option value="0">男</option>
+                                        <option value="1">女</option>
+                                        <option value="-1">保密</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4" style="text-align:left;">
+                                    <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                                    <button type="button" style="margin-left:50px" id="btn_clean" class="btn btn-default">清空条件</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                    <table id="table"></table>
+                </div>
+            </div>
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+</div>
+<!-- END WRAPPER -->
+
+<!-- Javascript -->
+<script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="assets/scripts/klorofil-common.js"></script>
+<script type="text/javascript" src="../../js/bootstrap-table.js" ></script>
+<script type="text/javascript" src="../../js/bootstrap-table-zh-CN.js"></script>
+<script>
+    var $table = $('#table');
+    var operaEvents;
+
+    //加载网页后的事件
+    $().ready(function (){
+        //初始化表格
+        $('#table').bootstrapTable({
+            url:"/customer/list",//要请求数据的文件路径
+            method:'post',
+            dataType: "json",
+            //data: value.data,
+            toolbar: '#toolbar',
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            buttonsAlign:"left",
+            pagination: true,                   //是否显示分页（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 8,                       //每页的记录行数（*）
+            pageList: [8, 10],        //可供选择的每页的行数（*）
+            queryParamsType : "undefined",     //查询参数组织方式
+            queryParams:queryParams,//请求服务器时所传的参数
+            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+            responseHandler:function(res){
+                //在ajax获取到数据，渲染表格之前，修改数据源
+                return res.data;
+            },
+            columns:
+                [{
+                    field: 'icon',
+                    title: '头像',
+                    width: 50,
+                    formatter: function(value,row,index){
+                        return '<img  style="width: 38px;height: 38px;" src="'+value+'" class="img-rounded" >';
+                    }
+                }, {
+                    field: 'id',
+                    title: '用户编号',
+                    width: 100
+                }, {
+                    field: 'nickName',
+                    sortable:true,
+                    title: '昵称'
+                }, {
+                    field: 'sex',
+                    sortable:true,
+                    title: '性别',
+                    formatter:function(value, row, index) {
+                        if(value === 0)
+                            return "男";
+                        else if(value === 1)
+                            return "女";
+                        else if(value === -1)
+                            return "保密";
+                        else
+                            return "未知";
+                    }
+                }, {
+                    field: 'telephone',
+                    sortable:true,
+                    title: '手机号'
+                }, {
+                    field: 'email',
+                    sortable:true,
+                    title: '电子邮箱'
+                }, {
+                    field: 'createTime',
+                    sortable:true,
+                    title: '注册时间'
+                }]
+        });
+    });
+
+    //请求服务数据时所传参数
+    function queryParams(params){
+        return{
+            //每页多少条数据
+            pageSize: params.pageSize,
+            //请求第几页
+            pageIndex:params.pageNumber,
+            nickName:$('#txtNickName').val(),
+            sex:$('#txtSex').val()
+        }
+    }
+
+    //查询
+    $('#btn_query').click(function () {
+        $table.bootstrapTable('refresh');
+    });
+
+    //清空条件
+    $('#btn_clean').click(function () {
+        if($('#txtNickName').val()!==""||$('#txtSex').val()!==""){
+            $('#txtNickName').val("");
+            $('#txtSex').val("");
+            $table.bootstrapTable('refresh');
+        }
+
+    });
+
+</script>
+</body>
+
+</html>

@@ -45,7 +45,49 @@ function check(){
 
 }
 
+var countdown=60;
+
+//设置点击后60秒才能重新获取验证码
+function setTime(val) {
+    if(countdown===60){
+        $.ajax({
+            type: "POST",
+            url: "/customer/info",
+            data: {
+                id:'f81986cd58214b2b9cc2815ecdd95d3e'
+            },
+            dataType: "json",
+            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+            success: function (msg) {
+                if(msg.code===0){
+                    console.log("获取用户信息成功");
+                }
+                else {
+                    console.log("查找用户信息失败");
+                }
+            },
+            error: function () {
+                layer.msg('发生错误', {time: 900});
+            }
+        });
+    }
+    if (countdown === 0) {
+        val.removeAttribute("disabled");
+        val.value="获取验证码";
+        countdown = 60;
+    }
+    else {
+        val.setAttribute("disabled", true);
+        val.value="重新发送(" + countdown + ")";
+        countdown--;
+        setTimeout(function() {
+            setTime(val);
+        },1000)
+    }
+}
+
 $(function(){
+    //点击注册按钮
     $('#register').click(function(){
         if(check()===0){
             console.log("通过验证");

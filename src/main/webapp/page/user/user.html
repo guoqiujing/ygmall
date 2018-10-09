@@ -230,10 +230,10 @@
                                     <div style="font-size: 14px;margin-top: 5px;">
                                         提交订单
                                     </div>
-                                    <div>
+                                    <div v-if="process_put!=''">
                                         {{selectedOrder.createTime.substring(0,10)}}
                                     </div>
-									<div>
+									<div v-if="process_put!=''">
 										{{selectedOrder.createTime.substring(11)}}
 									</div>
                                 </div>
@@ -338,7 +338,7 @@
                             <h4>配送信息</h4>
                             <div class="order-detail">
                                 <span>运费：</span>
-                                <div>¥{{selectedOrder.carriage.toFixed(2)}}</div>
+                                <div v-if="process_put!=''">¥{{selectedOrder.carriage.toFixed(2)}}</div>
                             </div>
                             <div class="order-detail">
                                 <span>发货日期：</span>
@@ -360,11 +360,11 @@
                             </div>
                             <div class="order-detail">
                                 <span>商品总额：</span>
-                                <div>¥{{selectedOrder.goodsTotalMoney.toFixed(2)}}</div>
+                                <div v-if="process_put!=''">¥{{selectedOrder.goodsTotalMoney.toFixed(2)}}</div>
                             </div>
                             <div class="order-detail">
                                 <span>应支付金额：</span>
-                                <div>¥{{selectedOrder.realTotalMoney.toFixed(2)}}</div>
+                                <div v-if="process_put!=''">¥{{selectedOrder.realTotalMoney.toFixed(2)}}</div>
                             </div>
                         </div>
                     </div>
@@ -383,7 +383,7 @@
                             <td align="center" style="vertical-align: middle;">
                                 <a v-bind:href="good.id" class="f0">{{good.id}}</a>
                             </td>
-                            <td style="vertical-align: middle;color: #333;" align="center">¥{{good.price.toFixed(2)}}</td>
+                            <td style="vertical-align: middle;color: #333;" align="center" v-if="process_put!=''">¥{{good.price.toFixed(2)}}</td>
                             <td style="vertical-align: middle;color: #333;" align="center">{{good.count}}</td>
                             <td style="vertical-align: middle;color: #333;" align="center">
                                 <a href="#" v-on:click="" v-if="process_done!=''">申请售后</a>
@@ -396,17 +396,17 @@
                         <ul>
                             <li>
                                 <span class="label">商品总额：</span>
-                                <span class="txt">¥{{selectedOrder.goodsTotalMoney.toFixed(2)}}</span>
+                                <span class="txt" v-if="process_put!=''">¥{{selectedOrder.goodsTotalMoney.toFixed(2)}}</span>
                             </li>
                             <li>
                                 <span class="label">运　　费：</span>
-                                <span class="txt">
+                                <span class="txt" v-if="process_put!=''">
                 	                        ¥{{selectedOrder.carriage.toFixed(2)}}
                                 </span>
                             </li>
                             <li class="ftx-01">
                                 <span class="label" style="color: #e4393c;">应付总额：</span>
-                                <span class="txt count">¥{{selectedOrder.realTotalMoney.toFixed(2)}}</span>
+                                <span class="txt count" v-if="process_put!=''">¥{{selectedOrder.realTotalMoney.toFixed(2)}}</span>
                             </li>
                         </ul>
                     </div>

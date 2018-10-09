@@ -2,6 +2,9 @@ package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.pojo.Customer;
 
+import java.util.List;
+import java.util.Map;
+
 public interface CustomerMapper {
 
     int deleteByPrimaryKey(String id);
@@ -15,6 +18,8 @@ public interface CustomerMapper {
     Customer selectByTelephone(String telephone);
 
     Customer selectByEmail(String email);
+
+    List<Customer> selectCustomer(Map<String, Object> map);
 
     int updateByPrimaryKeySelective(Customer record);
 

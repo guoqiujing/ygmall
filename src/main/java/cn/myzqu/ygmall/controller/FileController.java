@@ -83,4 +83,28 @@ public class FileController {
         return ResultVOUtil.error("接收不到图片");
     }
 
+    //评论图片上传到腾讯服务器（多文件）
+    @PostMapping("/qCloud/commentsInfo")
+    public Result uploadCommentsImg(HttpServletRequest request, @RequestParam("files") MultipartFile[] files) throws Exception {
+        //首先将MultipartFile转为File或InputStream
+        if (files != null && files.length > 0) {
+            //定义一个存放图片地址的数组
+            String[] result=new String[files.length];
+            //循环获取files数组中的文件
+            for(int i = 0; i < files.length; i++) {
+                File tempFile = ImgUtil.saveLocal(files[i],request);
+                //压缩图片
+                ImgUtil.compress(tempFile);
+                //调用方法
+                result[i] = Operate.upload(tempFile,new CommentInformation());
+                //在服务器删除tempFile
+                ImgUtil.deleteFile(tempFile);
+            }
+            System.out.println(result.toString());
+            //把图片地址数组返回前端
+            return ResultVOUtil.success(result);
+        }
+        return ResultVOUtil.error("接收不到图片");
+    }
+
 }

@@ -3,7 +3,7 @@
 	
 	<display-name>ygmall</display-name>
 	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>page/user/index.html</welcome-file>
 	</welcome-file-list>
 	
 	<listener>

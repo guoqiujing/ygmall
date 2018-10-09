@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 /**
+ * 品牌信息控制层
  * Created by 小奇冰 on 2018/9/12.
  */
 @RestController
