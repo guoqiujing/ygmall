@@ -42,6 +42,14 @@ public class SpuController {
         }
         return ResultVOUtil.error("修改货品信息失败");
     }
+    @PostMapping("/updateSPU_Attr")
+    public Result updateSPU_Attr(String oSpuId,String FName0,String oFVal0,String nFval0,String FName1,String oFVal1,String nFval1,String FName2,String oFVal2,String nFval2){
+        Integer result=spuService.updateSPU_Attr( oSpuId, FName0, oFVal0, nFval0, FName1, oFVal1, nFval1, FName2, oFVal2, nFval2);
+        if(result==1){
+            return ResultVOUtil.success(result);
+        }
+        return ResultVOUtil.error("修改货品信息的属性名字符串失败");
+    }
 
     /**
      * 获取所有未下架的货品的id、name、createtime、category_id

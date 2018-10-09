@@ -10,4 +10,6 @@ import java.util.List;
 public interface GoodsImgService {
     List<GoodsImg> selectByGoodsId(String goodsId);
     public Integer insert(String spuId,String urlList);
+    public Integer update(String goodsId,String urlList);
+    public Integer delete(String goodsId);
 }

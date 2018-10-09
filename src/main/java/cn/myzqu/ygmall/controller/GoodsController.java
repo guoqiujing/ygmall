@@ -31,6 +31,14 @@ public class GoodsController {
         }
         return ResultVOUtil.error("关联查找商品与货品失败");
     }
+    @PostMapping("/getAllGoods_Spu_Img")
+    public Result getAllGoods_Spu_Img(int pageSize,int pageIndex,String searchInput){
+        BootstrapTableVO bto=goodsService.getAllGoods_Spu_Img(pageSize,pageIndex,searchInput);
+        if(bto!=null){
+            return ResultVOUtil.success(bto);
+        }
+        return ResultVOUtil.error("获取所有商品及其关联的spu、图片信息失败");
+    }
     @PostMapping("/getIdAndAttributesBySpuId")  //√
     public Result getIdAndAttributesBySpuId(String spuId){
         HashMap<String,String> hashMap=goodsService.getIdAndAttributes(spuId);
@@ -76,5 +84,12 @@ public class GoodsController {
         if(result==1)
             return ResultVOUtil.success(goodsId);
         return ResultVOUtil.error("上架商品失败");
+    }
+    @PostMapping("/update")
+    public Result update(Goods goods){
+        Integer result=goodsService.updateGoods(goods);
+        if(result==1)
+            return ResultVOUtil.success();
+        return ResultVOUtil.error("更新商品信息失败");
     }
 }

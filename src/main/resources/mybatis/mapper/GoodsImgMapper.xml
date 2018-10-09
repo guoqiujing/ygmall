@@ -31,6 +31,15 @@
     delete from goods_img
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+
+
+  <delete id="deleteByGoodsId" parameterType="java.lang.String" >
+    delete from goods_img
+    where goods_id = #{goodsId}
+  </delete>
+
+
   <insert id="insert" parameterType="cn.myzqu.ygmall.pojo.GoodsImg" >
     insert into goods_img (id, goods_id, img_order, 
       img_url)

@@ -16,4 +16,5 @@ public interface SpuService {
     public BootstrapTableVO selectIdAndName(int pageSize, int pageIndex, String searchInput);
     public Integer putOff(String id);
     public Integer updateByPrimaryKeySelective(Spu spu);
+    public Integer updateSPU_Attr(String oSpuId,String FName0,String oFVal0,String nFval0,String FName1,String oFVal1,String nFval1,String FName2,String oFVal2,String nFval2);
 }

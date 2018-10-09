@@ -17,4 +17,6 @@ public interface GoodsService {
     public Integer putOffBySpuId(String spuId);
     public Integer putOffById(String id);
     public BootstrapTableVO getAllPutOff(int pageSize, int pageIndex, String searchInput);
+    public BootstrapTableVO getAllGoods_Spu_Img(int pageSize,int pageIndex,String searchInput);
+    public Integer updateGoods(Goods goods);
 }

@@ -189,7 +189,7 @@ var pageImg = new Vue({
     data: {
         file: [],//要上传的图片文件
         img: '',//头像图片预览图
-        imgArray: [],//头像图片预览图
+        imgArray: [],//图片预览图
         imgShow: true//是否显示预览图，默认显示
     },
     methods: {

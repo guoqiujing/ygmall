@@ -35,4 +35,12 @@ public class GoodsImgController {
         }
         return ResultVOUtil.error("添加商品细节图失败");
     }
+    @PostMapping("/update")
+    public Result update(String goodsId,String urlList){
+        Integer result= goodsImgService.update(goodsId,urlList);
+        if(result==1){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("修改商品细节图失败");
+    }
 }

@@ -112,4 +112,21 @@ public class Spu {
     public void setStatus(Byte status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Spu{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", categoryId=" + categoryId +
+                ", brandId=" + brandId +
+                ", createtime=" + createtime +
+                ", saleCount=" + saleCount +
+                ", commentCount=" + commentCount +
+                ", params='" + params + '\'' +
+                ", attributesName='" + attributesName + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

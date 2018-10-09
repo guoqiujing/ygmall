@@ -9,6 +9,8 @@ public interface GoodsImgMapper {
 
     int insert(GoodsImg record);
 
+    int deleteByGoodsId(String goodsId);
+
     int insertSelective(GoodsImg record);
 
     GoodsImg selectByPrimaryKey(Integer id);

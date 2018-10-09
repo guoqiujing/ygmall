@@ -2,6 +2,7 @@ package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.pojo.Goods;
 import cn.myzqu.ygmall.vo.GoodsDetailVO;
+import cn.myzqu.ygmall.vo.Goods_Img_AttributesVO;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,8 @@ public interface GoodsMapper {
     List<GoodsDetailVO> getGoodsAndSPU(String id);
 
     List<Goods> getIdAndAttributes(String spuId);
+
+    List<Goods_Img_AttributesVO> getAll(Map<String, Object> map);
 
     Integer putOffBySpuId(String spuId);
 

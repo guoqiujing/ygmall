@@ -22,11 +22,28 @@
     <association property="spu"  javaType="cn.myzqu.ygmall.pojo.Spu" select="cn.myzqu.ygmall.dao.SpuMapper.selectByPrimaryKey" column="SPU_id">
     </association>
   </resultMap>
+
+  <resultMap id="Goods_Img_Attributes_Map" type="cn.myzqu.ygmall.vo.Goods_Img_AttributesVO" extends="BaseResultMap">
+    <association property="goodsImgList" select="cn.myzqu.ygmall.dao.GoodsImgMapper.selectByGoodsId" column="id">
+                                                        <!--javaType="cn.myzqu.ygmall.pojo.GoodsImg"-->
+    </association>
+  </resultMap>
   <sql id="Base_Column_List" >
     id, SPU_id, name, inventory, category_id, status, cost, market_price, price, sale_price, 
     unit, sale_count, note, attributes
   </sql>
 
+
+  <select id="getAll" resultMap="Goods_Img_Attributes_Map" parameterType="Map" >
+    select
+    <include refid="Base_Column_List" />
+    from goods
+    <where>
+      <if test="name!=null and name!=''">
+        AND name LIKE '%${name}%'
+      </if>
+    </where>
+  </select>
 
   <select id="getIdAndAttributes" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select id, attributes

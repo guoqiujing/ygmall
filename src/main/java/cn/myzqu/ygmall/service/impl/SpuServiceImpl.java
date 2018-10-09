@@ -39,6 +39,33 @@ public class SpuServiceImpl implements SpuService{
         Integer result=spuMapper.updateByPrimaryKeySelective(spu);
         return result;
     }
+
+
+
+
+
+    public Integer updateSPU_Attr(String oSpuId,String FName0,String oFVal0,String nFval0,String FName1,String oFVal1,String nFval1,String FName2,String oFVal2,String nFval2){
+        Spu spu=new Spu();
+        spu.setId(oSpuId);
+        String oldAttr=selectByPrimaryKey(oSpuId).getAttributesName();
+
+        HashMap<String,String> hashMap=JSON.parseObject(oldAttr, HashMap.class);
+        if(hashMap.containsKey(FName0))
+            hashMap.put(FName0,hashMap.get(FName0).replace(oFVal0,nFval0));
+        if(hashMap.containsKey(FName1))
+            hashMap.put(FName1,hashMap.get(FName1).replace(oFVal1,nFval1));
+        if(hashMap.containsKey(FName2))
+            hashMap.put(FName2,hashMap.get(FName2).replace(oFVal2,nFval2));
+        spu.setAttributesName(JSON.toJSONString(hashMap));
+        System.out.println("--------------------------------------------");
+        System.out.println("spu:"+spu);
+        System.out.println("--------------------------------------------");
+        System.out.println("oldAttr:"+oldAttr);
+        Integer result= updateByPrimaryKeySelective(spu);
+        System.out.println("--------------------------------------------");
+        System.out.println("result:"+result);
+        return result;
+    }
     public BootstrapTableVO selectIdAndName(int pageSize,int pageIndex,String searchInput){
         Page<Spu> page = PageHelper.startPage(pageIndex,pageSize);
         Map<String,Object> map = new HashMap<>();
