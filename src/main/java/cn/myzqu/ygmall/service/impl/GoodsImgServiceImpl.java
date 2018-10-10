@@ -36,16 +36,13 @@ public class GoodsImgServiceImpl implements GoodsImgService {
         return 1;
     }
     public Integer update(String goodsId,String urlList) {
-        Integer delResult=delete(goodsId);
-        System.out.println("----------------------");
-        System.out.println("delResult:"+delResult);
-        System.out.println("----------------------");
         Integer result=0;
+        Integer delResult=1;
+        List<GoodsImg> goodsImgs=selectByGoodsId(goodsId);
+        if(goodsImgs.size()>0)
+            delResult=delete(goodsId);
         if(delResult>0)
             result=insert(goodsId,urlList);
-        System.out.println("----------------------");
-        System.out.println("insertResult:"+result);
-        System.out.println("----------------------");
         return result;
     }
     public Integer delete(String goodsId) {

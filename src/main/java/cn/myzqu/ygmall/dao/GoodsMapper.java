@@ -26,8 +26,9 @@ public interface GoodsMapper {
 
     List<Goods_Img_AttributesVO> getAll(Map<String, Object> map);
 
-    Integer putOffBySpuId(String spuId);
+    Integer putOnBySpuId(String spuId);
 
+    Integer putOffBySpuId(String spuId);
     Integer putOffById(String id);
 
     List<Goods> getAllPutOff(Map<String,Object> map);

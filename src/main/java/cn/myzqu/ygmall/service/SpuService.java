@@ -3,6 +3,7 @@ package cn.myzqu.ygmall.service;
 import cn.myzqu.ygmall.pojo.Spu;
 import cn.myzqu.ygmall.pojo.SpuDetail;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
+import cn.myzqu.ygmall.vo.SpuDetailVO;
 
 import java.text.ParseException;
 import java.util.List;
@@ -17,4 +18,8 @@ public interface SpuService {
     public Integer putOff(String id);
     public Integer updateByPrimaryKeySelective(Spu spu);
     public Integer updateSPU_Attr(String oSpuId,String FName0,String oFVal0,String nFval0,String FName1,String oFVal1,String nFval1,String FName2,String oFVal2,String nFval2);
+    public BootstrapTableVO selectAllSpu_Img(int pageSize,int pageIndex,String searchInput);
+    public Integer updateSPUSelective(String id, String name, String subtitle, Integer saleCount, Integer commentCount,String attrNamesArray[], String attrValuesArray[]);
+    public Integer putOn(String id);
+    public SpuDetailVO selectSpu_ImgById(String id);
 }

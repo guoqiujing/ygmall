@@ -40,7 +40,7 @@ $().ready(function (){
                 // events: operaEvents,
                 formatter:
                     function formatterOperate(value, row, index){
-                        return "&nbsp&nbsp<button onclick='putOff("+row.id+")' class='btn btn-default btn-sm'><span class='glyphicon glyphicon-pencil'></span>下架</button>";
+                        return "&nbsp&nbsp<button onclick=\"putOff('"+row.id+"')\" class='btn btn-default btn-sm'><span class='glyphicon glyphicon-pencil'></span>下架</button>";
                     }
             }]
     });

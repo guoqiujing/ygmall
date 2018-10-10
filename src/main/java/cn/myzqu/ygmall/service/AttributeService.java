@@ -13,4 +13,5 @@ public interface AttributeService {
     public List<CategoriesAttributeVO> getAllCategoriesAttribute();
     public Integer deleteByCategoryId(Integer categoryId);
     public Integer insertAttribute(Attribute attribute);
+    public List<Attribute> selectByCategoryId(Integer categoryId);
 }

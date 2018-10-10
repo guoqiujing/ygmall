@@ -16,6 +16,8 @@ public interface SpuMapper {
 
     List<Spu> selectIdAndName(Map<String, Object> map);
 
+    List<Spu> selectAll(Map<String, Object> map);
+
     int updateByPrimaryKeySelective(Spu record);
 
     int updateByPrimaryKey(Spu record);

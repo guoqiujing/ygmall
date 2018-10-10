@@ -31,6 +31,12 @@ public class BrandServiceImpl implements BrandService{
         }
         return brandList;
     }
+    //查找单个品牌
+    @Override
+    public Brand findBrandById(Integer id){
+        Brand brand = brandMapper.selectByPrimaryKey(id);
+        return brand;
+    }
 
     @Override
     public BootstrapTableVO findBrand(Map<String, Object> map, Integer pageIndex, Integer pageSize){

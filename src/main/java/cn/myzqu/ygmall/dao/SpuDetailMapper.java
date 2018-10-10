@@ -7,6 +7,8 @@ import java.util.List;
 public interface SpuDetailMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteBySpuId(String spuId);
+
     int insert(SpuDetail record);
 
     int insertSelective(SpuDetail record);

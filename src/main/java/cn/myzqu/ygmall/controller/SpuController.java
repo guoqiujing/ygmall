@@ -1,11 +1,13 @@
 package cn.myzqu.ygmall.controller;
 
 import cn.myzqu.ygmall.pojo.Spu;
+import cn.myzqu.ygmall.pojo.SpuDetail;
 import cn.myzqu.ygmall.service.SpuService;
 import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import cn.myzqu.ygmall.vo.Result;
+import cn.myzqu.ygmall.vo.SpuDetailVO;
 import org.apache.poi.util.SystemOutLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +35,14 @@ public class SpuController {
             return ResultVOUtil.success(spuId);
         }
         return ResultVOUtil.error("新增货品信息失败");
+    }
+    @PostMapping("/updateSPUSelective")
+    public Result updateSPUSelective(String id, String name, String subtitle, Integer saleCount, Integer commentCount,String attrNamesArray[], String attrValuesArray[]) throws ParseException {
+        Integer result=spuService.updateSPUSelective(id,name,subtitle,saleCount,commentCount,attrNamesArray,attrValuesArray);
+        if(result==1){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("修改货品信息失败");
     }
     @PostMapping("/updateSPU")
     public Result updateSPU(Spu spu){
@@ -72,7 +82,51 @@ public class SpuController {
         if(result==1){
             return ResultVOUtil.success();
         }
-        return ResultVOUtil.error("下架商品失败");
+        return ResultVOUtil.error("下架货品失败");
+    }
+
+    /**
+     * 修改货品状态为“上架”（默认状态）
+     * @param id
+     * @return
+     */
+    @PostMapping("/putOn")
+    public Result putOnById(String id){
+        Integer result=spuService.putOn(id);
+        if(result==1){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("修改货品状态为“上架”失败");
+    }
+
+    /**
+     * 查找所有货品的详细信息（包括图片、类别路径等）
+     * @param pageSize
+     * @param pageIndex
+     * @param searchInput
+     * @return
+     */
+    @PostMapping("/selectAllSpu_Img")
+    public Result selectAllSpu_Img(int pageSize,int pageIndex,String searchInput){
+        BootstrapTableVO bto=spuService.selectAllSpu_Img(pageSize,pageIndex,searchInput);
+        if(bto!=null){
+            return ResultVOUtil.success(bto);
+        }
+        return ResultVOUtil.error("获取所有货品信息及其图片信息失败");
+    }
+
+    /**
+     * 查找某个货品的详细信息（包括图片、类别路径等）
+     * @param id
+     * @return
+     */
+    @PostMapping("/selectSpu_ImgById")
+    public Result selectSpu_ImgById(String id){
+        SpuDetailVO spuDetailVO=spuService.selectSpu_ImgById(id);
+        if(spuDetailVO!=null){
+            return ResultVOUtil.success(spuDetailVO);
+        }
+        return ResultVOUtil.error("获取所有货品信息及其图片信息失败");
     }
 
 }

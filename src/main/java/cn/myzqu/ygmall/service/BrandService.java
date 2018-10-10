@@ -17,6 +17,7 @@ public interface BrandService {
      */
     List<Brand> findAllBrand();
 
+    public Brand findBrandById(Integer id);
     /**
      * 查找并显示品牌记录
      * @return

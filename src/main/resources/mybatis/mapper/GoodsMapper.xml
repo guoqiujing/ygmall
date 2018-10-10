@@ -191,6 +191,10 @@
     update goods set status=3 where SPU_id=#{spuId}
   </update>
 
+  <update id="putOnBySpuId" parameterType="String">
+    update goods set status=0 where SPU_id=#{spuId}
+  </update>
+
   <update id="putOffById" parameterType="String">
     update goods set status=3 where id=#{id}
   </update>

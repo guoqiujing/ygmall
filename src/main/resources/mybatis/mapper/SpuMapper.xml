@@ -30,6 +30,17 @@
    </where>
   </select>
 
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="Map">
+    select
+    <include refid="Base_Column_List" />
+    from spu
+    <where>
+      <if test="name!=null and name!=''">
+        AND name LIKE '%${name}%'
+      </if>
+    </where>
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
