@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.service;
 
+import cn.myzqu.ygmall.dto.SexCountDTO;
 import cn.myzqu.ygmall.pojo.Customer;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 
@@ -15,4 +16,6 @@ public interface CustomerService {
     Customer findCustomerById(String id);
 
     int updateCustomerById(Customer customer);
+
+    SexCountDTO findSexCount();
 }

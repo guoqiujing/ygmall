@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.controller;
 
+import cn.myzqu.ygmall.dto.UserAndPayUserDTO;
 import cn.myzqu.ygmall.pojo.Customer;
 import cn.myzqu.ygmall.service.AccountService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
@@ -47,4 +48,19 @@ public class AccountController {
         }
         return ResultVOUtil.error("修改密码失败");
     }
+
+    /**
+     * 查找用户数和付费用户数
+     * @return
+     */
+    @PostMapping("/findUserAndPay")
+    @ResponseBody
+    public Result findUserAndPay(){
+        UserAndPayUserDTO upo=accountService.findUserAndPayUser();
+        if(upo!=null){
+            return ResultVOUtil.success(upo);
+        }
+        return ResultVOUtil.error("查找失败");
+    }
+
 }

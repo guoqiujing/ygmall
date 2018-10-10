@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.controller;
 
+import cn.myzqu.ygmall.dto.SexCountDTO;
 import cn.myzqu.ygmall.pojo.Customer;
 import cn.myzqu.ygmall.service.CustomerService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
@@ -74,5 +75,18 @@ public class CustomerController {
             return  ResultVOUtil.error("修改失败");
         }
         return  ResultVOUtil.success();
+    }
+
+    /**
+     * 查找不同性别的用户数量
+     * @return
+     */
+    @PostMapping("/findSexCount")
+    public Result findSexCount(){
+        SexCountDTO so=customerService.findSexCount();
+        if(so!=null){
+            return ResultVOUtil.success(so);
+        }
+        return ResultVOUtil.error("查找失败");
     }
 }

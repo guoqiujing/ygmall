@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.dao;
 
+import cn.myzqu.ygmall.dto.UserAndPayUserDTO;
 import cn.myzqu.ygmall.pojo.Account;
 
 public interface AccountMapper {
@@ -15,4 +16,6 @@ public interface AccountMapper {
     int updateByPrimaryKeySelective(Account record);
 
     int updateByPrimaryKey(Account record);
+
+    UserAndPayUserDTO selectUserAndPayUser();
 }

@@ -15,6 +15,16 @@
     id, nick_name, icon, sex, telephone, email, create_time, update_time
   </sql>
 
+    <!--查询用户不同性别的用户数-->
+  <select id="selectSexCount" resultType="cn.myzqu.ygmall.dto.SexCountDTO">
+    SELECT * FROM
+    (SELECT COUNT(*) AS male FROM customer WHERE sex = 0)A
+    INNER JOIN
+    (SELECT COUNT(*) AS female FROM customer WHERE sex = 1)B
+    INNER JOIN
+    (SELECT COUNT(*) AS secret FROM customer WHERE sex = -1)C
+  </select>
+
     <!--查询用户信息记录-->
     <select id="selectCustomer" resultMap="BaseResultMap" parameterType="Map">
         select

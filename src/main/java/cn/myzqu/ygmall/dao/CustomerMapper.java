@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.dao;
 
+import cn.myzqu.ygmall.dto.SexCountDTO;
 import cn.myzqu.ygmall.pojo.Customer;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface CustomerMapper {
     int updateByPrimaryKeySelective(Customer record);
 
     int updateByPrimaryKey(Customer record);
+
+    SexCountDTO selectSexCount();
 }

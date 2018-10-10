@@ -28,10 +28,12 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String id, String telephone, String email) {
+    public Customer(String id, String telephone, String email, Byte sex, String icon) {
         this.id = id;
         this.telephone = telephone;
         this.email = email;
+        this.sex = sex;
+        this.icon = icon;
     }
 
     public Customer(String id, String nickName, String icon, Byte sex, String telephone, String email) {

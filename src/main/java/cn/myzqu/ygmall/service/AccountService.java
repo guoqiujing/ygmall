@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.service;
 
+import cn.myzqu.ygmall.dto.UserAndPayUserDTO;
 import cn.myzqu.ygmall.dto.UserSessionDTO;
 import cn.myzqu.ygmall.pojo.Customer;
 
@@ -14,5 +15,7 @@ public interface AccountService {
     UserSessionDTO login(String code, String password);
 
     int updatePassword(String id, String oldPwd, String newPwd);
+
+    UserAndPayUserDTO findUserAndPayUser();
 
 }

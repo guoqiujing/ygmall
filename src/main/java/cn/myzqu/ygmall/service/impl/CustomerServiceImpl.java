@@ -1,6 +1,7 @@
 package cn.myzqu.ygmall.service.impl;
 
 import cn.myzqu.ygmall.dao.CustomerMapper;
+import cn.myzqu.ygmall.dto.SexCountDTO;
 import cn.myzqu.ygmall.pojo.Customer;
 import cn.myzqu.ygmall.service.CustomerService;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
@@ -20,6 +21,11 @@ import java.util.Map;
 public class CustomerServiceImpl implements CustomerService{
     @Autowired
     private CustomerMapper customerMapper;
+
+    @Override
+    public SexCountDTO findSexCount() {
+        return customerMapper.selectSexCount();
+    }
 
     @Override
     public BootstrapTableVO findCustomer(Map<String, Object> map, Integer pageIndex, Integer pageSize) {

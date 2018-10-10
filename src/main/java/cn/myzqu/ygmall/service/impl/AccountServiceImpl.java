@@ -2,6 +2,7 @@ package cn.myzqu.ygmall.service.impl;
 
 import cn.myzqu.ygmall.dao.AccountMapper;
 import cn.myzqu.ygmall.dao.CustomerMapper;
+import cn.myzqu.ygmall.dto.UserAndPayUserDTO;
 import cn.myzqu.ygmall.dto.UserSessionDTO;
 import cn.myzqu.ygmall.enums.ResultEnum;
 import cn.myzqu.ygmall.exception.CustomException;
@@ -29,6 +30,11 @@ public class AccountServiceImpl implements AccountService{
     private CustomerMapper customerMapper;
 
     @Override
+    public UserAndPayUserDTO findUserAndPayUser() {
+        return accountMapper.selectUserAndPayUser();
+    }
+
+    @Override
     public Customer addCustomer(String telephone, String email, String password) {
 
         if(StringUtils.isEmpty(telephone)||StringUtils.isEmpty(email)){
@@ -53,7 +59,9 @@ public class AccountServiceImpl implements AccountService{
         if(accountMapper.insertSelective(account)>0){
             log.info("新增账号成功：{}",account);
             //封装顾客信息
-            Customer customer = new Customer(id,telephone,email);
+            Byte sex=-1;
+            String icon="https://ygmall-user-1255574204.cos.ap-guangzhou.myqcloud.com/a1bb4de56d414dca8d9ec7212f29961e.jpg";
+            Customer customer = new Customer(id,telephone,email,sex,icon);
             if(customerMapper.insertSelective(customer)>0){
                 log.info("新增顾客信息成功：{}",customer);
                 return customer;

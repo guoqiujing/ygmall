@@ -13,6 +13,15 @@
   <sql id="Base_Column_List" >
     id, password, salt, type, state, create_time, login_time
   </sql>
+
+    <!--用于查询付费用户数和总用户数-->
+  <select id="selectUserAndPayUser" resultType="cn.myzqu.ygmall.dto.UserAndPayUserDTO">
+    SELECT * FROM
+    (SELECT COUNT(DISTINCT user_id) AS pay_user FROM `order` WHERE `order`.`status` = 4)A
+    INNER JOIN
+    (SELECT COUNT(*) AS user_count FROM account)B
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
