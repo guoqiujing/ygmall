@@ -14,6 +14,18 @@
     id, password, salt, type, state, create_time, login_time
   </sql>
 
+  <!--用于查询最近一周的新增用户数-->
+  <select id="selectNewUser" resultType="java.lang.Integer">
+    SELECT COUNT(*) AS new_user FROM account WHERE
+    create_time
+    &gt;=
+    DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 7 DAY), '%Y-%m-%d 00:00:00')
+    AND
+    create_time
+    &lt;=
+    DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 23:59:59')
+  </select>
+
     <!--用于查询付费用户数和总用户数-->
   <select id="selectUserAndPayUser" resultType="cn.myzqu.ygmall.dto.UserAndPayUserDTO">
     SELECT * FROM

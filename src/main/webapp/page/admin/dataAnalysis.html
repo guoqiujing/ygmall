@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="assets/vendor/chartist/css/chartist-custom.css">
 	<!-- MAIN CSS -->
 	<link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="../../layer/theme/default/layer.css">
 	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
 	<link rel="stylesheet" href="assets/css/demo.css">
 	<!-- GOOGLE FONTS -->
@@ -21,7 +22,8 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
-
+    <script type="text/javascript" src="../../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../../layer/layer.js"></script>
 	<script type="text/javascript" src="../../js/vue.js"></script>
     <script type="text/javascript" src="../../js/highcharts.js"></script>
     <script type="text/javascript" src="../../js/highcharts-zh_CN.js"></script>
@@ -145,7 +147,7 @@
                                     <div class="metric">
                                         <span class="icon"><i class="fa fa-user"></i></span>
                                         <p>
-                                            <span class="number">23</span>
+                                            <span class="number" v-cloak>{{newUser}}</span>
                                             <span class="title">新增用户</span>
                                         </p>
                                     </div>

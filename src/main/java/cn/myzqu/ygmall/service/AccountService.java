@@ -18,4 +18,6 @@ public interface AccountService {
 
     UserAndPayUserDTO findUserAndPayUser();
 
+    int findNewUser();
+
 }

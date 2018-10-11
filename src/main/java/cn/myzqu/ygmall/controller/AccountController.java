@@ -76,4 +76,15 @@ public class AccountController {
         return ResultVOUtil.error("查找失败");
     }
 
+    /**
+     * 查找最近一周的新增用户数
+     * @return
+     */
+    @PostMapping("/findNewUser")
+    @ResponseBody
+    public Result findNewUser(){
+        int newUser=accountService.findNewUser();
+        return ResultVOUtil.success(newUser);
+    }
+
 }

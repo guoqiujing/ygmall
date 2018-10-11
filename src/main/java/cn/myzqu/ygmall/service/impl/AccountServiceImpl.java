@@ -30,6 +30,11 @@ public class AccountServiceImpl implements AccountService{
     private CustomerMapper customerMapper;
 
     @Override
+    public int findNewUser() {
+        return accountMapper.selectNewUser();
+    }
+
+    @Override
     public UserAndPayUserDTO findUserAndPayUser() {
         return accountMapper.selectUserAndPayUser();
     }

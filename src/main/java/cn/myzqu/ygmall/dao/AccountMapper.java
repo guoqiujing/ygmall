@@ -18,4 +18,6 @@ public interface AccountMapper {
     int updateByPrimaryKey(Account record);
 
     UserAndPayUserDTO selectUserAndPayUser();
+
+    int selectNewUser();
 }

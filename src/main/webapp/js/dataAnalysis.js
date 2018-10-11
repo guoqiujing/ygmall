@@ -3,17 +3,24 @@
 var app=new Vue({
     el: '#app',
     data:{
+        payUser:0,
         payUserScale:0,
+        noPayUser:0,
         noPayUserScale:0,
+        male:0,
         maleScale:0,
+        female:0,
         femaleScale:0,
-        secretScale:0
+        secret:0,
+        secretScale:0,
+        newUser:0
     },
     //创建vue实例之后的事件
     created: function (){
     },
 
     mounted:function () {
+        this.findNewUser();
         this.findSexCount();
         this.findUserAndPay();
         this.chart1create();
@@ -97,7 +104,8 @@ var app=new Vue({
                     text: null
                 },
                 tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>'+
+                    '人数: <b>{point.x}</b><br/>'
                 },
                 plotOptions: {
                     pie: {
@@ -132,12 +140,15 @@ var app=new Vue({
                     colorByPoint: true,
                     data: [{
                         name: '男',
+                        x:this.male,
                         y: this.maleScale
                     }, {
                         name: '女',
+                        x:this.female,
                         y: this.femaleScale
                     }, {
                         name: '保密',
+                        x:this.secret,
                         y: this.secretScale
                     }
                     ]
@@ -174,7 +185,8 @@ var app=new Vue({
                     text: null
                 },
                 tooltip: {
-                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>'+
+                    '人数: <b>{point.x}</b><br/>'
                 },
                 plotOptions: {
                     pie: {
@@ -209,9 +221,11 @@ var app=new Vue({
                     colorByPoint: true,
                     data: [{
                         name: '付费用户',
+                        x: this.payUser,
                         y: this.payUserScale
                     }, {
                         name: '非付费用户',
+                        x: this.noPayUser,
                         y: this.noPayUserScale
                     }]
                 }]
@@ -239,6 +253,30 @@ var app=new Vue({
             }         return m;
         },
 
+        //请求最近一周的用户数
+        findNewUser:function () {
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/account/findNewUser",
+                dataType: "json",
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        //console.log("成功");
+                        //console.log(msg.data);
+                        that.newUser=msg.data;
+                    }
+                    else {
+                        layer.msg('查找失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
+        },
+
         //请求查找用户数和付费用户数
         findUserAndPay:function () {
             var that=this;
@@ -251,6 +289,8 @@ var app=new Vue({
                     if(msg.code===0){
                         //console.log("成功");
                         //console.log(msg.data);
+                        that.payUser=msg.data.pay_user;
+                        that.noPayUser=msg.data.user_count-msg.data.pay_user;
                         that.payUserScale=(msg.data.pay_user/msg.data.user_count).toFixed(3)*100;
                         that.noPayUserScale=100-(msg.data.pay_user/msg.data.user_count).toFixed(3)*100;
                         that.pie2create();
@@ -278,6 +318,9 @@ var app=new Vue({
                         //console.log("成功");
                         //console.log(msg.data);
                         var sum=msg.data.male+msg.data.female+msg.data.secret;
+                        that.male=msg.data.male;
+                        that.female=msg.data.female;
+                        that.secret=msg.data.secret;
                         that.maleScale=(msg.data.male/sum).toFixed(3)*100;
                         that.femaleScale=(msg.data.female/sum).toFixed(3)*100;
                         that.secretScale=(msg.data.secret/sum).toFixed(3)*100;
