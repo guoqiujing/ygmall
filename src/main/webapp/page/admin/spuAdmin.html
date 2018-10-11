@@ -2,11 +2,12 @@
 <html lang="en">
 
 <head>
-	<title>Charts</title>
+	<title>艺格商城：货品信息管理</title>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<!-- VENDOR CSS -->
+	<link rel="stylesheet" href="../../css/bootstrap-table.css" >
 	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
@@ -20,6 +21,22 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+	<style>
+		.loadingWrap{
+			position:fixed;
+			top:0;
+			left:0;
+			width:100%;
+			height:100%;
+			z-index:300;
+			background-image:url(../../img/loading.gif);
+			background-repeat:no-repeat;
+			background-position:center center;
+			background-color:#000;
+			background-color:rgba(0,0,0,0.3);
+			filter:alpha(opacity=40);
+		}
+	</style>
 </head>
 
 <body>
@@ -108,8 +125,8 @@
 							<a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>商品下架</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
 							<div id="subPages2" class="collapse ">
 								<ul class="nav">
-									<li><a href="putOffSpu.html" class="">下架新货品</a></li>
-									<li><a href="putOffGoods.html" class="">下架新商品</a></li>
+									<li><a href="putOffSpu.html" class="">下架货品</a></li>
+									<li><a href="putOffGoods.html" class="">下架商品</a></li>
 								</ul>
 							</div>
 						</li>
@@ -127,50 +144,128 @@
 			<!-- MAIN CONTENT -->
 			<div class="main-content">
 				<div class="container-fluid">
-					<h3 class="page-title">Charts</h3>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Line Chart</h3>
+					<div class="panel panel-headline" id="spuAdmin" style="padding: 20px;">
+
+
+
+						<form>
+							<div class="form-group">
+								<div class="form-horizontal">
+									<label for="searchInput" class="col-sm-3 control-label">货品名称</label>
+									<div class="col-sm-4">
+										<input id="searchInput" class="form-control" placeholder="提示：支持模糊查询">
+									</div>
 								</div>
-								<div class="panel-body">
-									<div id="demo-line-chart" class="ct-chart"></div>
+								<div class="col-sm-2">
+									<button type="button" id="btn_query" class="btn btn-primary" onclick="javascript:$('#spuTable').bootstrapTable('refresh')" style="width: 100%">查询</button>
+								</div>
+								<div style="clear:both"></div>
+							</div>
+						</form>
+						<table id="spuTable" style="word-break:break-all; word-wrap:break-all"></table>
+						<!--ModalEdit-->
+						<div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="myModalLabel">修改货品信息</h4>
+									</div>
+									<div class="modal-body">
+										<form class="form-horizontal" id="form_update">
+											<div class="form-group">
+												<label for="inputId" class="col-sm-3 control-label">编号</label>
+												<div class="col-sm-7">
+													<input type="text" class="form-control" id="inputId" disabled>
+													<input name="id" type="text" class="form-control" id="hiddenId" style="display:none">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label">分类</label>
+												<div class="col-sm-7">
+													<input type="text" class="form-control" id="inputCategoriesName" disabled>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label">品牌</label>
+												<div class="col-sm-7">
+													<input type="text" class="form-control" id="inputBrandName" disabled>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputName" class="col-sm-3 control-label">名称</label>
+												<div class="col-sm-7">
+													<input name="name" type="text" class="form-control" id="inputName">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label">图片</label>
+												<div class="col-sm-7">
+													<div id="spuImgList" ></div>
+													<div id="showImgDiv">
+														<template v-for="val,index in imgArray">
+															<img style='width: 50px;margin: 3px;border: solid 1px #c8c8c8;' v-bind:src="val" />
+														</template>
+													</div>
+													<div>
+														<label id="fileLabel" for="exampleInputFile" class=" btn btn-d	efault unchexkedFileInput" >
+															修改图片
+														</label>
+														<input type="file" id="exampleInputFile" v-on:change="getFile($event),showImgVue($event)" multiple="multiple" accept="image/*" style="display: none">
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputSubtitle" class="col-sm-3 control-label">宣传标语</label>
+												<div class="col-sm-7">
+													<input name="subtitle" type="text" class="form-control" id="inputSubtitle">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputStatus" class="col-sm-3 control-label">状态</label>
+												<div class="col-sm-7">
+													<select name="status" class="form-control" id="inputStatus" >
+														<option value="0">默认</option>
+														<option value="1">下架</option>
+													</select>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputSaleCount" class="col-sm-3 control-label">销量</label>
+												<div class="col-sm-7">
+													<input name="saleCount" type="number" min="0" required="required" class="form-control" id="inputSaleCount">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputCommentCount" class="col-sm-3 control-label">评论数</label>
+												<div class="col-sm-7">
+													<input name="commentCount" type="number" min="0" required="required" class="form-control" id="inputCommentCount">
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-3 control-label">详细参数</label>
+												<div class="col-sm-7">
+													<div id="paramsDiv"></div>
+													<div><button class="glyphicon glyphicon-plus" style="width:100%" type="button" onclick="createAttrRow()"></button></div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputCreatetime" class="col-sm-3 control-label">创建时间</label>
+												<div class="col-sm-7">
+													<input name="createtime" type="text" class="form-control" id="inputCreatetime" disabled>
+												</div>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+										<button type="button" onclick="updateSpu()" class="btn btn-primary" >保存修改</button>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Bar Chart</h3>
-								</div>
-								<div class="panel-body">
-									<div id="demo-bar-chart" class="ct-chart"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-6">
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Area Chart</h3>
-								</div>
-								<div class="panel-body">
-									<div id="demo-area-chart" class="ct-chart"></div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="panel">
-								<div class="panel-heading">
-									<h3 class="panel-title">Multiple Chart</h3>
-								</div>
-								<div class="panel-body">
-									<div id="multiple-chart" class="ct-chart"></div>
-								</div>
-							</div>
-						</div>
+
+
 					</div>
 				</div>
 			</div>
@@ -178,112 +273,21 @@
 		</div>
 		<!-- END MAIN -->
 		<div class="clearfix"></div>
-		<footer>
-			<div class="container-fluid">
-				<p class="copyright">Copyright &copy; 2017.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
-			</div>
-		</footer>
 	</div>
 	<!-- END WRAPPER -->
 	<!-- Javascript -->
+	<script type="text/javascript" src="../../js/vue.js"></script>
 	<script src="assets/vendor/jquery/jquery.min.js"></script>
 	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/vendor/chartist/js/chartist.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
-	<script>
-	$(function() {
-		var options;
-
-		var data = {
-			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-			series: [
-				[200, 380, 350, 320, 410, 450, 570, 400, 555, 620, 750, 900],
-			]
-		};
-
-		// line chart
-		options = {
-			height: "300px",
-			showPoint: true,
-			axisX: {
-				showGrid: false
-			},
-			lineSmooth: false,
-		};
-
-		new Chartist.Line('#demo-line-chart', data, options);
-
-		// bar chart
-		options = {
-			height: "300px",
-			axisX: {
-				showGrid: false
-			},
-		};
-
-		new Chartist.Bar('#demo-bar-chart', data, options);
-
-
-		// area chart
-		options = {
-			height: "270px",
-			showArea: true,
-			showLine: false,
-			showPoint: false,
-			axisX: {
-				showGrid: false
-			},
-			lineSmooth: false,
-		};
-
-		new Chartist.Line('#demo-area-chart', data, options);
-
-
-		// multiple chart
-		var data = {
-			labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-			series: [{
-				name: 'series-real',
-				data: [200, 380, 350, 320, 410, 450, 570, 400, 555, 620, 750, 900],
-			}, {
-				name: 'series-projection',
-				data: [240, 350, 360, 380, 400, 450, 480, 523, 555, 600, 700, 800],
-			}]
-		};
-
-		var options = {
-			fullWidth: true,
-			lineSmooth: false,
-			height: "270px",
-			low: 0,
-			high: 'auto',
-			series: {
-				'series-projection': {
-					showArea: true,
-					showPoint: false,
-					showLine: false
-				},
-			},
-			axisX: {
-				showGrid: false,
-
-			},
-			axisY: {
-				showGrid: false,
-				onlyInteger: true,
-				offset: 0,
-			},
-			chartPadding: {
-				left: 20,
-				right: 20
-			}
-		};
-
-		new Chartist.Line('#multiple-chart', data, options);
-
-	});
-	</script>
+	<script src="../../js/spuAdmin.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap-table.js" ></script>
+	<script type="text/javascript" src="../../js/bootstrap-table-zh-CN.js"></script>
+	<script type="text/javascript" src="../../layer/layer.js"></script>
+	<script src="../../js/bootstrapValidator.min.js"></script>
+	<script src="../../js/bootstrapValidator_zh_CN.js"></script>
 </body>
 
 </html>

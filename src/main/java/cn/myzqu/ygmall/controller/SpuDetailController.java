@@ -30,11 +30,18 @@ public class SpuDetailController {
     }
     @PostMapping("/insert")
     public Result insert(String spuId,String urlList){
-        System.out.println("urlList--------------------"+urlList);
         Integer result= spuDetailService.insert(spuId,urlList);
         if(result==1){
             return ResultVOUtil.success();
         }
         return ResultVOUtil.error("添加商品详情图片失败");
+    }
+    @PostMapping("/update")
+    public Result update(String spuId,String urlList){
+        Integer result= spuDetailService.update(spuId,urlList);
+        if(result==1){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("修改商品详情图失败");
     }
 }

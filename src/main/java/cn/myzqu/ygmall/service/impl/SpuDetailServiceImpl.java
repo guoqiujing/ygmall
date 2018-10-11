@@ -35,4 +35,18 @@ public class SpuDetailServiceImpl implements SpuDetailService {
             return null;
         return 1;
     }
+    public Integer delete(String spuId) {
+        Integer result=spuDetailMapper.deleteBySpuId(spuId);
+        return result;
+    }
+    public Integer update(String spuId,String urlList) {
+        Integer result=0;
+        Integer delResult=1;
+        List<SpuDetail> spuDetails=selectBySPUId(spuId);
+        if(spuDetails.size()>0)
+            delResult=delete(spuId);
+        if(delResult>0)
+            result=insert(spuId,urlList);
+        return result;
+    }
 }

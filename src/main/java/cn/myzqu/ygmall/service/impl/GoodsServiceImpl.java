@@ -36,6 +36,8 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private AttributeService attributeService;
 
+
+
     public BootstrapTableVO getAllGoods_Spu_Img(int pageSize,int pageIndex,String searchInput){
         Page<Goods> page = PageHelper.startPage(pageIndex,pageSize);
         Map<String,Object> map = new HashMap<>();
@@ -46,14 +48,6 @@ public class GoodsServiceImpl implements GoodsService {
         for(int i=0;i<goodsList.size();i++){
             goodsList.get(i).setGoodsImgList(goodsList.get(i).getGoodsImgList());
             goodsList.get(i).setCategoriesAttributeVO(attributeService.getCategoriesAttributeByCategoryId(goodsList.get(i).getCategoryId()));
-            HashMap<String,String> attrHashMap=new HashMap<>();
-            String[] attrList1=goodsList.get(i).getAttributes().split("-");
-            for(int j=0;j<attrList1.length;j++){
-                String[] attrList2=attrList1[j].split(";");
-                if(attrList2.length>=2)
-                    attrHashMap.put(attrList2[1].substring(4),attrList2[0]);
-            }
-            goodsList.get(i).setAttrHashMap(attrHashMap);
         }
         int total = (int)page.getTotal();
         System.out.println("总记录数："+total);
@@ -151,6 +145,15 @@ public class GoodsServiceImpl implements GoodsService {
      */
     public Integer putOffBySpuId(String spuId){
         Integer result=goodsMapper.putOffBySpuId(spuId);
+        return result;
+    }
+    /**
+     * 根据货品id修改商品状态为上架
+     * @param spuId
+     * @return
+     */
+    public Integer putOnBySpuId(String spuId){
+        Integer result=goodsMapper.putOnBySpuId(spuId);
         return result;
     }
 

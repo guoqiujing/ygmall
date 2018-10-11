@@ -8,14 +8,10 @@ $().ready(function (){
 // 将侧边栏收起，腾出空间
     if(!$('body').hasClass('layout-fullwidth')) {
         $('body').addClass('layout-fullwidth');
-
     } else {
         $('body').removeClass('layout-fullwidth');
         $('body').removeClass('layout-default'); // also remove default behaviour if set
     }
-
-    $(this).find('.lnr').toggleClass('lnr-arrow-left-circle lnr-arrow-right-circle');
-
     if($(window).innerWidth() < 1025) {
         if(!$('body').hasClass('offcanvas-active')) {
             $('body').addClass('offcanvas-active');
@@ -75,7 +71,7 @@ $().ready(function (){
                     css:{"width":"50px"}
                 },
                 formatter:function(value,row,index){
-                    return "<a href='#'>"+value+"</a>";
+                    return "<a href='javascript:void(0)' onclick=\"showSpu('"+value+"')\">"+value+"</a>";
                 },
             }, {
                 field: 'cost',
@@ -133,6 +129,9 @@ $().ready(function (){
             }]
     });
 });
+function showSpu(value){
+    pageImg.showSpuVue(value);
+}
 // 校验器
 $(function () {
     $('#form_update').bootstrapValidator({
@@ -409,7 +408,16 @@ var pageImg = new Vue({
         file: [],//要上传的图片文件
         img: '',//头像图片预览图
         imgArray: [],//头像图片预览图
-        imgShow: true//是否显示预览图，默认显示
+        imgShow: true,//是否显示预览图，默认显示
+        spuId:"",
+        spuCategoriesName:"",
+        spuBrandName:"",
+        spuName:"",
+        spuSubtitle:"",
+        spuStatus:"",
+        spuSaleCount:"",
+        spuCommentCount:"",
+        spuCreatetime:""
     },
     methods: {
         //改变选择的图片时
@@ -529,6 +537,58 @@ var pageImg = new Vue({
                 }
             });
             return a;
+        },
+        showSpuVue:function(value){
+            var that = this;
+            $.ajax({
+                url:'/spu/selectSpu_ImgById',
+                type:'post',
+                data:{id:value},
+                dataType: "json",
+                success:function(data){
+                    if(data.code==0){
+                        that.spuId=data.data.spu.id;
+                        that.spuCategoriesName=data.data.categoriesName;
+                        that.spuBrandName=data.data.brandName;
+                        that.spuName=data.data.spu.name;
+                        that.spuSubtitle=data.data.spu.subtitle;
+                        that.spuSaleCount=data.data.spu.saleCount;
+                        that.spuCommentCount=data.data.spu.commentCount;
+                        if(data.data.spu.status=="0")
+                            that.spuStatus="默认";
+                        else
+                            that.spuStatus="已下架";
+                        that.spuCreatetime=new Date(parseInt(data.data.spu.createtime) ).toLocaleString().replace(/年|月/g, "-").replace(/日/g, " ");
+
+                        // 显示货品详情图
+                        $("#spuImgList").html("");
+                        var ImgList=[];
+                        for(var i=0;i<data.data.spuImgList.length;i++)
+                            ImgList.push(data.data.spuImgList[i].imgUrl);
+                        for(var i in ImgList)
+                            $("#spuImgList").append("<a href=\"javascript:void(0)\" onclick=\"showImg('"+ImgList[i]+"')\"><img style='width: 50px;margin: 3px;border: solid 1px #c8c8c8;' src='"+ImgList[i]+"'></img></a>");
+
+                        //货品参数
+                        var paramsList=data.data.spu.params.replace(/"/g,"").replace(/{/g,"").replace(/}/g,"").split(",");
+                        var paramsHtml="";
+                        for(var j=0;j<paramsList.length;j++) {
+                            var temparam=paramsList[j].split(":");
+                            paramsHtml+="<div class=\"form-group\" style='font-size: 14px;'>" +
+                                "<div class=\"col-sm-5\" style='text-align: right;'>" +temparam[0]+":</div>" +
+                                "<div class=\"col-sm-7\">" +temparam[1]+
+                                "</div></div>";
+                        }
+                        $("#paramsDiv").html(paramsHtml);
+
+                        $('#ModalLookSpu').modal('show');
+                    }
+                    else
+                        layer.msg('查找货品信息失败', {time: 2000});
+                },
+                error:function(){
+                    layer.msg('货品信息查看请求失败', {time: 2000});
+                }
+            });
         }
     }
 })

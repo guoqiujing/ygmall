@@ -15,15 +15,6 @@ import java.util.List;
 public class Goods_Img_AttributesVO extends Goods{
     private List<GoodsImg> goodsImgList;
     private CategoriesAttributeVO categoriesAttributeVO;//商品所属分类完整路径及其所含规格值
-    private HashMap<String,String> attrHashMap;
-
-    public HashMap<String, String> getAttrHashMap() {
-        return attrHashMap;
-    }
-
-    public void setAttrHashMap(HashMap<String, String> attrHashMap) {
-        this.attrHashMap = attrHashMap;
-    }
 
     public List<GoodsImg> getGoodsImgList() {
         return goodsImgList;
@@ -47,7 +38,6 @@ public class Goods_Img_AttributesVO extends Goods{
                 "Goods=" + super.toString() +
                 "goodsImgList=" + goodsImgList +
                 ", categoriesAttributeVO=" + categoriesAttributeVO +
-                ", attrHashMap=" + attrHashMap +
                 '}';
     }
 
