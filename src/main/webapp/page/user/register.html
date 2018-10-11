@@ -1,9 +1,5 @@
-
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html>
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -90,10 +86,17 @@
 					<!-- Start Sign In Form -->
 					<form action="#" class="fh5co-form animate-box" data-animate-effect="fadeIn">
 						<h2 style="font-size:24px ;font-family:'幼圆';color:#985F0D;text-align: center;">—— 注 册 ——</h2>
-						<div class="form-group">
-							<label for="telephone" class="sr-only">Telephone</label>
-							<input type="text" class="form-control" id="telephone" placeholder="手机号码" autocomplete="off">
+						<div class="input-group form-group">
+							<!--<label for="telephone" class="sr-only">Telephone</label>-->
+							<input  type="text" class="form-control" id="telephone" placeholder="手机号码" autocomplete="off">
+                            <span class="input-group-btn">
+		                        <input class="btn btn-default" type="button" value="获取验证码" onclick="setTime(this)" style="border-color: #987E46;background-color: #987E46;color: #fff;border-radius: 6px;margin-left: 5px;">
+		                    </span>
 						</div>
+                        <div class="form-group">
+                            <!--<label for="email" class="sr-only">verification</label>-->
+                            <input type="text" class="form-control" id="verification" placeholder="验证码" autocomplete="off">
+                        </div>
 						<div class="form-group">
 							<label for="email" class="sr-only">Email</label>
 							<input type="email" class="form-control" id="email" placeholder="邮箱" autocomplete="off">

@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by 的川 on 2018/9/6.
  */
@@ -23,7 +26,17 @@ public class AccountController {
 
     @PostMapping("/register")
     @ResponseBody
-    public Result register(String telephone, String email, String password){
+    public Result register(String code, String telephone, String email, String password, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        //取出存在session的验证码和手机号
+        String sessionCode=(String)session.getAttribute("code");
+        String sessionPhone=(String)session.getAttribute("phone");
+        if(!telephone.equals(sessionPhone)){
+            return ResultVOUtil.error("手机号不匹配，请重新发送验证码");
+        }
+        else if(!code.equals(sessionCode)){
+            return ResultVOUtil.error("验证码错误");
+        }
         //调用注册顾客的服务层方法
         Customer customer = accountService.addCustomer(telephone, email, password);
         if(customer!=null){
