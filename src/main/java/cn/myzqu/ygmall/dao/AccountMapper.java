@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.dao;
 
+import cn.myzqu.ygmall.dto.FirAndSecDTO;
 import cn.myzqu.ygmall.dto.UserAndPayUserDTO;
 import cn.myzqu.ygmall.pojo.Account;
 
@@ -20,4 +21,6 @@ public interface AccountMapper {
     UserAndPayUserDTO selectUserAndPayUser();
 
     int selectNewUser();
+
+    FirAndSecDTO selectFirAndSec();
 }

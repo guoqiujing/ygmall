@@ -13,7 +13,11 @@ var app=new Vue({
         femaleScale:0,
         secret:0,
         secretScale:0,
-        newUser:0
+        newUser:0,
+        firBuy:0,
+        firBuyScale:0,
+        secBuy:0,
+        secBuyScale:0
     },
     //创建vue实例之后的事件
     created: function (){
@@ -23,6 +27,7 @@ var app=new Vue({
         this.findNewUser();
         this.findSexCount();
         this.findUserAndPay();
+        this.findFirAndSec();
         this.chart1create();
     },
     methods: {
@@ -232,6 +237,82 @@ var app=new Vue({
             });
         },
 
+        //饼图3生成
+        pie3create:function () {
+            Highcharts.chart('pie3', {
+                credits:{
+                    enabled: false // 禁用版权信息
+                },
+                legend: {
+                    //backgroundColor: '#FFFFFF',
+                    layout: 'vertical',
+                    floating: true,
+                    y:10,
+                    align: 'right',
+                    verticalAlign: 'top',
+                    itemStyle:{
+                        fontWeight: 300,
+                        color: 'rgb(103, 106, 109)',
+                        fontSize:14
+                    }
+                },
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: null
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b><br/>'+
+                    '人数: <b>{point.x}</b><br/>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true,
+                        point: {                  // 每个扇区是数据点对象，所以事件应该写在 point 下面
+                            events: {
+                                // 鼠标滑过是，突出当前扇区
+                                mouseOver: function() {
+                                    this.slice();
+                                },
+                                // 鼠标移出时，收回突出显示
+                                mouseOut: function() {
+                                    this.slice();
+                                },
+                                // 默认是点击突出，这里屏蔽掉
+                                click: function() {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                },
+                colors: ['#92dee5', '#6185fa'],
+                series: [{
+                    innerSize: '50%',
+                    name: '比例',
+                    colorByPoint: true,
+                    data: [{
+                        name: '单次购买率',
+                        x: this.firBuy,
+                        y: this.firBuyScale
+                    }, {
+                        name: '多次购买率',
+                        x: this.secBuy,
+                        y: this.secBuyScale
+                    }]
+                }]
+            });
+        },
+
         //获得某一天的日期
         getDay:function(day){
             var today = new Date();
@@ -325,6 +406,35 @@ var app=new Vue({
                         that.femaleScale=(msg.data.female/sum).toFixed(3)*100;
                         that.secretScale=(msg.data.secret/sum).toFixed(3)*100;
                         that.pie1create();
+                    }
+                    else {
+                        layer.msg('查找失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
+        },
+
+        //请求查找单次购买用户和多次购买用户
+        findFirAndSec:function () {
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/account/findFirAndSec",
+                dataType: "json",
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        console.log("成功");
+                        console.log(msg.data);
+                        var sum=msg.data.fir_buy+msg.data.sec_buy;
+                        that.firBuy=msg.data.fir_buy-msg.data.sec_buy;
+                        that.secBuy=msg.data.sec_buy;
+                        that.firBuyScale=((msg.data.fir_buy-msg.data.sec_buy)/sum).toFixed(3)*100;
+                        that.secBuyScale=(msg.data.sec_buy/sum).toFixed(3)*100;
+                        that.pie3create();
                     }
                     else {
                         layer.msg('查找失败', {time: 2000});

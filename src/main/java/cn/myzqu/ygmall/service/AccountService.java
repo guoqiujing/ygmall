@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.service;
 
+import cn.myzqu.ygmall.dto.FirAndSecDTO;
 import cn.myzqu.ygmall.dto.UserAndPayUserDTO;
 import cn.myzqu.ygmall.dto.UserSessionDTO;
 import cn.myzqu.ygmall.pojo.Customer;
@@ -19,5 +20,7 @@ public interface AccountService {
     UserAndPayUserDTO findUserAndPayUser();
 
     int findNewUser();
+
+    FirAndSecDTO findFirAndSec();
 
 }

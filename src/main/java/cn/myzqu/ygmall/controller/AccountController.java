@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.controller;
 
+import cn.myzqu.ygmall.dto.FirAndSecDTO;
 import cn.myzqu.ygmall.dto.UserAndPayUserDTO;
 import cn.myzqu.ygmall.pojo.Customer;
 import cn.myzqu.ygmall.service.AccountService;
@@ -85,6 +86,20 @@ public class AccountController {
     public Result findNewUser(){
         int newUser=accountService.findNewUser();
         return ResultVOUtil.success(newUser);
+    }
+
+    /**
+     * 查找单次购买用户和多次购买用户
+     * @return
+     */
+    @PostMapping("/findFirAndSec")
+    @ResponseBody
+    public Result findFirAndSec(){
+        FirAndSecDTO fo=accountService.findFirAndSec();
+        if(fo!=null){
+            return ResultVOUtil.success(fo);
+        }
+        return ResultVOUtil.error("查找失败");
     }
 
 }

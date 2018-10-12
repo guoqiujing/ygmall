@@ -14,6 +14,28 @@
     id, password, salt, type, state, create_time, login_time
   </sql>
 
+   <!--用于查询单次购买用户和多次购买用户-->
+    <select id="selectFirAndSec" resultType="cn.myzqu.ygmall.dto.FirAndSecDTO">
+        SELECT * FROM
+        (SELECT COUNT(*) sec_buy
+        FROM
+        (SELECT o1.id
+        FROM `order` o1 ,`order` o2
+        WHERE
+        o1.id &lt;&gt; o2.id
+        AND
+        o1.user_id = o2.user_id
+        GROUP BY
+        o1.user_id)A)C
+        INNER JOIN
+        (SELECT COUNT(*) fir_buy
+        FROM
+        (SELECT *
+        FROM `order`
+        GROUP BY
+        `order`.user_id)B)D
+    </select>
+
   <!--用于查询最近一周的新增用户数-->
   <select id="selectNewUser" resultType="java.lang.Integer">
     SELECT COUNT(*) AS new_user FROM account WHERE

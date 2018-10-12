@@ -2,6 +2,7 @@ package cn.myzqu.ygmall.service.impl;
 
 import cn.myzqu.ygmall.dao.AccountMapper;
 import cn.myzqu.ygmall.dao.CustomerMapper;
+import cn.myzqu.ygmall.dto.FirAndSecDTO;
 import cn.myzqu.ygmall.dto.UserAndPayUserDTO;
 import cn.myzqu.ygmall.dto.UserSessionDTO;
 import cn.myzqu.ygmall.enums.ResultEnum;
@@ -32,6 +33,11 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public int findNewUser() {
         return accountMapper.selectNewUser();
+    }
+
+    @Override
+    public FirAndSecDTO findFirAndSec() {
+        return accountMapper.selectFirAndSec();
     }
 
     @Override
