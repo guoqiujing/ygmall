@@ -1,16 +1,19 @@
 package cn.myzqu.ygmall.controller;
 
 import cn.myzqu.ygmall.dto.CommentDTO;
+import cn.myzqu.ygmall.dto.PageDTO;
+import cn.myzqu.ygmall.enums.GoodsScoreEnum;
+import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.pojo.Comment;
+import cn.myzqu.ygmall.pojo.Goods;
 import cn.myzqu.ygmall.service.CommentService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import cn.myzqu.ygmall.vo.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -19,6 +22,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/comment")
+@Slf4j
 public class CommentController {
     @Autowired
     private CommentService commentService;
@@ -92,5 +96,31 @@ public class CommentController {
             return ResultVOUtil.error("更改状态失败");
         }
         return ResultVOUtil.success();
+    }
+
+    @GetMapping("/comList/{id}")
+    public Result list(@PathVariable("id") String id,
+                       @RequestParam(value = "goodsScore", defaultValue = "-1") Integer goodsScore,
+                       @RequestParam(value = "page", defaultValue = "0") Integer page,
+                       @RequestParam(value = "size", defaultValue = "10") Integer size) {
+        if (StringUtils.isEmpty(id)) {
+            log.error("【查询评论列表】id为空");
+            throw new CustomException(1, "id为空");
+        }
+        System.out.println(goodsScore);
+        //判断status是否合法
+        PageDTO pageDTO = null;
+        if (GoodsScoreEnum.FEEDBACK.getCode().equals(goodsScore) ||
+                GoodsScoreEnum.REVIEW.getCode().equals(goodsScore) ||
+                GoodsScoreEnum.BEST.getCode().equals(goodsScore)) {
+            pageDTO=commentService.selectByGoodsId(id,new Byte(goodsScore.toString()),page,size);
+        }
+        else{
+            pageDTO=commentService.selectByGoodsId(id,null,page,size);
+        }
+        if(pageDTO!=null){
+            return ResultVOUtil.success(pageDTO);
+        }
+        return ResultVOUtil.error("暂时没有数据哦！");
     }
 }
