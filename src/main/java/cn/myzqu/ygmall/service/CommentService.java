@@ -1,6 +1,7 @@
 package cn.myzqu.ygmall.service;
 
 import cn.myzqu.ygmall.dto.CommentDTO;
+import cn.myzqu.ygmall.dto.PageDTO;
 import cn.myzqu.ygmall.pojo.Comment;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 
@@ -43,4 +44,6 @@ public interface CommentService {
      * @return
      */
    int modifyStatusById(CommentDTO commentDTO);
+
+   PageDTO selectByGoodsId(String goodsId, Byte goodsScore, Integer pageIndex, Integer pageSize);
 }

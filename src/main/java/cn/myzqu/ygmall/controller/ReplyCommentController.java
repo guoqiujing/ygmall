@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.controller;
 
+import cn.myzqu.ygmall.pojo.Comment;
 import cn.myzqu.ygmall.pojo.ReplyComment;
 import cn.myzqu.ygmall.service.ReplyCommentService;
 import cn.myzqu.ygmall.utils.KeyUtil;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by CC on 2018/9/27.

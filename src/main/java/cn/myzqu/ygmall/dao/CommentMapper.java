@@ -2,6 +2,8 @@ package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.dto.CommentDTO;
 import cn.myzqu.ygmall.pojo.Comment;
+import cn.myzqu.ygmall.vo.CommentReplyVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -26,4 +28,6 @@ public interface CommentMapper {
     int  updateByIdList(List<Integer> idList);
 
     int updateStatusById(CommentDTO record);
+
+    List<CommentReplyVO> selectByGoodsId(@Param("goodsId") String goodsId, @Param("goodsScore") Byte goodsscore);
 }

@@ -1,5 +1,7 @@
 package cn.myzqu.ygmall.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class ReplyComment {
@@ -11,10 +13,12 @@ public class ReplyComment {
 
     private String replyContent;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date replyTime;
 
     private String content;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date creatTime;
 
     public String getId() {

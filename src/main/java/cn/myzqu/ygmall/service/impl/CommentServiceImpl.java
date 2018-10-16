@@ -2,9 +2,11 @@ package cn.myzqu.ygmall.service.impl;
 
 import cn.myzqu.ygmall.dao.CommentMapper;
 import cn.myzqu.ygmall.dto.CommentDTO;
+import cn.myzqu.ygmall.dto.PageDTO;
 import cn.myzqu.ygmall.pojo.Comment;
 import cn.myzqu.ygmall.service.CommentService;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
+import cn.myzqu.ygmall.vo.CommentReplyVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -68,5 +70,18 @@ public class CommentServiceImpl implements CommentService{
     public int modifyStatusById(CommentDTO commentDTO){
         int c=commentMapper.updateStatusById(commentDTO);
         return c;
+    }
+
+    @Override
+    public PageDTO selectByGoodsId(String goodsId, Byte goodsScore, Integer pageIndex, Integer pageSize) {
+
+        Page<CommentReplyVO> page =PageHelper.startPage(pageIndex,pageSize);
+        List<CommentReplyVO> comments=commentMapper.selectByGoodsId(goodsId,goodsScore);
+
+        int total=(int)page.getTotal();
+        System.out.println("总记录数："+total);
+        if(total<=0)
+            return null;
+        return new PageDTO(comments,total,pageSize,pageIndex);
     }
 }
