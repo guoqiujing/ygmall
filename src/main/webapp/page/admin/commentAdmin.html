@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <title>评价管理-艺格管理系统</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="../../css/bootstrap-table.css" >
     <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/vendor/linearicons/style.css">
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="assets/css/main.css">
-    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
     <link rel="stylesheet" href="assets/css/demo.css">
-    <!-- GOOGLE FONTS -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!--&lt;!&ndash; GOOGLE FONTS &ndash;&gt;
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">-->
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+
+    <script type="text/javascript" src="../../js/vue.js"></script>
+
 </head>
 <body>
 <!-- WRAPPER -->
@@ -140,9 +143,8 @@
                     <div class="" style="padding-bottom:0;">
                         <form id="formSearch" class="form-horizontal">
                             <div class="form-group" style="margin-top:0">
-                                <label class="control-label col-sm-1" for="txtGoodsScore">评价等级</label>
-                                <div class="col-sm-3">
-                                    <!--<input type="text" class="form-control" id="txt_search_statu">-->
+                                <label class="control-label col-sm-2" for="txtGoodsScore">评价等级</label>
+                                <div class="col-sm-2">
                                     <select id="txtGoodsScore" class="form-control">
                                         <option value="">全部</option>
                                         <option value="0">差评</option>
@@ -185,7 +187,50 @@
     <!-- END MAIN -->
 </div>
 <!-- END WRAPPER -->
+<!--评论详情模态框-->
+<div id="comment">
+    <div class="modal fade" id="comModal" tabindex="-1" role="dialog" v-cloak>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" v-cloak>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">评论回复详情</h4>
+                </div>
 
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <p>买家评论:{{comment.comment}}</p>
+                        </div>
+                        <div class="form-group">
+                            <p v-show="replyConFlag">卖家回复:{{reply.replyContent}}</p>
+                        </div>
+                        <div class="form-group">
+                            <p v-show="addFlag">买家追评:{{comment.additionalComment}}</p>
+                        </div>
+                        <div class="form-group">
+                            <p v-show="conFlag">卖家回复:{{reply.content}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputReply">回复</label>
+                            <input v-model="replyContent" type="text" class="form-control" id="inputReply"
+                                   placeholder="请输入您的回复">
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer bg-info">
+                    <button type="button" class="btn btn-default" v-on:click="clean()" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" v-on:click="replyCon()">回复
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Javascript -->
 <script src="assets/vendor/jquery/jquery.min.js"></script>
 <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -231,7 +276,18 @@
                 field: 'goodsScore',
                 sortable: true,
                 title: '商品评分',
-                witdth: 50
+                witdth: 50,
+                formatter: function (value, row, index) {
+                    if (row['goodsScore'] == 0) {
+                        return '差评';
+                    }
+                    if (row['goodsScore'] == 1) {
+                        return '中评';
+                    }
+                    if (row['goodsScore'] == 2) {
+                        return '好评';
+                    }
+                }
             }, {
                 field: 'comment',
                 sortable: true,
@@ -249,21 +305,6 @@
                 field: 'createTime',
                 sortable: true,
                 title: '评论时间',
-                formatter: function formatDateTime(inputTime) {
-                    var date = new Date(inputTime);
-                    var y = date.getFullYear();
-                    var m = date.getMonth() + 1;
-                    m = m < 10 ? ('0' + m) : m;
-                    var d = date.getDate();
-                    d = d < 10 ? ('0' + d) : d;
-                    var h = date.getHours();
-                    h = h < 10 ? ('0' + h) : h;
-                    var minute = date.getMinutes();
-                    var second = date.getSeconds();
-                    minute = minute < 10 ? ('0' + minute) : minute;
-                    second = second < 10 ? ('0' + second) : second;
-                    return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
-                }
             }, {
                 field: 'operation',
                 title: '操作',
@@ -300,8 +341,9 @@
     //    操作列的按钮事件（单个隐藏和回复）
     window.operaEvents = {
         'click #reply': function (e, value, row, index) {
-            $("#otherModal").model('show');
-            $("#")
+            page.getCommentId(row.id);
+            page.select();
+            $("#comModal").modal('show');
         },
         'click #hide': function (e, value, row, index) {
             console.log(row);
@@ -315,7 +357,7 @@
                         display: 0
                     },
                     dataType: "json",
-                    contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
                     success: function (msg) {
                         console.log(msg);
                         if (msg.code == 0) {
@@ -384,33 +426,6 @@
         }
     });
 
-
-    //    回复评论确认按钮
-    $('#reply').click(function () {
-        $.ajax({
-            type: "POST",
-            url: "/comment/reply",
-            data: {
-                id: $('#inti_id').val(),
-                replyId: $('#new_id').val(),
-                replyContent: $('#new_content').val(),
-            },
-            dataType: "json",
-            success: function (msg) {
-                if (msg.code == 0) {
-                    $('#otherModal').modal('hide');
-                    $table.bootstrapTable('refresh');
-                }
-                else {
-                    alert("回复失败");
-                }
-            },
-            error: function () {
-                alert("错误");
-            }
-        });
-    });
-
     //查询评论
     $('#btn_query').click(function () {
         $table.bootstrapTable('refresh');
@@ -418,14 +433,15 @@
 
     //清空条件
     $('#btn_clean').click(function () {
-        if ($('#txtGoodsScore').val() != "" || $('#txtStatus').val() != "") {
+        if ($('#txtGoodsScore').val() != "" || $('#txtcommentStatusStatus').val() != "") {
             $('#txtGoodsScore').val("");
             $('#txtcommentStatus').val("");
             $table.bootstrapTable('refresh');
         }
 
     });
-
 </script>
+<script type="text/javascript" src="../../layer/layer.js"></script>
+<script type="text/javascript" src="../../js/comment.js"></script>
 </body>
 </html>
