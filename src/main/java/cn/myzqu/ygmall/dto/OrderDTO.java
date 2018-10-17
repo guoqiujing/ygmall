@@ -8,5 +8,11 @@ import lombok.Data;
 @Data
 public class OrderDTO {
 
+    private String id;
+    private String name;
+    private String price;
+    private String attributes;
+    private Integer count;
+
 
 }
