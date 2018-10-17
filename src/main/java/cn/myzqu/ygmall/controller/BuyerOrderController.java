@@ -16,10 +16,12 @@ import cn.myzqu.ygmall.vo.Result;
 import cn.myzqu.ygmall.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +31,7 @@ import java.util.Map;
  * Created by 的川 on 2018/9/25.
  * 买家端订单控制器
  */
-@RestController
+@Controller
 @RequestMapping("buyer/order")
 @Slf4j
 public class BuyerOrderController {
@@ -43,10 +45,19 @@ public class BuyerOrderController {
 
     //创建订单
     @PostMapping("/create")
+    @ResponseBody
     public ResultVO create(OrderForm orderForm) {
-
         //获取收货地址
         orderForm.getAddress();
+        //获取购物车Json，将购物车Json转为实体类
+        return null;
+    }
+
+    //接收商品信息并跳转到订单页面
+    @PostMapping("/to/order")
+    public ModelAndView create(OrderDTO orderDTO) {
+        System.out.println(orderDTO);
+        //获取收货地址
         //获取购物车Json，将购物车Json转为实体类
         return null;
     }
@@ -57,6 +68,7 @@ public class BuyerOrderController {
      * @return
      */
     @GetMapping("/info/{id}")
+    @ResponseBody
     public Result info(@PathVariable("id") String id){
         if(StringUtils.isEmpty(id)){
             log.error("【查询订单】id为空");
@@ -75,6 +87,7 @@ public class BuyerOrderController {
      * @return
      */
     @GetMapping("/alter/{id}")
+    @ResponseBody
     public Result getOrderAlter(@PathVariable("id") String id){
         if(StringUtils.isEmpty(id)){
             log.error("【查询订单】id为空");
@@ -89,6 +102,7 @@ public class BuyerOrderController {
 
     //用户获取订单列表
     @GetMapping("/list/{id}")
+    @ResponseBody
     public Result list(@PathVariable("id") String id,
                        @RequestParam(value = "status", defaultValue = "-1") Integer status,
                        @RequestParam(value = "page", defaultValue = "0") Integer page,
