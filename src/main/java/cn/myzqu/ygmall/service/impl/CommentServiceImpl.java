@@ -6,6 +6,7 @@ import cn.myzqu.ygmall.dto.PageDTO;
 import cn.myzqu.ygmall.pojo.Comment;
 import cn.myzqu.ygmall.service.CommentService;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
+import cn.myzqu.ygmall.vo.CommentGoodsVO;
 import cn.myzqu.ygmall.vo.CommentReplyVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -84,4 +85,17 @@ public class CommentServiceImpl implements CommentService{
             return null;
         return new PageDTO(comments,total,pageSize,pageIndex);
     }
+
+    @Override
+    public PageDTO selectAddCom(String userId,Integer pageIndex,Integer pageSize){
+        Page<CommentGoodsVO> page=PageHelper.startPage(pageIndex,pageSize);
+        List<CommentGoodsVO> comments=commentMapper.selectAddCom(userId);
+
+        int total=(int)page.getTotal();
+        System.out.println("总记录数："+total);
+        if(total<=0)
+            return null;
+        return new PageDTO(comments,total,pageSize,pageIndex);
+    }
+
 }

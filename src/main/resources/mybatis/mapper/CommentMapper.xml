@@ -31,6 +31,24 @@
             <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
         </association>
     </resultMap>
+    <resultMap id="ComGoodsResultMap" type="cn.myzqu.ygmall.vo.CommentGoodsVO" extends="BaseResultMap">
+        <association property="goods" javaType="cn.myzqu.ygmall.pojo.Goods">
+            <id column="id" property="id" jdbcType="VARCHAR" />
+            <result column="SPU_id" property="spuId" jdbcType="VARCHAR" />
+            <result column="name" property="name" jdbcType="VARCHAR" />
+            <result column="inventory" property="inventory" jdbcType="INTEGER" />
+            <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+            <result column="status" property="status" jdbcType="TINYINT" />
+            <result column="cost" property="cost" jdbcType="DECIMAL" />
+            <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
+            <result column="price" property="price" jdbcType="DECIMAL" />
+            <result column="sale_price" property="salePrice" jdbcType="DECIMAL" />
+            <result column="unit" property="unit" jdbcType="VARCHAR" />
+            <result column="sale_count" property="saleCount" jdbcType="INTEGER" />
+            <result column="note" property="note" jdbcType="VARCHAR" />
+            <result column="attributes" property="attributes" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
     <sql id="Base_Column_List">
     id, goods_id, order_id, user_id, user_name, user_img, goods_score, service_score, 
     create_time, comment, comment_img, additional_comment, additional_comment_img, additional_comment_time, 
@@ -53,16 +71,14 @@
           </if>
         ORDER BY c.create_time
     </select>
-    <!--<select id="selectByGoodsId" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from comment
-        where goods_id=#{goodsId,jdbcType=VARCHAR}
-        <if test="goodsScore!=null">
-            and goods_score=#{goodsScore,jdbcType=TINYINT}
-        </if>
-        ORDER BY create_time
-    </select>-->
+
+    <!--查询可以进行追评的评论-->
+    <select id="selectAddCom" parameterType="java.lang.String"  resultMap="ComGoodsResultMap">
+        select c.id,c.goods_id,g.`name`,g.price
+        from `comment` c, goods g
+        where c.user_id=#{userId} and c.comment is not null and c.additional_comment is null and c.goods_id=g.id
+    </select>
+
     <!--根据id删除评论-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from comment

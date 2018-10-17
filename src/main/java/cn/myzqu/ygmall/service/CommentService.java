@@ -46,4 +46,6 @@ public interface CommentService {
    int modifyStatusById(CommentDTO commentDTO);
 
    PageDTO selectByGoodsId(String goodsId, Byte goodsScore, Integer pageIndex, Integer pageSize);
+
+   PageDTO selectAddCom(String userId,Integer pageIndex,Integer pageSize);
 }
