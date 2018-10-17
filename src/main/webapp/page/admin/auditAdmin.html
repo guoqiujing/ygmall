@@ -1,178 +1,376 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 
 <head>
-	<title>Typography</title>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<!-- VENDOR CSS -->
-	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
-	<!-- MAIN CSS -->
-	<link rel="stylesheet" href="assets/css/main.css">
-	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-	<link rel="stylesheet" href="assets/css/demo.css">
-	<!-- GOOGLE FONTS -->
-	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
-	<!-- ICONS -->
-	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+    <title>Typography</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" href="../../css/bootstrap-table.css" >
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/vendor/linearicons/style.css">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" href="assets/css/demo.css">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+    <script type="text/javascript" src="../../js/vue.js"></script>
 </head>
 
 <body>
-	<!-- WRAPPER -->
-	<div id="wrapper">
-		<!-- NAVBAR -->
-		<nav class="navbar navbar-default navbar-fixed-top">
-			<div class="brand">
-				<a href="index.html"><img src="assets/img/yigeguanli.png" alt="Klorofil Logo" class="img-responsive logo"></a>
-			</div>
-			<div class="container-fluid">
-				<div class="navbar-btn">
-					<button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
-				</div>
-				<form class="navbar-form navbar-left">
-					<!--<div class="input-group">
-						<input type="text" value="" class="form-control" placeholder="Search dashboard...">
-						<span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
-					</div>-->
-				</form>
-				<div class="navbar-btn navbar-btn-right">
-				</div>
-				<div id="navbar-menu">
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown">
-							<!--<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
-								<i class="lnr lnr-alarm"></i>
-								<span class="badge bg-danger">5</span>
-							</a>-->
-							<ul class="dropdown-menu notifications">
-								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space is almost full</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9 unfinished tasks</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report is available</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting in 1 hour</a></li>
-								<li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request has been approved</a></li>
-								<li><a href="#" class="more">See all notifications</a></li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<!--<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Help</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>-->
-							<ul class="dropdown-menu">
-								<li><a href="#">Basic Use</a></li>
-								<li><a href="#">Working With Data</a></li>
-								<li><a href="#">Security</a></li>
-								<li><a href="#">Troubleshooting</a></li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png" class="img-circle" alt="Avatar"> <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
-							<ul class="dropdown-menu">
-								<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
-								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-								<li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
-							</ul>
-						</li>
-						<!-- <li>
-							<a class="update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
-						</li> -->
-					</ul>
-				</div>
-			</div>
-		</nav>
-		<!-- END NAVBAR -->
-		<!-- LEFT SIDEBAR -->
-		<div id="sidebar-nav" class="sidebar">
-			<div class="sidebar-scroll">
-				<nav>
-					<ul class="nav">
-						<li><a href="dataAnalysis.html" class=""><i class="lnr lnr-home"></i> <span>数据分析</span></a></li>
-						<li><a href="goodsAdmin.html" class=""><i class="lnr lnr-code"></i> <span>商品信息管理</span></a></li>
-						<li><a href="spuAdmin.html" class=""><i class="lnr lnr-chart-bars"></i> <span>货品信息管理</span></a></li>
-						<li><a href="brandAdmin.html" class=""><i class="lnr lnr-cog"></i> <span>品牌管理</span></a></li>
-						<li><a href="typeAdmin.html" class=""><i class="lnr lnr-alarm"></i> <span>分类管理</span></a></li>
-						<li><a href="attributeAdmin.html" class=""><i class="lnr lnr-alarm"></i> <span>分类规格管理</span></a></li>
-						<li>
-							<a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>商品上架</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subPages" class="collapse ">
-								<ul class="nav">
-									<li><a href="putOnSpu.html" class="">上架新货品</a></li>
-									<li><a href="putOnGoods.html" class="">上架新商品</a></li>
-								</ul>
-							</div>
-						</li>
-						<li>
-							<a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>商品下架</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
-							<div id="subPages2" class="collapse ">
-								<ul class="nav">
-									<li><a href="putOffSpu.html" class="">下架货品</a></li>
-									<li><a href="putOffGoods.html" class="">下架商品</a></li>
-								</ul>
-							</div>
-						</li>
-						<li><a href="deliverGoods.html" class=""><i class="lnr lnr-dice"></i> <span>商品发货</span></a></li>
-						<li><a href="commentAdmin.html" class=""><i class="lnr lnr-pencil"></i> <span>评价管理</span></a></li>
-						<li><a href="auditAdmin.html" class="active"><i class="lnr lnr-text-format"></i> <span>审核管理</span></a></li>
-						<li><a href="refundAdmin.html" class=""><i class="lnr lnr-linearicons"></i> <span>退款管理</span></a></li>
-					</ul>
-				</nav>
-			</div>
-		</div>
-		<!-- END LEFT SIDEBAR -->
-		<!-- MAIN -->
-		<div class="main">
-			<!-- MAIN CONTENT -->
-			<div class="main-content">
-				<div class="container-fluid">
-					<h3 class="page-title">Typography</h3>
-					<div class="panel panel-headline">
-						<div class="panel-body">
-							<h1>Dashboard Heading 1</h1>
-							<h2>Dashboard Heading 2</h2>
-							<h3>Dashboard Heading 3</h3>
-							<h4>Dashboard Heading 4</h4>
-							<h5>Dashboard Heading 5</h5>
-							<h6>Dashboard Heading 6</h6>
-							<hr>
-							<p>Appropriately benchmark web-enabled bandwidth and functionalized leadership skills. Conveniently syndicate global opportunities without interactive methods of empowerment. Collaboratively conceptualize user-centric e-tailers for visionary methodologies. Dramatically myocardinate. Phosfluorescently disintermediate unique resources whereas reliable mindshare. Competently optimize client-focused infrastructures vis-a-vis e-business human capital. Uniquely formulate sustainable benefits whereas functional results. Energistically myocardinate bleeding-edge e-business.</p>
-							<hr>
-							<p class="text-muted"><code>.text-muted</code> Convey meaning through color with a handful of emphasis utility classes.</p>
-							<p class="text-primary"><code>.text-primary</code> Convey meaning through color with a handful of emphasis utility classes.</p>
-							<p class="text-success"><code>.text-success</code> Convey meaning through color with a handful of emphasis utility classes.</p>
-							<p class="text-info"><code>.text-info</code> Convey meaning through color with a handful of emphasis utility classes.</p>
-							<p class="text-warning"><code>.text-warning</code> Convey meaning through color with a handful of emphasis utility classes.</p>
-							<p class="text-danger"><code>.text-danger</code> Convey meaning through color with a handful of emphasis utility classes.</p>
-							<hr>
-							<p>Make a paragraph stand out by adding <code>.lead</code></p>
-							<p class="lead">Objectively re-engineer maintainable total linkage after proactive intellectual capital. Dynamically evolve best-of-breed e-services for user-centric customer.</p>
-							<hr>
-							<div class="well">
-								<p class="text-left"><code>.text-left</code> Left aligned text.</p>
-								<p class="text-center"><code>.text-center</code> Center aligned text.</p>
-								<p class="text-right"><code>.text-right</code> Right aligned text.</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- END MAIN CONTENT -->
-		</div>
-		<!-- END MAIN -->
-		<div class="clearfix"></div>
-		<footer>
-			<div class="container-fluid">
-				<p class="copyright">Copyright &copy; 2017.Company name All rights reserved.More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></p>
-			</div>
-		</footer>
-	</div>
-	<!-- END WRAPPER -->
-	<!-- Javascript -->
-	<script src="assets/vendor/jquery/jquery.min.js"></script>
-	<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
-	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="assets/scripts/klorofil-common.js"></script>
-</body>
+<!-- WRAPPER -->
+<div id="wrapper">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="brand">
+            <a href="index.html"><img src="assets/img/yigeguanli.png" alt="Klorofil Logo"
+                                      class="img-responsive logo"></a>
+        </div>
+        <div class="container-fluid">
+            <div class="navbar-btn">
+                <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+            </div>
+            <form class="navbar-form navbar-left">
+                <!--<div class="input-group">
+                    <input type="text" value="" class="form-control" placeholder="Search dashboard...">
+                    <span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+                </div>-->
+            </form>
+            <div class="navbar-btn navbar-btn-right">
+            </div>
+            <div id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <!--<a href="#" class="dropdown-toggle icon-menu" data-toggle="dropdown">
+                            <i class="lnr lnr-alarm"></i>
+                            <span class="badge bg-danger">5</span>
+                        </a>-->
+                        <ul class="dropdown-menu notifications">
+                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>System space
+                                is almost full</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-danger"></span>You have 9
+                                unfinished tasks</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Monthly report
+                                is available</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-warning"></span>Weekly meeting
+                                in 1 hour</a></li>
+                            <li><a href="#" class="notification-item"><span class="dot bg-success"></span>Your request
+                                has been approved</a></li>
+                            <li><a href="#" class="more">See all notifications</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="lnr lnr-question-circle"></i> <span>Help</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>-->
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Basic Use</a></li>
+                            <li><a href="#">Working With Data</a></li>
+                            <li><a href="#">Security</a></li>
+                            <li><a href="#">Troubleshooting</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png"
+                                                                                        class="img-circle" alt="Avatar">
+                            <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
+                            <li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
+                            <li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
+                            <li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+                        </ul>
+                    </li>
+                    <!-- <li>
+                        <a class="update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- END NAVBAR -->
+    <!-- LEFT SIDEBAR -->
+    <div id="sidebar-nav" class="sidebar">
+        <div class="sidebar-scroll">
+            <nav>
+                <ul class="nav">
+                    <li><a href="dataAnalysis.html" class=""><i class="lnr lnr-home"></i> <span>数据分析</span></a></li>
+                    <li><a href="goodsAdmin.html" class=""><i class="lnr lnr-code"></i> <span>商品信息管理</span></a></li>
+                    <li><a href="spuAdmin.html" class=""><i class="lnr lnr-chart-bars"></i> <span>货品信息管理</span></a></li>
+                    <li><a href="brandAdmin.html" class=""><i class="lnr lnr-cog"></i> <span>品牌管理</span></a></li>
+                    <li><a href="typeAdmin.html" class=""><i class="lnr lnr-alarm"></i> <span>分类管理</span></a></li>
+                    <li><a href="attributeAdmin.html" class=""><i class="lnr lnr-alarm"></i> <span>分类规格管理</span></a>
+                    </li>
+                    <li>
+                        <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
+                            <span>商品上架</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subPages" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="putOnSpu.html" class="">上架新货品</a></li>
+                                <li><a href="putOnGoods.html" class="">上架新商品</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#subPages2" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i>
+                            <span>商品下架</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
+                        <div id="subPages2" class="collapse ">
+                            <ul class="nav">
+                                <li><a href="putOffSpu.html" class="">下架货品</a></li>
+                                <li><a href="putOffGoods.html" class="">下架商品</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="deliverGoods.html" class=""><i class="lnr lnr-dice"></i> <span>商品发货</span></a></li>
+                    <li><a href="commentAdmin.html" class=""><i class="lnr lnr-pencil"></i> <span>评价管理</span></a></li>
+                    <li><a href="auditAdmin.html" class="active"><i class="lnr lnr-text-format"></i>
+                        <span>审核管理</span></a></li>
+                    <li><a href="refundAdmin.html" class=""><i class="lnr lnr-linearicons"></i> <span>退款管理</span></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <!-- END LEFT SIDEBAR -->
+    <!--MAIN-->
+    <div class="main">
+        <!--MAIN CONTENT-->
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="panel panel-headline" style="padding: 20px;">
+                    <div class="" style="padding-bottom:0;">
+                        <form id="formSearch" class="form-horizontal">
+                            <div class="form-group" style="margin-top:0">
+                                <label class="control-label col-sm-2" for="txtType">售后类型</label>
+                                <div class="col-sm-2">
+                                    <select id="txtType" class="form-control">
+                                        <option value="">全部</option>
+                                        <option value="0">七天无理由售后</option>
+                                        <option value="1">七天后售后</option>
+                                    </select>
+                                </div>
+                                <label class="control-label col-sm-1" for="txtStatus">状态</label>
+                                <div class="col-sm-3">
+                                    <select id="txtStatus" class="form-control">
+                                        <option value="">全部</option>
+                                        <option value="0">已同意退款</option>
+                                        <option value="1">已驳回退款</option>
+                                        <option value="2">待审核</option>
+                                        <option value="3">已取消</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-4" style="text-align:left;">
+                                    <button type="button" style="margin-left:50px" id="btn_query"
+                                            class="btn btn-primary">查询
+                                    </button>
+                                    <button type="button" style="margin-left:50px" id="btn_clean"
+                                            class="btn btn-default">清空条件
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <!--<div id="toolbar" class="btn-group">
+                            <button id="btn_hide" type="button" class="btn btn-default" style="">
+                            <span style="margin-right: 8px;" class="glyphicon  glyphicon-eye-close"
+                                  aria-hidden="true"></span>隐藏
+                            </button>
+                        </div>-->
+                    </div>
+                    <table id="table"></table>
+                </div>
+            </div>
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+</div>
+<!-- END WRAPPER -->
+<div id="audit">
+    <div class="modal fade" id="auditModal" tabindex="-1" role="dialog" v-cloak>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">售后申请详情</h4>
+                </div>
 
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <p v-if="audit.type==0">售后类型:七天无理由售后</p>
+                            <p v-else="audit.type==1">售后类型:七天后售后</p>
+                        </div>
+                        <div class="form-group">
+                            <p>申请人:{{audit.receiverName}}</p>
+                        </div>
+                        <div class="form-group">
+                            <p v-if="audit.reason!=null">申请原因:{{audit.reason}}</p>
+                        </div>
+                        <div class="form-group">
+                            <p v-if="audit.description!=null">问题描述:{{audit.description}}</p>
+                        </div>
+                        <div class="form-group">
+                            <p v-if="audit.status==0">售后处理状态:已同意退款</p>
+                            <p v-else-if="audit.status==1">售后处理状态:驳回退款</p>
+                            <p v-else-if="audit.status==2">售后处理状态:待审核</p>
+                            <p v-if="audit.status==3">售后处理状态:买家已取消售后申请</p>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer bg-info">
+                    <span v-if="audit.status!=0&&audit.status!=1">
+                    <button type="button" class="btn btn-primary"  v-on:click="agreeRefund()">同意退款</button>
+                    <button type="button" class="btn btn-danger"  v-on:click="refuse()">驳回申请</button></span>
+                    <button type="button" class="btn btn-default"   data-dismiss="modal">取消</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Javascript -->
+<script src="assets/vendor/jquery/jquery.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="assets/scripts/klorofil-common.js"></script>
+<script type="text/javascript" src="../../js/bootstrap-table.js"></script>
+<script type="text/javascript" src="../../js/bootstrap-table-zh-CN.js"></script>
+<script>
+    var $table = $('#table');
+    var operaEvents;
+
+    //加载网页后的事件
+    $().ready(function () {
+        //初始化表格
+        $('#table').bootstrapTable({
+            url: "/afterSale/list",//要请求数据的文件路径
+            method: 'post',
+            dataType: "json",
+            toolbar: '#toolbar',
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            buttonsAlign: "left",
+            pagination: true,                   //是否显示分页（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 8,                       //每页的记录行数（*）
+            pageList: [8, 10],        //可供选择的每页的行数（*）
+            queryParamsType: "undefined",     //查询参数组织方式
+            queryParams: queryParams,//请求服务器时所传的参数
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            responseHandler: function (res) {
+                //在ajax获取到数据，渲染表格之前，修改数据源
+                return res.data;
+            },
+            columns: [{
+                checkbox: true,
+                visible: true                  //是否显示复选框
+            }, {
+                field: 'id',
+                sortable: true,
+                title: '售后编号'
+            }, {
+                field: 'orderId',
+                sortable: true,
+                title: '订单编号',
+                witdth: 50
+            }, {
+                field: 'type',
+                sortable: true,
+                title: '售后类型',
+                formatter:function (value,row,index) {
+                    if(row['type']==0){
+                        return '七天无理由售后';
+                    }
+                    if(row['type']==1){
+                        return '七天后售后';
+                    }
+                    return value;
+                }
+            }, {
+                field: 'receiverName',
+                sortable: true,
+                title: '买家'
+            }, {
+                field: 'status',
+                sortable: true,
+                title: '售后处理状态',
+                width:200,
+                formatter:function (value,row,index) {
+                    if(row['status']==0){
+                        return '已同意退款';
+                    }
+                    if(row['status']==1){
+                        return '已驳回退款';
+                    }
+                    if(row['status']==2){
+                        return '买家申请退款，待商家处理';
+                    }
+                    if(row['status']==3){
+                        return '买家已取消申请售后';
+                    }
+                }
+            }, {
+                field: 'createTime',
+                sortable: true,
+                title: '申请售后时间',
+            }, {
+                field: 'operation',
+                title: '操作',
+                width: 150,
+                align: 'center',
+                valign: 'middle',
+                events: operaEvents,
+                formatter: operaFormatter()
+            }]
+
+        });
+    });
+
+    //请求服务数据时所传参数
+    function queryParams(params) {
+        return {
+            //每页多少条数据
+            pageSize: params.pageSize,
+            //请求第几页
+            pageIndex: params.pageNumber,
+            type: $('#txtType').val(),
+            status: $('#txtStatus').val()
+        }
+    }
+    //    操作列的按钮
+    function operaFormatter(value, row, index) {
+        return [
+            '<a id="handle" href="##" class="glyphicon glyphicon-check"></a>'
+        ].join('')
+    }
+    window.operaEvents={
+        'click #handle':function (e,value,row,index) {
+            after.getAuditId(row.id);
+            after.getAfterSale();
+            $("#auditModal").modal('show');
+        }
+    };
+    //查询评论
+    $('#btn_query').click(function () {
+        $table.bootstrapTable('refresh');
+    });
+    //清空条件
+    $('#btn_clean').click(function () {
+        if ($('#txtType').val() != "" || $('#txtStatus').val() != "") {
+            $('#txtType').val("");
+            $('#txtStatus').val("");
+            $table.bootstrapTable('refresh');
+        }
+
+    });
+</script>
+<script type="text/javascript" src="../../js/audit.js"></script>
+</body>
 </html>
