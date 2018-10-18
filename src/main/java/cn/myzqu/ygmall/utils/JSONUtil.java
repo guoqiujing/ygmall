@@ -1,6 +1,9 @@
 package cn.myzqu.ygmall.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import org.apache.poi.ss.formula.functions.T;
+
+import java.util.List;
 
 /**
  * Created by 的川 on 2018/8/11.
@@ -14,10 +17,10 @@ public class JSONUtil {
         return t;
     }
 
-//    public static List<T> T ToList(List<Object> object, Class<E> classType){
-//        String  json= JSONObject.toJSONString(object);
-//        System.out.println(json);
-//        T t = JSONObject.parseArray(json,classType);
-//        return t;
-//    }
+    public static List<T> ToList(String json ){
+
+        return null;
+    }
+
+
 }

@@ -1,10 +1,14 @@
 package cn.myzqu.ygmall.service.impl;
 
+import cn.myzqu.ygmall.dao.OrderDetailMapper;
 import cn.myzqu.ygmall.dao.OrderMapper;
 import cn.myzqu.ygmall.dto.PageDTO;
 import cn.myzqu.ygmall.pojo.Brand;
 import cn.myzqu.ygmall.pojo.Order;
+import cn.myzqu.ygmall.pojo.OrderDetail;
+import cn.myzqu.ygmall.service.OrderDetailService;
 import cn.myzqu.ygmall.service.OrderService;
+import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -24,13 +28,29 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private OrderDetailService orderDetailService;
+
+    @Autowired
+    private OrderDetailMapper orderDetailMapper;
+
     @Override
     public Boolean add() {
         //获取收货地址
 
         //获取总订单信息
+        //生成订单表id
+        String orderId = KeyUtil.genUniqueKey();
+        Order order = new Order();
 
-        //获取订单明细信息
+        order.setId(orderId);
+        OrderDetail orderDetail = new OrderDetail();
+
+        if(orderMapper.insert(order)>0){
+            //添加订单明细信息\
+
+        }
+
 
         return null;
     }

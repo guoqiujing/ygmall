@@ -10,7 +10,7 @@ public class OrderDTO {
 
     private String id;
     private String name;
-    private String price;
+    private Double price;
     private String attributes;
     private Integer count;
 

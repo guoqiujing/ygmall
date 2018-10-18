@@ -2,30 +2,31 @@ package cn.myzqu.ygmall.controller;
 
 import cn.myzqu.ygmall.dto.OrderDTO;
 import cn.myzqu.ygmall.dto.PageDTO;
+import cn.myzqu.ygmall.dto.UserSessionDTO;
 import cn.myzqu.ygmall.enums.OrderStatusEnum;
-import cn.myzqu.ygmall.enums.ResultEnum;
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.form.OrderForm;
+import cn.myzqu.ygmall.pojo.CustomerAddress;
 import cn.myzqu.ygmall.pojo.Order;
 import cn.myzqu.ygmall.pojo.OrderAlter;
+import cn.myzqu.ygmall.service.CustomerAddressService;
 import cn.myzqu.ygmall.service.OrderAlterService;
 import cn.myzqu.ygmall.service.OrderService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
-import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import cn.myzqu.ygmall.vo.Result;
 import cn.myzqu.ygmall.vo.ResultVO;
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by 的川 on 2018/9/25.
@@ -40,8 +41,10 @@ public class BuyerOrderController {
     private OrderService orderService;
 
     @Autowired
-
     private OrderAlterService orderAlterService;
+
+    @Autowired
+    private CustomerAddressService customerAddressService;
 
     //创建订单
     @PostMapping("/create")
@@ -50,16 +53,61 @@ public class BuyerOrderController {
         //获取收货地址
         orderForm.getAddress();
         //获取购物车Json，将购物车Json转为实体类
+
+        //添加到订单总表
         return null;
     }
 
-    //接收商品信息并跳转到订单页面
+    //接收商品信息或者购物车信息并跳转到订单页面
     @PostMapping("/to/order")
-    public ModelAndView create(OrderDTO orderDTO) {
+    public ModelAndView create(String  cart,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserSessionDTO userSessionDTO = (UserSessionDTO) session.getAttribute("user");
+        //将cart 转换为实体类
+        List<OrderDTO> list = JSONObject.parseArray(cart,OrderDTO.class);
+        Iterator it = list.iterator();
+        while (it.hasNext()){
+            System.out.println("转换后的cart");
+            System.out.println(it.next().toString());
+        }
+        //进行操作
+        OrderDTO orderDTO = list.get(0);
         System.out.println(orderDTO);
-        //获取收货地址
-        //获取购物车Json，将购物车Json转为实体类
-        return null;
+        System.out.println(userSessionDTO);
+        if(userSessionDTO==null){
+            //session为空，请先登录
+            ModelAndView mav = new ModelAndView("user/login.jsp");
+            return mav;
+        }
+        ModelAndView mav = new ModelAndView("user/index.jsp");
+        //根据userSession获取用户收货地址
+        String userId = userSessionDTO.getId();
+        List<CustomerAddress> customerAddressList = customerAddressService.findByUserId(userId);
+        //判断用户是否已经设置了地址
+        if(customerAddressList.size()>0){
+            //取第一个
+            mav.addObject("address", customerAddressList.get(0));
+        }else{
+            mav.addObject("address", null);
+        }
+        //获取传进来的商品信息
+        //商品名称
+        mav.addObject("name", orderDTO.getName());
+        //商品规格字符
+        mav.addObject("attributes",orderDTO.getAttributes());
+        //单价
+        Double price = orderDTO.getPrice();
+        mav.addObject("price", price);
+        //数量
+        Integer count = orderDTO.getCount();
+        mav.addObject("count", count);
+        //计算总价
+        Double totalPrice = price * count;
+        mav.addObject("totalPrice", totalPrice);
+
+
+
+        return mav;
     }
 
     /**
