@@ -5,8 +5,11 @@ import cn.myzqu.ygmall.dto.PageDTO;
 import cn.myzqu.ygmall.enums.GoodsScoreEnum;
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.pojo.Comment;
+import cn.myzqu.ygmall.pojo.Customer;
 import cn.myzqu.ygmall.pojo.OrderDetail;
 import cn.myzqu.ygmall.service.CommentService;
+import cn.myzqu.ygmall.service.CustomerService;
+import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import cn.myzqu.ygmall.vo.Result;
@@ -28,9 +31,13 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private CustomerService customerService;
+
     /**
-     *查找评论
-     *  @param pageSize
+     * 查找评论
+     *
+     * @param pageSize
      * @param pageIndex
      * @param goodsScore
      * @param commentStatus
@@ -57,6 +64,7 @@ public class CommentController {
 
     /**
      * 根据评论id隐藏评论
+     *
      * @param id
      * @param display
      * @return
@@ -76,6 +84,7 @@ public class CommentController {
 
     /**
      * 批量隐藏评论
+     *
      * @param idList
      * @return
      */
@@ -95,6 +104,7 @@ public class CommentController {
 
     /**
      * 后台管理：根据评论id获取评论内容
+     *
      * @param id
      * @return
      */
@@ -111,6 +121,7 @@ public class CommentController {
 
     /**
      * 根据评论id修改评论回复状态
+     *
      * @param id
      * @param commentStatus
      * @return
@@ -130,8 +141,9 @@ public class CommentController {
     }
 
     /**
-     *获取商品详情页的评论
-     *  @param id
+     * 获取商品详情页的评论
+     *
+     * @param id
      * @param goodsScore
      * @param page
      * @param size
@@ -163,72 +175,90 @@ public class CommentController {
     }
 
     /**
-     *获取用户可以追评的评论
-     *  @param userId
+     * 获取用户可以追评的评论
+     *
+     * @param userId
      * @param page
      * @param size
      * @return
      */
     @PostMapping("/addComList")
-    public Result searchAddCom(String userId,Integer page,Integer size){
+    public Result searchAddCom(String userId, Integer page, Integer size) {
         System.out.println(userId);
         PageDTO pageDTO = commentService.selectAddCom(userId, page, size);
-        if(pageDTO!=null){
+        if (pageDTO != null) {
             return ResultVOUtil.success(pageDTO);
         }
         return ResultVOUtil.error("暂时没有数据哦！");
     }
 
     /**
-     *获取用户未评论的商品
-     *  @param userId
+     * 获取用户未评论的商品
+     *
+     * @param userId
      * @param page
      * @param size
      * @return
      */
     @PostMapping("/getCommentByOrder")
-    public Result getCommentByOrder(String userId,Integer page,Integer size){
+    public Result getCommentByOrder(String userId, Integer page, Integer size) {
         System.out.println(userId);
-        PageDTO pageDTO=commentService.searchComment(userId,page,size);
-        if(pageDTO!=null){
+        PageDTO pageDTO = commentService.searchComment(userId, page, size);
+        if (pageDTO != null) {
             return ResultVOUtil.success(pageDTO);
         }
         return ResultVOUtil.error("暂时没有数据哦！");
     }
 
     /**
-     *根据评论id插入追评
-     *  @param id
+     * 根据评论id插入追评
+     *
+     * @param id
      * @param additionalComment
      * @param additionnalCommentImg
      * @param commentStatus
      * @return
      */
     @PostMapping("/updateAdditComment")
-    public Result updateAdditComment(String id,String additionalComment,String additionnalCommentImg,Byte commentStatus){
+    public Result updateAdditComment(String id, String additionalComment, String additionnalCommentImg, Byte commentStatus) {
         System.out.println(id);
-        Comment comment=new Comment(id,additionalComment,additionnalCommentImg,commentStatus);
-        int c=commentService.updateAdditComment(comment);
-        if(c<=0){
-            return  ResultVOUtil.error("添加追评错误");
+        Comment comment = new Comment(id, additionalComment, additionnalCommentImg, commentStatus);
+        int c = commentService.updateAdditComment(comment);
+        if (c <= 0) {
+            return ResultVOUtil.error("添加追评错误");
         }
         return ResultVOUtil.success();
     }
 
     /**
      * 获取用户已经评论和追评的商品列表
+     *
      * @param userId
      * @param page
      * @param size
      * @return
      */
     @PostMapping("/getComment")
-    public Result getComment(String userId,Integer page,Integer size){
+    public Result getComment(String userId, Integer page, Integer size) {
         System.out.println(userId);
         PageDTO pageDTO = commentService.selectComment(userId, page, size);
-        if(pageDTO!=null){
+        if (pageDTO != null) {
             return ResultVOUtil.success(pageDTO);
         }
         return ResultVOUtil.error("暂时没有数据哦！");
+    }
+
+    @PostMapping("/addComment")
+    public Result addComment(String goodsId, String orderId, String userId, Byte goodsScore, Byte serviceScore, String comment, String commentImg, String formatAndStyle) {
+        Customer customer = customerService.findCustomerById(userId);
+        String userName = customer.getNickName();
+        String userImg = customer.getIcon();
+        String id= KeyUtil.getUUID();
+        Comment comments=new Comment(id,goodsId,orderId,userId,userName,userImg,goodsScore,serviceScore,comment,commentImg,formatAndStyle);
+        int c=commentService.addComment(comments);
+        if(c<=0){
+            return ResultVOUtil.error("评论失败");
+        }
+        return  ResultVOUtil.success();
     }
 }

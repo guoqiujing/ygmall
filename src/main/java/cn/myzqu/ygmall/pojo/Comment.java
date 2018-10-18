@@ -197,4 +197,18 @@ public class Comment {
         this.additionalCommentImg = additionalCommentImg;
         this.commentStatus = commentStatus;
     }
+
+    public Comment(String id, String goodsId, String orderId, String userId, String userName, String userImg, Byte goodsScore, Byte serviceScore, String comment, String commentImg, String formatAndStyle) {
+        this.id = id;
+        this.goodsId = goodsId;
+        this.orderId = orderId;
+        this.userId = userId;
+        this.userName = userName;
+        this.userImg = userImg;
+        this.goodsScore = goodsScore;
+        this.serviceScore = serviceScore;
+        this.comment = comment;
+        this.commentImg = commentImg;
+        this.formatAndStyle = formatAndStyle;
+    }
 }
