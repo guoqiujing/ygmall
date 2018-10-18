@@ -7,7 +7,13 @@ import cn.myzqu.ygmall.pojo.Goods;
  * Created by CC on 2018/10/17.
  */
 public class CommentGoodsVO extends Comment{
-    private String id;
-    private String name;
-    private String price;
+    private Goods goods;
+
+    public Goods getGoods() {
+        return goods;
+    }
+
+    public void setGoods(Goods goods) {
+        this.goods = goods;
+    }
 }
