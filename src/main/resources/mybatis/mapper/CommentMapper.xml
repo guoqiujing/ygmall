@@ -31,23 +31,18 @@
             <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
         </association>
     </resultMap>
-    <resultMap id="ComGoodsResultMap" type="cn.myzqu.ygmall.vo.CommentGoodsVO" extends="BaseResultMap">
-        <association property="goods" javaType="cn.myzqu.ygmall.pojo.Goods">
-            <id column="id" property="id" jdbcType="VARCHAR" />
-            <result column="SPU_id" property="spuId" jdbcType="VARCHAR" />
-            <result column="name" property="name" jdbcType="VARCHAR" />
-            <result column="inventory" property="inventory" jdbcType="INTEGER" />
-            <result column="category_id" property="categoryId" jdbcType="INTEGER" />
-            <result column="status" property="status" jdbcType="TINYINT" />
-            <result column="cost" property="cost" jdbcType="DECIMAL" />
-            <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
-            <result column="price" property="price" jdbcType="DECIMAL" />
-            <result column="sale_price" property="salePrice" jdbcType="DECIMAL" />
-            <result column="unit" property="unit" jdbcType="VARCHAR" />
-            <result column="sale_count" property="saleCount" jdbcType="INTEGER" />
-            <result column="note" property="note" jdbcType="VARCHAR" />
-            <result column="attributes" property="attributes" jdbcType="VARCHAR" />
-        </association>
+    <resultMap id="OrderDetailResultMap" type="cn.myzqu.ygmall.pojo.OrderDetail" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="goods_number" property="goodsNumber" jdbcType="VARCHAR" />
+        <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+        <result column="format_and_style" property="formatAndStyle" jdbcType="VARCHAR" />
+        <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
+        <result column="price" property="price" jdbcType="DECIMAL" />
+        <result column="count" property="count" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="TINYINT" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Base_Column_List">
     id, goods_id, order_id, user_id, user_name, user_img, goods_score, service_score, 
@@ -62,6 +57,7 @@
         where id = #{id,jdbcType=VARCHAR}
     </select>
 
+    <!--用户查看商品详情页的评论与商家回复-->
     <select id="selectByGoodsId" resultMap="ComRepResultMap">
         select r.*,c.*
         from comment c left join reply_comment r on r.reply_id=c.id
@@ -73,10 +69,16 @@
     </select>
 
     <!--查询可以进行追评的评论-->
-    <select id="selectAddCom" parameterType="java.lang.String"  resultMap="ComGoodsResultMap">
-        select c.id,c.goods_id,g.`name`,g.price
-        from `comment` c, goods g
-        where c.user_id=#{userId} and c.comment is not null and c.additional_comment is null and c.goods_id=g.id
+    <select id="selectAddCom" parameterType="java.lang.String"  resultMap="OrderDetailResultMap">
+        select o.id,o.goods_name,o.goods_number,o.price
+        from order_detail o LEFT JOIN `comment` c on c.order_id=o.id
+        where o.user_id=#{userId} and c.`comment` is not null and c.additional_comment is null
+    </select>
+    <!--查询用户是否可以进行评论-->
+    <select id="selectCommentByOrder" parameterType="java.lang.String" resultMap="OrderDetailResultMap">
+        select o.id,o.goods_name,o.goods_number,o.price
+        from order_detail o LEFT JOIN `comment` c on c.order_id=o.id
+        where o.user_id=#{userId} and c.id is null
     </select>
 
     <!--根据id删除评论-->

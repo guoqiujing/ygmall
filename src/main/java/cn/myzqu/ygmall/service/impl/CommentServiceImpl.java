@@ -4,9 +4,9 @@ import cn.myzqu.ygmall.dao.CommentMapper;
 import cn.myzqu.ygmall.dto.CommentDTO;
 import cn.myzqu.ygmall.dto.PageDTO;
 import cn.myzqu.ygmall.pojo.Comment;
+import cn.myzqu.ygmall.pojo.OrderDetail;
 import cn.myzqu.ygmall.service.CommentService;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
-import cn.myzqu.ygmall.vo.CommentGoodsVO;
 import cn.myzqu.ygmall.vo.CommentReplyVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -14,10 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -88,8 +85,8 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     public PageDTO selectAddCom(String userId,Integer pageIndex,Integer pageSize){
-        Page<CommentGoodsVO> page=PageHelper.startPage(pageIndex,pageSize);
-        List<CommentGoodsVO> comments=commentMapper.selectAddCom(userId);
+        Page<OrderDetail> page=PageHelper.startPage(pageIndex,pageSize);
+        List<OrderDetail> comments=commentMapper.selectAddCom(userId);
 
         int total=(int)page.getTotal();
         System.out.println("总记录数："+total);
@@ -98,4 +95,14 @@ public class CommentServiceImpl implements CommentService{
         return new PageDTO(comments,total,pageSize,pageIndex);
     }
 
+    @Override
+    public PageDTO searchComment(String userId,Integer pageIndex,Integer pageSize){
+        Page<OrderDetail> page=PageHelper.startPage(pageIndex,pageSize);
+        List<OrderDetail> orderDetails=commentMapper.selectCommentByOrder(userId);
+        int total=(int)page.getTotal();
+        System.out.println("总记录数："+total);
+        if(total<=0)
+            return null;
+        return new PageDTO(orderDetails,total,pageSize,pageIndex);
+    }
 }

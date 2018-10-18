@@ -2,7 +2,7 @@ package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.dto.CommentDTO;
 import cn.myzqu.ygmall.pojo.Comment;
-import cn.myzqu.ygmall.vo.CommentGoodsVO;
+import cn.myzqu.ygmall.pojo.OrderDetail;
 import cn.myzqu.ygmall.vo.CommentReplyVO;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,5 +32,7 @@ public interface CommentMapper {
 
     List<CommentReplyVO> selectByGoodsId(@Param("goodsId") String goodsId, @Param("goodsScore") Byte goodsscore);
 
-    List<CommentGoodsVO> selectAddCom(String userId);
+    List<OrderDetail> selectAddCom(String userId);
+
+    List<OrderDetail> selectCommentByOrder(String userId);
 }
