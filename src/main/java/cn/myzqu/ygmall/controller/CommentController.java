@@ -5,6 +5,7 @@ import cn.myzqu.ygmall.dto.PageDTO;
 import cn.myzqu.ygmall.enums.GoodsScoreEnum;
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.pojo.Comment;
+import cn.myzqu.ygmall.pojo.OrderDetail;
 import cn.myzqu.ygmall.service.CommentService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
@@ -98,6 +99,14 @@ public class CommentController {
         return ResultVOUtil.success();
     }
 
+    /**
+     *获取商品详情页的评论
+     *  @param id
+     * @param goodsScore
+     * @param page
+     * @param size
+     * @return
+     */
     @GetMapping("/comList/{id}")
     public Result list(@PathVariable("id") String id,
                        @RequestParam(value = "goodsScore", defaultValue = "-1") Integer goodsScore,
@@ -123,10 +132,34 @@ public class CommentController {
         return ResultVOUtil.error("暂时没有数据哦！");
     }
 
+    /**
+     *获取用户可以追评的评论
+     *  @param userId
+     * @param page
+     * @param size
+     * @return
+     */
     @PostMapping("/addComList")
     public Result searchAddCom(String userId,Integer page,Integer size){
         System.out.println(userId);
         PageDTO pageDTO = commentService.selectAddCom(userId, page, size);
+        if(pageDTO!=null){
+            return ResultVOUtil.success(pageDTO);
+        }
+        return ResultVOUtil.error("暂时没有数据哦！");
+    }
+
+    /**
+     *获取用户为评论的商品
+     *  @param userId
+     * @param page
+     * @param size
+     * @return
+     */
+    @PostMapping("/getCommentByOrder")
+    public Result getCommentByOrder(String userId,Integer page,Integer size){
+        System.out.println(userId);
+        PageDTO pageDTO=commentService.searchComment(userId,page,size);
         if(pageDTO!=null){
             return ResultVOUtil.success(pageDTO);
         }
