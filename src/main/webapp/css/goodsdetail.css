@@ -299,6 +299,79 @@
 	color: #987e46;
 }
 
+/**
+选择评论类型
+ */
+
+.commentInfo {
+	width: 980px;
+	overflow: hidden;
+}
+/*
+
+*
+显示评价内容
+*/
+.review-item{
+	zoom: 1;
+	position: relative;
+	list-style: none;
+	outline: 0;
+	padding: 10px;
+	/*border-bottom: 1px solid #D4D4D4;*/
+}
+.review-items{
+	zoom: 1;
+	position: relative;
+	list-style: none;
+	outline: 0;
+	padding: 10px;
+	border-bottom: 1px solid #D4D4D4;
+}
+.review-detail{
+	box-sizing: border-box;
+	overflow: hidden;
+	margin-left: 100px;
+	position: relative;
+	zoom: 1;
+}
+.review-item .review-detail avatar{
+	width: 40px;
+	height: 40px;
+}
+.comment{
+	font-size: 14px;
+	line-height: 1.4;
+	color: #3F3F3F;
+	word-wrap: break-word;
+}
+.time{
+	margin-top: 10px;
+}
+.time-info{
+	float: left;
+	font-size: 12px;
+	color: #B0B0B0;
+}
+.user_information {
+	float: left;
+	overflow: hidden;
+	width: 100px;
+	text-align: center;
+	line-height: 1.5;
+}
+.separator{
+	border-top: 1px dashed #E4E4E4;
+	padding-top: 7px;
+	margin-top: 10px;
+}
+.bracketed{
+	color: #AAA;
+}
+.f4 {
+	color: #B4995D;
+	font-size: 12px;
+}
 
 /*
  * 单选按钮(规格选框)
