@@ -204,11 +204,19 @@
 									<label class="col-sm-2 control-label">上传照片</label>
 									<div class="col-sm-10 labelInput">
 										<!--<label for="labelInput1" class="btn btn-default fileBtn">上传照片</label>-->
-										<input id="labelInput1" type="file" style="" onchange="getFile(event),page.showImg(event,this)" multiple="multiple" accept="image/*">
+										<input id="labelInput1" name="uploadImg" type="file" style="" onchange="getFile(event),page.showImg(event,this)" multiple="multiple" accept="image/*">
 									</div>
 								</div>
-								<div class="form-group nodisplay" id="attributesDiv1"></div>
-								<div class="form-group nodisplay" id="attributesDiv"></div>
+								<div class="form-group nodisplay attributesDiv1">
+									<label for='' class='col-sm-2 control-label labela0'>规格1：</label>
+									<div class='nodisplay col-sm-3'><input onblur='changeName(this)' type='text' name='inputformat0' class='form-control attribute0'></div>
+								</div>
+								<div class="form-group nodisplay attributesDiv">
+									<label for='' class='nodisplay col-sm-2 control-label labela1'>规格2：</label>
+									<div class='nodisplay col-sm-3'><input onblur='changeName(this)' type='text'  name='inputformat1' class='form-control attribute1'></div>
+									<label for='' class='col-sm-2 control-label labela2'>规格3：</label>
+									<div class='nodisplay col-sm-3'><input onblur='changeName(this)' type='text' name='inputformat2' class='form-control attribute2'></div>
+								</div>
 								<div class="form-group">
 									<label class="col-sm-2 control-label">商品状态</label>
 									<div class="col-sm-3">
@@ -259,7 +267,7 @@
 						<button type="button" class="glyphicon glyphicon-plus col-sm-12" onclick="addGoodsForm()"></button>
 					</div>
 				</form>
-				<button type="button" class="btn btn-primary col-sm-2" onclick="submitAll()">提交</button>
+				<button type="button" class="btn btn-primary col-sm-2" onclick="submitAll()" id="btnsubmit">提交</button>
 			</div>
 		</div>
 		<!-- END MAIN CONTENT -->
@@ -277,6 +285,8 @@
 <script src="../../js/putOnGoods.js"></script>
 <script type="text/javascript" src="../../js/bootstrap-table.js" ></script>
 <script type="text/javascript" src="../../js/bootstrap-table-zh-CN.js"></script>
+<script src="../../js/bootstrapValidator.min.js"></script>
+<script src="../../js/bootstrapValidator_zh_CN.js"></script>
 </body>
 
 </html>

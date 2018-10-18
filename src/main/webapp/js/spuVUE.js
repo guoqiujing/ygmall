@@ -66,6 +66,8 @@ function submitAnd(mark){
     }
     attrNamesArray.push("品牌");
     attrValuesArray.push(brandName);
+    attrNamesArray.push("货品名称");
+    attrValuesArray.push(name);
     $('#spu_form').data('bootstrapValidator').validate();
     if(!$('#spu_form').data('bootstrapValidator').isValid()){
         return ;

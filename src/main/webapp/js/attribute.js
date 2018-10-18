@@ -69,6 +69,7 @@ function editRow(index){
 }
 //根据分类id删除规格属性
 function deleteArrtibute(categoryId){
+    var del=true;
     $.ajax({
         type: 'post',
         url: '/attribute/deleteAttributeByCategoryId',
@@ -91,10 +92,12 @@ function deleteArrtibute(categoryId){
         complete: function(){
             $(".loadingWrap").removeClass();
         }
-    })
+    });
+    return del;
 }
 //根据分类id和属性名添加规格属性
 function insertArrtibute(categoryId,name){
+    var insert0=true;
     $.ajax({
         type: 'post',
         url:'/attribute/insertAttribute',
@@ -118,31 +121,34 @@ function insertArrtibute(categoryId,name){
             $(".loadingWrap").removeClass();
         }
     });
+    return insert0;
 }
 // 保存修改
 function saveRow(index,categoryId){
     var obj=$("#tableAttribute>tbody>tr[data-index='"+index+"'] td.editable");
-    var del=true,insert1=true,insert2=true,insert0=true;
+    var del=false,insert1=true,insert2=true,insert0=true;
     var attribute0 = obj.eq(0).find("input").val();
     var attribute1 = obj.eq(1).find("input").val();
     var attribute2 = obj.eq(2).find("input").val();
     var boolean0=Boolean(attribute0.trim().length!=0&&attribute0.trim()!="-");
     var boolean1=Boolean(attribute1.trim().length!=0&&attribute1.trim()!="-");
     var boolean2=Boolean(attribute2.trim().length!=0&&attribute2.trim()!="-");
+    // 如果三个规格值都有实际输入：不为空，不为“-”
     if(boolean0||boolean1||boolean2) {
-        deleteArrtibute(categoryId);
+        del=deleteArrtibute(categoryId);
         if(boolean0){
-            insertArrtibute(categoryId,attribute0);
+            insert0=insertArrtibute(categoryId,attribute0);
         }
         if(boolean1){
-            insertArrtibute(categoryId,attribute1);
+            insert1=insertArrtibute(categoryId,attribute1);
         }
         if(boolean2){
-            insertArrtibute(categoryId,attribute2);
+            insert2=insertArrtibute(categoryId,attribute2);
         }
     }
     if(del&&insert0&&insert1&&insert2)
         alert("修改成功");
+    // 如果三个规格值都无实际输入或删除原有规格失败或新增新规格失败
     else
         alert("修改失败，请联系管理员。");
     $("#tableAttribute").bootstrapTable('updateRow', {

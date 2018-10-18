@@ -156,7 +156,7 @@ function beforeEdit(id,name,ImgStr,createtime,saleCount,commentCount,params,subt
             "<input class=\"form-control attrName\" name=\"attrName\" value='"+temparam[0]+"' onblur=\"ifAttrRow(this)\">" +
             "</div>" +
             "<div class=\"col-sm-7\">" +
-            "<input class=\"form-control attrValue\" name=\"attrValue\"  value='"+temparam[1]+"' alt=\"0\" onblur=\"ifAttrRow(this)\">" +
+            "<input class=\"form-control attrValue\" name=\"attrValue\"  value=\""+temparam[1]+"\" alt=\"0\" onblur=\"ifAttrRow(this)\">" +
             "</div></div>";
         }
         $("#paramsDiv").html(paramsHtml);
@@ -164,6 +164,10 @@ function beforeEdit(id,name,ImgStr,createtime,saleCount,commentCount,params,subt
     });
 }
 
+// 对字符串参数中的引号进行转义
+// function altStrQuotes(str){
+//     return str.replace(/'/g,"\\'").replace(/"/g,'\\"');
+// }
 // 添加一行货品参数
     function createAttrRow(){
     var newRow = "<div class='form-group'>" +

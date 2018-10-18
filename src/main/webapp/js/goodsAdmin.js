@@ -48,7 +48,7 @@ $().ready(function (){
             }, {
                 field: 'attributes',
                 title: '规格字符串',
-                visible: false
+                // visible: false
             }, {
                 field: 'categoriesAttributeVO.categoriesName',
                 title: '分类'
@@ -124,11 +124,16 @@ $().ready(function (){
                         var imgList=[];
                         for(var i=0;i<row.goodsImgList.length;i++)
                             imgList.push(row.goodsImgList[i].imgUrl);
-                        return "<a onclick=\"beforeEdit('"+row.id+"','"+row.name+"','"+imgList+"','"+row.cost+"','"+row.marketPrice+"','"+row.price+"','"+row.salePrice+"','"+row.unit+"','"+row.status+"','"+row.inventory+"','"+row.saleCount+"','"+row.note+"','"+row.attributes+"','"+row.spuId+"')\" data-toggle='modal' data-target='#ModalEdit' type='button' class='glyphicon glyphicon-pencil'></a>";
+                        // return "<a data-toggle='modal' data-target='#ModalEdit' type='button' class='glyphicon glyphicon-pencil' onclick=\"beforeEdit('"+row.id+"','"+row.name+"','"+imgList+"','"+row.cost+"','"+row.marketPrice+"','"+row.price+"','"+row.salePrice+"','"+row.unit+"','"+row.status+"','"+row.inventory+"','"+row.saleCount+"','"+row.note+"','"+row.attributes+"','"+row.spuId+"')\"></a>";
+                        return "<a type='button' class='glyphicon glyphicon-pencil' onclick=\"beforeEdit('"+row.id+"','"+row.name+"','"+imgList+"','"+row.cost+"','"+row.marketPrice+"','"+row.price+"','"+row.salePrice+"','"+row.unit+"','"+row.status+"','"+row.inventory+"','"+row.saleCount+"','"+row.note+"','"+row.attributes+"','"+row.spuId+"')\"></a>";
                 }
             }]
     });
 });
+// 对字符串参数中的引号进行转义
+// function altStrQuotes(str){
+//     return str.replace(/'/g,"\\'").replace(/"/g,'\\"');
+// }
 function showSpu(value){
     pageImg.showSpuVue(value);
 }
@@ -187,57 +192,58 @@ function updateAttr(){
 }
 function beforeEdit(id,name,ImgStr,cost,marketPrice,price,salePrice,unit,status,inventory,saleCount,note,attributes,spuId){//,attr0,attr1,attr2
     oSpuId=spuId;
-    $('#ModalEdit').on('show.bs.modal',function(event) {
-        changeStatus();
-        updateAttr();
-        var attrInitList=attributes.split("-");
-        var tempAttr="";
-        for(var k=0;k<3;k++){
-            $("#format"+k).css("display","none");
-            $("#inputformat"+k).attr("disabled","disabled");
+    var attrInitList=attributes.split("-");
+    var tempAttr="";
+    for(var k=0;k<3;k++){
+        $("#format"+k).css("display","none");
+        $("#inputformat"+k).attr("disabled","disabled");
+    }
+    for(var i in attrInitList){
+        var attrInitList2 =attrInitList[i].split(";");
+        console.log("attrInitList2[0]："+attrInitList2[0]);
+        console.log("attrInitList2[1]："+attrInitList2[1]);
+        $("#format"+i).css("display","block");
+        $("#inputformat"+i).removeAttr("disabled");
+        $("#format"+i+" label").html(attrInitList2[1].substring(4));
+        $("#inputformat"+i).val(attrInitList2[0]);
+        tempAttr+=attrInitList2[0]+"-";
+        if(i==0) {
+            FName0 = attrInitList2[1].substring(4);
+            oFVal0 = attrInitList2[0];
         }
-        for(var i in attrInitList){
-            var attrInitList2 =attrInitList[i].split(";");
-            $("#format"+i).css("display","block");
-            $("#inputformat"+i).removeAttr("disabled");
-            $("#format"+i+" label").html(attrInitList2[1].substring(4));
-            $("#inputformat"+i).val(attrInitList2[0]);
-            tempAttr+=attrInitList2[0]+"-";
-            if(i==0) {
-                FName0 = attrInitList2[1].substring(4);
-                oFVal0 = attrInitList2[0];
-            }
-            if(i==1) {
-                FName1 = attrInitList2[1].substring(4);
-                oFVal1 = attrInitList2[0];
-            }
-            if(i==2) {
-                FName2 = attrInitList2[1].substring(4);
-                oFVal2 = attrInitList2[0];
-            }
+        if(i==1) {
+            FName1 = attrInitList2[1].substring(4);
+            oFVal1 = attrInitList2[0];
         }
-        oAttributes=tempAttr.substring(0,tempAttr.length-1);
-        $("#goodsImgList").css("display","block");
-        $("#showImgDiv").css("display","none");
-        $("#inputId").val(id);
-        $("#hiddenId").val(id);
-        $("#inputName").val(name);
-        $("#inputCost").val(cost);
-        $("#inputMarketPrice").val(marketPrice);
-        $("#inputPrice").val(price);
-        if(salePrice!=null&&salePrice!="null")
-            $("#inputSalePrice").val(salePrice);
-        $("#inputUnit").val(unit);
-        $("#inputStatus").val(status);
-        $("#inputInventory").val(inventory);
-        $("#inputSaleCount").val(saleCount);
-        if(note!=null&&note!="null")
-            $("#inputNote").val(note);
-        var ImgList=ImgStr.split(",");
-        $("#goodsImgList").html("");
-        for(var i in ImgList)
-            $("#goodsImgList").append("<a href=\"javascript:void(0)\" onclick=\"showImg('"+ImgList[i]+"')\"><img style='width: 50px;margin: 3px;border: solid 1px #c8c8c8;' src='"+ImgList[i]+"'></img></a>");
-    });
+        if(i==2) {
+            FName2 = attrInitList2[1].substring(4);
+            oFVal2 = attrInitList2[0];
+        }
+    }
+    oAttributes=tempAttr.substring(0,tempAttr.length-1);
+    $("#goodsImgList").css("display","block");
+    $("#showImgDiv").css("display","none");
+    $("#inputId").val(id);
+    $("#hiddenId").val(id);
+    $("#inputName").val(name);
+    $("#inputCost").val(cost);
+    $("#inputMarketPrice").val(marketPrice);
+    $("#inputPrice").val(price);
+    if(salePrice!=null&&salePrice!="null")
+        $("#inputSalePrice").val(salePrice);
+    $("#inputUnit").val(unit);
+    $("#inputStatus").val(status);
+    $("#inputInventory").val(inventory);
+    $("#inputSaleCount").val(saleCount);
+    if(note!=null&&note!="null")
+        $("#inputNote").val(note);
+    var ImgList=ImgStr.split(",");
+    $("#goodsImgList").html("");
+    for(var i in ImgList)
+        $("#goodsImgList").append("<a href=\"javascript:void(0)\" onclick=\"showImg('"+ImgList[i]+"')\"><img style='width: 50px;margin: 3px;border: solid 1px #c8c8c8;' src='"+ImgList[i]+"'></img></a>");
+    changeStatus();
+    updateAttr();
+    $('#ModalEdit').modal('show');
 }
 function showImg(url) {
     var img = "<img src='" + url + "' />";
@@ -310,7 +316,6 @@ function updateGoods(){
     var unit=$("#inputUnit").val();
     var inventory=$("#inputInventory").val();
     var saleCount=$("#inputSaleCount").val();
-    var note=$("#inputNote").val();
     var img=0;
     if("none"!=$("#showImgDiv").css("display")){
         if(pageImg.imgArray.length<0)
@@ -337,7 +342,6 @@ function updateGoods(){
         unit!=null&&unit!="null"&&unit.trim()!=""&&
         inventory!=null&&inventory!="null"&&inventory.trim()!=""&&
         saleCount!=null&&saleCount!="null"&&saleCount.trim()!=""&&
-        note!=null&&note!="null"&&note.trim()!=""&&
         img==0&&formats==0) {
 
         $("#ModalEdit").modal("hide");

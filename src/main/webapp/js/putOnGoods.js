@@ -55,6 +55,11 @@ $().ready(function (){
         });
     }
 });
+// 对字符串参数中的引号进行转义
+// function altStrQuotes(str){
+//     console.log( str.replace(/'/g,"\\'").replace(/"/g,'\\"'));
+//     return str.replace(/'/g,"\\'").replace(/"/g,'\\"');
+// }
 // ①请求服务数据时所传参数
 function queryParams(params){
     return{
@@ -88,18 +93,18 @@ function selectSpu(id,name,categoryId){
         async:false,
         success:function(value){
             if(value.code==0) {
-                $("#attributesDiv").html("");
-                $("#attributesDiv1").html("");
+                $(".attributesDiv").html("");
+                $(".attributesDiv1").html("");
                 if(value.data.attribute1!=null){
-                    $("#attributesDiv").css("display","block");
-                    $("#attributesDiv").append("<label for='' class='col-sm-2 control-label'>规格2："+value.data.attribute1+"</label><div class='col-sm-3'><input onchange='changeName(this)' type='text' id='' class='form-control attribute1'></div>");
+                    $(".attributesDiv").css("display","block");
+                    $(".attributesDiv").append("<label for='' class='col-sm-2 control-label'>规格2："+value.data.attribute1+"</label><div class='col-sm-3'><input onblur='changeName(this)' type='text'  name='inputformat1' class='form-control attribute1'></div>");
                 }
                 if(value.data.attribute2!=null){
-                    $("#attributesDiv").append("<label for='' class='col-sm-2 control-label'>规格3："+value.data.attribute2+"</label><div class='col-sm-3'><input onchange='changeName(this)' type='text' id='' class='form-control attribute2'></div>");
+                    $(".attributesDiv").append("<label for='' class='col-sm-2 control-label'>规格3："+value.data.attribute2+"</label><div class='col-sm-3'><input onblur='changeName(this)' type='text' name='inputformat2' class='form-control attribute2'></div>");
                 }
                 if(value.data.attribute0!=null){
-                    $("#attributesDiv1").css("display","block");
-                    $("#attributesDiv1").append("<label for='' class='col-sm-2 control-label'>规格1："+value.data.attribute0+"</label><div class='col-sm-3'><input onchange='changeName(this)' type='text' id='' class='form-control attribute0'></div>");
+                    $(".attributesDiv1").css("display","block");
+                    $(".attributesDiv1").append("<label for='' class='col-sm-2 control-label'>规格1："+value.data.attribute0+"</label><div class='col-sm-3'><input onblur='changeName(this)' type='text' name='inputformat0' class='form-control attribute0'></div>");
                 }
                 newGoodsForm=$("#goodsForm1").html();
             }
@@ -113,6 +118,8 @@ function selectSpu(id,name,categoryId){
 }
 // 当商品规格输入框改变时，更新隐藏的商品名称
 function  changeName(target){
+    $(target).css("border","#ccc solid 1px");
+    $("#btnsubmit").removeAttr("disabled");
     var oldname= $("#selectSpuBg h2").html();
     var f0="";
     var f1="";
@@ -135,7 +142,16 @@ function  changeName(target){
     }
     $("#"+currentFormId+" .name").eq(0).val(oldname+" "+f0+f1+f2);
     $("#"+currentFormId+" .attributes").val(f00+f11+f22);
-    console.log(f00+f11+f22);
+    var formcount=$(".panel-body form").length;
+    var attrstr=$(".panel-body form").eq(0).find(".name").val();
+    for(var i=1;i<formcount;i++){
+        if(attrstr==$(".panel-body form").eq(i).find(".name").val()) {
+            alert("已存在该商品规格值组合，请重新输入");
+            $(target).css("border","#ad0000 solid 1px");
+            $("#btnsubmit").attr("disabled","disabled");
+            $("#btnsubmit").attr("alt","123");
+        }
+    }
 }
 // 点击添加按钮，添加一个商品表单
 function addGoodsForm(){
@@ -173,48 +189,82 @@ function changeSale(target){
 }
 // 提交
 function submitAll(){
-    var allForm=$("#createGoods .panel-body form");
-    var successNum=0;
-    for(var i=0;i<allForm.length;i++){
-        var formid=allForm.eq(i).attr("id");
-        var formData=$("#"+formid).serialize();
-        $.ajax({
-            url:'/goods/create',
-            type:'post',
-            data:formData,
-            dataType:'json',
-            async:false,
-            success:function(value){
-                $(".loadingWrap").removeClass();
-                if(value.code==0){
-                    var re=page.uploadImg(value.data,i);
-                    if(re==0){
-                        successNum++;
+    // var formcount=$(".panel-body form").length;
+    // var dot=0;
+    console.log("please ");
+    $('#goodsForm1').data('bootstrapValidator').validate();
+    console.log("tell me ");
+    if(!$('#goodsForm1').data('bootstrapValidator').isValid()){
+        console.log("what  ");
+    } else {
+        console.log("happen? ");
+        var allForm = $("#createGoods .panel-body form");
+        var successNum = 0;
+        for (var i = 0; i < allForm.length; i++) {
+            var formid = allForm.eq(i).attr("id");
+            var formData = $("#" + formid).serialize();
+            $.ajax({
+                url: '/goods/create',
+                type: 'post',
+                data: formData,
+                dataType: 'json',
+                async: false,
+                success: function (value) {
+                    $(".loadingWrap").removeClass();
+                    if (value.code == 0) {
+                        var re = page.uploadImg(value.data, i);
+                        if (re == 0) {
+                            successNum++;
+                        }
                     }
+                    else
+                        console.log("第" + i + "次提交失败！");
+                },
+                error: function () {
+                    $(".loadingWrap").removeClass();
+                    console.log("第" + i + "次请求失败");
+                },
+                beforeSend: function () {
+                    $('<div class="loadingWrap"></div>').appendTo("body");
+                },
+                complete: function () {
+                    $(".loadingWrap").removeClass();
                 }
-                else
-                    console.log("第"+i+"次提交失败！");
-            },
-            error:function(){
-                $(".loadingWrap").removeClass();
-                console.log("第"+i+"次请求失败");
-            },
-            beforeSend: function(){
-                $('<div class="loadingWrap"></div>').appendTo("body");
-            },
-            complete: function(){
-                $(".loadingWrap").removeClass();
-            }
-        })
+            })
+        }
+        if (successNum == allForm.length) {
+            alert("已成功提交！");
+            window.location.href = "/page/admin/putOnGoods.html";
+        }
+        else
+            alert("提交失败！");
     }
-    if(successNum==allForm.length){
-        alert("已成功提交！");
-        window.location.href="/page/admin/putOnGoods.html";
-    }
-    else
-        alert("提交失败！");
 }
-
+// 校验器
+$(function () {
+    $('form').bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        excluded:[":disabled"],//表示只对于禁用域不进行验证，其他的表单元素都要验证
+        fields: {
+            unit: {validators: {notEmpty: {message: '请输入计数单位'}}},
+            cost: {validators: {notEmpty: {message: '请输入商品成本'}}},
+            marketPrice: {validators: {notEmpty: {message: '请输入商品市场价'}}},
+            price: {validators: {notEmpty: {message: '请输入商品售价'}}},
+            salePrice: {validators: {notEmpty: {message: '请输入商品促销价'}}},
+            unit: {validators: {notEmpty: {message: '请输入商品计数单位'}}},
+            inventory: {validators: {notEmpty: {message: '请输入商品库存'}}},
+            uploadImg: {validators: {notEmpty: {message: '请上传商品图片'}}},
+            inputformat0: {validators: {notEmpty: {message: '不能为空'}}},
+            inputformat1: {validators: {notEmpty: {message: '不能为空'}}},
+            inputformat2: {validators: {notEmpty: {message: '不能为空'}}},
+        }
+    })
+})
 function getFile(event) {
     //如果图片文件不为空，给本地file赋值为接收的图片
     var index=parseInt(event.target.id.substring(10))-parseInt(1);
