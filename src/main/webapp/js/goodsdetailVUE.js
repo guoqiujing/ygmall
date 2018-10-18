@@ -1,4 +1,4 @@
-
+var staticID="";
 function addSelectedNum(){
     $(".selectNum").val(parseInt($('.selectNum').val())+parseInt(1));
 }
@@ -134,7 +134,6 @@ function detailForward(target){
         $(".goods-details").css("display","none");
         $(".goods-format").css("display","none");
         $(".goods-comment").css("display","block");
-        page.getComments();
     }
     if(str=="service-detail"){
         $(".goods-details").css("display","none");
@@ -212,8 +211,28 @@ function mouseMoveSmallBox(e){
     bigImg.style.left = -x*2 + "px";
     bigImg.style.top = -y*2 + "px";
 }
-
-
+// “立即购买”
+function buyNow(){
+    var id=staticID;
+    var name=page.orders.name;
+    var price=page.orders.price;
+    var attributes=$(".formatDIV input[type='radio']:checked").eq(0).val();
+    for(var i=1;i<$(".formatDIV input[type='radio']:checked").length;i++)
+        attributes+="-"+$(".formatDIV input[type='radio']:checked").eq(i).val();
+    var count=$(".selectNum").val();
+    $.ajax({
+        url:'/buyer/order/to/order',
+        type:'post',
+        data:{id:id,name:name,price:price,attributes:attributes,count:count},
+        dataType:'json',
+        success:function(){
+            console.log("立即购买触发成功");
+        },
+        error:function(){
+            console.log("立即购买触发失败");
+        }
+    })
+}
 
 
 
@@ -237,22 +256,6 @@ var page = new Vue({
         //     "单本-精装版-一年保修": "3",
         //     "单本-礼盒版-一年保修": "4"
         // },
-        comments: [],
-        commentTab: -1,//评价类型选项卡
-        all: 8, //总页数
-        cur: 1,//当前页码
-    },
-    //监听每次数据的修改，并执行修改后的方法
-    watch: {
-        cur: function () {
-            this.getComments();
-        },
-        //评价类型选项卡变化时，请求信数据
-        commentTab: function () {
-            console.log(this.commentTab);
-            this.cur = 1;
-            this.getComments();
-        }
     },
     //在vue对象创建完成时自动触发的事件
     created: function (data) {
@@ -265,6 +268,7 @@ var page = new Vue({
                 for(var i = 0; i < strs.length; i ++){
                     object[strs[i].split("=")[0]]=strs[i].split("=")[1]
                 }
+                staticID=object.id;
             }
             var that = this;
             $.ajax({
@@ -344,40 +348,8 @@ var page = new Vue({
                         }
                     }
                 }
-
             }
-
         },
-        // getSPUFormat:function(attributesName){//对保存SPU规格的json进行处理
-        //     var that = this;
-        //     var attributesName =JSON.parse(attributesName);//{"规格":"单本;整套","款式":"礼盒版;精装版"};// {"55":"1a","70":"0","80":"2","60":"2"};
-        //     var strlll="";
-        //     var symbol1=1;
-        //     var symbol2=1;
-        //     for (var prop in attributesName)
-        //     {
-        //         var temp=attributesName[prop];//将SPU的规格json的每个键对应的值
-        //         temp=temp.split(";");//进行字符串分割
-        //         var formatDivHTML="<div style=\"margin-bottom: 1em;\">" +
-        //         "<div style=\"float:left;width:15%;padding:0.5em 1em;\"><label>"+prop+"</label></div>" +
-        //         "<div style=\"margin-left:15%;\">" ;
-        //         var date1=(new Date()).getTime()+symbol1;
-        //         console.log("date1"+date1);
-        //         for (var i in temp)
-        //         {
-        //             var date2=(new Date()).getTime()+symbol2;
-        //             console.log("date2"+date2);                                                     //class=\"style-radio-label\"
-        //             formatDivHTML+= "<label for=\""+date2+"\" class=\"style-radio-label\" >" +
-        //                 "<input v-model=\"sex\" type=\"radio\" value=\""+temp[i]+"\" id=\""+date2+"\" name=\""+date1+"\" onclick=\"clickRadio(this)\"/>"+temp[i]+"</label>";
-        //             symbol2++;
-        //         }
-        //         symbol1++;
-        //         formatDivHTML+="</div><div class=\"clear\"></div></div>";
-        //         attributesName[prop]=formatDivHTML;//并将分割结果（数组）赋值回相应的key
-        //         strlll+=formatDivHTML;
-        //     }
-        //     that.orders.spu.attributesName=strlll;
-        // },
         getFormatCombination:function(spuId){//对保存SPU规格的json进行处理
             var that = this;
             $.ajax({
@@ -469,99 +441,6 @@ var page = new Vue({
                     alert("错误");
                 }
             });
-        },
-        getComments: function () {
-            var url = decodeURI(location.search); //?id="123456"&Name="bicycle";
-            var object = {};
-            if (url.indexOf("?") != -1)//url中存在问号，也就说有参数。
-            {
-                var str = url.substr(1);  //得到?后面的字符串
-                var strs = str.split("&");  //将得到的参数分隔成数组[id="123456",Name="bicycle"];
-                for (var i = 0; i < strs.length; i++) {
-                    object[strs[i].split("=")[0]] = strs[i].split("=")[1]
-                }
-            }
-            var that = this;
-            $.ajax({
-                type: 'GET',
-                url: "/comment/comList/" + object.id + "?goodsScore=" + that.commentTab + "&page=" + that.cur + "&size=" + 8,
-                dataType: "json",
-                contentType: 'application/json;charset=UTF-8',
-                success: function (msg) {
-                    if (msg.code == 0) {
-                        console.log("评论查找成功");
-                        console.log(msg.data.rows);
-                        that.comments = msg.data.rows;
-                        that.all = msg.data.pages;
-                    }
-                    else {
-                        console.log("评论查找失败");
-                        that.comments = [];
-                        that.all = 1;
-                    }
-                },
-                error: function () {
-                    console.log("查找评论错误");
-                }
-            });
-        },
-        /*formatDateTime: function (inputTime) {
-         var date = new Date(inputTime);
-         var y = date.getFullYear();
-         var m = date.getMonth() + 1;
-         m = m < 10 ? ('0' + m) : m;
-         var d = date.getDate();
-         d = d < 10 ? ('0' + d) : d;
-         var h = date.getHours();
-         h = h < 10 ? ('0' + h) : h;
-         var minute = date.getMinutes();
-         var second = date.getSeconds();
-         minute = minute < 10 ? ('0' + minute) : minute;
-         second = second < 10 ? ('0' + second) : second;
-         return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
-         },*/
-        //点击订单页面页码
-        btnClick: function (data) {
-            //console.log(data);
-            if (data !== this.cur) {
-                this.cur = data;
-            }
-        },
-
-        pageClick: function () {
-            //console.log('现在在'+this.cur+'页');
-        }
-    },
-    //计算属性，当对象的某个值改变的时候，同时会触发实时计算
-    computed: {
-        indexs: function () {
-            var left = 1;
-            var right = this.all;
-            var ar = [];
-            //总页数大于5时
-            if (this.all >= 5) {
-                if (this.cur > 3 && this.cur < this.all - 2) {
-                    left = this.cur - 2;
-                    right = this.cur + 2;
-                } else {
-                    if (this.cur <= 3) {
-                        left = 1;
-                        right = 5;
-                    } else {
-                        right = this.all;
-                        left = this.all - 4;
-                    }
-                }
-            }
-            while (left <= right) {
-                ar.push(left);
-                left++;
-            }
-            return ar;
         }
     }
-
-});
-$(document).ready(function () {
-
 })
