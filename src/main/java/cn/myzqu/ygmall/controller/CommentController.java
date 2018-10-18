@@ -28,6 +28,14 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    /**
+     *查找评论
+     *  @param pageSize
+     * @param pageIndex
+     * @param goodsScore
+     * @param commentStatus
+     * @return
+     */
     @PostMapping("/list")
     public Result findComment(int pageSize, int pageIndex, Byte goodsScore, Byte commentStatus) {
         System.out.println("每页数据条数：" + pageSize);
@@ -47,6 +55,12 @@ public class CommentController {
         return ResultVOUtil.error("查找评论失败");
     }
 
+    /**
+     * 根据评论id隐藏评论
+     * @param id
+     * @param display
+     * @return
+     */
     @PostMapping("/hide")
     @ResponseBody
     public Result modifyDisplayById(String id, Byte display) {
@@ -60,6 +74,11 @@ public class CommentController {
         return ResultVOUtil.error("隐藏评论失败");
     }
 
+    /**
+     * 批量隐藏评论
+     * @param idList
+     * @return
+     */
     @PostMapping("/batchHide")
     @ResponseBody
     public Result updateDispalyByIdList(Integer idList[]) {
@@ -74,6 +93,11 @@ public class CommentController {
         return ResultVOUtil.error("批量隐藏失败");
     }
 
+    /**
+     * 后台管理：根据评论id获取评论内容
+     * @param id
+     * @return
+     */
     @PostMapping("/commentInfo")
     @ResponseBody
     public Result getCommentInfoById(String id) {
@@ -85,6 +109,12 @@ public class CommentController {
         return ResultVOUtil.error("找不到该评论");
     }
 
+    /**
+     * 根据评论id修改评论回复状态
+     * @param id
+     * @param commentStatus
+     * @return
+     */
     @PostMapping("/updateStatus")
     @ResponseBody
     public Result updateStatusById(String id, Byte commentStatus) {
@@ -150,7 +180,7 @@ public class CommentController {
     }
 
     /**
-     *获取用户为评论的商品
+     *获取用户未评论的商品
      *  @param userId
      * @param page
      * @param size
@@ -160,6 +190,42 @@ public class CommentController {
     public Result getCommentByOrder(String userId,Integer page,Integer size){
         System.out.println(userId);
         PageDTO pageDTO=commentService.searchComment(userId,page,size);
+        if(pageDTO!=null){
+            return ResultVOUtil.success(pageDTO);
+        }
+        return ResultVOUtil.error("暂时没有数据哦！");
+    }
+
+    /**
+     *根据评论id插入追评
+     *  @param id
+     * @param additionalComment
+     * @param additionnalCommentImg
+     * @param commentStatus
+     * @return
+     */
+    @PostMapping("/updateAdditComment")
+    public Result updateAdditComment(String id,String additionalComment,String additionnalCommentImg,Byte commentStatus){
+        System.out.println(id);
+        Comment comment=new Comment(id,additionalComment,additionnalCommentImg,commentStatus);
+        int c=commentService.updateAdditComment(comment);
+        if(c<=0){
+            return  ResultVOUtil.error("添加追评错误");
+        }
+        return ResultVOUtil.success();
+    }
+
+    /**
+     * 获取用户已经评论和追评的商品列表
+     * @param userId
+     * @param page
+     * @param size
+     * @return
+     */
+    @PostMapping("/getComment")
+    public Result getComment(String userId,Integer page,Integer size){
+        System.out.println(userId);
+        PageDTO pageDTO = commentService.selectComment(userId, page, size);
         if(pageDTO!=null){
             return ResultVOUtil.success(pageDTO);
         }

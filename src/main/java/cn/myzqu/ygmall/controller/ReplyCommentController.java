@@ -77,6 +77,12 @@ public class ReplyCommentController {
         return  ResultVOUtil.success();
     }
 
+    /**
+     * 根据回复id添加追评回复
+     * @param id
+     * @param content
+     * @return
+     */
     @PostMapping("/updateContent")
     @ResponseBody
     public Result updateContent(String id,String content){

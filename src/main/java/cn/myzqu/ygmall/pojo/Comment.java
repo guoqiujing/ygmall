@@ -191,4 +191,10 @@ public class Comment {
         this.commentStatus = commentStatus;
     }
 
+    public Comment(String id, String additionalComment, String additionalCommentImg, Byte commentStatus) {
+        this.id = id;
+        this.additionalComment = additionalComment;
+        this.additionalCommentImg = additionalCommentImg;
+        this.commentStatus = commentStatus;
+    }
 }

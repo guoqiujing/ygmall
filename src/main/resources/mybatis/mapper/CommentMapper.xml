@@ -113,7 +113,11 @@
         where o.user_id=#{userId} and c.id is null
     </select>
 
-    <!--<select id="selectCommentByUserId"-->
+    <select id="selectCommentByUserId" parameterType="java.lang.String" resultMap="OrderDetailResultMap">
+        select o.id,o.goods_name,o.goods_number,o.price
+        from order_detail o LEFT JOIN `comment` c on c.order_id=o.id
+        where o.user_id=#{userId} and c.`comment` is not null and c.additional_comment is not null
+    </select>
 
     <!--根据id删除评论-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">

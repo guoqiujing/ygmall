@@ -36,4 +36,6 @@ public interface CommentMapper {
     List<OrderDetail> selectAddCom(String userId);
 
     List<ComemntOrderDetailVo> selectCommentByOrder(String userId);
+
+    List<OrderDetail> selectCommentByUserId(String uderId);
 }

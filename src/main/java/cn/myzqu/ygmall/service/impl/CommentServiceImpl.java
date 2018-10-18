@@ -59,18 +59,21 @@ public class CommentServiceImpl implements CommentService{
         return c;
     }
 
+    //根据评论id查找评论
     @Override
     public Comment findComment(String id){
         Comment comment=commentMapper.selectByPrimaryKey(id);
         return comment;
     }
 
+    //根据评论id修改评论回复状态
     @Override
     public int modifyStatusById(CommentDTO commentDTO){
         int c=commentMapper.updateStatusById(commentDTO);
         return c;
     }
 
+    //根据商品编号获取相应的评论和商家回复
     @Override
     public PageDTO selectByGoodsId(String goodsId, Byte goodsScore, Integer pageIndex, Integer pageSize) {
 
@@ -84,6 +87,7 @@ public class CommentServiceImpl implements CommentService{
         return new PageDTO(comments,total,pageSize,pageIndex);
     }
 
+    //根据用户id获取用户可以追评的商品信息、评论编号
     @Override
     public PageDTO selectAddCom(String userId,Integer pageIndex,Integer pageSize){
         Page<OrderDetail> page=PageHelper.startPage(pageIndex,pageSize);
@@ -96,6 +100,7 @@ public class CommentServiceImpl implements CommentService{
         return new PageDTO(comments,total,pageSize,pageIndex);
     }
 
+    //根据用户id获取用户未评论的商品信息
     @Override
     public PageDTO searchComment(String userId,Integer pageIndex,Integer pageSize){
         Page<ComemntOrderDetailVo > page=PageHelper.startPage(pageIndex,pageSize);
@@ -105,5 +110,24 @@ public class CommentServiceImpl implements CommentService{
         if(total<=0)
             return null;
         return new PageDTO(orderDetails,total,pageSize,pageIndex);
+    }
+    //根据评论ID添加追评
+    @Override
+    public int updateAdditComment(Comment comment){
+        int c=commentMapper.updateByPrimaryKeySelective(comment);
+        return c;
+    }
+
+    //根据用户ID查询已经评论和追评的商品信息
+    @Override
+    public PageDTO selectComment(String userId,Integer pageIndex,Integer pageSize){
+        Page<OrderDetail> page=PageHelper.startPage(pageIndex,pageSize);
+        List<OrderDetail> comments=commentMapper.selectCommentByUserId(userId);
+
+        int total=(int)page.getTotal();
+        System.out.println("总记录数："+total);
+        if(total<=0)
+            return null;
+        return new PageDTO(comments,total,pageSize,pageIndex);
     }
 }
