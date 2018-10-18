@@ -108,7 +108,7 @@
     </select>
     <!--查询用户是否可以进行评论-->
     <select id="selectCommentByOrder" parameterType="java.lang.String" resultMap="OrderDetailResultMap">
-        select o.id,o.goods_name,o.goods_number,o.price
+        select o.id,o.goods_name,o.goods_number,o.price,o.format_and_style
         from order_detail o LEFT JOIN `comment` c on c.order_id=o.id
         where o.user_id=#{userId} and c.id is null
     </select>

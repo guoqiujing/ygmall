@@ -130,4 +130,11 @@ public class CommentServiceImpl implements CommentService{
             return null;
         return new PageDTO(comments,total,pageSize,pageIndex);
     }
+
+    //添加评论
+    @Override
+    public int addComment(Comment comment){
+        int c=commentMapper.insertSelective(comment);
+        return c;
+    }
 }

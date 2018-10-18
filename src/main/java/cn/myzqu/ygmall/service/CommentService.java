@@ -35,4 +35,6 @@ public interface CommentService {
     int updateAdditComment(Comment comment);
 
     PageDTO selectComment(String userId,Integer pageIndex,Integer pageSize);
+
+    int addComment(Comment comment);
 }
