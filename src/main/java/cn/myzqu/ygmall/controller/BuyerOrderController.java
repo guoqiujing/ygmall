@@ -58,55 +58,62 @@ public class BuyerOrderController {
         return null;
     }
 
+    @GetMapping("/from")
+    @ResponseBody
+    public Result getOrderFrom(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return ResultVOUtil.success(session.getAttribute("orderSession"));
+    }
+
     //接收商品信息或者购物车信息并跳转到订单页面
     @PostMapping("/to/order")
     public ModelAndView create(String  cart,HttpServletRequest request) {
         HttpSession session = request.getSession();
         UserSessionDTO userSessionDTO = (UserSessionDTO) session.getAttribute("user");
-        //将cart 转换为实体类
-        List<OrderDTO> list = JSONObject.parseArray(cart,OrderDTO.class);
-        Iterator it = list.iterator();
-        while (it.hasNext()){
-            System.out.println("转换后的cart");
-            System.out.println(it.next().toString());
-        }
-        //进行操作
-        OrderDTO orderDTO = list.get(0);
-        System.out.println(orderDTO);
         System.out.println(userSessionDTO);
         if(userSessionDTO==null){
             //session为空，请先登录
-            ModelAndView mav = new ModelAndView("user/login.jsp");
+            ModelAndView mav = new ModelAndView("redirect:/page/user/login.jsp");
             return mav;
         }
-        ModelAndView mav = new ModelAndView("user/index.jsp");
-        //根据userSession获取用户收货地址
-        String userId = userSessionDTO.getId();
-        List<CustomerAddress> customerAddressList = customerAddressService.findByUserId(userId);
-        //判断用户是否已经设置了地址
-        if(customerAddressList.size()>0){
-            //取第一个
-            mav.addObject("address", customerAddressList.get(0));
-        }else{
-            mav.addObject("address", null);
+        //将cart 转换为实体类
+        List<OrderDTO> list = JSONObject.parseArray(cart,OrderDTO.class);
+        Iterator it = list.iterator();
+        //计算总价
+        double totalPrice = 0 ;
+        while (it.hasNext()){
+            OrderDTO item = (OrderDTO)it.next();
+            //计算总价格
+            totalPrice += item.getCount() * item.getPrice();
         }
+        //进行操作
+        ModelAndView mav = new ModelAndView("redirect:/page/user/order/create.jsp");
+        //根据userSession获取用户收货地址
+//        String userId = userSessionDTO.getId();
+//        List<CustomerAddress> customerAddressList = customerAddressService.findByUserId(userId);
+//        //判断用户是否已经设置了地址
+//        if(customerAddressList.size()>0){
+//            //取第一个
+//            mav.addObject("address", customerAddressList.get(0));
+//        }else{
+//            mav.addObject("address", null);
+//        }
+        //将信息暂时存储在session
+        session.setAttribute("orderSession",list);
         //获取传进来的商品信息
         //商品名称
-        mav.addObject("name", orderDTO.getName());
-        //商品规格字符
-        mav.addObject("attributes",orderDTO.getAttributes());
-        //单价
-        Double price = orderDTO.getPrice();
-        mav.addObject("price", price);
-        //数量
-        Integer count = orderDTO.getCount();
-        mav.addObject("count", count);
-        //计算总价
-        Double totalPrice = price * count;
-        mav.addObject("totalPrice", totalPrice);
-
-
-
+//        mav.addObject("name", orderDTO.getName());
+//        //商品规格字符
+//        mav.addObject("attributes",orderDTO.getAttributes());
+//        //单价
+//        Double price = orderDTO.getPrice();
+//        mav.addObject("price", price);
+//        //数量
+//        Integer count = orderDTO.getCount();
+//        mav.addObject("count", count);
+//        //计算总价
+//        Double totalPrice = price * count;
+//        mav.addObject("totalPrice", totalPrice);
         return mav;
     }
 

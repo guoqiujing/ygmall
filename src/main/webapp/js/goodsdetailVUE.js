@@ -228,6 +228,7 @@ function buyNow(){
     element.price = page.orders.price;
     element.attributes = attributes;
     element.count = count;
+    element.picture = page.goodsImgs[0].imgUrl;
     data.push(element);
     $("#cart").val(JSON.stringify(data));
     //请求的url

@@ -11,6 +11,7 @@ public class OrderDTO {
     private String id;
     private String name;
     private Double price;
+    private String picture;
     private String attributes;
     private Integer count;
 
