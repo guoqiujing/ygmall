@@ -44,7 +44,24 @@
         <result column="status" property="status" jdbcType="TINYINT" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
-    <resultMap id="ComOrdDetResultMap" type="cn.myzqu.ygmall.vo.ComemntOrderDetailVo" extends="BaseResultMap">
+    <resultMap id="ComOrdDetResultMap" type="cn.myzqu.ygmall.vo.ComemntOrderDetailVo">
+        <id column="commentId" jdbcType="VARCHAR" property="id"/>
+        <result column="goods_id" jdbcType="VARCHAR" property="goodsId"/>
+        <result column="order_id" jdbcType="VARCHAR" property="orderId"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="user_img" jdbcType="VARCHAR" property="userImg"/>
+        <result column="goods_score" jdbcType="TINYINT" property="goodsScore"/>
+        <result column="service_score" jdbcType="TINYINT" property="serviceScore"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="comment" jdbcType="VARCHAR" property="comment"/>
+        <result column="comment_img" jdbcType="VARCHAR" property="commentImg"/>
+        <result column="additional_comment" jdbcType="VARCHAR" property="additionalComment"/>
+        <result column="additional_comment_img" jdbcType="VARCHAR" property="additionalCommentImg"/>
+        <result column="additional_comment_time" jdbcType="TIMESTAMP" property="additionalCommentTime"/>
+        <result column="format_and_style" jdbcType="VARCHAR" property="formatAndStyle"/>
+        <result column="display" jdbcType="TINYINT" property="display"/>
+        <result column="comment_status" jdbcType="TINYINT" property="commentStatus"/>
         <association property="orderDetail" javaType="cn.myzqu.ygmall.pojo.OrderDetail">
             <id column="id" property="id" jdbcType="VARCHAR" />
             <result column="order_id" property="orderId" jdbcType="VARCHAR" />
@@ -95,6 +112,8 @@
         from order_detail o LEFT JOIN `comment` c on c.order_id=o.id
         where o.user_id=#{userId} and c.id is null
     </select>
+
+    <!--<select id="selectCommentByUserId"-->
 
     <!--根据id删除评论-->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
