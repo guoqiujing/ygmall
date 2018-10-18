@@ -446,7 +446,10 @@
 				<div class="blockTitle"><strong style="color:#666">猜你喜欢</strong></div>
 				<div style="border: solid 1px #ddd;height:200px"></div>
 				<div class="clear"></div> 
-			</div>	
+			</div>
+			<form id="cartFrom" action="" method="post">
+				<input id="cart" name="cart" type="hidden"/>
+			</form>
 			<div class="clear"></div> 
 		</div>
 			<div class="footer">

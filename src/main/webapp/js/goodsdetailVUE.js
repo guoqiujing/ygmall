@@ -219,19 +219,33 @@ function buyNow(){
     var attributes=$(".formatDIV input[type='radio']:checked").eq(0).val();
     for(var i=1;i<$(".formatDIV input[type='radio']:checked").length;i++)
         attributes+="-"+$(".formatDIV input[type='radio']:checked").eq(i).val();
-    var count=$(".selectNum").val();
-    $.ajax({
-        url:'/buyer/order/to/order',
-        type:'post',
-        data:{id:id,name:name,price:price,attributes:attributes,count:count},
-        dataType:'json',
-        success:function(){
-            console.log("立即购买触发成功");
-        },
-        error:function(){
-            console.log("立即购买触发失败");
-        }
-    })
+    var count = $(".selectNum").val();
+    //构造json参数串
+    var data = [];
+    var element = {};
+    element.id = staticID;
+    element.name = page.orders.name;
+    element.price = page.orders.price;
+    element.attributes = attributes;
+    element.count = count;
+    data.push(element);
+    $("#cart").val(JSON.stringify(data));
+    //请求的url
+    var url = "/buyer/order/to/order" ;
+    $("#cartFrom").attr("action",url);
+    $("#cartFrom").submit();
+    // $.ajax({
+    //     url:'/buyer/order/to/order',
+    //     type:'post',
+    //     data:{id:id,name:name,price:price,attributes:attributes,count:count},
+    //     dataType:'json',
+    //     success:function(){
+    //         console.log("立即购买触发成功");
+    //     },
+    //     error:function(){
+    //         console.log("立即购买触发失败");
+    //     }
+    // })
 }
 
 
