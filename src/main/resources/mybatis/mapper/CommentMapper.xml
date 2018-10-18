@@ -44,6 +44,21 @@
         <result column="status" property="status" jdbcType="TINYINT" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     </resultMap>
+    <resultMap id="ComOrdDetResultMap" type="cn.myzqu.ygmall.vo.ComemntOrderDetailVo" extends="BaseResultMap">
+        <association property="orderDetail" javaType="cn.myzqu.ygmall.pojo.OrderDetail">
+            <id column="id" property="id" jdbcType="VARCHAR" />
+            <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+            <result column="user_id" property="userId" jdbcType="VARCHAR" />
+            <result column="goods_number" property="goodsNumber" jdbcType="VARCHAR" />
+            <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+            <result column="format_and_style" property="formatAndStyle" jdbcType="VARCHAR" />
+            <result column="market_price" property="marketPrice" jdbcType="DECIMAL" />
+            <result column="price" property="price" jdbcType="DECIMAL" />
+            <result column="count" property="count" jdbcType="INTEGER" />
+            <result column="status" property="status" jdbcType="TINYINT" />
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        </association>
+    </resultMap>
     <sql id="Base_Column_List">
     id, goods_id, order_id, user_id, user_name, user_img, goods_score, service_score, 
     create_time, comment, comment_img, additional_comment, additional_comment_img, additional_comment_time, 
@@ -69,8 +84,8 @@
     </select>
 
     <!--查询可以进行追评的评论-->
-    <select id="selectAddCom" parameterType="java.lang.String"  resultMap="OrderDetailResultMap">
-        select o.id,o.goods_name,o.goods_number,o.price
+    <select id="selectAddCom" parameterType="java.lang.String"  resultMap="ComOrdDetResultMap">
+        select o.id,o.goods_name,o.goods_number,o.price,c.id as commentId
         from order_detail o LEFT JOIN `comment` c on c.order_id=o.id
         where o.user_id=#{userId} and c.`comment` is not null and c.additional_comment is null
     </select>
