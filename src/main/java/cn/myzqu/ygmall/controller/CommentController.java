@@ -216,12 +216,12 @@ public class CommentController {
      * @param id
      * @param additionalComment
      * @param additionnalCommentImg
-     * @param commentStatus
      * @return
      */
     @PostMapping("/updateAdditComment")
-    public Result updateAdditComment(String id, String additionalComment, String additionnalCommentImg, Byte commentStatus) {
+    public Result updateAdditComment(String id, String additionalComment, String additionnalCommentImg) {
         System.out.println(id);
+        Byte commentStatus=0;
         Comment comment = new Comment(id, additionalComment, additionnalCommentImg, commentStatus);
         int c = commentService.updateAdditComment(comment);
         if (c <= 0) {

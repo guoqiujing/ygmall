@@ -31,7 +31,7 @@
             <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
         </association>
     </resultMap>
-    <resultMap id="OrderDetailResultMap" type="cn.myzqu.ygmall.pojo.OrderDetail" >
+    <resultMap id="OrderDetailResultMap" type="cn.myzqu.ygmall.vo.OrdDetGoodsImgVO">
         <id column="id" property="id" jdbcType="VARCHAR" />
         <result column="order_id" property="orderId" jdbcType="VARCHAR" />
         <result column="user_id" property="userId" jdbcType="VARCHAR" />
@@ -43,6 +43,12 @@
         <result column="count" property="count" jdbcType="INTEGER" />
         <result column="status" property="status" jdbcType="TINYINT" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <association property="goodsImg" javaType="cn.myzqu.ygmall.pojo.GoodsImg">
+            <id column="id" property="id" jdbcType="INTEGER" />
+            <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+            <result column="img_order" property="imgOrder" jdbcType="INTEGER" />
+            <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+        </association>
     </resultMap>
     <resultMap id="ComOrdDetResultMap" type="cn.myzqu.ygmall.vo.ComemntOrderDetailVo">
         <id column="commentId" jdbcType="VARCHAR" property="id"/>
@@ -75,6 +81,12 @@
             <result column="status" property="status" jdbcType="TINYINT" />
             <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         </association>
+        <association property="goodsImg" javaType="cn.myzqu.ygmall.pojo.GoodsImg">
+            <id column="id" property="id" jdbcType="INTEGER" />
+            <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+            <result column="img_order" property="imgOrder" jdbcType="INTEGER" />
+            <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+        </association>
     </resultMap>
     <sql id="Base_Column_List">
     id, goods_id, order_id, user_id, user_name, user_img, goods_score, service_score, 
@@ -102,21 +114,21 @@
 
     <!--查询可以进行追评的评论-->
     <select id="selectAddCom" parameterType="java.lang.String"  resultMap="ComOrdDetResultMap">
-        select o.id,o.goods_name,o.goods_number,o.price,c.id as commentId
-        from order_detail o LEFT JOIN `comment` c on c.order_id=o.id
-        where o.user_id=#{userId} and c.`comment` is not null and c.additional_comment is null
+        select o.id,o.goods_name,o.goods_number,o.price,c.id as commentId,g.img_url
+        from order_detail o LEFT JOIN `comment` c on c.order_id=o.id LEFT JOIN goods_img g ON g.goods_id=o.goods_number
+        where o.user_id=#{userId} and c.`comment` is not null and c.additional_comment is null and g.img_order=0
     </select>
     <!--查询用户是否可以进行评论-->
     <select id="selectCommentByOrder" parameterType="java.lang.String" resultMap="OrderDetailResultMap">
-        select o.id,o.goods_name,o.goods_number,o.price,o.format_and_style
-        from order_detail o LEFT JOIN `comment` c on c.order_id=o.id
-        where o.user_id=#{userId} and c.id is null
+        select o.id,o.goods_name,o.goods_number,o.price,o.format_and_style,g.img_url
+        from order_detail o LEFT JOIN `comment` c on c.order_id=o.id LEFT JOIN goods_img g ON g.goods_id=o.goods_number
+        where o.user_id=#{userId} and c.id is null and g.img_order=0
     </select>
-
+    <!--查询用户已经评论和追评的商品信息-->
     <select id="selectCommentByUserId" parameterType="java.lang.String" resultMap="OrderDetailResultMap">
-        select o.id,o.goods_name,o.goods_number,o.price
-        from order_detail o LEFT JOIN `comment` c on c.order_id=o.id
-        where o.user_id=#{userId} and c.`comment` is not null and c.additional_comment is not null
+        select o.id,o.goods_name,o.goods_number,o.price,g.img_url
+        from order_detail o LEFT JOIN `comment` c on c.order_id=o.id LEFT JOIN goods_img g ON g.goods_id=o.goods_number
+        where o.user_id=#{userId} and c.`comment` is not null and c.additional_comment is not null and g.img_order=0
     </select>
 
     <!--根据id删除评论-->
