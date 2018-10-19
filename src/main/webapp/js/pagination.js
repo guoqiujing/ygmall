@@ -2224,7 +2224,10 @@ var page = new Vue({
             this.getOrders();
         }
         if(this.tab==='2'){
-            this.getNotCommentGoods();
+            if(this.commentTab===0)
+                this.getNotCommentGoods();
+            if(this.commentTab===1)
+                this.getNotAdditionGoods();
         }
         if(this.tab==='6'){
             this.getAddress();
@@ -2486,7 +2489,10 @@ var page = new Vue({
             var that=this;
             //如果接收到的文件为空，不上传图片，直接评论
             if(that.file===''||that.file===undefined){
-                that.addComment();
+                if(that.tab==='2_1')
+                    that.addComment();
+                else if(that.tab==='2_2')
+                    that.addAdditionComment();
             }
             else
                 $.ajax({
@@ -2506,7 +2512,10 @@ var page = new Vue({
                             console.log("图片："+msg.data.substring(61));
                             that.commentImgUrl=msg.data;
                             //上传图片、获取图片地址后，执行评论的方法
-                            that.addComment();
+                            if(that.tab==='2_1')
+                                that.addComment();
+                            else if(that.tab==='2_2')
+                                that.addAdditionComment();
                         }
                         else if(msg.code===1){
                             layer.closeAll('loading');
@@ -2539,6 +2548,37 @@ var page = new Vue({
                     comment:that.commentContext,//评论内容
                     commentImg:that.commentImgUrl,//评论图片
                     formatAndStyle:that.selectedComment.formatAndStyle//规格
+                },
+                dataType: "json",
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    layer.closeAll('loading');
+                    if(msg.code===0){
+                        console.log("成功");
+                        layer.msg('发表成功', {time: 2000});
+                        window.location.href="/page/user/user.html?tab=2";
+                    }
+                    else {
+                        layer.msg('发表失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.closeAll('loading');
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
+        },
+
+        //追评
+        addAdditionComment:function () {
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/comment/updateAdditComment",
+                data: {
+                    id:that.selectedComment.id,//评论id
+                    additionalComment:that.commentContext,//评论
+                    additionnalCommentImg:that.commentImgUrl//评论图片
                 },
                 dataType: "json",
                 contentType:'application/x-www-form-urlencoded; charset=UTF-8',

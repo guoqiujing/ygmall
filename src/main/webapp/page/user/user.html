@@ -436,7 +436,7 @@
                                 </div>
                             </td>
                             <td align="center" style="vertical-align: middle;width: 200px;">{{comment.id}}</td>
-                            <td align="center" style="vertical-align: middle;">{{comment.price}}</td>
+                            <td align="center" style="vertical-align: middle;">¥{{comment.price}}</td>
                             <td align="center" style="vertical-align: middle;">
                                 <a href="#" v-on:click="selectedComment=comment,tab='2_1',imgShow=false,file='',img=''">去评价</a>
                             </td>
@@ -460,9 +460,9 @@
                                 </div>
                             </td>
 							<td align="center" style="vertical-align: middle;width: 200px;">{{comment.orderDetail.goodsNumber}}</td>
-							<td align="center" style="vertical-align: middle;">{{comment.orderDetail.price}}</td>
+							<td align="center" style="vertical-align: middle;">¥{{comment.orderDetail.price}}</td>
 							<td align="center" style="vertical-align: middle;">
-								<a href="#">添加追评</a>
+								<a href="#" v-on:click="selectedComment=comment,tab='2_2',imgShow=false,file='',img=''">添加追评</a>
 							</td>
 						</tr>
 						</tbody>
@@ -484,7 +484,7 @@
                                 </div>
                             </td>
                             <td align="center" style="vertical-align: middle;width: 200px;">{{comment.goodsNumber}}</td>
-                            <td align="center" style="vertical-align: middle;">{{comment.price}}</td>
+                            <td align="center" style="vertical-align: middle;">¥{{comment.price}}</td>
                             <td align="center" style="vertical-align: middle;">
                                 <a v-bind:href="'/page/user/goodsdetail.jsp?id='+comment.goodsNumber">查看详情</a>
                             </td>
@@ -518,12 +518,13 @@
 					</div>
 				</div>
                 <!--评论-->
-                <div class="clearfix" style="_height:1%;" v-if="tab=='2_1'" v-cloak>
-                    <div class="title" id="comment">商品评价</div>
+                <div class="clearfix" style="_height:1%;" v-if="tab=='2_1'||tab=='2_2'" v-cloak>
+                    <div class="title" id="comment" v-if="tab=='2_1'">商品评价</div>
+                    <div class="title" id="comment2" v-if="tab=='2_2'">商品追评</div>
                     <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData">
                         <tbody><tr>
                             <td align="center" style="vertical-align: text-top;">
-                                <div style="width: 250px;margin-top: 15px;">
+                                <div v-if="tab=='2_1'" style="width: 250px;margin-top: 15px;">
                                     <img v-bind:src="selectedComment.goodsImg.imgUrl" style="height: 200px;vertical-align: middle;margin-bottom: 15px;">
                                     <div>
                                         <a v-bind:href="'/page/user/goodsdetail.jsp?id='+selectedComment.goodsNumber" class="f0">{{selectedComment.goodsName}}</a>
@@ -532,35 +533,44 @@
                                         ¥{{selectedComment.price}}
                                     </div>
                                 </div>
+                                <div v-if="tab=='2_2'" style="width: 250px;margin-top: 15px;">
+                                    <img v-bind:src="selectedComment.goodsImg.imgUrl" style="height: 200px;vertical-align: middle;margin-bottom: 15px;">
+                                    <div>
+                                        <a v-bind:href="'/page/user/goodsdetail.jsp?id='+selectedComment.orderDetail.goodsNumber" class="f0">{{selectedComment.orderDetail.goodsName}}</a>
+                                    </div>
+                                    <div style="font-size: 18px;font-weight:bold;color: #e2231a;margin-top: 15px;">
+                                        ¥{{selectedComment.orderDetail.price}}
+                                    </div>
+                                </div>
                             </td>
                             <td style="">
                             <!--评论的标题-->
                             <!--<div class="address_add" v-if="tab=='2_1'" style="margin: 0;">初次评价</div>-->
                             <!--追评的标题-->
                             <!--<div class="address_add" v-if="tab=='2_2'">追加评价</div>-->
-                            <!--初次评论-->
-                            <div class="address_pad" v-if="tab=='2_1'">
+                            <!--评论各项-->
+                            <div class="address_pad" v-if="tab=='2_1'||tab=='2_2'">
                                 <table border="0" cellpadding="0" cellspacing="0" style="margin-top: 5px;">
                                     <form method="post" name="theForm"></form>
                                     <tbody>
-                                    <tr>
+                                    <tr v-if="tab=='2_1'">
                                         <td align="left" style="font-weight: bold;">
                                             商品质量：
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr v-if="tab=='2_1'">
                                         <td align="left">
                                             <label class="radio-inline"><input v-model="commentClass" name="commentClass" type="radio" value="2" />好评 </label>
                                             <label class="radio-inline"><input v-model="commentClass" name="commentClass" type="radio" value="1" />中评 </label>
                                             <label class="radio-inline"><input v-model="commentClass" name="commentClass" type="radio" value="0" />差评 </label>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr v-if="tab=='2_1'">
                                         <td align="left" style="font-weight: bold;">
                                             服务质量：
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr v-if="tab=='2_1'">
                                         <td align="left">
                                             <label class="radio-inline"><input v-model="serviceClass" name="serviceClass" type="radio" value="2" />好评 </label>
                                             <label class="radio-inline"><input v-model="serviceClass" name="serviceClass" type="radio" value="1" />中评 </label>
