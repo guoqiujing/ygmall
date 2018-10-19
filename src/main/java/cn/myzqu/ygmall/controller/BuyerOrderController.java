@@ -6,7 +6,6 @@ import cn.myzqu.ygmall.dto.UserSessionDTO;
 import cn.myzqu.ygmall.enums.OrderStatusEnum;
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.form.OrderForm;
-import cn.myzqu.ygmall.pojo.CustomerAddress;
 import cn.myzqu.ygmall.pojo.Order;
 import cn.myzqu.ygmall.pojo.OrderAlter;
 import cn.myzqu.ygmall.service.CustomerAddressService;
