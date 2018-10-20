@@ -6,6 +6,7 @@ import cn.myzqu.ygmall.dto.UserSessionDTO;
 import cn.myzqu.ygmall.enums.OrderStatusEnum;
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.form.OrderForm;
+import cn.myzqu.ygmall.pojo.CustomerAddress;
 import cn.myzqu.ygmall.pojo.Order;
 import cn.myzqu.ygmall.pojo.OrderAlter;
 import cn.myzqu.ygmall.service.CustomerAddressService;
@@ -47,14 +48,21 @@ public class BuyerOrderController {
 
     //创建订单
     @PostMapping("/create")
-    @ResponseBody
-    public ResultVO create(OrderForm orderForm) {
-        //获取收货地址
-        orderForm.getAddress();
+    public ModelAndView create(String cart,String address) {
+        System.out.println("cart:"+cart);
+        System.out.println("address:"+address);
         //获取购物车Json，将购物车Json转为实体类
+        CustomerAddress addressPojo = JSONObject.parseObject(address,CustomerAddress.class);
+        //将cart 转换为实体类
+        List<OrderDTO> orderDTOS = JSONObject.parseArray(cart,OrderDTO.class);
+        //添加订单
+        if(orderService.add(addressPojo,orderDTOS)){
+            ModelAndView mav = new ModelAndView("redirect:/page/user/user.html");
+            return mav;
+        }
+        ModelAndView mav = new ModelAndView("redirect:/page/user/user.html");
+        return mav;
 
-        //添加到订单总表
-        return null;
     }
 
     @GetMapping("/from")
@@ -83,36 +91,14 @@ public class BuyerOrderController {
         while (it.hasNext()){
             OrderDTO item = (OrderDTO)it.next();
             //计算总价格
-            totalPrice += item.getCount() * item.getPrice();
+            double sum = item.getCount() * item.getPrice().doubleValue();
+            item.setSum(sum);
+            totalPrice += sum;
         }
         //进行操作
-        ModelAndView mav = new ModelAndView("redirect:/page/user/order/create.jsp");
-        //根据userSession获取用户收货地址
-//        String userId = userSessionDTO.getId();
-//        List<CustomerAddress> customerAddressList = customerAddressService.findByUserId(userId);
-//        //判断用户是否已经设置了地址
-//        if(customerAddressList.size()>0){
-//            //取第一个
-//            mav.addObject("address", customerAddressList.get(0));
-//        }else{
-//            mav.addObject("address", null);
-//        }
+        ModelAndView mav = new ModelAndView("redirect:/page/user/order/create.html");
         //将信息暂时存储在session
         session.setAttribute("orderSession",list);
-        //获取传进来的商品信息
-        //商品名称
-//        mav.addObject("name", orderDTO.getName());
-//        //商品规格字符
-//        mav.addObject("attributes",orderDTO.getAttributes());
-//        //单价
-//        Double price = orderDTO.getPrice();
-//        mav.addObject("price", price);
-//        //数量
-//        Integer count = orderDTO.getCount();
-//        mav.addObject("count", count);
-//        //计算总价
-//        Double totalPrice = price * count;
-//        mav.addObject("totalPrice", totalPrice);
         return mav;
     }
 

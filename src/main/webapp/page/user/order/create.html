@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>购物流程_美术生艺考用品专营电商</title>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link href="http://www.nahanms.com/themes/kf666/style.css" rel="stylesheet" type="text/css" />
+    <link href="http://www.nahanms.com/themes/kf666/wangyin.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<div class="flow_top">
+    <div class="flow_wrap">
+        <div class="f_l flow_logo">
+            <h1><a href="http://www.nahanms.com/index.html">呐喊美术商城官方网站</a></h1>
+        </div>
+        <div class="flow_member f_r">
+            <ul class="member_info f_l" id="ECS_MEMBERZONE">
+                <script src="http://www.nahanms.com/gogo.php?id=1" type="text/javascript"></script>
+            </ul>
+            <div class="brocodes brocodes_top f_r">
+                <dt class="ico_wx">官方微信商城</dt>
+                <dd class="brocodes_detail"><img src="http://www.nahanms.com/themes/kf666/images/brode.jpg"></dd>
+            </div>
+            <div class="member_info f_r">
+            </div>
+            <ul class="member_info f_r">
+                <li><a rel="nofollow" href="http://www.nahanms.com/user.php?act=order_list">订单查询</a></li>
+                <li><a rel="nofollow" href="http://www.nahanms.com/user.php">我的呐喊</a></li>
+                <li class="fav"><a rel="nofollow" href="http://www.nahanms.com/user.php?act=collection_list">我的收藏</a></li>
+            </ul>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<div class="blank30"></div>
+<div class="flow_block">
+    <div class="cartnew-title">
+        <h2 class="step2">我的购物车</h2>
+        <ul>
+            <li><span>查看购物车</span></li>
+            <li><span class="act">填写订单</span></li>
+            <li class="end"><span>付款，完成购买</span></li>
+        </ul>
+    </div>
+    <div class="flow_title">
+        请填写并核对以下信息
+    </div>
+    <div class="flowBoxbd" id="addressFrom" v-cloak>
+        <div class="flowBox">
+            <div class="title">填写收货信息：</div>
+            <div class="consignee_form">
+                <div class="shipping-address">
+                </div>
+            </div>
+            <div class="clearfix blank"></div>
+            <div class="address_wrap">
+                <div class="address_add_new f_l" v-if="!isHas">
+                    <button type="button" class="tc-btn createAddr"
+                            name="address_id" id="new_address" value="0"
+                            onclick="show_ConsigneeDetail(0)">
+                        <strong class="f16">+</strong> 添加新地址
+                    </button>
+                </div>
+                <div class="f_l" v-if="isHas" >
+                    <div style="display: flex;flex-direction: row;">
+                        <span style="color: #999;">收货人：</span>
+                        <p style="color: #666;">{{address.receiverName}}</p>
+                    </div>
+                    <div style="display: flex;flex-direction: row;">
+                        <span style="color: #999;">收货地址：</span>
+                        <p style="color: #666;">{{address.province}}{{address.city}}{{address.county}} {{address.detail}}</p>
+                    </div>
+                    <div style="display: flex;flex-direction: row;">
+                        <span style="color: #999;">手机号码：</span>
+                        <p style="color: #666;">{{address.receiverTel}}</p>
+                    </div>
+                </div>
+                <div class="address_manage f_r">
+                    <a href="user.php?act=address_list">管理收货地址</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--支付方式-->
+    <!--<div class="flowBoxbd">-->
+        <!--<div class="flowBox">-->
+            <!--<div class="title">选择支付方式：</div>-->
+            <!--<div class="pay_wrap">-->
+                <!--<dd>-->
+                    <!--<ul class="list-bank">-->
+                        <!--<li id="li1"><input type="radio" id="pay1" name="payment" value="1" isCod="0" onclick="selectPayment(this)" /><label for="pay1" class="icon alipay" onclick="sel(li1);"></label></li>-->
+                        <!--<li id="li5"><input type="radio" id="pay5" name="payment" value="5" isCod="0" onclick="selectPayment(this)" /><label for="pay5" class="icon CMB" onclick="sel(li5);"></label></li>-->
+                    <!--</ul>-->
+                <!--</dd>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="blank clearfix"></div>
+    <div class="flow_title_cartinfo"><span><a href="flow.php">返回修改购物车</a></span></div>
+    <div id="orderFrom">
+        <div class="flowcart">
+            <table width="100%" align="center" border="0" cellpadding="5" cellspacing="0">
+                <tr>
+                    <th>商品信息</th>
+                    <th>单价（元）</th>
+                    <th>数量</th>
+                    <th>小计（元）</th>
+                </tr>
+                <tr v-for="item in list" v-cloak>
+                    <td class="bbd">
+                        <a href="#" target="_blank">
+                            <img v-bind:src="item.goodsPicture" v-bind:alt="item.goodsName" class="small_goodsimg"/>
+                        </a>
+                        <a href="#" target="_blank">{{item.goodsName}}{{item.goodsNumber}}</a>
+                        <br /><span class="f4"></span>
+                    </td>
+                    <td class="bbd" align=center>{{item.price}}</td>
+                    <td class="bbd" align=center>{{item.count}}</td>
+                    <td class="bbdr" align=center>{{item.sum}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="flowBox">
+            <div class="flowbuy">
+                <!--<div class="flowbeizhu f_l">-->
+                    <!--<div class="bztitle">添加订单备注信息：</div>-->
+                    <!--<textarea name="postscript" cols="50" rows="2" id="postscript" class="textarea_inputbg"></textarea>-->
+                <!--</div>-->
+                <div class="flowprice f_r">
+                    <div class="order_total">
+                        <div id="ECS_ORDERTOTAL">
+                            <div class="order_total_price">
+                                <dl>
+                                    <dt class="f_16">应付总额：</dt>
+                                    <dd><span class="shop_total">{{orderSum}}</span></dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="order_submit" action="" id="cartFrom" method="post">
+                        <input id="address" name="address" type="hidden"   />
+                        <input id="cart" name="cart" type="hidden"/>
+                        <input class="bnt_submit_order f_r" value="提交订单" type="button" onclick="createOrder()" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clearfix blank50"></div>
+<div class="footer">
+</div>
+<script src="../../../js/vue.js"></script>
+<script src="../../../js/jquery-1.8.3.min.js"></script>
+<script src="../../../js/jquery.min.js"></script>
+<script src="../../../js/bootstrap.js"></script>
+<script src="../../../layer/layer.js"></script>
+<script src="../../../js/userSession.js"></script>
+<script src="../../../js/public.js"></script>
+<script type="text/javascript" src="js/create.js"></script>
+
+</body>
+
+</html>

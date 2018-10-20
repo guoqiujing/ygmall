@@ -1,11 +1,13 @@
 package cn.myzqu.ygmall.service.impl;
 
+import cn.myzqu.ygmall.controller.CustomerAddressController;
+import cn.myzqu.ygmall.dao.OrderAlterMapper;
 import cn.myzqu.ygmall.dao.OrderDetailMapper;
 import cn.myzqu.ygmall.dao.OrderMapper;
+import cn.myzqu.ygmall.dto.OrderDTO;
 import cn.myzqu.ygmall.dto.PageDTO;
-import cn.myzqu.ygmall.pojo.Brand;
-import cn.myzqu.ygmall.pojo.Order;
-import cn.myzqu.ygmall.pojo.OrderDetail;
+import cn.myzqu.ygmall.enums.OrderStatusEnum;
+import cn.myzqu.ygmall.pojo.*;
 import cn.myzqu.ygmall.service.OrderDetailService;
 import cn.myzqu.ygmall.service.OrderService;
 import cn.myzqu.ygmall.utils.KeyUtil;
@@ -13,9 +15,12 @@ import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,25 +39,57 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderDetailMapper orderDetailMapper;
 
-    @Override
-    public Boolean add() {
-        //获取收货地址
+    @Autowired
+    private OrderAlterMapper orderAlterMapper;
 
+    @Override
+    public Boolean add(CustomerAddress address , List<OrderDTO> orderDTOList) {
         //获取总订单信息
         //生成订单表id
         String orderId = KeyUtil.genUniqueKey();
         Order order = new Order();
-
+        BeanUtils.copyProperties(address,order);
+        //获取当前操作用户
+        String userId = order.getUserId();
         order.setId(orderId);
-        OrderDetail orderDetail = new OrderDetail();
-
-        if(orderMapper.insert(order)>0){
-            //添加订单明细信息\
-
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        //插入订单详情表，并计算总金额
+        double goodsTotalMoney = 0;
+        for(int i = 0;i<orderDTOList.size();i++){
+            OrderDetail orderDetail = new OrderDetail();
+            BeanUtils.copyProperties(orderDTOList.get(i),orderDetail);
+            goodsTotalMoney += orderDetail.getCount() * orderDetail.getPrice().doubleValue();
+            orderDetail.setId(KeyUtil.genUniqueKey());
+            orderDetail.setOrderId(orderId);
+            orderDetail.setUserId(userId);
+            System.out.println("orderDetail:"+orderDetail);
+            orderDetails.add(orderDetail);
         }
-
-
-        return null;
+        //订单状态:支付功能还没做，暂时先直接待收货
+        Byte status = OrderStatusEnum.DAIFAHUO.getCode().byteValue();
+        order.setStatus(status);
+        order.setCarriage(new BigDecimal(0));
+        order.setGoodsTotalMoney(new BigDecimal(goodsTotalMoney));
+        order.setRealTotalMoney(new BigDecimal(goodsTotalMoney));
+        //System.out.println("order:"+order);
+        if(orderMapper.insert(order)>0){
+            //添加订单明细信息
+            for(int i=0;i<orderDetails.size();i++){
+                OrderDetail orderDetail = orderDetails.get(i);
+                orderDetail.setStatus(status);
+                orderDetailMapper.insert(orderDetail);
+                //扣库存
+            }
+            //记录订单信息变更
+            OrderAlter orderAlter= new OrderAlter();
+            orderAlter.setId(KeyUtil.genUniqueKey());
+            orderAlter.setEntryId(orderId);
+            orderAlter.setOperator(userId);
+            orderAlter.setState(status);
+            orderAlterMapper.insert(orderAlter);
+            return true;
+        }
+        return false;
     }
 
     @Override

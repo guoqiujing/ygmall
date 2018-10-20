@@ -223,12 +223,12 @@ function buyNow(){
     //构造json参数串
     var data = [];
     var element = {};
-    element.id = staticID;
-    element.name = page.orders.name;
+    element.goodsNumber = staticID;
+    element.goodsName = page.orders.name;
     element.price = page.orders.price;
-    element.attributes = attributes;
+    element.formatAndStyle = attributes;
     element.count = count;
-    element.picture = page.goodsImgs[0].imgUrl;
+    element.goodsPicture = page.goodsImgs[0].imgUrl;
     data.push(element);
     $("#cart").val(JSON.stringify(data));
     //请求的url

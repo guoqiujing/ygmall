@@ -40,35 +40,35 @@ public class OrderMapperTest {
 
     @Test
     public void selectOrderDetailByCustomerIdAndStatus() throws Exception {
-//        String customerId = "f81986cd58214b2b9cc2815ecdd95d3e";
-//        List<Order> orderList = orderMapper.selectOrderDetailByCustomerIdAndStatus(customerId,null);
-//        Iterator it = orderList.iterator();
+////        String customerId = "f81986cd58214b2b9cc2815ecdd95d3e";
+////        List<Order> orderList = orderMapper.selectOrderDetailByCustomerIdAndStatus(customerId,null);
+////        Iterator it = orderList.iterator();
+////        while (it.hasNext()){
+////            System.out.println(it.next().toString());
+////        }
+//        OrderDTO orderDTO = new OrderDTO();
+////        orderDTO.setId("123");
+////        orderDTO.setName("商品名称");
+////        orderDTO.setAttributes("商品规格");
+////        orderDTO.setPrice(123.0);
+////        List orderList = new ArrayList();
+////        orderList.add(orderDTO);
+////
+////        OrderDTO orderDTO1 = new OrderDTO();
+////        orderDTO1.setId("234");
+////        orderDTO1.setName("商品名称");
+////        orderDTO1.setAttributes("商品规格");
+////        orderDTO1.setPrice(123.0);
+//        orderList.add(orderDTO1);
+//
+//        String json = JSONObject.toJSONString(orderList);
+//
+//        System.out.println(json);
+//        List<OrderDTO> list = JSONObject.parseArray(json,OrderDTO.class);
+//        Iterator it = list.iterator();
 //        while (it.hasNext()){
 //            System.out.println(it.next().toString());
 //        }
-        OrderDTO orderDTO = new OrderDTO();
-        orderDTO.setId("123");
-        orderDTO.setName("商品名称");
-        orderDTO.setAttributes("商品规格");
-        orderDTO.setPrice(123.0);
-        List orderList = new ArrayList();
-        orderList.add(orderDTO);
-
-        OrderDTO orderDTO1 = new OrderDTO();
-        orderDTO1.setId("234");
-        orderDTO1.setName("商品名称");
-        orderDTO1.setAttributes("商品规格");
-        orderDTO1.setPrice(123.0);
-        orderList.add(orderDTO1);
-
-        String json = JSONObject.toJSONString(orderList);
-
-        System.out.println(json);
-        List<OrderDTO> list = JSONObject.parseArray(json,OrderDTO.class);
-        Iterator it = list.iterator();
-        while (it.hasNext()){
-            System.out.println(it.next().toString());
-        }
 
     }
 
