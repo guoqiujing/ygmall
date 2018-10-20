@@ -102,16 +102,6 @@ var orderFrom = new Vue({
 })
 // 提交订单
 function createOrder(){
-    //构造json参数串
-    // var data = [];
-    // var element = {};
-    // element.id = staticID;
-    // element.name = page.orders.name;
-    // element.price = page.orders.price;
-    // element.attributes = attributes;
-    // element.count = count;
-    // element.picture = page.goodsImgs[0].imgUrl;
-    // data.push(element);
     //商品信息
     var cart = orderFrom.list;
     //地址信息

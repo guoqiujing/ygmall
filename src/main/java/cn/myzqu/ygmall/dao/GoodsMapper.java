@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.dao;
 
+import cn.myzqu.ygmall.dto.GoodsDTO;
 import cn.myzqu.ygmall.pojo.Goods;
 import cn.myzqu.ygmall.vo.GoodsDetailVO;
 import cn.myzqu.ygmall.vo.Goods_Img_AttributesVO;
@@ -32,5 +33,7 @@ public interface GoodsMapper {
     Integer putOffById(String id);
 
     List<Goods> getAllPutOff(Map<String,Object> map);
+
+    List<GoodsDTO> searchGoods(String search);
 
 }

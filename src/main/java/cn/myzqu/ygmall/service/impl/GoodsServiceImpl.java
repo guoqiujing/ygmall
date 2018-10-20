@@ -3,6 +3,8 @@ package cn.myzqu.ygmall.service.impl;
 import cn.myzqu.ygmall.dao.AttributeMapper;
 import cn.myzqu.ygmall.dao.GoodsMapper;
 import cn.myzqu.ygmall.dao.SpuMapper;
+import cn.myzqu.ygmall.dto.GoodsDTO;
+import cn.myzqu.ygmall.dto.PageDTO;
 import cn.myzqu.ygmall.pojo.Goods;
 import cn.myzqu.ygmall.pojo.GoodsImg;
 import cn.myzqu.ygmall.pojo.Spu;
@@ -64,7 +66,9 @@ public class GoodsServiceImpl implements GoodsService {
         Integer integer=goodsMapper.updateByPrimaryKeySelective(goods);
         return integer;
     }
-        /**
+
+
+    /**
          * 创建新商品（商品上架时调用）
          */
     public Integer createNew(Goods goods){
@@ -165,6 +169,19 @@ public class GoodsServiceImpl implements GoodsService {
     public Integer putOffById(String id){
         Integer result=goodsMapper.putOffById(id);
         return result;
+    }
+
+
+    @Override
+    public PageDTO searchGoods(String search, int pageSize, int pageIndex) {
+        Page<Goods> page = PageHelper.startPage(pageIndex,pageSize);
+        List<GoodsDTO> goodsList = goodsMapper.searchGoods(search);
+        int total = (int)page.getTotal();
+        System.out.println("总记录数："+total);
+        PageDTO pageDTO = new PageDTO(goodsList,total,pageSize,pageIndex);
+        if(total<=0)
+            return null;
+        return pageDTO;
     }
 
 }

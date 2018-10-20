@@ -1,0 +1,72 @@
+<!DOCTYPE html >
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>水粉颜料_颜料_美术生艺考用品专营电商-呐喊美术商城官方网站</title>
+    <meta content="" name="Description" />
+    <meta content="" name="Keywords" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link href="http://www.nahanms.com/themes/kf666/style.css" rel="stylesheet" type="text/css" />
+    <script src="../../../js/vue.js"></script>
+    <script src="../../../js/jquery-1.8.3.min.js"></script>
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
+    <script src="../../../layer/layer.js"></script>
+</head>
+
+<body>
+<div class="block">
+    <div class="blank"></div>
+    <div class="desc_acs">
+        <dl class="order">
+            <dt>排序：</dt>
+            <dd><a rel="nofollow"  href="http://www.nahanms.com/category.php?id=5&brand=0&price_min=0&price_max=0&filter_attr=0&page=1&sort=have_sold&order=desc">销量<b class="icon-order-DESCending"></b></a></dd>
+            <dd><a rel="nofollow"  href="http://www.nahanms.com/category.php?id=5&brand=0&price_min=0&price_max=0&filter_attr=0&page=1&sort=shop_price&order=asc">价格<b class="icon-order-DESCending"></b></a></dd>
+            <dd class="curr"><a rel="nofollow"  href="http://www.nahanms.com/category.php?id=5&brand=0&price_min=0&price_max=0&filter_attr=0&page=1&sort=goods_id&order=desc">上架<b class="icon-order-DESCending"></b></a></dd>
+        </dl>
+    </div>
+    <div class="blank"></div>
+    <div class="categorybox clearfix" id="search1" v-cloak>
+        <div v-for="item in goodsList">
+            <div class="goodsItem">
+                <a href="http://www.nahanms.com/yanliao/1448.html" target="_blank" v-bind:title="item.name" >
+                    <img v-bind:src="item.img" v-bind:alt="item.goodsName"
+                          class="goodsimg" /></a>
+                <div class="orderinfo">
+                    <font class="shop_s">¥ {{item.market}}</font>
+                    <font class="market_s">¥ {{item.price}}</font>
+                    <p class="name"><a href="http://www.nahanms.com/yanliao/1448.html"
+                                       target="_blank" v-bind:title="item.name"">
+                        {{item.name}} </a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="pagebar">
+    </div>
+    <div class="clearfix"></div>
+    <div class="block">
+        <div id="cat_history">
+            <div class="showshowbox">
+                <div class="pr-hd">
+                    <em></em>
+                    <span>最近浏览过商品</span>
+                </div>
+                <div class="history_info" id="history_div">
+                    <div id='history_list'>
+                        <div class="Lpic">
+                            <script src="http://www.nahanms.com/gogo.php?id=3" type="text/javascript"></script>
+                            <script src="http://www.nahanms.com/gogo.php?id=7&goods_id=" type="text/javascript"></script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="blank20 clearfix"></div>
+<script src="../../../js/userSession.js"></script>
+<script src="../../../js/public.js"></script>
+<script src="js/list.js" />
+</body>
+</html>
