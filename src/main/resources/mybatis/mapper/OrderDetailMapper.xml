@@ -157,7 +157,7 @@
         status = #{status,jdbcType=TINYINT},
       </if>
     </set>
-    where orderId = #{order_id,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
 
 </mapper>
