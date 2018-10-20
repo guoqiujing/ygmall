@@ -10,6 +10,7 @@ import cn.myzqu.ygmall.enums.OrderStatusEnum;
 import cn.myzqu.ygmall.pojo.*;
 import cn.myzqu.ygmall.service.OrderDetailService;
 import cn.myzqu.ygmall.service.OrderService;
+import cn.myzqu.ygmall.task.OrderTask;
 import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import com.github.pagehelper.Page;
@@ -41,6 +42,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderAlterMapper orderAlterMapper;
+
+    @Autowired
+    private OrderTask orderTask;
 
     @Override
     public Boolean add(CustomerAddress address , List<OrderDTO> orderDTOList) {
@@ -97,6 +101,7 @@ public class OrderServiceImpl implements OrderService {
         Byte status = OrderStatusEnum.DAIFAHUO.getCode().byteValue();
         if(updateStatus(orderId,userId,status)){
             //用户付款成功后，通知发货（1分钟后自动发货，每天早上8点检查是否需要发货)
+            orderTask.deliver(orderId);
             return true;
         }
         return false;
