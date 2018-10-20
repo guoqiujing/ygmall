@@ -44,7 +44,7 @@
         <result column="status" property="status" jdbcType="TINYINT" />
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         <association property="goodsImg" javaType="cn.myzqu.ygmall.pojo.GoodsImg">
-            <id column="id" property="id" jdbcType="INTEGER" />
+            <id column="img_id" property="id" jdbcType="INTEGER" />
             <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
             <result column="img_order" property="imgOrder" jdbcType="INTEGER" />
             <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
@@ -82,7 +82,7 @@
             <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
         </association>
         <association property="goodsImg" javaType="cn.myzqu.ygmall.pojo.GoodsImg">
-            <id column="id" property="id" jdbcType="INTEGER" />
+            <id column="img_id" property="id" jdbcType="INTEGER" />
             <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
             <result column="img_order" property="imgOrder" jdbcType="INTEGER" />
             <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
