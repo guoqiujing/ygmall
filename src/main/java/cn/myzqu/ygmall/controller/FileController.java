@@ -58,7 +58,19 @@ public class FileController {
         ImgUtil.deleteFile(tempFile);
         return ResultVOUtil.success(result);
     }
-
+    //评论图片上传到腾讯服务器
+    @PostMapping("/qCloud/commentInfo")
+    public Result uploadCommentImg(HttpServletRequest request, @RequestParam("file") MultipartFile file) throws Exception {
+        //首先将MultipartFile转为File或InputStream
+        File tempFile = ImgUtil.saveLocal(file,request);
+        //压缩图片
+        ImgUtil.compress(tempFile);
+        //调用方法
+        String result = Operate.upload(tempFile,new CommentInformation());
+        //在服务器删除tempFile
+        ImgUtil.deleteFile(tempFile);
+        return ResultVOUtil.success(result);
+    }
     //商品货品图片上传到腾讯服务器（多文件）
     @PostMapping("/qCloud/goodsInfo")
     public Result uploadGoodsImg(HttpServletRequest request, @RequestParam("files") MultipartFile[] files) throws Exception {

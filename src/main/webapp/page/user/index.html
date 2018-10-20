@@ -8,10 +8,14 @@
         <link rel="stylesheet" href="../../css/vue-setting.css">
 		<link rel="stylesheet" href="../../css/bootstrap.css" />
 		<link rel="stylesheet" href="../../css/index.css" />
+        <!--用于用户验证-->
 		<script src="../../js/vue.js"></script>
+        <!------------------->
 		<script src="../../js/jquery.min.js"></script>
 		<script src="../../js/bootstrap.js"></script>
+        <!--用于用户验证-->
         <script src="../../js/userSession.js"></script>
+        <!------------------->
 		<title></title>
 	</head>
 
@@ -19,6 +23,7 @@
 
 		<div class="container-fluid head" style="border-bottom: 1px solid #DEDEDE; background-color: #F2F2F2;color: #484848;">
 			<div class="container">
+                <!--id为top的div，用于显示登录当前用户-->
 				<div id="top" class="row" style="font-size: 12px;padding:5px;">
 					<div class="col-md-2">欢迎来到艺格艺术生用品商城</div>
                     <div class="col-md-2" v-if="userId!=null"><a href="/page/user/user.html?tab=4" v-cloak>用户{{user.telephone}}</a></div>
@@ -30,6 +35,7 @@
 					<div class="col-md-1" style="float: right;">我的收藏</div>
 					<div class="col-md-1" style="float: right;">订单查询</div>
 				</div>
+                 <!-------------------------------------------->
 			</div>
 		</div>
 
@@ -131,15 +137,15 @@
 						热销推荐
 					</div>
 					<div style="font-size: 20px;font-weight: normal;">
-						<a href="login.html">更多</a>
+						<a href="#">更多</a>
 					</div>
 					
 				</div>
 				
 				<div class="divside" style="min-width:1180px;max-width:100%;width:100%;height: 240px;">
-					<a  href="/page/user/goodsdetail.jsp?id=3"><img class="hot-img" src="../../img/hot1.jpg" /></a>
+					<a  href="/page/user/goodsdetail.jsp?id=5523afed85a7479ea27dfca9c28af027"><img class="hot-img" src="../../img/hot1.jpg" /></a>
 					<a  href="/page/user/goodsdetail.jsp?id=bbdb28dfd7ab4e9ea09c9f85fbf60214"><img class="hot-img" src="../../img/hot2.jpg" /></a>
-					<a  href="/page/user/goodsdetail.jsp?id=1"><img class="hot-img" src="../../img/hot3.jpg" /></a>
+					<a  href="/page/user/goodsdetail.jsp?id=5d526ff1389f40e4aac64a4794d3b595"><img class="hot-img" src="../../img/hot3.jpg" /></a>
 					<a  href="/page/user/goodsdetail.jsp?id=bbdb28dfd7ab4e9ea09c9f85fbf60214"><img class="hot-img" src="../../img/hot4.jpg" /></a>
 				</div>
 				
@@ -229,8 +235,9 @@
 		</div>
 
 		<script src="../../js/index.js"></script>
-
+        <!--用于用户验证-->
         <script src="../../js/public.js"></script>
+        <!------------------->
 	</body>
 
 </html>

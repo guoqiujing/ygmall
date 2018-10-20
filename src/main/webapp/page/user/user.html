@@ -42,7 +42,7 @@
 			<div class="head-center" style="justify-content: space-between;">
 
 				<div style="margin-right: 0;">
-					<a href="index.html"><img src="../../img/yigeshangchenglogo.png"></a>
+					<a href="/page/user/index.html"><img src="../../img/yigeshangchenglogo.png"></a>
 				</div>
 
 				<div class="divcenter">
@@ -68,7 +68,7 @@
 						<a href="#" style="padding: 15px 50px 15px 50px;">热门商品分类</a>
 					</li>
 					<li>
-						<a href="index.html" style="padding: 15px 30px ;">首页</a>
+						<a href="/page/user/index.html" style="padding: 15px 30px ;">首页</a>
 					</li>
 					<li>
 						<a href="#" style="padding: 15px 30px ;">美术生专区</a>
@@ -145,6 +145,12 @@
 					<h2 class="h2bg" v-on:click="orderTab=3">已完成</h2>
 					<h2 class="h2bg" v-on:click="orderTab=4">已取消</h2>
 				</div>
+                <!--评价状态tab-->
+                <div id="tabline-bar2" class="tabline" v-if="tab==2" v-cloak>
+                    <h2 class="" v-on:click="commentTab=0">待评论</h2>
+                    <h2 class="h2bg" v-on:click="commentTab=1">待追评</h2>
+                    <h2 class="h2bg" v-on:click="commentTab=2">已追评</h2>
+                </div>
 				<!--订单中心-->
 				<div class="clearfix" style="height: 365px;position: relative;display: flex;flex-direction: column;align-items: center;" v-if="tab==1" v-cloak>
 					<table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData table table-hover ">
@@ -410,6 +416,189 @@
                             </li>
                         </ul>
                     </div>
+                </div>
+				<!--评论列表-->
+				<div class="clearfix" style="height: 680px;position: relative;display: flex;flex-direction: column;align-items: center;" v-if="tab==2" v-cloak>
+                    <!--待评价表格-->
+                    <table v-if="commentTab==0" width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData table table-hover " v-cloak>
+                        <tbody>
+                        <tr style="background-color: #F5F5F5;" v-cloak>
+                            <th>商品</th>
+                            <th>订单详情编号</th>
+                            <th>单价</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr v-for="(comment,index) in comments" v-cloak>
+                            <td  style="vertical-align: text-top;width: 300px;">
+                                <img v-bind:src="comment.goodsImg.imgUrl" style="float:left;height: 80px;vertical-align: middle;margin-right: 15px;">
+                                <div>
+                                    <a v-bind:href="'/page/user/goodsdetail.jsp?id='+comment.goodsNumber" class="f0">{{comment.goodsName}}</a>
+                                </div>
+                            </td>
+                            <td align="center" style="vertical-align: middle;width: 200px;">{{comment.id}}</td>
+                            <td align="center" style="vertical-align: middle;">¥{{comment.price}}</td>
+                            <td align="center" style="vertical-align: middle;">
+                                <a href="#" v-on:click="selectedComment=comment,tab='2_1',imgShow=false,file='',img=''">去评价</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--待追评表格-->
+					<table v-if="commentTab==1" width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData table table-hover " v-cloak>
+						<tbody>
+						<tr style="background-color: #F5F5F5;" v-cloak>
+							<th>商品</th>
+							<th>商品编号</th>
+							<th>单价</th>
+							<th>操作</th>
+						</tr>
+						<tr v-for="comment in comments" v-cloak>
+							<td style="vertical-align: text-top;width: 300px;">
+                                <img v-bind:src="comment.goodsImg.imgUrl" style="float:left;height: 80px;vertical-align: middle;margin-right: 15px;">
+                                <div>
+								    <a v-bind:href="'/page/user/goodsdetail.jsp?id='+comment.orderDetail.goodsNumber" class="f0">{{comment.orderDetail.goodsName}}</a>
+                                </div>
+                            </td>
+							<td align="center" style="vertical-align: middle;width: 200px;">{{comment.orderDetail.goodsNumber}}</td>
+							<td align="center" style="vertical-align: middle;">¥{{comment.orderDetail.price}}</td>
+							<td align="center" style="vertical-align: middle;">
+								<a href="#" v-on:click="selectedComment=comment,tab='2_2',imgShow=false,file='',img=''">添加追评</a>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+					<!--已追评表格-->
+                    <table v-if="commentTab==2" width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData table table-hover " v-cloak>
+                        <tbody>
+                        <tr style="background-color: #F5F5F5;" v-cloak>
+                            <th>商品</th>
+                            <th>商品编号</th>
+                            <th>单价</th>
+                            <th>操作</th>
+                        </tr>
+                        <tr v-for="comment in comments" v-cloak>
+                            <td style="vertical-align: text-top;width: 300px;">
+                                <img v-bind:src="comment.goodsImg.imgUrl" style="float:left;height: 80px;vertical-align: middle;margin-right: 15px;">
+                                <div>
+                                    <a v-bind:href="'/page/user/goodsdetail.jsp?id='+comment.goodsNumber" class="f0">{{comment.goodsName}}</a>
+                                </div>
+                            </td>
+                            <td align="center" style="vertical-align: middle;width: 200px;">{{comment.goodsNumber}}</td>
+                            <td align="center" style="vertical-align: middle;">¥{{comment.price}}</td>
+                            <td align="center" style="vertical-align: middle;">
+                                <a v-bind:href="'/page/user/goodsdetail.jsp?id='+comment.goodsNumber">查看详情</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--分页-->
+					<div class="page-bar" style="" v-if="all>1">
+						<div style="margin: auto;width:450px;">
+							<ul v-cloak>
+								<li v-if="cur>1">
+									<a v-on:click="cur--,pageClick()">上一页</a>
+								</li>
+								<li v-if="cur==1">
+									<a class="banClick">上一页</a>
+								</li>
+								<li v-for="index in indexs" v-bind:class="{ 'active': cur == index}">
+									<a v-on:click="btnClick(index)">{{ index }}</a>
+								</li>
+								<li v-if="cur!=all">
+									<a v-on:click="cur++,pageClick()">下一页</a>
+								</li>
+								<li v-if="cur == all">
+									<a class="banClick">下一页</a>
+								</li>
+								<li>
+									<a>共<i>{{all}}</i>页</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+                <!--评论-->
+                <div class="clearfix" style="_height:1%;" v-if="tab=='2_1'||tab=='2_2'" v-cloak>
+                    <div class="title" id="comment" v-if="tab=='2_1'">商品评价</div>
+                    <div class="title" id="comment2" v-if="tab=='2_2'">商品追评</div>
+                    <table width="100%" border="0" cellpadding="0" cellspacing="0" class="tabelData">
+                        <tbody><tr>
+                            <td align="center" style="vertical-align: text-top;">
+                                <div v-if="tab=='2_1'" style="width: 250px;margin-top: 15px;">
+                                    <img v-bind:src="selectedComment.goodsImg.imgUrl" style="height: 200px;vertical-align: middle;margin-bottom: 15px;">
+                                    <div>
+                                        <a v-bind:href="'/page/user/goodsdetail.jsp?id='+selectedComment.goodsNumber" class="f0">{{selectedComment.goodsName}}</a>
+                                    </div>
+                                    <div style="font-size: 18px;font-weight:bold;color: #e2231a;margin-top: 15px;">
+                                        ¥{{selectedComment.price}}
+                                    </div>
+                                </div>
+                                <div v-if="tab=='2_2'" style="width: 250px;margin-top: 15px;">
+                                    <img v-bind:src="selectedComment.goodsImg.imgUrl" style="height: 200px;vertical-align: middle;margin-bottom: 15px;">
+                                    <div>
+                                        <a v-bind:href="'/page/user/goodsdetail.jsp?id='+selectedComment.orderDetail.goodsNumber" class="f0">{{selectedComment.orderDetail.goodsName}}</a>
+                                    </div>
+                                    <div style="font-size: 18px;font-weight:bold;color: #e2231a;margin-top: 15px;">
+                                        ¥{{selectedComment.orderDetail.price}}
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="">
+                            <!--评论的标题-->
+                            <!--<div class="address_add" v-if="tab=='2_1'" style="margin: 0;">初次评价</div>-->
+                            <!--追评的标题-->
+                            <!--<div class="address_add" v-if="tab=='2_2'">追加评价</div>-->
+                            <!--评论各项-->
+                            <div class="address_pad" v-if="tab=='2_1'||tab=='2_2'">
+                                <table border="0" cellpadding="0" cellspacing="0" style="margin-top: 5px;">
+                                    <form method="post" name="theForm"></form>
+                                    <tbody>
+                                    <tr v-if="tab=='2_1'">
+                                        <td align="left" style="font-weight: bold;">
+                                            商品质量：
+                                        </td>
+                                    </tr>
+                                    <tr v-if="tab=='2_1'">
+                                        <td align="left">
+                                            <label class="radio-inline"><input v-model="commentClass" name="commentClass" type="radio" value="2" />好评 </label>
+                                            <label class="radio-inline"><input v-model="commentClass" name="commentClass" type="radio" value="1" />中评 </label>
+                                            <label class="radio-inline"><input v-model="commentClass" name="commentClass" type="radio" value="0" />差评 </label>
+                                        </td>
+                                    </tr>
+                                    <tr v-if="tab=='2_1'">
+                                        <td align="left" style="font-weight: bold;">
+                                            服务质量：
+                                        </td>
+                                    </tr>
+                                    <tr v-if="tab=='2_1'">
+                                        <td align="left">
+                                            <label class="radio-inline"><input v-model="serviceClass" name="serviceClass" type="radio" value="2" />好评 </label>
+                                            <label class="radio-inline"><input v-model="serviceClass" name="serviceClass" type="radio" value="1" />中评 </label>
+                                            <label class="radio-inline"><input v-model="serviceClass" name="serviceClass" type="radio" value="0" />差评 </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left">
+                                            <textarea v-model="commentContext" placeholder="写下你的评论吧~" maxlength="120" rows="5" cols="50" name="comment" style="line-height: 18px;padding: 8px;"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left">
+                                            <img id="commentImg" style="height: 80px;margin-bottom: 10px;" v-bind:src="img" v-show="imgShow">
+                                            <!--此处为图片上传-->
+                                            <input style="display: none;" type="file" id="commentInputFile" v-on:change="getFile($event),showImg($event)">
+                                            <input onclick="commentInputFile.click()" type="button" class="btn" style="color:#6c6c6c;background-color: #e0e0e0;font-size: 12px;padding: 4px 8px;border:1px solid #afafaf;" value="上传图片">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <input v-on:click="uploadCommentImg()" type="button" name="submit2" class="bnt_submit" value="发表">
+                                            <input v-on:click="tab='2'" type="button" name="submit" class="bnt_submit" value="取消" style="margin-left: 30px;">
+                                        </td>
+                                    </tr>
+                                    </tbody></table>
+                            </div>
+                        </td></tr></tbody></table>
                 </div>
                 <!--个人资料-->
 				<div class="clearfix" style="_height:1%;" v-if="tab==4" v-cloak>

@@ -23,11 +23,16 @@ th {
 	border-bottom: 4px solid #987E46;
 	padding-bottom: 20px;
 }
-    
+#tabline-bar2>h2:hover{
+    border-bottom: 4px solid #987E46;
+    padding-bottom: 20px;
+}
  #tabline-bar{
     	margin-bottom: 20px;
     }
-
+#tabline-bar2{
+    margin-bottom: 20px;
+}
  /*订单详情内容面板*/
  .order-detail-div{
      display:flex;

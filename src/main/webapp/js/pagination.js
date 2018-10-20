@@ -2072,7 +2072,7 @@ var page = new Vue({
     el: '#app',
     data: {
         userId:userId,//从session获取的用户id
-        all: 8, //总页数
+        all: 1, //总页数
         cur: 1,//当前页码
         tab:'1',//左边选项卡切换标志
         orderTab:-1,//订单状态选项卡
@@ -2086,6 +2086,15 @@ var page = new Vue({
         process_done:'',//订单流程：完成
         process_cancel:'',//订单流程：取消
         orderState:-1,//订单状态
+
+        comments:[],//评论列表
+        selectedComment:{},//选中的未评论商品
+        commentImgUrl:'',//用户上传的评论图片
+        commentTab:0,//评论状态（0，未评论，1，已评论，2，已追评）
+        commentClass:2,//商品质量
+        serviceClass:2,//服务质量
+        commentContext:'',//用户输入的评论
+
         user:{},//用户信息
         staticUser:{},//静态不可变用户信息
 
@@ -2110,14 +2119,23 @@ var page = new Vue({
         selectedAddress:{},//准备修改的收货地址
 
         file:'',//要上传的图片文件
-        img:'',//头像图片预览图
+        img:'',//图片预览图
         imgShow:true//是否显示预览图，默认显示
     },
 
     //监听每次数据的修改，并执行修改后的方法
     watch: {
         cur: function(){
-            this.getOrders();
+            if(this.tab==='2'){
+                if(this.commentTab ===0){
+                    this.getNotCommentGoods();
+                }
+                if(this.commentTab ===1){
+                    this.getNotAdditionGoods();
+                }
+            }
+            else
+                this.getOrders();
         },
 
         prov: function () {
@@ -2153,11 +2171,28 @@ var page = new Vue({
             }
         },
 
-        // 订单状态选项卡变化时，请求新数据
+        //订单状态选项卡变化时，请求新数据
         orderTab:function () {
             console.log(this.orderTab);
             this.cur=1;
             this.getOrders();
+        },
+
+        //评论状态选项卡改变时，请求新数据
+        commentTab:function () {
+            console.log(this.commentTab);
+            this.comments=[];
+            this.all=1;
+            this.cur=1;
+            if(this.commentTab ===0){
+                this.getNotCommentGoods();
+            }
+            if(this.commentTab ===1){
+                this.getNotAdditionGoods();
+            }
+            if(this.commentTab ===2){
+                this.getAdditionGoods();
+            }
         },
 
         orderId:function () {
@@ -2167,6 +2202,8 @@ var page = new Vue({
     //创建vue实例之后的事件
 	created: function (){
         console.log("vue:"+GetQueryString("tab"));
+        this.all=1;
+        this.cur=1;
         //判断用户是否已经登录
         if(this.userId!==null)
             this.getUserInfo();
@@ -2185,6 +2222,12 @@ var page = new Vue({
         }
         if(this.tab==='1'){
             this.getOrders();
+        }
+        if(this.tab==='2'){
+            if(this.commentTab===0)
+                this.getNotCommentGoods();
+            if(this.commentTab===1)
+                this.getNotAdditionGoods();
         }
         if(this.tab==='6'){
             this.getAddress();
@@ -2340,6 +2383,223 @@ var page = new Vue({
             });
         },
 
+        //获取未评价的商品
+        getNotCommentGoods:function () {
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/comment/getCommentByOrder",
+                dataType: "json",
+                data: {
+                    userId:that.userId,
+                    page:that.cur,
+                    size:5
+                },
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        console.log("评论查找成功");
+                        console.log(msg.data);
+                        that.comments=msg.data.rows;
+                        that.all=msg.data.pages;
+                    }
+                    else {
+                        console.log("评论查找失败");
+                        that.comments=[];
+                        that.all=1;
+                    }
+                },
+                error: function () {
+                    console.log("错误");
+                }
+            });
+        },
+
+        //获取已评价未追评的商品
+        getNotAdditionGoods:function () {
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/comment/addComList",
+                dataType: "json",
+                data: {
+                    userId:that.userId,
+                    page:that.cur,
+                    size:8
+                },
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        console.log("评论查找成功");
+                        console.log(msg.data);
+                        that.comments=msg.data.rows;
+                        that.all=msg.data.pages;
+                    }
+                    else {
+                        console.log("评论查找失败");
+                        that.comments=[];
+                        that.all=1;
+                    }
+                },
+                error: function () {
+                    console.log("错误");
+                }
+            });
+        },
+
+        //获取已追评的商品
+        getAdditionGoods:function () {
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/comment/getComment",
+                dataType: "json",
+                data: {
+                    userId:that.userId,
+                    page:that.cur,
+                    size:8
+                },
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        console.log("评论查找成功");
+                        console.log(msg.data);
+                        that.comments=msg.data.rows;
+                        that.all=msg.data.pages;
+                    }
+                    else {
+                        console.log("评论查找失败");
+                        that.comments=[];
+                        that.all=1;
+                    }
+                },
+                error: function () {
+                    console.log("错误");
+                }
+            });
+        },
+
+        //上传用户评论图片
+        uploadCommentImg:function () {
+            //阻止元素发生默认的行为
+            //event.preventDefault();
+            layer.load(2);
+            var formData = new FormData();
+            formData.append("file", this.file);
+            var that=this;
+            //如果接收到的文件为空，不上传图片，直接评论
+            if(that.file===''||that.file===undefined){
+                if(that.tab==='2_1')
+                    that.addComment();
+                else if(that.tab==='2_2')
+                    that.addAdditionComment();
+            }
+            else
+                $.ajax({
+                    type: "POST",
+                    url: "/files/qCloud/commentInfo",
+                    data: formData,
+                    contentType:false,// 不设置Content-Type请求头，因为formData自带请求格式
+                    processData:false,// 不处理发送的数据
+                    mimeType:"multipart/form-data",//文件后缀名
+                    dataType: "json",
+                    success: function (msg) {
+                        console.log(msg);
+                        if(msg.code===0){
+                            console.log("上传成功");
+                            console.log("图片地址："+msg.data);
+                            //将返回的图片地址赋值给本地
+                            console.log("图片："+msg.data.substring(61));
+                            that.commentImgUrl=msg.data;
+                            //上传图片、获取图片地址后，执行评论的方法
+                            if(that.tab==='2_1')
+                                that.addComment();
+                            else if(that.tab==='2_2')
+                                that.addAdditionComment();
+                        }
+                        else if(msg.code===1){
+                            layer.closeAll('loading');
+                            layer.msg('上传文件不能大于4M', {time: 2500});
+                        }
+                        else {
+                            layer.closeAll('loading');
+                            layer.msg('上传图片失败', {time: 2000});
+                        }
+                    },
+                    error: function () {
+                        layer.closeAll('loading');
+                        layer.msg('发生错误', {time: 2000});
+                    }
+                });
+        },
+
+        //初次评论
+        addComment:function () {
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/comment/addComment",
+                data: {
+                    goodsId:that.selectedComment.goodsNumber,//商品id
+                    orderId:that.selectedComment.id,//订单详情id
+                    userId: that.userId,//用户id
+                    goodsScore: that.commentClass,//商品质量评分
+                    serviceScore: that.serviceClass,//服务质量评分
+                    comment:that.commentContext,//评论内容
+                    commentImg:that.commentImgUrl,//评论图片
+                    formatAndStyle:that.selectedComment.formatAndStyle//规格
+                },
+                dataType: "json",
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    layer.closeAll('loading');
+                    if(msg.code===0){
+                        console.log("成功");
+                        layer.msg('发表成功', {time: 2000});
+                        window.location.href="/page/user/user.html?tab=2";
+                    }
+                    else {
+                        layer.msg('发表失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.closeAll('loading');
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
+        },
+
+        //追评
+        addAdditionComment:function () {
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/comment/updateAdditComment",
+                data: {
+                    id:that.selectedComment.id,//评论id
+                    additionalComment:that.commentContext,//评论
+                    additionnalCommentImg:that.commentImgUrl//评论图片
+                },
+                dataType: "json",
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    layer.closeAll('loading');
+                    if(msg.code===0){
+                        console.log("成功");
+                        layer.msg('发表成功', {time: 2000});
+                        window.location.href="/page/user/user.html?tab=2";
+                    }
+                    else {
+                        layer.msg('发表失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.closeAll('loading');
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
+        },
+
         //获取用户信息
         getUserInfo: function() {
             var that=this;
@@ -2432,7 +2692,7 @@ var page = new Vue({
             }
         },
 
-        //上传图片
+        //上传头像图片
         uploadImg:function () {
             //阻止元素发生默认的行为
             //event.preventDefault();
