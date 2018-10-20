@@ -64,6 +64,7 @@ public class BuyerOrderController {
         return mav;
     }
 
+
     //模拟付款
     @PutMapping("/buy")
     @ResponseBody
@@ -78,7 +79,23 @@ public class BuyerOrderController {
             return ResultVOUtil.success();
         }
         return ResultVOUtil.error("付款发生异常");
+    }
 
+
+    //取消订单
+    @PutMapping("/cancel")
+    @ResponseBody
+    public Result cancel(String orderId ,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserSessionDTO userSessionDTO = (UserSessionDTO) session.getAttribute("user");
+        System.out.println(userSessionDTO);
+        if(userSessionDTO==null){
+            return ResultVOUtil.error("请先登录");
+        }
+        if(orderService.cancel(orderId,userSessionDTO.getId())){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("取消订单发生异常");
     }
 
     @GetMapping("/from")

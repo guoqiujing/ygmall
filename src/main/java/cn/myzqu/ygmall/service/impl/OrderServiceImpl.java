@@ -94,8 +94,25 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Boolean buy(String orderId,String userId) {
-        //修改订单总表状态
         Byte status = OrderStatusEnum.DAIFAHUO.getCode().byteValue();
+        if(updateStatus(orderId,userId,status)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean cancel(String orderId, String userId) {
+        Byte status = OrderStatusEnum.CANCELED.getCode().byteValue();
+        if(updateStatus(orderId,userId,status)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean updateStatus(String orderId, String userId, Byte status) {
+        //修改订单总表状态
         Order order = new Order();
         order.setId(orderId);
         order.setStatus(status);

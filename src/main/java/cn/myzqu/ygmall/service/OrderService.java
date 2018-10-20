@@ -19,4 +19,6 @@ public interface OrderService {
     PageDTO selectOrderDetailByCustomerId(String customerId, Byte status,Integer pageIndex, Integer pageSize);
     PageDTO selectByCustomerId(String customerId, Byte status,Integer pageIndex, Integer pageSize);
     Boolean buy(String orderId,String userId);
+    Boolean cancel(String orderId,String userId);
+    Boolean updateStatus(String orderId,String userId,Byte status);
 }
