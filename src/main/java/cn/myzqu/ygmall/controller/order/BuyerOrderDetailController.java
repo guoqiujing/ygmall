@@ -1,4 +1,4 @@
-package cn.myzqu.ygmall.controller;
+package cn.myzqu.ygmall.controller.order;
 
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.pojo.OrderDetail;

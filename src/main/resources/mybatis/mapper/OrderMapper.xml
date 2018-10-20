@@ -92,6 +92,30 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
+  <!--最近一周的销售额（具体到每一天的销售额）-->
+  <select id="selectSaleroomForWeek" resultType="cn.myzqu.ygmall.dto.StatisticsForWeekDTO"  >
+select a.click_date,ifnull(b.sum,0) as sum
+from (
+    SELECT curdate() as click_date
+    union all
+    SELECT date_sub(curdate(), interval 1 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 2 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 3 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 4 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 5 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 6 day) as click_date
+) a left join (
+  select date(create_time) as datetime, sum(`order`.real_total_money) as sum
+  from `order` where `order`.`status` = 3
+  group by date(create_time)
+) b on a.click_date = b.datetime;
+  </select>
+
   <delete id="deleteById" parameterType="java.lang.String" >
     delete from `order`
     where id = #{id,jdbcType=VARCHAR}

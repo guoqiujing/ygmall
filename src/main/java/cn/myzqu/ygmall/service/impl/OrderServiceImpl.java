@@ -6,6 +6,7 @@ import cn.myzqu.ygmall.dao.OrderDetailMapper;
 import cn.myzqu.ygmall.dao.OrderMapper;
 import cn.myzqu.ygmall.dto.OrderDTO;
 import cn.myzqu.ygmall.dto.PageDTO;
+import cn.myzqu.ygmall.dto.StatisticsForWeekDTO;
 import cn.myzqu.ygmall.enums.OrderStatusEnum;
 import cn.myzqu.ygmall.pojo.*;
 import cn.myzqu.ygmall.service.OrderDetailService;
@@ -189,6 +190,11 @@ public class OrderServiceImpl implements OrderService {
         if(total<=0)
             return null;
         return new PageDTO(orders,total,pageSize,pageIndex);
+    }
+
+    @Override
+    public List<StatisticsForWeekDTO> selectSaleroomForWeek() {
+        return orderMapper.selectSaleroomForWeek();
     }
 
 

@@ -1,4 +1,4 @@
-package cn.myzqu.ygmall.controller;
+package cn.myzqu.ygmall.controller.order;
 
 import cn.myzqu.ygmall.dto.OrderDTO;
 import cn.myzqu.ygmall.dto.PageDTO;

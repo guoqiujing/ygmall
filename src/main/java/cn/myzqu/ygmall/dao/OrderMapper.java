@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.dao;
 
+import cn.myzqu.ygmall.dto.StatisticsForWeekDTO;
 import cn.myzqu.ygmall.pojo.Order;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,7 @@ public interface OrderMapper {
     List<Order> selectOrderDetailByCustomerIdAndStatus(@Param("customerId") String customerId, @Param("status") Byte status);
 
     List<Order> selectByCustomerId(@Param("customerId") String customerId, @Param("status") Byte status);
+
+    List<StatisticsForWeekDTO>  selectSaleroomForWeek();
+
 }

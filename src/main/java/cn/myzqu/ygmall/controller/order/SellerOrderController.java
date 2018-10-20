@@ -1,4 +1,4 @@
-package cn.myzqu.ygmall.controller;
+package cn.myzqu.ygmall.controller.order;
 
 /**
  * Created by 的川 on 2018/9/25.
