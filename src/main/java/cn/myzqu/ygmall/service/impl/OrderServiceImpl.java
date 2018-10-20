@@ -66,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
             orderDetails.add(orderDetail);
         }
         //订单状态:支付功能还没做，暂时先直接待收货
-        Byte status = OrderStatusEnum.DAIFAHUO.getCode().byteValue();
+        Byte status = OrderStatusEnum.OBLIGATION.getCode().byteValue();
         order.setStatus(status);
         order.setCarriage(new BigDecimal(0));
         order.setGoodsTotalMoney(new BigDecimal(goodsTotalMoney));
