@@ -175,9 +175,9 @@
                                 <td align="center" v-if="order.status==4">已取消</td>
 								<td align="center">
 										<a v-bind:href="'/page/user/user.html?tab=1_2&orderId='+order.id">查看详情</a>
-										<a href="#" v-if="order.status==0">&nbsp;&nbsp;付款</a>
-                                        <a href="#" v-if="order.status==2">&nbsp;&nbsp;确认收货</a>
-										<a href="#" v-if="order.status!=2&&order.status!=3&&order.status!=4">&nbsp;&nbsp;取消订单</a>
+										<a href="#" v-if="order.status==0" v-on:click="payMoney(order.id)">&nbsp;&nbsp;付款</a>
+                                        <a href="#" v-if="order.status==2" v-on:click="askReceive(order.id)">&nbsp;&nbsp;确认收货</a>
+										<a href="#" v-if="order.status!=2&&order.status!=3&&order.status!=4" v-on:click="askCancelOrder(order.id)">&nbsp;&nbsp;取消订单</a>
 								</td>
 							</tr>
 						</tbody>
@@ -214,9 +214,9 @@
                     <a href="/page/user/user.html?tab=1" style="font-size:14px;font-weight:bold;color:#717171;padding:4px;margin-bottom: 6px;" name="submit" v-if="tab=='1_2'"><code style="background-color: rgba(0,0,0,0);">&lt;　</code>返回订单列表</a>
                     <!--订单流程图-->
                     <div class="order-detail-div">
-                        <div class="order-detail-panel" style="width:250px;height: 160px;justify-content: flex-start;align-items: center;">
+                        <div class="order-detail-panel" style="width:260px;height: 160px;justify-content: flex-start;align-items: center;">
                             <div style="margin-bottom: 28px;">
-                                <span style="color: #787878;font-size: 14px;">订单号：{{selectedOrder.id}}</span>
+                                <span style="color: #787878;font-size: 11px;">订单号：{{selectedOrder.id}}</span>
                             </div>
                             <div>
 								<span style="font: 700 24px/34px 'Microsoft YaHei';color: #B4995D;" v-if="orderState==0">待付款</span>

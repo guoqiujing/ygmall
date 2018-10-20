@@ -2600,6 +2600,122 @@ var page = new Vue({
             });
         },
 
+        //付款
+        payMoney:function (orderId) {
+            console.log("付款"+orderId);
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/buyer/order/buy",
+                data: {
+                    orderId:orderId
+                },
+                dataType: "json",
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    layer.closeAll('loading');
+                    if(msg.code===0){
+                        console.log("成功");
+                        layer.msg('付款成功', {time: 2000});
+                        window.location.href="/page/user/user.html?tab=1";
+                    }
+                    else {
+                        layer.msg('付款失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.closeAll('loading');
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
+        },
+
+        //询问是否取消订单
+        askCancelOrder:function (orderId) {
+            var that=this;
+            console.log("要取消的订单id："+orderId);
+            layer.confirm('确认取消订单吗？', {
+                skin: 'demo-class',
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                that.cancelOrder(orderId);
+            }, function(){
+            });
+        },
+
+        //取消订单
+        cancelOrder:function (orderId) {
+            console.log("取消订单"+orderId);
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/buyer/order/cancel",
+                data: {
+                    orderId:orderId
+                },
+                dataType: "json",
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    layer.closeAll('loading');
+                    if(msg.code===0){
+                        console.log("成功");
+                        layer.msg('订单已取消', {time: 2000});
+                        window.location.href="/page/user/user.html?tab=1";
+                    }
+                    else {
+                        layer.msg('取消失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.closeAll('loading');
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
+        },
+
+        //询问确认收货
+        askReceive:function (orderId) {
+            var that=this;
+            console.log("要确认收货的订单id："+orderId);
+            layer.confirm('确认收货吗？', {
+                skin: 'demo-class',
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                that.receiveGoods(orderId);
+            }, function(){
+            });
+        },
+
+        //确认收货
+        receiveGoods:function (orderId) {
+            console.log("确认收货"+orderId);
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/buyer/order/receive",
+                data: {
+                    orderId:orderId
+                },
+                dataType: "json",
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    layer.closeAll('loading');
+                    if(msg.code===0){
+                        console.log("成功");
+                        layer.msg('已确认收货', {time: 2000});
+                        window.location.href="/page/user/user.html?tab=1";
+                    }
+                    else {
+                        layer.msg('操作失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.closeAll('loading');
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
+        },
+
         //获取用户信息
         getUserInfo: function() {
             var that=this;
