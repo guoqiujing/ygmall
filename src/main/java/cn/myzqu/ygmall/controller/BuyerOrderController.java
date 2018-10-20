@@ -65,7 +65,12 @@ public class BuyerOrderController {
     }
 
 
-    //模拟付款
+    /**
+     * 模拟付款
+     * @param orderId
+     * @param request
+     * @return
+     */
     @PutMapping("/buy")
     @ResponseBody
     public Result buy(String orderId ,HttpServletRequest request) {
@@ -82,7 +87,12 @@ public class BuyerOrderController {
     }
 
 
-    //取消订单
+    /**
+     * 取消订单
+     * @param orderId
+     * @param request
+     * @return
+     */
     @PutMapping("/cancel")
     @ResponseBody
     public Result cancel(String orderId ,HttpServletRequest request) {
@@ -98,6 +108,32 @@ public class BuyerOrderController {
         return ResultVOUtil.error("取消订单发生异常");
     }
 
+    /**
+     * 用户确认收货
+     * @param orderId
+     * @param request
+     * @return
+     */
+    @PutMapping("/receive")
+    @ResponseBody
+    public Result receive(String orderId ,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserSessionDTO userSessionDTO = (UserSessionDTO) session.getAttribute("user");
+        System.out.println(userSessionDTO);
+        if(userSessionDTO==null){
+            return ResultVOUtil.error("请先登录");
+        }
+        if(orderService.cancel(orderId,userSessionDTO.getId())){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("确定收货发生异常");
+    }
+
+    /**
+     * 获取下单信息
+     * @param request
+     * @return
+     */
     @GetMapping("/from")
     @ResponseBody
     public Result getOrderFrom(HttpServletRequest request) {
@@ -105,7 +141,12 @@ public class BuyerOrderController {
         return ResultVOUtil.success(session.getAttribute("orderSession"));
     }
 
-    //接收商品信息或者购物车信息并跳转到订单页面
+    /**
+     * 接收商品信息或者购物车信息并跳转到订单页面
+     * @param cart
+     * @param request
+     * @return
+     */
     @PostMapping("/to/order")
     public ModelAndView create(String  cart,HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -173,7 +214,15 @@ public class BuyerOrderController {
         return ResultVOUtil.error("该订单暂时无进度");
     }
 
-    //用户获取订单列表
+
+    /**
+     *  用户获取订单列表
+     * @param id
+     * @param status
+     * @param page
+     * @param size
+     * @return
+     */
     @GetMapping("/list/{id}")
     @ResponseBody
     public Result list(@PathVariable("id") String id,

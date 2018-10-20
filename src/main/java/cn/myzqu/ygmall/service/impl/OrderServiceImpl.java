@@ -96,6 +96,7 @@ public class OrderServiceImpl implements OrderService {
     public Boolean buy(String orderId,String userId) {
         Byte status = OrderStatusEnum.DAIFAHUO.getCode().byteValue();
         if(updateStatus(orderId,userId,status)){
+            //用户付款成功后，通知发货（1分钟后自动发货，每天早上8点检查是否需要发货)
             return true;
         }
         return false;
@@ -105,6 +106,25 @@ public class OrderServiceImpl implements OrderService {
     public Boolean cancel(String orderId, String userId) {
         Byte status = OrderStatusEnum.CANCELED.getCode().byteValue();
         if(updateStatus(orderId,userId,status)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean deliver(String orderId, String userId) {
+        Byte status = OrderStatusEnum.DAISHOUHUO.getCode().byteValue();
+        if(updateStatus(orderId,userId,status)){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean receive(String orderId, String userId) {
+        Byte status = OrderStatusEnum.DONE.getCode().byteValue();
+        if(updateStatus(orderId,userId,status)){
+            //客户确定收货后，如果用户一直不确认收货，15天内自动完成订单
             return true;
         }
         return false;
