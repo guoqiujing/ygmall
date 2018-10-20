@@ -71,7 +71,7 @@ public class BuyerOrderController {
      * @param request
      * @return
      */
-    @PutMapping("/buy")
+    @PostMapping("/buy")
     @ResponseBody
     public Result buy(String orderId ,HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -93,7 +93,7 @@ public class BuyerOrderController {
      * @param request
      * @return
      */
-    @PutMapping("/cancel")
+    @PostMapping("/cancel")
     @ResponseBody
     public Result cancel(String orderId ,HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -114,7 +114,7 @@ public class BuyerOrderController {
      * @param request
      * @return
      */
-    @PutMapping("/receive")
+    @PostMapping("/receive")
     @ResponseBody
     public Result receive(String orderId ,HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -123,7 +123,7 @@ public class BuyerOrderController {
         if(userSessionDTO==null){
             return ResultVOUtil.error("请先登录");
         }
-        if(orderService.cancel(orderId,userSessionDTO.getId())){
+        if(orderService.receive(orderId,userSessionDTO.getId())){
             return ResultVOUtil.success();
         }
         return ResultVOUtil.error("确定收货发生异常");
