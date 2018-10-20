@@ -62,6 +62,22 @@ public class BuyerOrderController {
         }
         ModelAndView mav = new ModelAndView("redirect:/page/user/user.html");
         return mav;
+    }
+
+    //模拟付款
+    @PutMapping("/buy")
+    @ResponseBody
+    public Result buy(String orderId ,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserSessionDTO userSessionDTO = (UserSessionDTO) session.getAttribute("user");
+        System.out.println(userSessionDTO);
+        if(userSessionDTO==null){
+            return ResultVOUtil.error("请先登录");
+        }
+        if(orderService.buy(orderId,userSessionDTO.getId())){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("付款发生异常");
 
     }
 

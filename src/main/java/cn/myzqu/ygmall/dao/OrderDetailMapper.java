@@ -16,4 +16,6 @@ public interface OrderDetailMapper {
 
     int updateById(OrderDetail record);
 
+    int updateStatusByOrderId(OrderDetail record);
+
 }

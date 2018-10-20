@@ -18,4 +18,5 @@ public interface OrderService {
     Order selectById(String id);
     PageDTO selectOrderDetailByCustomerId(String customerId, Byte status,Integer pageIndex, Integer pageSize);
     PageDTO selectByCustomerId(String customerId, Byte status,Integer pageIndex, Integer pageSize);
+    Boolean buy(String orderId,String userId);
 }

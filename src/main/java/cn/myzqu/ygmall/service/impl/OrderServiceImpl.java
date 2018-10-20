@@ -93,6 +93,31 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Boolean buy(String orderId,String userId) {
+        //修改订单总表状态
+        Byte status = OrderStatusEnum.DAIFAHUO.getCode().byteValue();
+        Order order = new Order();
+        order.setId(orderId);
+        order.setStatus(status);
+        if(orderMapper.updateById(order)>0){
+            //修改订单详情表
+            //根据订单总表id
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setOrderId(orderId);
+            orderDetail.setStatus(status);
+            orderDetailMapper.updateStatusByOrderId(orderDetail);
+        }
+        //增加订单变更记录
+        OrderAlter orderAlter= new OrderAlter();
+        orderAlter.setId(KeyUtil.genUniqueKey());
+        orderAlter.setEntryId(orderId);
+        orderAlter.setOperator(userId);
+        orderAlter.setState(status);
+        orderAlterMapper.insert(orderAlter);
+        return true;
+    }
+
+    @Override
     public Order selectById(String id) {
         return orderMapper.selectById(id);
     }
@@ -123,4 +148,6 @@ public class OrderServiceImpl implements OrderService {
             return null;
         return new PageDTO(orders,total,pageSize,pageIndex);
     }
+
+
 }

@@ -150,4 +150,14 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
+  <update id="updateStatusByOrderId" parameterType="cn.myzqu.ygmall.pojo.OrderDetail" >
+    update order_detail
+    <set >
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+    </set>
+    where orderId = #{order_id,jdbcType=VARCHAR}
+  </update>
+
 </mapper>
