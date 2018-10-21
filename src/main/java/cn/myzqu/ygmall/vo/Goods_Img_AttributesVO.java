@@ -15,6 +15,15 @@ import java.util.List;
 public class Goods_Img_AttributesVO extends Goods{
     private List<GoodsImg> goodsImgList;
     private CategoriesAttributeVO categoriesAttributeVO;//商品所属分类完整路径及其所含规格值
+    private String categoriesName;
+
+    public String getCategoriesName() {
+        return categoriesName;
+    }
+
+    public void setCategoriesName(String categoriesName) {
+        this.categoriesName = categoriesName;
+    }
 
     public List<GoodsImg> getGoodsImgList() {
         return goodsImgList;
@@ -31,6 +40,8 @@ public class Goods_Img_AttributesVO extends Goods{
     public void setCategoriesAttributeVO(CategoriesAttributeVO categoriesAttributeVO) {
         this.categoriesAttributeVO = categoriesAttributeVO;
     }
+
+
 
     @Override
     public String toString() {

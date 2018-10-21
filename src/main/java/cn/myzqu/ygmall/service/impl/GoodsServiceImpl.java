@@ -1,6 +1,7 @@
 package cn.myzqu.ygmall.service.impl;
 
 import cn.myzqu.ygmall.dao.AttributeMapper;
+import cn.myzqu.ygmall.dao.CategoriesMapper;
 import cn.myzqu.ygmall.dao.GoodsMapper;
 import cn.myzqu.ygmall.dao.SpuMapper;
 import cn.myzqu.ygmall.dto.GoodsDTO;
@@ -12,6 +13,7 @@ import cn.myzqu.ygmall.service.AttributeService;
 import cn.myzqu.ygmall.service.GoodsService;
 import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
+import cn.myzqu.ygmall.vo.CategoriesAttributeVO;
 import cn.myzqu.ygmall.vo.GoodsDetailVO;
 import cn.myzqu.ygmall.vo.Goods_Img_AttributesVO;
 import com.alibaba.fastjson.JSON;
@@ -49,7 +51,8 @@ public class GoodsServiceImpl implements GoodsService {
         List<Goods_Img_AttributesVO> goodsList=goodsMapper.getAll(map);
         for(int i=0;i<goodsList.size();i++){
             goodsList.get(i).setGoodsImgList(goodsList.get(i).getGoodsImgList());
-            goodsList.get(i).setCategoriesAttributeVO(attributeService.getCategoriesAttributeByCategoryId(goodsList.get(i).getCategoryId()));
+            goodsList.get(i).setCategoriesName(goodsList.get(i).getCategoriesName());
+//            goodsList.get(i).setCategoriesAttributeVO(attributeService.getCategoriesAttributeByCategoryId(goodsList.get(i).getCategoryId()));
         }
         int total = (int)page.getTotal();
         System.out.println("总记录数："+total);

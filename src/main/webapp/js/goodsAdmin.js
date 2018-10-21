@@ -50,7 +50,8 @@ $().ready(function (){
                 title: '规格字符串',
                 // visible: false
             }, {
-                field: 'categoriesAttributeVO.categoriesName',
+                field: 'categoriesName',
+                // field: 'categoriesAttributeVO.categoriesName',
                 title: '分类'
             }, {
                 field: 'name',

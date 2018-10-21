@@ -23,11 +23,18 @@
     </association>
   </resultMap>
 
+  <!--<resultMap id="Goods_Img_Attributes_Map" type="cn.myzqu.ygmall.vo.Goods_Img_AttributesVO" extends="BaseResultMap">-->
+    <!--<association property="goodsImgList" select="cn.myzqu.ygmall.dao.GoodsImgMapper.selectByGoodsId" column="id">-->
+    <!--</association>-->
+  <!--</resultMap>-->
+
   <resultMap id="Goods_Img_Attributes_Map" type="cn.myzqu.ygmall.vo.Goods_Img_AttributesVO" extends="BaseResultMap">
     <association property="goodsImgList" select="cn.myzqu.ygmall.dao.GoodsImgMapper.selectByGoodsId" column="id">
-                                                        <!--javaType="cn.myzqu.ygmall.pojo.GoodsImg"-->
+    </association>
+    <association property="categoriesName" select="cn.myzqu.ygmall.dao.CategoriesMapper.completeCategories" column="id">
     </association>
   </resultMap>
+
   <sql id="Base_Column_List" >
     id, SPU_id, name, inventory, category_id, status, cost, market_price, price, sale_price, 
     unit, sale_count, note, attributes
