@@ -40,7 +40,6 @@
     unit, sale_count, note, attributes
   </sql>
 
-
   <select id="getAll" resultMap="Goods_Img_Attributes_Map" parameterType="Map" >
     select
     <include refid="Base_Column_List" />
