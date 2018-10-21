@@ -29,4 +29,6 @@ public interface GoodsService {
      * @return
      */
     PageDTO searchGoods(String search, int pageSize, int pageIndex);
+
+    PageDTO getSimpleGoods(String GoodsIdString);
 }

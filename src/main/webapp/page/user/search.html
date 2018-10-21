@@ -1,0 +1,59 @@
+<!DOCTYPE html >
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>水粉颜料_颜料_美术生艺考用品专营电商-呐喊美术商城官方网站</title>
+    <meta content="" name="Description" />
+    <meta content="" name="Keywords" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link href="http://www.nahanms.com/themes/kf666/style.css" rel="stylesheet" type="text/css" />
+    <script src="../../js/jquery-1.8.3.min.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.js"></script>
+    <script src="../../layer/layer.js"></script>
+    <script src="../../js/vue.js"></script>
+</head>
+
+<body>
+<div id="configHead">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#configHead').load('head/head.html');
+        });
+    </script>
+</div>
+<div class="block">
+    <div class="blank"></div>
+    <div class="clearfix"></div>
+    <div class="categorybox clearfix" id="search1" v-cloak>
+        <div v-for="item in goodsList">
+            <div class="goodsItem">
+                <a v-bind:href="item.url" onclick="toDetail()" target="_blank" v-bind:title="item.name" >
+                    <img v-bind:src="item.img" v-bind:alt="item.goodsName"
+                          class="goodsimg" /></a>
+                <div class="orderinfo">
+                    <font class="shop_s">¥ {{item.price}}</font>
+                    <font class="market_s">¥ {{item.market}}</font>
+                    <p class="name" style="height: auto"><a href="http://www.nahanms.com/yanliao/1448.html"
+                                       target="_blank" v-bind:title="item.name">
+                        {{item.name}} </a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="block">
+        <div id="cat_history">
+            <div class="showshowbox">
+                <div class="pr-hd">
+                    <em></em>
+                    <span>最近浏览过商品</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="blank20 clearfix"></div>
+        <script src="../../js/search.js" ></script>
+</body>
+</html>

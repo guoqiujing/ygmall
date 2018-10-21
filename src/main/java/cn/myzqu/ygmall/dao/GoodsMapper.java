@@ -36,4 +36,11 @@ public interface GoodsMapper {
 
     List<GoodsDTO> searchGoods(String search);
 
+    /**
+     * 根据商品id串获取包含该串的所有商品信息
+     * @param goodsId 格式：123,145
+     * @return
+     */
+    List<GoodsDTO> getSimpleGoods(String goodsId);
+
 }

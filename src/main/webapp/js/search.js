@@ -7,6 +7,7 @@ var search = new Vue({
     el: '#search1',
     data: {
         goodsList:[],
+        search:'',
         all: 1, //总页数
         cur: 1//当前页码
     },
@@ -16,15 +17,28 @@ var search = new Vue({
     },
     //创建vue实例之后的事件
     created: function (){
+        var that = this;
+        //截取连接后面的参数
+        var url = decodeURI(location.search); //?id="123456"&Name="bicycle";
+        var object = {};
+        if(url.indexOf("?") != -1)//url中存在问号，也就说有参数。
+        {
+            var str = url.substr(1);  //得到?后面的字符串
+            var arr = str.split("&");  //将得到的参数分隔成数组[id="123456",Name="bicycle"];
+            for(var i = 0; i < arr.length; i ++){
+                object[arr[i].split("=")[0]]=arr[i].split("=")[1]
+            }
+            that.search = object.content;
+        }
         this.searchGoodsList();
     },
     //方法
     methods: {
         //获取下单列表
         searchGoodsList: function () {
-            var search = "11"
+            var that = this;
+            var search = that.search;
             console.log("test")
-            var that=this;
             $.ajax({
                 type: "GET",
                 url: "/search/"+ search,

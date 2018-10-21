@@ -22,6 +22,7 @@ public class GoodsDTO {
     private String price;
     //市场价
     private String market;
+    private String url;
 
 
 }

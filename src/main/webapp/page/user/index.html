@@ -47,9 +47,10 @@
 
 				<div class="divcenter">
 					<div class="input-group" style="max-width:400px;min-width:100px;">
-						<input placeholder="水粉颜料" type="text" class="form-control" style="border: 2px solid #987E46;">
+						<input placeholder="水粉颜料" type="text" id="search_value" class="form-control" style="border: 2px solid #987E46;">
 						<span class="input-group-btn">
-		                        <button class="btn btn-default" type="button" style="color: #fff;background-color: #987E46;border: 1px solid #987E46;">搜索</button>
+		                        <button class="btn btn-default" id="search_submit"
+										 type="button" style="color: #fff;background-color: #987E46;border: 1px solid #987E46;">搜索</button>
 		                    </span>
 					</div>
 				</div>
@@ -81,7 +82,6 @@
 						<a href="#" style="padding: 15px 30px ;">舞蹈生专区</a>
 					</li>
 				</ul>
-
 			</div>
 		</div>
 
@@ -237,6 +237,18 @@
 		<script src="../../js/index.js"></script>
         <!--用于用户验证-->
         <script src="../../js/public.js"></script>
+
+		<script type="text/javascript">
+            $(document).ready(function(){
+                $("#search_submit").click(function(){
+                    //获取搜索框的内容
+                    var search_value = $("#search_value").val();
+                    console.log(search_value)
+                    console.log("search....")
+                    location.href = "search.html?content="+search_value;
+                });
+            })
+		</script>
         <!------------------->
 	</body>
 

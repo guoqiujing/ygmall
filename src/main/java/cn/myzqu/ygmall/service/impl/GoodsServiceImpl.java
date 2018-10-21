@@ -187,4 +187,9 @@ public class GoodsServiceImpl implements GoodsService {
         return pageDTO;
     }
 
+    @Override
+    public PageDTO getSimpleGoods(String GoodsIdString) {
+        return null;
+    }
+
 }

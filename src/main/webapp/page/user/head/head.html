@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<!--<body style="background-image: url(/img/rgt_lg.png);overflow-x: hidden;">-->
+<div class="container-fluid head" style="border-bottom: 1px solid #DEDEDE; background-color: #F2F2F2;color: #484848;">
     <link rel="stylesheet" href="../../../css/vue-setting.css">
     <link rel="stylesheet" href="../../../css/bootstrap.css" />
     <link rel="stylesheet" href="../../../css/index.css" />
-</head>
-<body style="background-image: url(/img/rgt_lg.png);overflow-x: hidden;">
-<div class="container-fluid head" style="border-bottom: 1px solid #DEDEDE; background-color: #F2F2F2;color: #484848;">
+    <script src="../../../js/vue.js"></script>
+    <script src="../../../js/jquery-1.8.3.min.js"></script>
+    <script src="../../../js/jquery.min.js"></script>
+    <script src="../../../js/bootstrap.js"></script>
+    <script src="../../../layer/layer.js"></script>
+    <script src="../../../js/index.js"></script>
+    <!--用于用户验证-->
+    <script src="../../../js/public.js"></script>
     <div class="container">
         <!--id为top的div，用于显示登录当前用户-->
         <div id="top" class="row" style="font-size: 12px;padding:5px;">
@@ -35,7 +37,7 @@
                 <input placeholder="水粉颜料" type="text" id="search_value" class="form-control" style="border: 2px solid #987E46;">
                 <span class="input-group-btn">
                                 <button class="btn btn-default" id="search_submit"
-                                        onclick="search()" type="button" style="color: #fff;background-color: #987E46;border: 1px solid #987E46;">搜索</button>
+                                         type="button" style="color: #fff;background-color: #987E46;border: 1px solid #987E46;">搜索</button>
                             </span>
             </div>
         </div>
@@ -66,9 +68,13 @@
         </ul>
     </div>
 </div>
-<script src="../../../js/index.js"></script>
-<!--用于用户验证-->
-<script src="../../../js/public.js"></script>
-</body>
-
-</html>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#search_submit").click(function(){
+            //获取搜索框的内容
+            var search_value = $("#search_value").val();
+            console.log(search_value)
+            console.log("search....")
+        });
+    })
+</script>

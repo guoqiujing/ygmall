@@ -273,11 +273,20 @@
   <select id="searchGoods" resultType="cn.myzqu.ygmall.dto.GoodsDTO"
           parameterType="java.lang.String" >
       select goods.id , goods.SPU_id as spu, goods.name , goods.price
-      , goods_img.img_url as img , goods.market_price as market
+      , goods_img.img_url as img , goods.market_price as market ,concat('goodsdetail.jsp?id=',goods.id) as url
         from goods ,goods_img
         where goods.name like concat('%',#{search},'%')
         and goods.id = goods_img.goods_id
         and goods_img.img_order = 0
   </select>
 
+  <select id="getSimpleGoods" resultType="cn.myzqu.ygmall.dto.GoodsDTO"
+          parameterType="java.lang.String" >
+    select goods.id , goods.SPU_id as spu, goods.name , goods.price
+    , goods_img.img_url as img , goods.market_price as market
+    from goods ,goods_img
+    where goods.id in (goodsId)
+    and goods.id = goods_img.goods_id
+    and goods_img.img_order = 0
+  </select>
 </mapper>
