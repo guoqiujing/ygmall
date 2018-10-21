@@ -227,7 +227,7 @@ public class OrderServiceImpl implements OrderService {
         result.put("thisWeekProfit",thisWeekProfit.toString());
         //最近一周总利润率
         Double thisWeekProfitRate = 0.0;
-        if(thisWeekProfitRate > 0){
+        if(thisWeekPrice > 0){
             thisWeekProfitRate = thisWeekProfit / thisWeekPrice * 100;
         }
         result.put("thisWeekProfitRate",thisWeekProfitRate + "%");
