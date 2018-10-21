@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../../css/vue-setting.css">
+    <link rel="stylesheet" href="../../../css/bootstrap.css" />
+    <link rel="stylesheet" href="../../../css/index.css" />
+</head>
+<body style="background-image: url(/img/rgt_lg.png);overflow-x: hidden;">
+<div class="container-fluid head" style="border-bottom: 1px solid #DEDEDE; background-color: #F2F2F2;color: #484848;">
+    <div class="container">
+        <!--id为top的div，用于显示登录当前用户-->
+        <div id="top" class="row" style="font-size: 12px;padding:5px;">
+            <div class="col-md-2">欢迎来到艺格艺术生用品商城</div>
+            <div class="col-md-2" v-if="userId!=null"><a href="/page/user/user.html?tab=4" v-cloak>用户{{user.telephone}}</a></div>
+            <div class="col-md-1" v-if="userId!=null"><a href="#" v-on:click="logout()" v-cloak>退出</a></div>
+            <div class="col-md-1" v-if="userId==null"><a href="/page/user/login.html" v-cloak>请登录</a></div>
+            <div class="col-md-1" v-if="userId==null"><a href="/page/user/register.html" v-cloak>免费注册</a></div>
+            <div class="col-md-1" style="float: right;"><a href="/page/user/user.html">我的艺格</a></div>
+            <div class="col-md-1" style="float: right;">我的收藏</div>
+            <div class="col-md-1" style="float: right;">订单查询</div>
+        </div>
+        <!-------------------------------------------->
+    </div>
+</div>
+<div class="head" style="margin: 20px 0 20px 0;">
+    <div class="head-center" style="justify-content: space-between;">
+        <div style="margin-right: 0;">
+            <a href="index.html"><img src="/img/yigeshangchenglogo.png"></a>
+        </div>
+        <div class="divcenter">
+            <div class="input-group" style="max-width:400px;min-width:100px;">
+                <input placeholder="水粉颜料" type="text" id="search_value" class="form-control" style="border: 2px solid #987E46;">
+                <span class="input-group-btn">
+                                <button class="btn btn-default" id="search_submit"
+                                        onclick="search()" type="button" style="color: #fff;background-color: #987E46;border: 1px solid #987E46;">搜索</button>
+                            </span>
+            </div>
+        </div>
+        <a href="#" class="divcenter" style="font-size:15px;color: #666;border: 1px solid #E6E6E6;width: 132px;height: 38px;background-color: #F2F2F2;">
+            <img src="/img/carts.png" style="margin-right: 10px;" /> 购物车
+        </a>
+    </div>
+</div>
+<div class="head" style="background-color: #181818;">
+    <div class="head-center" style="padding: 0;background-color:#181818 ;height: auto;">
+
+        <ul class="nav navbar-nav">
+            <li class="active" style="background-color: #484848;">
+                <a href="#" style="padding: 15px 50px 15px 50px;">热门商品分类</a>
+            </li>
+            <li>
+                <a href="index.html" style="padding: 15px 30px ;">首页</a>
+            </li>
+            <li>
+                <a href="#" style="padding: 15px 30px ;">美术生专区</a>
+            </li>
+            <li>
+                <a href="#" style="padding: 15px 30px ;">音乐生专区</a>
+            </li>
+            <li>
+                <a href="#" style="padding: 15px 30px ;">舞蹈生专区</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script src="../../../js/index.js"></script>
+<!--用于用户验证-->
+<script src="../../../js/public.js"></script>
+</body>
+
+</html>
