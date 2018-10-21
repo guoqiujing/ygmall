@@ -1,4 +1,4 @@
-<%--<!DOCTYPE html>--%>
+<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -11,10 +11,7 @@
     <link rel="stylesheet" href="../../css/page-head.css">
     <link rel="stylesheet" href="../../css/pagination.css">
     <link rel="stylesheet" href="../../css/goodsdetail.css"/>
-    <script type="text/javascript" src="../../js/vue.js"></script>
-    <script src="../../js/jquery.min.js"></script>
-    <script src="../../js/bootstrap.js"></script>
-    <script src="../../js/user.js"></script>
+
     <%--<script src="../../js/goodsdetail.js"></script>--%>
     <title>商品详情</title>
     <style>
@@ -320,7 +317,7 @@
                     <ul>
                         <li class="review-items">
                             <div class="user_information">
-                                <img class="avatar" src="../../img/user_img.gif">
+                                <img class="avatar" style="height: 48px;width: 48px;margin-bottom: 10px;" v-bind:src="comment.userImg">
                                 <br>
                                 <font class="f4">{{comment.userName}}</font>
                             </div>
@@ -328,6 +325,7 @@
                                 <div class="review-item">
                                     <div class="comment">{{comment.comment}}</div>
                                     <div class="clearfix"></div>
+                                    <div v-if="comment.commentImg!=''"><span v-on:click="showImg(comment.commentImg)"><img style='width: 50px;margin: 3px;border: solid 1px #c8c8c8;' v-bind:src="comment.commentImg"></span></div>
                                     <div class="time">
                                         <div class="time-info">
                                             <span>{{comment.createTime}}</span>
@@ -356,6 +354,7 @@
                                             <span class="bracketed">[买家追评]</span>
                                             <span>{{comment.additionalComment}}</span>
                                         </div>
+                                        <div v-if="comment.additionalCommentImg!=''"><span v-on:click="showImg(comment.additionalCommentImg)"><img style='width: 50px;margin: 3px;border: solid 1px #c8c8c8;' v-bind:src="comment.additionalCommentImg"></span></div>
                                         <div class="time">
                                             <div class="time-info">
                                                 <span>{{comment.additionalCommentTime}}</span>
@@ -482,11 +481,17 @@
     </div>
 </div>
 <div class="clear"></div>
+<script src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/vue.js"></script>
+<script src="../../js/bootstrap.js"></script>
+<script src="assets/scripts/klorofil-common.js"></script>
+
 <script src="../../js/goodsdetailVUE.js"></script>
+<script src="../../js/user.js"></script>
+<script type="text/javascript" src="../../layer/layer.js"></script>
 <script>
     function ExchangeClass(t) {
         tabindex = $(t).index();
-        console.log("垃圾网页");
         $(t).removeClass("h2bg");
         $(t).siblings("").addClass("h2bg");
     }

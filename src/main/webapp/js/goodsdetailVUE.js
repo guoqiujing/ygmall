@@ -496,6 +496,7 @@ var page = new Vue({
                         console.log("评论查找成功");
                         console.log(msg.data.rows);
                         that.comments = msg.data.rows;
+                        console.log(that.img);
                         that.all = msg.data.pages;
                     }
                     else {
@@ -534,6 +535,58 @@ var page = new Vue({
 
         pageClick: function () {
             //console.log('现在在'+this.cur+'页');
+        },
+        showImg:function (url) {
+            console.log(url);
+            var img = "<img src='" + url + "' />";
+            img.src = url;
+            var setting = {
+                type: 1,
+                shadeClose: true,
+                scrollbar: false,//屏蔽浏览器滚动条
+                skin: 'layui-layer-nobg', //没有背景色
+                title: false, //不显示标题
+                content: img //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+            }
+            var windowH = $(window).height();
+            var windowW = $(window).width();
+            console.log(windowH);
+            console.log(windowW);
+            this.getImageWidth(url, function (w, h) {
+                // 调整图片大小
+                console.log(w);
+                console.log(h);
+                if (w > windowW || h > windowH) {
+                    if (w > windowW && h > windowH) {
+                        setting.area = [windowW + "px", windowH + "px"];
+                    } else if (w > windowW) {
+                        setting.area = [windowW + 'px', 'auto'];
+                    } else {
+                        setting.area = ['auto', window.innerHeight + 'px'];
+                        console.log(setting.area+"#");
+                    }
+                }
+                else{
+                    setting.area = [img.width + 'px', img.height + 'px'];
+                    console.log(img.width+"*");
+                }
+                console.log(img);
+                console.log(setting);
+                layer.open(setting);
+            });
+        },
+        getImageWidth:function (url,callback) {
+            var img = new Image();
+            img.src = url;
+            // 如果图片被缓存，则直接返回缓存数据
+            if(img.complete){
+                callback(img.width, img.height);
+            }else{
+                // 完全加载完毕的事件
+                img.onload = function(){
+                    callback(img.width, img.height);
+                }
+            }
         }
     },
     //计算属性，当对象的某个值改变的时候，同时会触发实时计算
