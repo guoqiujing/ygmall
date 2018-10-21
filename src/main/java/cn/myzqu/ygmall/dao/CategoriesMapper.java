@@ -32,4 +32,6 @@ public interface CategoriesMapper {
     public Integer deleteCategories(Integer id);
 
     public Integer insertCategories(Categories categories);
+
+    String completeCategories(String goodsId);
 }
