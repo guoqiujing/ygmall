@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 
 <head>
 	<title>分类管理-艺格管理系统</title>
@@ -20,7 +20,9 @@
 	<!-- ICONS -->
 	<link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
 	<link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+	<script type="text/javascript" src="../../js/vue.js"></script>
 	<script src="../../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../../js/userSession.js"></script>
 	<script src="../../js/bootstrap.js"></script>
 	<script src="../../js/bootstrap-table.js"></script>
 	<script src="../../js/bootstrap-table-zh-CN.js"></script>
@@ -95,13 +97,11 @@
 							</ul>
 						</li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="assets/img/user.png" class="img-circle" alt="Avatar"> <span>Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
-							<ul class="dropdown-menu">
-								<li><a href="#"><i class="lnr lnr-user"></i> <span>My Profile</span></a></li>
-								<li><a href="#"><i class="lnr lnr-envelope"></i> <span>Message</span></a></li>
-								<li><a href="#"><i class="lnr lnr-cog"></i> <span>Settings</span></a></li>
-								<li><a href="#"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
-							</ul>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img v-bind:src="user.icon" class="img-circle" alt="Avatar"> <span>管理员{{user.telephone}}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                            <ul class="dropdown-menu">
+                                <!--<li><a href="#"><i class="lnr lnr-user"></i> <span>我的信息</span></a></li>-->
+                                <li><a href="#" v-on:click="logout()"><i class="lnr lnr-exit"></i> <span>注销</span></a></li>
+                            </ul>
 						</li>
 						<!-- <li>
 							<a class="update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
@@ -117,6 +117,7 @@
 				<nav>
 					<ul class="nav">
 						<li><a href="dataAnalysis.html" class=""><i class="lnr lnr-home"></i> <span>数据分析</span></a></li>
+						<li><a href="userAdmin.html" class=""><i class="lnr lnr-users"></i> <span>用户信息管理</span></a></li>
 						<li><a href="goodsAdmin.html" class=""><i class="lnr lnr-code"></i> <span>商品信息管理</span></a></li>
 						<li><a href="spuAdmin.html" class=""><i class="lnr lnr-chart-bars"></i> <span>货品信息管理</span></a></li>
 						<li><a href="brandAdmin.html" class=""><i class="lnr lnr-cog"></i> <span>品牌管理</span></a></li>
@@ -140,7 +141,6 @@
 								</ul>
 							</div>
 						</li>
-						<li><a href="deliverGoods.html" class=""><i class="lnr lnr-dice"></i> <span>商品发货</span></a></li>
 						<li><a href="commentAdmin.html" class="active"><i class="lnr lnr-pencil"></i> <span>评价管理</span></a>
 						</li>
 						<li><a href="auditAdmin.html" class=""><i class="lnr lnr-text-format"></i> <span>审核管理</span></a></li>
@@ -219,6 +219,7 @@
 		<!-- END MAIN -->
 		<div class="clearfix"></div>
 	</div>
+    <script type="text/javascript" src="../../js/adminPublic.js"></script>
 	<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 	<script src="assets/scripts/klorofil-common.js"></script>
 

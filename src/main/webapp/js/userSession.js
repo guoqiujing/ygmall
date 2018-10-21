@@ -18,5 +18,22 @@ jQuery.myPlugin={
             }
         });
         return userId;
+    },
+
+    //获取用户类型
+    getUserType:function () {
+        var userType = null;
+        $.ajax({
+            url: '/session/user',
+            type: 'get',
+            contentType: "application/json",
+            async: false,
+            success: function(res) {
+                if(res.code == '0'){
+                    userType = res.data.type;
+                }
+            }
+        });
+        return userType;
     }
 };
