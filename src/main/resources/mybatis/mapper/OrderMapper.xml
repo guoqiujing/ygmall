@@ -116,6 +116,32 @@ from (
 ) b on a.click_date = b.datetime;
   </select>
 
+  <!--&lt;是xml的小于号-->
+  <select id="selectStatistics" resultType="cn.myzqu.ygmall.dto.StatisticsDTO"
+          parameterType="java.lang.Integer" >
+    select count(o.id) as vol, sum(order_detail.count) as volume
+    , sum(o.real_total_money) as saleroom
+    from `order` o , order_detail
+    where o.id = order_detail.order_id
+    <if test="status!=null">
+      and o.status = #{status,jdbcType=TINYINT}
+    </if>
+    and DATEDIFF(NOW(),o.create_time) &lt; #{period}
+  </select>
+
+  <!--统计和利润相关的东西-->
+  <select id="selectGoodsStatistics" resultType="java.util.Map"
+          parameterType="java.lang.Integer" >
+    select sum(goods.cost * order_detail.count) as total_cost,
+    sum(goods.price * order_detail.count) as total_price
+    from goods , order_detail
+    where order_detail.`status` = 3
+    and order_detail.goods_number = goods.id
+    and DATEDIFF(NOW(),order_detail.create_time) &lt; #{period}
+  </select>
+
+
+
   <delete id="deleteById" parameterType="java.lang.String" >
     delete from `order`
     where id = #{id,jdbcType=VARCHAR}

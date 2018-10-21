@@ -38,4 +38,9 @@ public class OrderStatisticsController {
         }
         return ResultVOUtil.error("请求错误");
     }
+
+    @GetMapping("/sale")
+    public Result select(){
+        return ResultVOUtil.success(orderService.statisticalOrder());
+    }
 }

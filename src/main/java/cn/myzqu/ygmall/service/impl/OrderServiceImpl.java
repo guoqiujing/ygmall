@@ -1,11 +1,11 @@
 package cn.myzqu.ygmall.service.impl;
 
-import cn.myzqu.ygmall.controller.CustomerAddressController;
 import cn.myzqu.ygmall.dao.OrderAlterMapper;
 import cn.myzqu.ygmall.dao.OrderDetailMapper;
 import cn.myzqu.ygmall.dao.OrderMapper;
 import cn.myzqu.ygmall.dto.OrderDTO;
 import cn.myzqu.ygmall.dto.PageDTO;
+import cn.myzqu.ygmall.dto.StatisticsDTO;
 import cn.myzqu.ygmall.dto.StatisticsForWeekDTO;
 import cn.myzqu.ygmall.enums.OrderStatusEnum;
 import cn.myzqu.ygmall.pojo.*;
@@ -13,17 +13,17 @@ import cn.myzqu.ygmall.service.OrderDetailService;
 import cn.myzqu.ygmall.service.OrderService;
 import cn.myzqu.ygmall.task.OrderTask;
 import cn.myzqu.ygmall.utils.KeyUtil;
-import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 的川 on 2018/9/21.
@@ -34,9 +34,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderMapper orderMapper;
-
-    @Autowired
-    private OrderDetailService orderDetailService;
 
     @Autowired
     private OrderDetailMapper orderDetailMapper;
@@ -166,18 +163,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    @Override
-    public PageDTO selectOrderDetailByCustomerId(String customerId, Byte status, Integer pageIndex, Integer pageSize) {
-        //分页插件
-        Page<Order> page = PageHelper.startPage(pageIndex,pageSize);
-        List<Order> orders = orderMapper.selectOrderDetailByCustomerIdAndStatus(customerId,status);
-        //获取总记录数
-        int total = (int)page.getTotal();
-        System.out.println("总记录数："+total);
-        if(total<=0)
-            return null;
-        return new PageDTO(orders,total,pageSize,pageIndex);
-    }
+//    @Override
+//    public PageDTO selectOrderDetailByCustomerId(String customerId, Byte status, Integer pageIndex, Integer pageSize) {
+//        //分页插件
+//        Page<Order> page = PageHelper.startPage(pageIndex,pageSize);
+//        List<Order> orders = orderMapper.selectOrderDetailByCustomerIdAndStatus(customerId,status);
+//        //获取总记录数
+//        int total = (int)page.getTotal();
+//        System.out.println("总记录数："+total);
+//        if(total<=0)
+//            return null;
+//        return new PageDTO(orders,total,pageSize,pageIndex);
+//    }
 
     @Override
     public PageDTO selectByCustomerId(String customerId, Byte status, Integer pageIndex, Integer pageSize) {
@@ -197,5 +194,60 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.selectSaleroomForWeek();
     }
 
+    @Override
+    public Map<String,String> statisticalOrder() {
+        Map<String,String> result = new HashMap();
+        StatisticsDTO statisticsDTO =
+                orderMapper.selectStatistics(7,OrderStatusEnum.DONE.getCode().byteValue());
+        //最近一周的成交量（订单状态为完成的订单数量）
+        result.put("vol",statisticsDTO.getVol().toString());
+        //最近一周的销售量（订单状态为完成的订单所购买的商品总数）
+        result.put("volume",statisticsDTO.getVolume().toString());
+        //最近一周的销售额（订单状态为完成的订单里的商品金额的总数）
+        result.put("saleroom",statisticsDTO.getSaleroom().toString());
+        StatisticsDTO statisticsDTO1 =
+                orderMapper.selectStatistics(7,null);
+        //最近一周的订单数
+        result.put("thisWeekOrderNum",statisticsDTO1.getVol().toString());
+        StatisticsDTO statisticsDTO2 =
+                orderMapper.selectStatistics(14,null);
+        //上一周的订单数
+        Integer lastWeekOrderNum = statisticsDTO2.getVol() - statisticsDTO1.getVol();
+        result.put("lastWeekOrderNum",lastWeekOrderNum.toString());
+        //计算利润相关
+        Map thisWeekMap = orderMapper.selectGoodsStatistics(7);
+        Map lastWeekMap = orderMapper.selectGoodsStatistics(14);
+        //最近一周总成本
+        Double thisWeekCost = ((BigDecimal)thisWeekMap.get("total_cost")).doubleValue();
+        //最近一周总销售
+        Double thisWeekPrice = ((BigDecimal)thisWeekMap.get("total_price")).doubleValue();
+        result.put("thisWeekPrice",thisWeekPrice.toString());
+        //最近一周总利润
+        Double thisWeekProfit = thisWeekPrice - thisWeekCost;
+        result.put("thisWeekProfit",thisWeekProfit.toString());
+        //最近一周总利润率
+        Double thisWeekProfitRate = 0.0;
+        if(thisWeekProfitRate > 0){
+            thisWeekProfitRate = thisWeekProfit / thisWeekPrice * 100;
+        }
+        result.put("thisWeekProfitRate",thisWeekProfitRate + "%");
+        //上一周总成本
+        Double lastWeekCost =
+                ((BigDecimal)lastWeekMap.get("total_cost")).doubleValue() - thisWeekCost;
+        //上一周总销售
+        Double lastWeekPrice =
+                ((BigDecimal)lastWeekMap.get("total_price")).doubleValue() - thisWeekPrice;
+        result.put("lastWeekPrice",lastWeekPrice.toString());
+        //上一周总利润
+        Double lastWeekProfit = lastWeekPrice - lastWeekCost;
+        result.put("lastWeekProfit",lastWeekProfit.toString());
+        //上一周总利润率
+        Double lastWeekProfitRate = 0.0;
+        if(lastWeekPrice>0){
+            lastWeekProfitRate = lastWeekProfit / lastWeekPrice * 100;
+        }
+        result.put("lastWeekProfitRate",lastWeekProfitRate + "%");
+        return result;
+    }
 
 }
