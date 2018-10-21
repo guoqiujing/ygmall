@@ -113,7 +113,7 @@ from (
   select date(create_time) as datetime, sum(`order`.real_total_money) as sum
   from `order` where `order`.`status` = 3
   group by date(create_time)
-) b on a.click_date = b.datetime;
+) b on a.click_date = b.datetime order by click_date;
   </select>
 
   <!--&lt;是xml的小于号-->
