@@ -13,6 +13,9 @@ public interface AccountService {
 
     Customer addCustomer(String telephone, String email, String password);
 
+    Customer addCustomer(String telephone, String email,
+                                String password,Byte sex,String niceName);
+
     UserSessionDTO login(String code, String password);
 
     int updatePassword(String id, String oldPwd, String newPwd);

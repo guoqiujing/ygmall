@@ -47,7 +47,6 @@ public class AccountServiceImpl implements AccountService{
 
     @Override
     public Customer addCustomer(String telephone, String email, String password) {
-
         if(StringUtils.isEmpty(telephone)||StringUtils.isEmpty(email)){
             throw new CustomException(ResultEnum.LOGIN_FAIL1);
         }
@@ -73,6 +72,44 @@ public class AccountServiceImpl implements AccountService{
             Byte sex=-1;
             String icon="https://ygmall-user-1255574204.cos.ap-guangzhou.myqcloud.com/a1bb4de56d414dca8d9ec7212f29961e.jpg";
             Customer customer = new Customer(id,telephone,email,sex,icon);
+            if(customerMapper.insertSelective(customer)>0){
+                log.info("新增顾客信息成功：{}",customer);
+                return customer;
+            }
+            return null;
+        }
+        return null;
+    }
+
+    @Override
+    public Customer addCustomer(String telephone, String email,
+                                String password,Byte sex,String niceName) {
+
+        if(StringUtils.isEmpty(telephone)||StringUtils.isEmpty(email)){
+            throw new CustomException(ResultEnum.LOGIN_FAIL1);
+        }
+        //检查手机号码是否已经存在
+        if(customerMapper.selectByTelephone(telephone)!=null){
+            throw new CustomException(1,"该手机号码已经注册");
+        }
+        //检查邮箱是否已经存在
+        if(customerMapper.selectByEmail(email)!=null){
+            throw new CustomException(1,"该邮箱已经注册");
+        }
+        //生成唯一id
+        String id = KeyUtil.genUniqueKey();
+        //加密密码
+        //生成盐
+        String salt = KeyUtil.getSalt();
+        String encryptPassword = MD5Utils.encrypt(password,salt);
+        //封装Account
+        Account account = new Account(id,encryptPassword,salt);
+        if(accountMapper.insertSelective(account)>0){
+            log.info("新增账号成功：{}",account);
+            //封装顾客信息
+            String icon="https://ygmall-user-1255574204.cos.ap-guangzhou.myqcloud.com/a1bb4de56d414dca8d9ec7212f29961e.jpg";
+            Customer customer = new Customer(id,telephone,email,sex,icon);
+            customer.setNickName(niceName);
             if(customerMapper.insertSelective(customer)>0){
                 log.info("新增顾客信息成功：{}",customer);
                 return customer;
