@@ -14,10 +14,6 @@ var page = new Vue({
         replyConFlag: false,//回复标志
         conFlag: false,//回复追评标志
     },
-    //创建vue实例之后的事件
-    created: function () {
-    },
-    watch: {},
     methods: {
         //弹出模态框进行的操作
         select: function () {
@@ -44,6 +40,7 @@ var page = new Vue({
                         console.log("成功");
                         console.log(msg.data);
                         that.comment = msg.data;
+                        that.addFlag = false;
                         that.judgeadd();
                     }
                     else {
@@ -81,12 +78,15 @@ var page = new Vue({
                 success: function (msg) {
                     console.log(msg)
                     if (msg.code == 0) {
-                        console.log(that.replyConFlag);
+                        /*console.log(that.replyConFlag);*/
                         console.log(msg.data);
                         that.reply = msg.data;
+                        that.replyConFlag=false;
+                        that.conFlag=false;
                         that.judgereply();
                     }
                     else {//商家没有进行回复
+                        console.log("没有找到该评论的回复");
                         that.replyConFlag=false;
                         that.conFlag=false;
                     }
@@ -106,6 +106,7 @@ var page = new Vue({
             if (that.reply.content != null) {
                 that.conFlag = true;
             }
+            console.log(that.replyConFlag);
         },
         //点击模态框中的回复
         replyCon: function () {
@@ -259,6 +260,58 @@ var page = new Vue({
                     alert("更新状态错误");
                 }
             });
+        },
+        showImg:function (url) {
+            console.log(url);
+            var img = "<img src='" + url + "' />";
+            img.src = url;
+            var setting = {
+                type: 1,
+                shadeClose: true,
+                scrollbar: false,//屏蔽浏览器滚动条
+                skin: 'layui-layer-nobg', //没有背景色
+                title: false, //不显示标题
+                content: img //捕获的元素，注意：最好该指定的元素要存放在body最外层，否则可能被其它的相对元素所影响
+            }
+            var windowH = $(window).height();
+            var windowW = $(window).width();
+            console.log(windowH);
+            console.log(windowW);
+            this.getImageWidth(url, function (w, h) {
+                // 调整图片大小
+                console.log(w);
+                console.log(h);
+                if (w > windowW || h > windowH) {
+                    if (w > windowW && h > windowH) {
+                        setting.area = [windowW + "px", windowH + "px"];
+                    } else if (w > windowW) {
+                        setting.area = [windowW + 'px', 'auto'];
+                    } else {
+                        setting.area = ['auto', window.innerHeight + 'px'];
+                        console.log(setting.area+"#");
+                    }
+                }
+                else{
+                    setting.area = [img.width + 'px', img.height + 'px'];
+                    console.log(img.width+"*");
+                }
+                console.log(img);
+                console.log(setting);
+                layer.open(setting);
+            });
+        },
+        getImageWidth:function (url,callback) {
+            var img = new Image();
+            img.src = url;
+            // 如果图片被缓存，则直接返回缓存数据
+            if(img.complete){
+                callback(img.width, img.height);
+            }else{
+                // 完全加载完毕的事件
+                img.onload = function(){
+                    callback(img.width, img.height);
+                }
+            }
         }
     },
 })

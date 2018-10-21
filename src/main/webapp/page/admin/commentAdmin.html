@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- VENDOR CSS -->
-    <link rel="stylesheet" href="../../css/bootstrap-table.css" >
+    <link rel="stylesheet" href="../../css/bootstrap-table.css">
     <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/vendor/linearicons/style.css">
@@ -190,10 +190,20 @@
                             <p>买家评论:{{comment.comment}}</p>
                         </div>
                         <div class="form-group">
+                            <div v-if="comment.commentImg!=''">
+                                <span v-on:click="showImg(comment.commentImg)"><img style='width: 50px;margin: 3px;border: solid 1px #c8c8c8;' v-bind:src="comment.commentImg"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <p v-show="replyConFlag">卖家回复:{{reply.replyContent}}</p>
                         </div>
                         <div class="form-group">
                             <p v-show="addFlag">买家追评:{{comment.additionalComment}}</p>
+                        </div>
+                        <div class="form-group">
+                            <div v-if="comment.additionalCommentImg!=null&&comment.additionalCommentImg!=''">
+                                <span v-on:click="showImg(comment.additionalCommentImg)"><img style='width: 50px;margin: 3px;border: solid 1px #c8c8c8;' v-bind:src="comment.additionalCommentImg"></span>
+                            </div>
                         </div>
                         <div class="form-group">
                             <p v-show="conFlag">卖家回复:{{reply.content}}</p>
@@ -258,7 +268,7 @@
                 field: 'id',
                 sortable: true,
                 title: '评论编号',
-                width:60
+                width: 60
             }, {
                 field: 'goodsScore',
                 sortable: true,
