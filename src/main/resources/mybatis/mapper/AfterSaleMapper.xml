@@ -18,7 +18,7 @@
             <result column="serial" property="serial" jdbcType="VARCHAR" />
             <result column="step" property="step" jdbcType="INTEGER" />
             <result column="operator" property="operator" jdbcType="VARCHAR" />
-            <result column="time" property="createTime" jdbcType="TIMESTAMP" />
+            <result column="ctime" property="createTime" jdbcType="TIMESTAMP" />
         </association>
     </resultMap>
     <sql id="Base_Column_List">
@@ -49,7 +49,7 @@
 
     <!--根据用户ID查询售后列表-->
     <select id="selectAfterSaleByUserId" parameterType="java.lang.String">
-        select DISTINCT a.*,r.id refund_id,r.serial,r.step,r.operator,r.time
+        select DISTINCT a.*,r.id refund_id,r.serial,r.step,r.operator,r.create_time ctime
         from order_detail o , after_sale a
         LEFT JOIN refund r on a.id=r.serial
         where o.user_id='6fec14b9f23e42d69f5ae2fbcd1a834e' and o.id=a.order_id
