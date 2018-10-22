@@ -20,9 +20,6 @@
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
     <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
-    <script type="text/javascript" src="../../js/vue.js"></script>
-    <script type="text/javascript" src="../../js/jquery.min.js"></script>
-    <script type="text/javascript" src="../../js/userSession.js"></script>
 </head>
 
 <body>
@@ -235,13 +232,16 @@
     </div>
 </div>
 <!-- Javascript -->
+<script type="text/javascript" src="../../js/vue.js"></script>
+<script type="text/javascript" src="../../js/jquery.min.js"></script>
+<script type="text/javascript" src="../../js/userSession.js"></script>
 <script type="text/javascript" src="../../js/adminPublic.js"></script>
-<!--<script src="assets/vendor/jquery/jquery.min.js"></script>-->
 <script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 <script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <script src="assets/scripts/klorofil-common.js"></script>
 <script type="text/javascript" src="../../js/bootstrap-table.js"></script>
 <script type="text/javascript" src="../../js/bootstrap-table-zh-CN.js"></script>
+<script type="text/javascript" src="../../js/audit.js"></script>
 <script>
     var $table = $('#table');
     var operaEvents;
@@ -278,7 +278,7 @@
             }, {
                 field: 'orderId',
                 sortable: true,
-                title: '订单编号',
+                title: '订单详情编号',
                 witdth: 50
             }, {
                 field: 'type',
@@ -371,6 +371,5 @@
 
     });
 </script>
-<script type="text/javascript" src="../../js/audit.js"></script>
 </body>
 </html>
