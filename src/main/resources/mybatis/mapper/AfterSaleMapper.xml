@@ -48,11 +48,12 @@
 
 
     <!--根据用户ID查询售后列表-->
-    <select id="selectAfterSaleByUserId" parameterType="java.lang.String">
+    <select id="selectAfterSaleByUserId" parameterType="j11ava.lang.String" resultMap="AfterSaleRefundMap">
         select DISTINCT a.*,r.id refund_id,r.serial,r.step,r.operator,r.create_time ctime
         from order_detail o , after_sale a
         LEFT JOIN refund r on a.id=r.serial
         where o.user_id=#{userId} and o.id=a.order_id
+        ORDER  BY a.create_time DESC
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
