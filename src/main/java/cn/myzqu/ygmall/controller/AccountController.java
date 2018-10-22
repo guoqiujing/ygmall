@@ -2,6 +2,7 @@ package cn.myzqu.ygmall.controller;
 
 import cn.myzqu.ygmall.dto.FirAndSecDTO;
 import cn.myzqu.ygmall.dto.UserAndPayUserDTO;
+import cn.myzqu.ygmall.dto.WeeklyBuyUserDTO;
 import cn.myzqu.ygmall.pojo.Customer;
 import cn.myzqu.ygmall.service.AccountService;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by 的川 on 2018/9/6.
@@ -61,6 +63,20 @@ public class AccountController {
             return ResultVOUtil.success();
         }
         return ResultVOUtil.error("修改密码失败");
+    }
+
+    /**
+     * 查找最近一周每一天的下单人数
+     * @return
+     */
+    @PostMapping("/findWeeklyBuyUser")
+    @ResponseBody
+    public Result findWeeklyBuyUser(){
+        List<WeeklyBuyUserDTO> wto=accountService.findWeeklyBuyUser();
+        if(wto!=null){
+            return ResultVOUtil.success(wto);
+        }
+        return ResultVOUtil.error("查找失败");
     }
 
     /**
