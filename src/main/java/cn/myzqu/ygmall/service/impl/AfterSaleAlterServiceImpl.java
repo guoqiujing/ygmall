@@ -14,6 +14,7 @@ public class AfterSaleAlterServiceImpl implements AfterSaleAlterService {
     @Autowired
     private AfterSaleAlterMapper afterSaleAlterMapper;
 
+    //添加售后变更数据
     @Override
     public int addAlter(AfterSaleAlter afterSaleAlter){
         int a=afterSaleAlterMapper.insertSelective(afterSaleAlter);

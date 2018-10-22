@@ -16,5 +16,5 @@ public interface AfterSaleService {
 
     int updateStatus(AfterSale afterSale);
 
-    int addAfterSale(AfterSale afterSale);//添加售后
+    int addAfterSale(AfterSale afterSale);
 }
