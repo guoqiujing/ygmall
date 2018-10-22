@@ -83,6 +83,16 @@ public class AfterSaleController {
         return ResultVOUtil.success();
     }
 
+    /**
+     * 添加售后数据
+     * @param orderId
+     * @param type
+     * @param reason
+     * @param description
+     * @param receiverName
+     * @param receiverTel
+     * @return
+     */
     @PostMapping("/addAfterSale")
     public Result addAfterSale(String orderId,Byte type,String reason,String description,String receiverName,String receiverTel){
         String id= KeyUtil.getUUID();
