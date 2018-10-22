@@ -17,18 +17,33 @@ var app=new Vue({
         firBuy:0,
         firBuyScale:0,
         secBuy:0,
-        secBuyScale:0
+        secBuyScale:0,
+        everyDaySaleroom:[],
+        everyDayBuyUser:[],
+        saleData:{"volume": "0",
+            "saleroom": "0",
+            "thisWeekPrice": "0",
+            "vol": "0",
+            "thisWeekOrderNum": "0",
+            "lastWeekPrice": "0",
+            "lastWeekProfitRate": "0",
+            "lastWeekOrderNum": "0",
+            "thisWeekProfitRate": "0",
+            "lastWeekProfit": "0",
+            "thisWeekProfit": "0"}
     },
     //创建vue实例之后的事件
     created: function (){
     },
 
     mounted:function () {
+        this.getSaleData();
+        this.getSaleRoom();
         this.findNewUser();
         this.findSexCount();
         this.findUserAndPay();
         this.findFirAndSec();
-        this.chart1create();
+        this.findWeeklyBuyUser();
     },
     methods: {
        //表格1生成
@@ -48,7 +63,7 @@ var app=new Vue({
                 },
                 xAxis: {
                     categories: [
-                        this.getDay(-7),this.getDay(-6),this.getDay(-5),this.getDay(-4),this.getDay(-3),this.getDay(-2),this.getDay(-1)
+                        this.getDay(-6),this.getDay(-5),this.getDay(-4),this.getDay(-3),this.getDay(-2),this.getDay(-1),this.getDay(0)
                     ],
                     crosshair: true
                 },
@@ -74,7 +89,15 @@ var app=new Vue({
                 },
                 series: [{
                     name: '销售额',
-                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6],
+                    data: [
+                        this.everyDaySaleroom[0].sum,
+                        this.everyDaySaleroom[1].sum,
+                        this.everyDaySaleroom[2].sum,
+                        this.everyDaySaleroom[3].sum,
+                        this.everyDaySaleroom[4].sum,
+                        this.everyDaySaleroom[5].sum,
+                        this.everyDaySaleroom[6].sum
+                    ],
                     showInLegend: false // 设置为 false 即为不显示在图例中
                 }]
             });
@@ -313,6 +336,44 @@ var app=new Vue({
             });
         },
 
+        //折线图生成
+        lineChartcreate:function () {
+            var chart = Highcharts.chart('lineChart', {
+                title: {
+                    text: null
+                },
+                subtitle: {
+                    text: null
+                },
+                credits:{
+                    enabled: false // 禁用版权信息
+                },
+                xAxis: {
+                    categories: [
+                        this.getDay(-6),this.getDay(-5),this.getDay(-4),this.getDay(-3),this.getDay(-2),this.getDay(-1),this.getDay(0)
+                    ]
+                },
+                yAxis: {
+                    title: {
+                        text: '下单人数'
+                    }
+                },
+                series: [{
+                    name: '下单人数',
+                    data: [
+                        this.everyDayBuyUser[0].sum,
+                        this.everyDayBuyUser[1].sum,
+                        this.everyDayBuyUser[2].sum,
+                        this.everyDayBuyUser[3].sum,
+                        this.everyDayBuyUser[4].sum,
+                        this.everyDayBuyUser[5].sum,
+                        this.everyDayBuyUser[6].sum
+                    ],
+                    showInLegend: false // 设置为 false 即为不显示在图例中
+                }]
+            });
+        },
+
         //获得某一天的日期
         getDay:function(day){
             var today = new Date();
@@ -332,6 +393,82 @@ var app=new Vue({
             if(month.toString().length == 1){
                 m = "0" + month;
             }         return m;
+        },
+
+        //请求最近一周的销售额（具体到每一天的销售额）
+        getSaleRoom:function () {
+            var that=this;
+            $.ajax({
+                type: "GET",
+                url: "/order/statistics/saleroom",
+                dataType: "json",
+                contentType:'application/json; charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        console.log("成功");
+                        console.log(msg.data);
+                        that.everyDaySaleroom=msg.data;
+                        //console.log(that.everyDaySaleroom[5].sum);
+                        that.chart1create();
+                    }
+                    else {
+                        console.log('查找失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
+        },
+
+        //请求销量相关数据
+        getSaleData:function () {
+            var that=this;
+            $.ajax({
+                type: "GET",
+                url: "/order/statistics/sale",
+                dataType: "json",
+                contentType:'application/json; charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        console.log("成功");
+                        console.log(msg.data);
+                        that.saleData=msg.data;
+                        console.log(that.saleData);
+                    }
+                    else {
+                        console.log('查找失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
+        },
+
+        //请求最近一周下单人数
+        findWeeklyBuyUser:function () {
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/account/findWeeklyBuyUser",
+                dataType: "json",
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        //console.log("请求最近一周下单人数成功");
+                        //console.log(msg.data);
+                        that.everyDayBuyUser=msg.data;
+                        that.lineChartcreate();
+                    }
+                    else {
+                        layer.msg('查找失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
         },
 
         //请求最近一周的用户数
@@ -437,7 +574,7 @@ var app=new Vue({
                         that.pie3create();
                     }
                     else {
-                        layer.msg('查找失败', {time: 2000});
+                        console.log('查找失败', {time: 2000});
                     }
                 },
                 error: function () {

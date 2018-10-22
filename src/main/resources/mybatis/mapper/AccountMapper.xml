@@ -14,12 +14,36 @@
     id, password, salt, type, state, create_time, login_time
   </sql>
 
+  <!--用于查询最近一周每一天的下单人数-->
+  <select id="selectWeeklyBuyUser" resultType="cn.myzqu.ygmall.dto.WeeklyBuyUserDTO">
+    select a.click_date,ifnull(b.sum,0) as sum
+from (
+    SELECT curdate() as click_date
+    union all
+    SELECT date_sub(curdate(), interval 1 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 2 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 3 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 4 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 5 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 6 day) as click_date
+) a left join (
+  select date(create_time) as datetime, COUNT(DISTINCT user_id) as sum
+  from `order`
+  group by date(create_time)
+) b on a.click_date = b.datetime  ORDER BY a.click_date
+  </select>
+
    <!--用于查询单次购买用户和多次购买用户-->
     <select id="selectFirAndSec" resultType="cn.myzqu.ygmall.dto.FirAndSecDTO">
         SELECT * FROM
         (SELECT COUNT(*) sec_buy
         FROM
-        (SELECT o1.id
+        (SELECT o1.user_id
         FROM `order` o1 ,`order` o2
         WHERE
         o1.id &lt;&gt; o2.id
@@ -30,7 +54,7 @@
         INNER JOIN
         (SELECT COUNT(*) fir_buy
         FROM
-        (SELECT *
+        (SELECT `order`.user_id
         FROM `order`
         GROUP BY
         `order`.user_id)B)D
@@ -41,11 +65,11 @@
     SELECT COUNT(*) AS new_user FROM account WHERE
     create_time
     &gt;=
-    DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 7 DAY), '%Y-%m-%d 00:00:00')
+    DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 6 DAY), '%Y-%m-%d 00:00:00')
     AND
     create_time
     &lt;=
-    DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 1 DAY), '%Y-%m-%d 23:59:59')
+    DATE_FORMAT( DATE_SUB(CURDATE(), INTERVAL 0 DAY), '%Y-%m-%d 23:59:59')
   </select>
 
     <!--用于查询付费用户数和总用户数-->

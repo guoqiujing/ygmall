@@ -5,6 +5,7 @@ import cn.myzqu.ygmall.dao.CustomerMapper;
 import cn.myzqu.ygmall.dto.FirAndSecDTO;
 import cn.myzqu.ygmall.dto.UserAndPayUserDTO;
 import cn.myzqu.ygmall.dto.UserSessionDTO;
+import cn.myzqu.ygmall.dto.WeeklyBuyUserDTO;
 import cn.myzqu.ygmall.enums.ResultEnum;
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.pojo.Account;
@@ -17,6 +18,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * Created by 的川 on 2018/9/6.
@@ -43,6 +46,11 @@ public class AccountServiceImpl implements AccountService{
     @Override
     public UserAndPayUserDTO findUserAndPayUser() {
         return accountMapper.selectUserAndPayUser();
+    }
+
+    @Override
+    public List<WeeklyBuyUserDTO> findWeeklyBuyUser() {
+        return accountMapper.selectWeeklyBuyUser();
     }
 
     @Override

@@ -13,7 +13,6 @@ var top=new Vue({
     },
     //创建vue实例之后的事件
     created: function (){
-        console.log("create");
         if(this.userType===null){
             window.location.href="/page/user/login.html";
         }

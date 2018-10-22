@@ -1,8 +1,12 @@
 package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.dto.FirAndSecDTO;
+import cn.myzqu.ygmall.dto.StatisticsForWeekDTO;
 import cn.myzqu.ygmall.dto.UserAndPayUserDTO;
+import cn.myzqu.ygmall.dto.WeeklyBuyUserDTO;
 import cn.myzqu.ygmall.pojo.Account;
+
+import java.util.List;
 
 public interface AccountMapper {
 
@@ -23,4 +27,6 @@ public interface AccountMapper {
     int selectNewUser();
 
     FirAndSecDTO selectFirAndSec();
+
+    List<WeeklyBuyUserDTO> selectWeeklyBuyUser();
 }

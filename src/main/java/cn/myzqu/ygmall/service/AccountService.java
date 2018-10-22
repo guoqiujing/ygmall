@@ -3,7 +3,10 @@ package cn.myzqu.ygmall.service;
 import cn.myzqu.ygmall.dto.FirAndSecDTO;
 import cn.myzqu.ygmall.dto.UserAndPayUserDTO;
 import cn.myzqu.ygmall.dto.UserSessionDTO;
+import cn.myzqu.ygmall.dto.WeeklyBuyUserDTO;
 import cn.myzqu.ygmall.pojo.Customer;
+
+import java.util.List;
 
 /**
  * Created by 的川 on 2018/9/6.
@@ -25,5 +28,7 @@ public interface AccountService {
     int findNewUser();
 
     FirAndSecDTO findFirAndSec();
+
+    List<WeeklyBuyUserDTO> findWeeklyBuyUser();
 
 }
