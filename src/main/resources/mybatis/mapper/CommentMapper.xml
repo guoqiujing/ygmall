@@ -117,18 +117,21 @@
         select o.id,o.goods_name,o.goods_number,o.price,c.id as commentId,g.img_url
         from order_detail o LEFT JOIN `comment` c on c.order_id=o.id LEFT JOIN goods_img g ON g.goods_id=o.goods_number
         where o.user_id=#{userId} and c.`comment` is not null and c.additional_comment is null and g.img_order=0
+        ORDER BY o.create_time DESC
     </select>
     <!--查询用户是否可以进行评论-->
     <select id="selectCommentByOrder" parameterType="java.lang.String" resultMap="OrderDetailResultMap">
         select o.id,o.goods_name,o.goods_number,o.price,o.format_and_style,g.img_url
         from order_detail o LEFT JOIN `comment` c on c.order_id=o.id LEFT JOIN goods_img g ON g.goods_id=o.goods_number
         where o.user_id=#{userId} and c.id is null and g.img_order=0
+        ORDER BY o.create_time DESC
     </select>
     <!--查询用户已经评论和追评的商品信息-->
     <select id="selectCommentByUserId" parameterType="java.lang.String" resultMap="OrderDetailResultMap">
         select o.id,o.goods_name,o.goods_number,o.price,g.img_url
         from order_detail o LEFT JOIN `comment` c on c.order_id=o.id LEFT JOIN goods_img g ON g.goods_id=o.goods_number
         where o.user_id=#{userId} and c.`comment` is not null and c.additional_comment is not null and g.img_order=0
+        ORDER BY o.create_time DESC
     </select>
 
     <!--根据id删除评论-->

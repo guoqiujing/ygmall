@@ -85,6 +85,25 @@ public class AfterSaleController {
     }
 
     /**
+     * 买家取消申请售后，修改售后表状态并向售后变更状态表插入数据
+     * @param id
+     * @return
+     */
+    @PostMapping("/modifyStatus")
+    public Result modifyStatus(String id){
+        Byte status=3;
+        String id2=KeyUtil.getUUID();
+        AfterSale afterSale=new AfterSale(id,status);
+        AfterSaleAlter afterSaleAlter=new AfterSaleAlter(id2,id,status);
+        int a=afterSaleService.updateStatus(afterSale);
+        int b=afterSaleAlterService.addAlter(afterSaleAlter);
+        if(a>0&&b>0){
+            return ResultVOUtil.success();
+        }
+        return ResultVOUtil.error("取消申请售后失败");
+    }
+
+    /**
      * 添加售后数据
      * @param orderId
      * @param type
@@ -103,10 +122,11 @@ public class AfterSaleController {
         AfterSaleAlter afterSaleAlter=new AfterSaleAlter(id2,id,state);
         int a=afterSaleService.addAfterSale(afterSale);
         int b=afterSaleAlterService.addAlter(afterSaleAlter);
-        if(a<=0){
-            return ResultVOUtil.error("添加申请售后失败");
+        if(a>0&&b>0){
+            return ResultVOUtil.success();
+
         }
-        return ResultVOUtil.success();
+        return ResultVOUtil.error("添加申请售后失败");
     }
 
     /**
