@@ -48,7 +48,7 @@
 
 
     <!--根据用户ID查询售后列表-->
-    <select id="selectAfterSaleByUserId" parameterType="j11ava.lang.String" resultMap="AfterSaleRefundMap">
+    <select id="selectAfterSaleByUserId" parameterType="java.lang.String" resultMap="AfterSaleRefundMap">
         select DISTINCT a.*,r.id refund_id,r.serial,r.step,r.operator,r.create_time ctime
         from order_detail o , after_sale a
         LEFT JOIN refund r on a.id=r.serial
