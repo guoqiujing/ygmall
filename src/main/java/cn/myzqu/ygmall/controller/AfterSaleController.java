@@ -95,6 +95,7 @@ public class AfterSaleController {
      */
     @PostMapping("/addAfterSale")
     public Result addAfterSale(String orderId,Byte type,String reason,String description,String receiverName,String receiverTel){
+        System.out.print(orderId);
         String id= KeyUtil.getUUID();
         String id2=KeyUtil.getUUID();
         Byte state=2;
