@@ -15,4 +15,6 @@ public interface AfterSaleService {
     AfterSale selectById(String id);
 
     int updateStatus(AfterSale afterSale);
+
+    int addAfterSale(AfterSale afterSale);
 }

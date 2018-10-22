@@ -62,4 +62,10 @@ public class AfterSaleAlter {
         this.state = state;
         this.operator = operator;
     }
+
+    public AfterSaleAlter(String id, String afterSaleId, Byte state) {
+        this.id = id;
+        this.afterSaleId = afterSaleId;
+        this.state = state;
+    }
 }

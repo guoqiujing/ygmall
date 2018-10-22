@@ -19,9 +19,17 @@ public class AfterSaleAlterController {
     @Autowired
     private AfterSaleAlterService afterSaleAlterService;
 
+    /**
+     *添加售后状态变更数据
+     *  @param afterSaleId
+     * @param state
+     * @param operator
+     * @return
+     */
     @PostMapping("/addAlter")
     public Result addAlter(String afterSaleId,Byte state,String operator){
         String id= KeyUtil.getUUID();
+        System.out.println(id);
         AfterSaleAlter afterSaleAlter=new AfterSaleAlter(id,afterSaleId,state,operator);
         int a=afterSaleAlterService.addAlter(afterSaleAlter);
         if(a<=0){

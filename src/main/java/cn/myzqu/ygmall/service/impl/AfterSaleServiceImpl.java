@@ -39,14 +39,23 @@ public class AfterSaleServiceImpl implements AfterSaleService{
         return bto;
     }
 
+    //根据售后id查找售后数据
     @Override
     public AfterSale selectById(String id){
         return afterSaleMapper.selectByPrimaryKey(id);
     }
 
+    //修改售后状态
     @Override
     public int updateStatus(AfterSale afterSale){
         int a=afterSaleMapper.updateByPrimaryKeySelective(afterSale);
+        return a;
+    }
+
+    //添加售后
+    @Override
+    public int addAfterSale(AfterSale afterSale){
+        int a=afterSaleMapper.insertSelective(afterSale);
         return a;
     }
 }
