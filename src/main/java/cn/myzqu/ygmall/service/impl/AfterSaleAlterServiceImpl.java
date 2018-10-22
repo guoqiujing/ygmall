@@ -16,7 +16,7 @@ public class AfterSaleAlterServiceImpl implements AfterSaleAlterService {
 
     @Override
     public int addAlter(AfterSaleAlter afterSaleAlter){
-        int a=afterSaleAlterMapper.insert(afterSaleAlter);
+        int a=afterSaleAlterMapper.insertSelective(afterSaleAlter);
         return a;
     }
 }

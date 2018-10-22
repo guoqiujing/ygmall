@@ -49,4 +49,11 @@ public class AfterSaleServiceImpl implements AfterSaleService{
         int a=afterSaleMapper.updateByPrimaryKeySelective(afterSale);
         return a;
     }
+
+    //添加售后
+    @Override
+    public int addAfterSale(AfterSale afterSale){
+        int a=afterSaleMapper.insertSelective(afterSale);
+        return a;
+    }
 }

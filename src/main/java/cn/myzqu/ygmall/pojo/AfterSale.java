@@ -108,4 +108,14 @@ public class AfterSale {
         this.id = id;
         this.status = status;
     }
+
+    public AfterSale(String id, String orderId, Byte type, String reason, String description, String receiverName, String receiverTel) {
+        this.id = id;
+        this.orderId = orderId;
+        this.type = type;
+        this.reason = reason;
+        this.description = description;
+        this.receiverName = receiverName;
+        this.receiverTel = receiverTel;
+    }
 }

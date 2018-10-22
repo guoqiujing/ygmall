@@ -2,7 +2,10 @@ package cn.myzqu.ygmall.controller;
 
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.pojo.AfterSale;
+import cn.myzqu.ygmall.pojo.AfterSaleAlter;
+import cn.myzqu.ygmall.service.AfterSaleAlterService;
 import cn.myzqu.ygmall.service.AfterSaleService;
+import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import cn.myzqu.ygmall.vo.Result;
@@ -23,6 +26,9 @@ import java.util.Map;
 public class AfterSaleController {
     @Autowired
     private AfterSaleService afterSaleService;
+
+    @Autowired
+    private AfterSaleAlterService afterSaleAlterService;
 
     @PostMapping("/list")
     public Result findAfterSale(int pageSize,int pageIndex,Byte type,Byte status){
@@ -73,6 +79,21 @@ public class AfterSaleController {
         int a=afterSaleService.updateStatus(afterSale);
         if(a<=0){
             return ResultVOUtil.error("更改状态失败");
+        }
+        return ResultVOUtil.success();
+    }
+
+    @PostMapping("/addAfterSale")
+    public Result addAfterSale(String orderId,Byte type,String reason,String description,String receiverName,String receiverTel){
+        String id= KeyUtil.getUUID();
+        String id2=KeyUtil.getUUID();
+        Byte state=2;
+        AfterSale afterSale=new AfterSale(id,orderId,type,reason,description,receiverName,receiverTel);
+        AfterSaleAlter afterSaleAlter=new AfterSaleAlter(id2,id,state);
+        int a=afterSaleService.addAfterSale(afterSale);
+        int b=afterSaleAlterService.addAlter(afterSaleAlter);
+        if(a<=0){
+            return ResultVOUtil.error("添加申请售后失败");
         }
         return ResultVOUtil.success();
     }
