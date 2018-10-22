@@ -1,8 +1,10 @@
 package cn.myzqu.ygmall.service.impl;
 
 import cn.myzqu.ygmall.dao.AfterSaleMapper;
+import cn.myzqu.ygmall.dto.PageDTO;
 import cn.myzqu.ygmall.pojo.AfterSale;
 import cn.myzqu.ygmall.service.AfterSaleService;
+import cn.myzqu.ygmall.vo.AfterSaleRefundVO;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -57,5 +59,17 @@ public class AfterSaleServiceImpl implements AfterSaleService{
     public int addAfterSale(AfterSale afterSale){
         int a=afterSaleMapper.insertSelective(afterSale);
         return a;
+    }
+
+    //根据用户id查询售后列表
+    @Override
+    public PageDTO selectAfterSale(String userId, Integer pageIndex, Integer pageSize){
+        Page<AfterSaleRefundVO> page=PageHelper.startPage(pageIndex,pageSize);
+        List<AfterSaleRefundVO> afterSaleRefundVOList=afterSaleMapper.selectAfterSaleByUserId(userId);
+        int total=(int)page.getTotal();
+        System.out.println("总记录数："+total);
+        if(total<=0)
+            return null;
+        return new PageDTO(afterSaleRefundVOList,total,pageSize,pageIndex);
     }
 }

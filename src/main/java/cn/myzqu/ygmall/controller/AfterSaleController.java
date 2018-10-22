@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.controller;
 
+import cn.myzqu.ygmall.dto.PageDTO;
 import cn.myzqu.ygmall.exception.CustomException;
 import cn.myzqu.ygmall.pojo.AfterSale;
 import cn.myzqu.ygmall.pojo.AfterSaleAlter;
@@ -106,6 +107,23 @@ public class AfterSaleController {
             return ResultVOUtil.error("添加申请售后失败");
         }
         return ResultVOUtil.success();
+    }
+
+    /**
+     * 根据用户id获取售后列表
+     * @param userId
+     * @param page
+     * @param size
+     * @return
+     */
+    @PostMapping("/getAfterSale")
+    public Result getAfterSale(String userId, Integer page, Integer size){
+        System.out.println(userId);
+        PageDTO pageDTO=afterSaleService.selectAfterSale(userId,page,size);
+        if (pageDTO != null) {
+            return ResultVOUtil.success(pageDTO);
+        }
+        return ResultVOUtil.error("暂时没有数据哦！");
     }
 }
 

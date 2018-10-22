@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.service;
 
+import cn.myzqu.ygmall.dto.PageDTO;
 import cn.myzqu.ygmall.pojo.AfterSale;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 
@@ -17,4 +18,6 @@ public interface AfterSaleService {
     int updateStatus(AfterSale afterSale);
 
     int addAfterSale(AfterSale afterSale);
+
+    PageDTO selectAfterSale(String userId,Integer pageIndex,Integer pageSize);
 }

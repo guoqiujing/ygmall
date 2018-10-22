@@ -12,6 +12,15 @@
         <result column="status" property="status" jdbcType="TINYINT"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
+    <resultMap id="AfterSaleRefundMap" type="cn.myzqu.ygmall.vo.AfterSaleRefundVO" extends="BaseResultMap">
+        <association property="refund" javaType="cn.myzqu.ygmall.pojo.Refund">
+            <id column="refund_id" property="id" jdbcType="VARCHAR" />
+            <result column="serial" property="serial" jdbcType="VARCHAR" />
+            <result column="step" property="step" jdbcType="INTEGER" />
+            <result column="operator" property="operator" jdbcType="VARCHAR" />
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        </association>
+    </resultMap>
     <sql id="Base_Column_List">
     id, order_id, type, reason, description, receiver_name, receiver_tel, status, create_time
   </sql>
@@ -35,6 +44,15 @@
         <if test="status!=null">
             and status=${status}
         </if>
+    </select>
+
+
+    <!--根据用户ID查询售后列表-->
+    <select id="selectAfterSaleByUserId" parameterType="java.lang.String">
+        select DISTINCT a.*,r.id refund_id,r.serial,r.step,r.operator,r.create_time
+        from order_detail o , after_sale a
+        LEFT JOIN refund r on a.id=r.serial
+        where o.user_id='6fec14b9f23e42d69f5ae2fbcd1a834e' and o.id=a.order_id
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
