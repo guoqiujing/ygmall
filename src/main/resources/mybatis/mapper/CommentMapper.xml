@@ -105,11 +105,11 @@
     <select id="selectByGoodsId" resultMap="ComRepResultMap">
         select r.*,c.*
         from comment c left join reply_comment r on r.reply_id=c.id
-        where goods_id=#{goodsId,jdbcType=VARCHAR}
+        where goods_id=#{goodsId,jdbcType=VARCHAR} and c.display=1
           <if test="goodsScore!=null">
               and c.goods_score=#{goodsScore,jdbcType=TINYINT}
           </if>
-        ORDER BY c.create_time
+        ORDER BY c.create_time DESC
     </select>
 
     <!--查询可以进行追评的评论-->
@@ -349,6 +349,7 @@
         <if test="commentStatus!=null">
             AND comment_status = ${commentStatus}
         </if>
+        ORDER BY create_time DESC
     </select>
 
     <!--根据id隐藏评论-->

@@ -97,7 +97,7 @@ var after = new Vue({
                 }
             })
         },
-        addAfterSaleAlter:function () {
+        addAfterSaleAlter:function () {//向售后变更表添加数据
             var that = this;
             $.ajax({
                 type: "POST",
@@ -134,6 +134,7 @@ var after = new Vue({
                 type: "POST",
                 url: "/refund/addRefund",
                 data: {
+                    serial:that.auditId,
                     step:0,
                     operator:that.userId
                 },

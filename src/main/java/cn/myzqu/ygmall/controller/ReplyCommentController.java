@@ -46,9 +46,9 @@ public class ReplyCommentController {
      */
     @PostMapping("/addReply")
     @ResponseBody
-    public Result addReply(String commentId,String replyContent){
+    public Result addReply(String commentId,String replyName,String replyContent){
        String id=KeyUtil.getUUID();
-       ReplyComment replyComment=new ReplyComment(id,commentId,replyContent);
+       ReplyComment replyComment=new ReplyComment(id,commentId,replyName,replyContent);
        int r=replyCommentService.addReply(replyComment);
        if(r<=0){
            return ResultVOUtil.error("回复失败");
@@ -64,11 +64,12 @@ public class ReplyCommentController {
      */
     @PostMapping("/addContent")
     @ResponseBody
-    public Result addContent(String commentId,String content){
+    public Result addContent(String commentId,String replyName,String content){
         String id= KeyUtil.getUUID();
         ReplyComment replyComment=new ReplyComment();
         replyComment.setId(id);
         replyComment.setReplyId(commentId);
+        replyComment.setReplyName(replyName);
         replyComment.setContent(content);
         int r=replyCommentService.addContent(replyComment);
         if(r<=0){

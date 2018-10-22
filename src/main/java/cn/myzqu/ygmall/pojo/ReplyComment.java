@@ -80,9 +80,10 @@ public class ReplyComment {
     public ReplyComment() {
     }
 
-    public ReplyComment(String id, String replyId, String replyContent) {
+    public ReplyComment(String id, String replyId, String replyName, String replyContent) {
         this.id = id;
         this.replyId = replyId;
+        this.replyName = replyName;
         this.replyContent = replyContent;
     }
 

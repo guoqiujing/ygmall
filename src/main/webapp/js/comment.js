@@ -1,6 +1,9 @@
 /**
  * Created by CC on 2018/9/26.
  */
+//获取存在session的用户信息
+var userId = $.myPlugin.getUserId();
+
 //创建Vue实例
 var page = new Vue({
     el: '#comment',
@@ -10,9 +13,9 @@ var page = new Vue({
         reply: {},
         replyContent: '',
         addFlag: false,//追评标志
-        /*replyFlag:true,*/
         replyConFlag: false,//回复标志
         conFlag: false,//回复追评标志
+        userId:userId,//从session获取的用户id
     },
     methods: {
         //弹出模态框进行的操作
@@ -161,6 +164,7 @@ var page = new Vue({
                 url: "/replyComment/addReply",
                 data: {
                     commentId: that.commentId,
+                    replyName:that.userId,
                     replyContent: that.replyContent
                 },
                 dataType: "json",
@@ -190,6 +194,7 @@ var page = new Vue({
                 url: "/replyComment/addContent",
                 data: {
                     commentId: that.commentId,
+                    replyName:that.userId,
                     content: that.replyContent
                 },
                 dataType: "json",

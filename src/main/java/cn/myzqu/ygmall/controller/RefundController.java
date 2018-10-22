@@ -30,9 +30,8 @@ public class RefundController {
      * @return
      */
     @PostMapping("/addRefund")
-    public Result addRefund(int step,String operator){
+    public Result addRefund(String serial,int step,String operator){
         String id= KeyUtil.getUUID();
-        String serial=KeyUtil.getUUID();
         Refund refund=new Refund(id,serial,step,operator);
         int r=refundService.addRefund(refund);
         if(r<=0){
