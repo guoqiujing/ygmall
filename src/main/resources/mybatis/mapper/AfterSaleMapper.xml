@@ -52,7 +52,7 @@
         select DISTINCT a.*,r.id refund_id,r.serial,r.step,r.operator,r.create_time ctime
         from order_detail o , after_sale a
         LEFT JOIN refund r on a.id=r.serial
-        where o.user_id='6fec14b9f23e42d69f5ae2fbcd1a834e' and o.id=a.order_id
+        where o.user_id=#{userId} and o.id=a.order_id
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
