@@ -1,10 +1,12 @@
 package cn.myzqu.ygmall.service.impl;
 
+import cn.myzqu.ygmall.dao.AreasMapper;
 import cn.myzqu.ygmall.dao.CustomerMapper;
 import cn.myzqu.ygmall.dao.GoodsMapper;
 import cn.myzqu.ygmall.dto.OrderDTO;
 import cn.myzqu.ygmall.pojo.Customer;
 import cn.myzqu.ygmall.pojo.CustomerAddress;
+import cn.myzqu.ygmall.pojo.District;
 import cn.myzqu.ygmall.service.OrderService;
 import cn.myzqu.ygmall.utils.gen.UserInfo;
 import cn.myzqu.ygmall.vo.Goods_Img_AttributesVO;
@@ -39,6 +41,9 @@ public class OrderServiceImplTest {
     @Autowired
     private GoodsMapper goodsMapper;
 
+    @Autowired
+    private AreasMapper areasMapper;
+
     @Test
     public void add() throws Exception {
 
@@ -48,7 +53,10 @@ public class OrderServiceImplTest {
         //获取数据库中所有的商品
         List<Goods_Img_AttributesVO> goods = goodsMapper.getAll(null);
 
-        for(int i = 0;i<100;i++){
+        //获取数据库中的行政地址
+        List<District>  districts = areasMapper.selectDistrict();
+
+        for(int i = 0;i<10;i++){
             //随机获取用户，获取商品
             List<OrderDTO> orderDTOList = new ArrayList<>();
             OrderDTO orderDTO = new OrderDTO();
@@ -76,9 +84,12 @@ public class OrderServiceImplTest {
             customerAddress.setUserId(customer.getId());
             customerAddress.setReceiverName(customer.getNickName());
             customerAddress.setReceiverTel(customer.getTelephone());
-            customerAddress.setProvince("广东");
-            customerAddress.setCity("佛山");
-            customerAddress.setCounty("禅城区");
+            //随机获取行政地址
+            int disIndex = ra.nextInt(districts.size()-1) + 1;
+            District district = districts.get(disIndex);
+            customerAddress.setProvince(district.getProvince());
+            customerAddress.setCity(district.getCity());
+            customerAddress.setCounty(district.getArea());
             customerAddress.setDetail(UserInfo.getRoad());
             orderService.add(customerAddress,orderDTOList);
         }
