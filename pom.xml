@@ -305,6 +305,13 @@
             <version>1.0.5</version>
         </dependency>
 
+        <!--阿里沙箱支付-->
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>3.3.49.ALL</version>
+        </dependency>
+
     </dependencies>
 
 </project>
