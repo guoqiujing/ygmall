@@ -19,6 +19,7 @@ import cn.myzqu.ygmall.vo.ResultVO;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.api.internal.util.AlipaySignature;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -52,9 +53,10 @@ public class BuyerOrderController {
 
     //创建订单
     @PostMapping("/create")
-    public ModelAndView create(String cart,String address) {
+    public ModelAndView create(String cart,String address,HttpServletRequest httpServletRequest) {
         System.out.println("cart:"+cart);
         System.out.println("address:"+address);
+        HttpSession session = httpServletRequest.getSession();
         //获取购物车Json，将购物车Json转为实体类
         CustomerAddress addressPojo = JSONObject.parseObject(address,CustomerAddress.class);
         //将cart 转换为实体类
@@ -66,6 +68,7 @@ public class BuyerOrderController {
             String url = "/page/user/index.jsp?"+"WIDout_trade_no="+map.get("orderId")+
                     "&WIDtotal_amount="+map.get("money");
             ModelAndView mav = new ModelAndView("redirect:"+url);
+            session.setAttribute("WIDout_trade_no",map.get("orderId"));
             return mav;
         }
         ModelAndView mav = new ModelAndView("redirect:/page/user/user.html");
@@ -98,6 +101,7 @@ public class BuyerOrderController {
     @PostMapping("/buy1")
     public ModelAndView buy1(String orderId ,HttpServletRequest request) {
         HttpSession session = request.getSession();
+        orderId = (String)session.getAttribute("WIDout_trade_no");
         UserSessionDTO userSessionDTO = (UserSessionDTO) session.getAttribute("user");
         System.out.println(orderId);
         if(userSessionDTO==null){
