@@ -41,11 +41,6 @@ public class SpuServiceImpl implements SpuService{
         Integer result=spuMapper.updateByPrimaryKeySelective(spu);
         return result;
     }
-
-
-
-
-
     public Integer updateSPU_Attr(String oSpuId,String FName0,String oFVal0,String nFval0,String FName1,String oFVal1,String nFval1,String FName2,String oFVal2,String nFval2){
         Spu spu=new Spu();
         spu.setId(oSpuId);
@@ -83,20 +78,25 @@ public class SpuServiceImpl implements SpuService{
         if(searchInput!=null&&searchInput!="") {
             map.put("name", searchInput);
         }
-        List<Spu> spuList=spuMapper.selectAll(map);
-        List<SpuDetailVO> spuDetailList=new ArrayList<>();
-        for(Spu spu:spuList){
-            SpuDetailVO spuDetailVO=new SpuDetailVO();
-            spuDetailVO.setSpu(spu);
-            spuDetailVO.setSpuImgList(spuDetailService.selectBySPUId(spu.getId()));
-            spuDetailVO.setBrandName(brandService.findBrandById(spu.getBrandId()).getName());
-            spuDetailVO.setCategoriesName(attributeService.getCategoriesAttributeByCategoryId(spu.getCategoryId()).getCategoriesName());
-            spuDetailList.add(spuDetailVO);
+//        List<Spu> spuList=spuMapper.selectAll(map);
+//        List<SpuDetailVO> spuDetailList=new ArrayList<>();
+//        for(Spu spu:spuList){
+//            SpuDetailVO spuDetailVO=new SpuDetailVO();
+//            spuDetailVO.setSpu(spu);
+//            spuDetailVO.setSpuImgList(spuDetailService.selectBySPUId(spu.getId()));
+//            spuDetailVO.setBrandName(brandService.findBrandById(spu.getBrandId()).getName());
+//            spuDetailList.add(spuDetailVO);
+//        }
+        List<SpuDetailVO> spuList=spuMapper.selectAll(map);
+        for(int i=0;i<spuList.size();i++){
+            spuList.get(i).setSpuImgList(spuList.get(i).getSpuImgList());
+            spuList.get(i).setCategoriesName(spuList.get(i).getCategoriesName());
+            spuList.get(i).setBrandName(brandService.findBrandById(spuList.get(i).getSpu().getBrandId()).getName());
         }
         int total = (int)page.getTotal();
         System.out.println("总记录数："+total);
         //把总记录数和某一页的记录装入BootstrapTableVO类
-        BootstrapTableVO bto=new BootstrapTableVO(total,spuDetailList);
+        BootstrapTableVO bto=new BootstrapTableVO(total,spuList);
         if(total<=0)
             return null;
         return bto;

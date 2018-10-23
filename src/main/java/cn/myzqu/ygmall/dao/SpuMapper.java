@@ -1,6 +1,7 @@
 package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.pojo.Spu;
+import cn.myzqu.ygmall.vo.SpuDetailVO;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public interface SpuMapper {
 
     List<Spu> selectIdAndName(Map<String, Object> map);
 
-    List<Spu> selectAll(Map<String, Object> map);
+    List<SpuDetailVO> selectAll(Map<String, Object> map);
 
     int updateByPrimaryKeySelective(Spu record);
 

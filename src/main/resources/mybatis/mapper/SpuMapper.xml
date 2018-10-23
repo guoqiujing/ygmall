@@ -14,6 +14,24 @@
     <result column="subtitle" property="subtitle" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="TINYINT" />
   </resultMap>
+
+
+
+  <resultMap id="Spu_Img_Attributes_Map" type="cn.myzqu.ygmall.vo.SpuDetailVO">
+    <id column="id" property="spu.id" jdbcType="VARCHAR" />
+    <result column="name" property="spu.name" jdbcType="VARCHAR" />
+    <result column="category_id" property="spu.categoryId" jdbcType="INTEGER" />
+    <result column="brand_id" property="spu.brandId" jdbcType="INTEGER" />
+    <result column="createtime" property="spu.createtime" jdbcType="TIMESTAMP" />
+    <result column="sale_count" property="spu.saleCount" jdbcType="INTEGER" />
+    <result column="comment_count" property="spu.commentCount" jdbcType="INTEGER" />
+    <result column="params" property="spu.params" jdbcType="VARCHAR" />
+    <result column="attributes_name" property="spu.attributesName" jdbcType="VARCHAR" />
+    <result column="subtitle" property="spu.subtitle" jdbcType="VARCHAR" />
+    <result column="status" property="spu.status" jdbcType="TINYINT" />
+    <association property="categoriesName" select="cn.myzqu.ygmall.dao.CategoriesMapper.completeCategoriesSpu" column="id"></association>
+    <association property="spuImgList" select="cn.myzqu.ygmall.dao.SpuDetailMapper.selectBySPUId" column="id"></association>
+  </resultMap>
   <sql id="Base_Column_List" >
     id, name, category_id, brand_id, createtime, sale_count, comment_count,
     params, attributes_name, subtitle,status
@@ -30,7 +48,7 @@
    </where>
   </select>
 
-  <select id="selectAll" resultMap="BaseResultMap" parameterType="Map">
+  <select id="selectAll" resultMap="Spu_Img_Attributes_Map" parameterType="Map">
     select
     <include refid="Base_Column_List" />
     from spu
