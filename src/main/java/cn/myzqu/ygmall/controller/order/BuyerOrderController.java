@@ -1,5 +1,6 @@
 package cn.myzqu.ygmall.controller.order;
 
+import cn.myzqu.ygmall.alipay.config.AlipayConfig;
 import cn.myzqu.ygmall.dto.OrderDTO;
 import cn.myzqu.ygmall.dto.PageDTO;
 import cn.myzqu.ygmall.dto.UserSessionDTO;
@@ -16,6 +17,7 @@ import cn.myzqu.ygmall.utils.ResultVOUtil;
 import cn.myzqu.ygmall.vo.Result;
 import cn.myzqu.ygmall.vo.ResultVO;
 import com.alibaba.fastjson.JSONObject;
+import com.alipay.api.internal.util.AlipaySignature;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,8 +27,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 的川 on 2018/9/25.
@@ -56,8 +60,12 @@ public class BuyerOrderController {
         //将cart 转换为实体类
         List<OrderDTO> orderDTOS = JSONObject.parseArray(cart,OrderDTO.class);
         //添加订单
-        if(orderService.add(addressPojo,orderDTOS)){
-            ModelAndView mav = new ModelAndView("redirect:/page/user/user.html");
+        Map<String,String> map = orderService.add(addressPojo,orderDTOS);
+        if(!map.isEmpty()){
+            //跳转到付款页面
+            String url = "/page/user/index.jsp?"+"WIDout_trade_no="+map.get("orderId")+
+                    "&WIDtotal_amount="+map.get("money");
+            ModelAndView mav = new ModelAndView("redirect:"+url);
             return mav;
         }
         ModelAndView mav = new ModelAndView("redirect:/page/user/user.html");
@@ -84,6 +92,25 @@ public class BuyerOrderController {
             return ResultVOUtil.success();
         }
         return ResultVOUtil.error("付款发生异常");
+    }
+
+
+    @PostMapping("/buy1")
+    public ModelAndView buy1(String orderId ,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        UserSessionDTO userSessionDTO = (UserSessionDTO) session.getAttribute("user");
+        System.out.println(orderId);
+        if(userSessionDTO==null){
+            //session为空，请先登录
+            ModelAndView mav = new ModelAndView("redirect:/page/user/login.html");
+            return mav;
+        }
+        if(orderService.buy(orderId,userSessionDTO.getId())){
+            ModelAndView mav = new ModelAndView("redirect:/page/user/user.html");
+            return mav;
+        }
+        ModelAndView mav = new ModelAndView("redirect:/page/user/user.html");
+        return mav;
     }
 
 
@@ -154,7 +181,7 @@ public class BuyerOrderController {
         System.out.println(userSessionDTO);
         if(userSessionDTO==null){
             //session为空，请先登录
-            ModelAndView mav = new ModelAndView("redirect:/page/user/login.jsp");
+            ModelAndView mav = new ModelAndView("redirect:/page/user/login.html");
             return mav;
         }
         //将cart 转换为实体类

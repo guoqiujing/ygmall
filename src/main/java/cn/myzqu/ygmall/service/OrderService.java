@@ -23,7 +23,7 @@ public interface OrderService {
      * @param orderDTOList
      * @return
      */
-    Boolean add(CustomerAddress address , List<OrderDTO> orderDTOList);
+    Map<String,String> add(CustomerAddress address , List<OrderDTO> orderDTOList);
 
     /**
      * 付款

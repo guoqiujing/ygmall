@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderTask orderTask;
 
     @Override
-    public Boolean add(CustomerAddress address , List<OrderDTO> orderDTOList) {
+    public Map<String,String> add(CustomerAddress address , List<OrderDTO> orderDTOList) {
         //获取总订单信息
         //生成订单表id
         String orderId = KeyUtil.genUniqueKey();
@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
         order.setId(orderId);
         List<OrderDetail> orderDetails = new ArrayList<>();
         //插入订单详情表，并计算总金额
-        double goodsTotalMoney = 0;
+        Double goodsTotalMoney = 0.0;
         for(int i = 0;i<orderDTOList.size();i++){
             OrderDetail orderDetail = new OrderDetail();
             BeanUtils.copyProperties(orderDTOList.get(i),orderDetail);
@@ -89,9 +89,12 @@ public class OrderServiceImpl implements OrderService {
             orderAlter.setOperator(userId);
             orderAlter.setState(status);
             orderAlterMapper.insert(orderAlter);
-            return true;
+            Map<String,String> map = new HashMap<>();
+            map.put("orderId",orderId);
+            map.put("money",goodsTotalMoney.toString());
+            return map;
         }
-        return false;
+        return null;
     }
 
     @Override

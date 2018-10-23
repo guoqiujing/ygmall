@@ -384,19 +384,23 @@ h2 {
 	}
 	
 	function GetDateNow() {
-		var vNow = new Date();
-		var sNow = "";
-		sNow += String(vNow.getFullYear());
-		sNow += String(vNow.getMonth() + 1);
-		sNow += String(vNow.getDate());
-		sNow += String(vNow.getHours());
-		sNow += String(vNow.getMinutes());
-		sNow += String(vNow.getSeconds());
-		sNow += String(vNow.getMilliseconds());
-		document.getElementById("WIDout_trade_no").value =  sNow;
-		document.getElementById("WIDsubject").value = "测试";
-		document.getElementById("WIDtotal_amount").value = "0.01";
+        var url = decodeURI(location.search);
+        var object = [];
+        if(url.indexOf("?") != -1)//url中存在问号，也就说有参数。
+        {
+            var str = url.substr(1);  //得到?后面的字符串
+            var strs = str.split("&");  //将得到的参数分隔成数组[id="123456",Name="bicycle"];
+            for(var i = 0; i < strs.length; i ++){
+                object[strs[i].split("=")[0]]=strs[i].split("=")[1]
+            }
+            document.getElementById("WIDout_trade_no").value = object.WIDout_trade_no;
+            document.getElementById("WIDsubject").value = "艺格商城订单";
+            document.getElementById("WIDtotal_amount").value = object.WIDtotal_amount;
+            document.getElementById("WIDbody").value = "艺格商城订单";
+
+        }
 	}
+
 	GetDateNow();
 </script>
 </html>
