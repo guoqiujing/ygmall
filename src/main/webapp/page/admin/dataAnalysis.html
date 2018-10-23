@@ -183,7 +183,7 @@
 								</div>
 								<div class="col-md-3"  v-cloak>
 									<div class="weekly-summary text-right">
-										<span class="number">¥{{saleData.thisWeekProfit}}</span> <span class="percentage"><i class="fa fa-caret-up text-success"></i> 12%</span>
+										<span class="number" v-if="saleData.thisWeekProfit!='0'">¥{{parseFloat(saleData.thisWeekProfit).toFixed(2)}}</span> <span class="percentage"><i class="fa fa-caret-up text-success"></i> 12%</span>
 										<span class="info-label">利润</span>
 									</div>
 									<div class="weekly-summary text-right">
