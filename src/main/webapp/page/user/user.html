@@ -842,19 +842,22 @@
                             <th>售后状态</th>
                             <th>操作</th>
                         </tr>
-                        <tr v-for="order in orders" v-cloak>
+                        <tr v-for="item in afterSaleList" v-cloak>
                             <td align="center">
-                                <a v-bind:href="order.href" class="f0">{{order.id}}</a>
+                                {{item.orderId}}
                             </td>
-                            <td align="center">{{order.createTime}}</td>
-                            <td align="center">{{order.realTotalMoney}}</td>
-                            <td align="center" v-if="order.status==0">待付款</td>
-                            <td align="center" v-if="order.status==1">待发货</td>
-                            <td align="center" v-if="order.status==2">待收货</td>
-                            <td align="center" v-if="order.status==3">已完成</td>
+                            <td align="center">{{item.createTime}}</td>
+
+                            <td align="center" v-if="item.type==0">七天无理由售后</td>
+                            <td align="center" v-if="item.type==1">七天后售后</td>
+
+                            <td align="center" v-if="item.status==2">待审核</td>
+                            <td align="center" v-if="item.status==0&&item.refund.step==0">待审核</td>
+                            <td align="center" v-if="item.status==0&&item.refund.step==1">已退款</td>
+                            <td align="center" v-if="item.status==1">驳回退款</td>
+                            <td align="center" v-if="item.status==3">已取消</td>
                             <td align="center">
-                                <a v-bind:href="'/page/user/user.html?tab=1_2&orderId='+order.id">查看详情</a>
-                                <a href="#" v-if="order.status==2" v-on:click="askReceive(order.id)">取消</a>
+                                <a href="#" v-if="item.status==2||(item.status==0&&item.refund.step==0)" v-on:click="askCancelAfterSale(item.id)">取消</a>
                             </td>
                         </tr>
                         </tbody>

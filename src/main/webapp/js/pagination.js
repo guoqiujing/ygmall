@@ -2095,6 +2095,13 @@ var page = new Vue({
         serviceClass:2,//服务质量
         commentContext:'',//用户输入的评论
 
+        afterSaleOrderDetail:{},//选择售后的订单详情
+        afterSaleName:'',//售后联系人
+        afterSaleTel:'',//售后联系电话
+        reason:'',//售后申请原因
+        question:'',//售后问题描述
+        afterSaleList:[],//售后记录列表
+
         user:{},//用户信息
         staticUser:{},//静态不可变用户信息
 
@@ -2231,6 +2238,9 @@ var page = new Vue({
         }
         if(this.tab==='6'){
             this.getAddress();
+        }
+        if(this.tab==='7'){
+            this.getAfterSaleList();
         }
 	},
 
@@ -2591,6 +2601,166 @@ var page = new Vue({
                     }
                     else {
                         layer.msg('发表失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.closeAll('loading');
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
+        },
+
+        //检测售后信息
+        checkAfterSale:function () {
+            var that=this;
+            var re= /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+            var re2=/^[a-zA-Z]*$/;
+            var re3= /^[\u4E00-\u9FA5\uF900-\uFA2D]*$/;
+            var type=1;
+            var d=new Date(Date.parse(that.afterSaleOrderDetail.createTime.replace(/-/g, "/"))).format('yyyy-MM-dd hh:mm:ss');
+            var sevenD=new Date(Date.parse(addDate(d,7).replace(/-/g, "/"))).format('yyyy-MM-dd hh:mm:ss');
+            var nowDate = new Date();
+            var sD=new Date(sevenD);
+            if(nowDate.getTime()<sD.getTime()){
+                console.log("七天无理由");
+                type=0;
+            }
+            else{
+                console.log("超过七天");
+                type=1;
+            }
+            if(that.afterSaleName===""){
+                that.mBox('请输入联系人姓名');
+            }
+            else if (that.afterSaleName.length>5&&re3.test(that.afterSaleName)){
+                that.mBox("最多5个汉字");
+            }
+            else if(that.afterSaleName.length>20&&re2.test(that.afterSaleName)){
+                that.mBox("最多20个英文字母");
+            }
+            else if(that.afterSaleName.length>20){
+                that.mBox("长度超出限制");
+            }
+            else if(that.afterSaleTel===""){
+                that.mBox("请输入手机号");
+            }
+            else if(!re.test(that.afterSaleTel)){
+                that.mBox("请输入正确的手机号");
+            }
+            else if(type===1){
+                if(that.reason===''||that.question===''){
+                    layer.msg('请填写申请原因和问题描述', {time: 2000});
+                }
+                else{
+                    that.askAfterSale(type);
+                }
+            }
+            else if(type===0){
+                that.askAfterSale(type);
+            }
+        },
+
+        //申请售后
+        askAfterSale:function (type) {
+            var that=this;
+            //console.log(type);
+            $.ajax({
+                type: "POST",
+                url: "/afterSale/addAfterSale",
+                data: {
+                    orderId:that.afterSaleOrderDetail.id,//订单详情id
+                    type:type,//售后类型
+                    reason:that.reason,//申请原因
+                    description:that.question,//问题描述
+                    receiverName:that.afterSaleName,//联系人
+                    receiverTel:that.afterSaleTel//联系电话
+                },
+                dataType: "json",
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    layer.closeAll('loading');
+                    if(msg.code===0){
+                        console.log("成功");
+                        layer.msg('已申请售后', {time: 2000});
+                        window.location.href="/page/user/user.html?tab=1";
+                    }
+                    else {
+                        layer.msg('申请失败', {time: 2000});
+                    }
+                },
+                error: function () {
+                    layer.closeAll('loading');
+                    layer.msg('发生错误', {time: 2000});
+                }
+            });
+        },
+
+        //请求售后列表
+        getAfterSaleList:function () {
+            var that=this;
+            console.log(that.userId);
+            $.ajax({
+                type: "POST",
+                url: "/afterSale/getAfterSale",
+                dataType: "json",
+                data: {
+                    userId:that.userId,
+                    page:that.cur,
+                    size:8
+                },
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    if(msg.code===0){
+                        console.log("售后列表查找成功");
+                        console.log(msg.data);
+                        that.afterSaleList=msg.data.rows;
+                        that.all=msg.data.pages;
+                    }
+                    else {
+                        console.log("售后列表查找失败");
+                        that.afterSaleList=[];
+                        that.all=1;
+                    }
+                },
+                error: function () {
+                    console.log("错误");
+                }
+            });
+        },
+
+        //询问是否取消售后
+        askCancelAfterSale:function (id) {
+            var that=this;
+            console.log("要取消的售后id："+id);
+            layer.confirm('确认取消该售后申请吗？', {
+                skin: 'demo-class',
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                that.CancelAfterSale(id);
+            }, function(){
+            });
+        },
+
+        //取消售后
+        CancelAfterSale:function (id) {
+            var that=this;
+            $.ajax({
+                type: "POST",
+                url: "/afterSale/modifyStatus",
+                data: {
+                    id:id//订单详情id
+                },
+                dataType: "json",
+                contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+                success: function (msg) {
+                    layer.closeAll('loading');
+                    if(msg.code===0){
+                        console.log("成功");
+                        layer.msg('已取消该申请', {time: 2000});
+                        window.location.href="/page/user/user.html?tab=7";
+                    }
+                    else {
+                        layer.msg('取消失败', {time: 2000});
                     }
                 },
                 error: function () {
@@ -3128,7 +3298,8 @@ var page = new Vue({
             } else {
                 this.district = '';
             }
-        }
+        },
+
 },
 
     //计算属性，当对象的某个值改变的时候，同时会触发实时计算
@@ -3172,4 +3343,33 @@ function GetQueryString(name)
     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
     if(r!==null)return  decodeURI(r[2]); return null;
+}
+
+Date.prototype.format = function (format) {
+    var date = {
+        "M+": this.getMonth() + 1,
+        "d+": this.getDate(),
+        "h+": this.getHours(),
+        "m+": this.getMinutes(),
+        "s+": this.getSeconds(),
+        "q+": Math.floor((this.getMonth() + 3) / 3),
+        "S+": this.getMilliseconds()
+    };
+    if (/(y+)/i.test(format)) {
+        format = format.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length));
+    }
+    for (var k in date) {
+        if (new RegExp("(" + k + ")").test(format)) {
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1
+                ? date[k] : ("00" + date[k]).substr(("" + date[k]).length));
+        }
+    }
+    return format;
+};
+
+function addDate(date,days){
+    var d=new Date(date);
+    d.setDate(d.getDate()+days);
+    var m=d.getMonth()+1;
+    return d.getFullYear()+'-'+m+'-'+d.getDate()+' '+d.getHours()+':'+d.getMinutes()+':'+d.getSeconds();
 }
