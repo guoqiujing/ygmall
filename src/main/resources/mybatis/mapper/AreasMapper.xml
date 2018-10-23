@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.myzqu.ygmall.dao.AreasMapper" >
+  <resultMap id="BaseResultMap" type="cn.myzqu.ygmall.pojo.Areas" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="areaid" property="areaid" jdbcType="CHAR" />
+    <result column="area" property="area" jdbcType="VARCHAR" />
+    <result column="cityid" property="cityid" jdbcType="CHAR" />
+  </resultMap>
+
+  <select id="selectDistrict" resultType="cn.myzqu.ygmall.pojo.District">
+    select areas.area ,cities.city , provinces.province
+    from areas
+
+    left join cities on areas.cityid = cities.cityid
+
+    left join provinces on cities.provinceid = provinces.provinceid
+  </select>
+
+</mapper>

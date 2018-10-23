@@ -20,6 +20,14 @@
     left join  categories c3 ON c3.id = c2.parent_level
     WHERE goods.id = #{id}
 </select>
+  <select id="completeCategoriesSpu" parameterType="java.lang.String" resultType="java.lang.String">
+    select CONCAT(c3.`name` ,'>',c2.`name`,'>',c1.`name`) as type
+    from spu
+    left join categories c1 ON c1.id = spu.category_id
+    left join  categories c2 ON c2.id = c1.parent_level
+    left join  categories c3 ON c3.id = c2.parent_level
+    WHERE spu.id =#{id}
+  </select>
 
 <!--bySimon-->
   <select id="findAllCategories" resultMap="BaseResultMap">

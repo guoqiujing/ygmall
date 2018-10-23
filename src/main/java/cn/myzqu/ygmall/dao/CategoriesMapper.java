@@ -34,4 +34,6 @@ public interface CategoriesMapper {
     public Integer insertCategories(Categories categories);
 
     String completeCategories(String goodsId);
+
+    String completeCategoriesSpu(String spuId);
 }
