@@ -1,5 +1,9 @@
 package cn.myzqu.ygmall.vo;
 
+import cn.myzqu.ygmall.pojo.Attribute;
+
+import java.util.List;
+
 /**
  * Created by Simon on 2018/9/21.
  */
@@ -9,6 +13,24 @@ public class CategoriesAttributeVO {
     private String attribute0;
     private String attribute1;
     private String attribute2;
+    private List<Attribute> attributes;
+
+    public void setAttributes012(){
+        if(attributes.size()>0)
+            this.attribute0=attributes.get(0).getName();
+        if(attributes.size()>1)
+            this.attribute1=attributes.get(1).getName();
+        if(attributes.size()>2)
+            this.attribute2=attributes.get(2).getName();
+    }
+
+    public List<Attribute> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(List<Attribute> attributes) {
+        this.attributes = attributes;
+    }
 
     public Integer getCategoryId() {
         return categoryId;

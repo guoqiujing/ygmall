@@ -38,24 +38,29 @@ public class AttributeServiceImpl implements AttributeService {
         String categoriesName="";
         Categories categories=categoriesMapper.selectByPrimaryKey(categoryId);
         if(categories.getGrandLevel()!=null){
-            Integer parentId=categories.getParentLevel();
-            Integer grandId=categories.getGrandLevel();
-            String parentName=categoriesMapper.selectByPrimaryKey(parentId).getName();
-            String grandName=categoriesMapper.selectByPrimaryKey(grandId).getName();
-            categoriesName+=grandName+" > "+parentName+" > "+categories.getName();
-            categoriesAttributeVO.setCategoriesName(categoriesName);
+//            Integer parentId=categories.getParentLevel();
+//            Integer grandId=categories.getGrandLevel();
+//            String parentName=categoriesMapper.selectByPrimaryKey(parentId).getName();
+//            String grandName=categoriesMapper.selectByPrimaryKey(grandId).getName();
+//            categoriesName+=grandName+" > "+parentName+" > "+categories.getName();
+            categoriesAttributeVO.setCategoriesName(categoriesMapper.completeCategoriesCId(categoryId));
         }
         return categoriesAttributeVO;
     }
 
     public List<CategoriesAttributeVO> getAllCategoriesAttribute(){
-        List<CategoriesAttributeVO> categoriesAttributeVOList=new ArrayList<>();
-        List<Categories> categoriesList=categoriesMapper.findAllL3Categories();
-        for (Categories categories:categoriesList) {
-            CategoriesAttributeVO categoriesAttributeVO=getCategoriesAttributeByCategoryId(categories.getId());
-            if(categoriesAttributeVO!=null)
-                categoriesAttributeVOList.add(categoriesAttributeVO);
-        }
+        List<CategoriesAttributeVO> categoriesAttributeVOList=categoriesMapper.allCategoriesName();
+        for(CategoriesAttributeVO categoriesAttributeVO:categoriesAttributeVOList)
+            categoriesAttributeVO.setAttributes012();
+//        for(CategoriesAttributeVO categoriesAttributeVO:categoriesAttributeVOList)
+//            categoriesAttributeVO.setCategoriesName(categoriesAttributeVO.getCategoriesName());
+//        List<CategoriesAttributeVO> categoriesAttributeVOList=new ArrayList<>();
+//        List<Categories> categoriesList=categoriesMapper.findAllL3Categories();
+//        for (Categories categories:categoriesList) {
+//            CategoriesAttributeVO categoriesAttributeVO=getCategoriesAttributeByCategoryId(categories.getId());
+//            if(categoriesAttributeVO!=null)
+//                categoriesAttributeVOList.add(categoriesAttributeVO);
+//        }
         return categoriesAttributeVOList;
     }
 

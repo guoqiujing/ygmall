@@ -5,7 +5,7 @@ import cn.myzqu.ygmall.pojo.Goods;
 import cn.myzqu.ygmall.service.GoodsService;
 import cn.myzqu.ygmall.utils.KeyUtil;
 import cn.myzqu.ygmall.utils.ResultVOUtil;
-import cn.myzqu.ygmall.utils.SessionUtil;
+//import cn.myzqu.ygmall.utils.SessionUtil;
 import cn.myzqu.ygmall.vo.BootstrapTableVO;
 import cn.myzqu.ygmall.vo.GoodsDetailVO;
 import cn.myzqu.ygmall.vo.Result;
@@ -31,7 +31,7 @@ public class GoodsController {
     @PostMapping("/getCompleteGoodsById")
     public Result getGoodsAndSPU(String id, HttpServletRequest request){
         //设置最近浏览商品
-        SessionUtil.setLastGoodsSession(id,request);
+//        SessionUtil.setLastGoodsSession(id,request);
         List<GoodsDetailVO> goodsDetailVO=goodsService.getGoodsAndSPU(id);
         if (goodsDetailVO.size() > 0) {
             return ResultVOUtil.success(goodsDetailVO);

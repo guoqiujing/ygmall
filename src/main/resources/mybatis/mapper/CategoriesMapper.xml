@@ -8,6 +8,11 @@
     <result column="grand_level" jdbcType="INTEGER" property="grandLevel" />
     <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
+  <resultMap id="allCategoriesName" type="cn.myzqu.ygmall.vo.CategoriesAttributeVO">
+    <id column="id" jdbcType="INTEGER" property="categoryId" />
+    <association property="categoriesName" column="id" select="cn.myzqu.ygmall.dao.CategoriesMapper.completeCategoriesCId" fetchType="eager"></association>
+    <association property="attributes" column="id" select="cn.myzqu.ygmall.dao.AttributeMapper.selectByCategoryId" fetchType="eager"></association>
+  </resultMap>
   <sql id="Base_Column_List">
     id, name, parent_level, grand_level, status
   </sql>
@@ -27,6 +32,20 @@
     left join  categories c2 ON c2.id = c1.parent_level
     left join  categories c3 ON c3.id = c2.parent_level
     WHERE spu.id =#{id}
+  </select>
+
+  <select id="completeCategoriesCId" parameterType="int" resultType="java.lang.String">
+    select distinct CONCAT(c3.`name` ,'>',c2.`name`,'>',c1.`name`) as type
+    from categories
+    inner join categories c1 ON c1.id = #{categoryId}
+    inner join  categories c2 ON c2.id = c1.parent_level
+    inner join  categories c3 ON c3.id = c2.parent_level
+  </select>
+
+  <select id="allCategoriesName" resultMap="allCategoriesName">
+    SELECT id
+    FROM categories
+    where parent_level is not null and grand_level is not null
   </select>
 
 <!--bySimon-->

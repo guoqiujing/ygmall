@@ -1,6 +1,7 @@
 package cn.myzqu.ygmall.dao;
 
 import cn.myzqu.ygmall.pojo.Categories;
+import cn.myzqu.ygmall.vo.CategoriesAttributeVO;
 
 import java.util.List;
 
@@ -36,4 +37,8 @@ public interface CategoriesMapper {
     String completeCategories(String goodsId);
 
     String completeCategoriesSpu(String spuId);
+
+    String completeCategoriesCId(Integer categoryId);
+
+    List<CategoriesAttributeVO> allCategoriesName();
 }
