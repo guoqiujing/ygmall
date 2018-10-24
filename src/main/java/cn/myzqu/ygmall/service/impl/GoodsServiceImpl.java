@@ -49,11 +49,11 @@ public class GoodsServiceImpl implements GoodsService {
             map.put("name", searchInput);
         }
         List<Goods_Img_AttributesVO> goodsList=goodsMapper.getAll(map);
-        for(int i=0;i<goodsList.size();i++){
-            goodsList.get(i).setGoodsImgList(goodsList.get(i).getGoodsImgList());
-            goodsList.get(i).setCategoriesName(goodsList.get(i).getCategoriesName());
-//            goodsList.get(i).setCategoriesAttributeVO(attributeService.getCategoriesAttributeByCategoryId(goodsList.get(i).getCategoryId()));
-        }
+//        for(int i=0;i<goodsList.size();i++){
+//            goodsList.get(i).setGoodsImgList(goodsList.get(i).getGoodsImgList());
+//            goodsList.get(i).setCategoriesName(goodsList.get(i).getCategoriesName());
+////            goodsList.get(i).setCategoriesAttributeVO(attributeService.getCategoriesAttributeByCategoryId(goodsList.get(i).getCategoryId()));
+//        }
         int total = (int)page.getTotal();
         System.out.println("总记录数："+total);
         //把总记录数和某一页的记录装入BootstrapTableVO类

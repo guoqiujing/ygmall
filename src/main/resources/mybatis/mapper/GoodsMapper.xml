@@ -29,9 +29,9 @@
   <!--</resultMap>-->
 
   <resultMap id="Goods_Img_Attributes_Map" type="cn.myzqu.ygmall.vo.Goods_Img_AttributesVO" extends="BaseResultMap">
-    <association property="goodsImgList" select="cn.myzqu.ygmall.dao.GoodsImgMapper.selectByGoodsId" column="id">
+    <association property="goodsImgList" select="cn.myzqu.ygmall.dao.GoodsImgMapper.selectByGoodsId" column="id" fetchType="eager">
     </association>
-    <association property="categoriesName" select="cn.myzqu.ygmall.dao.CategoriesMapper.completeCategories" column="id">
+    <association property="categoriesName" select="cn.myzqu.ygmall.dao.CategoriesMapper.completeCategories" column="id" fetchType="eager">
     </association>
   </resultMap>
 

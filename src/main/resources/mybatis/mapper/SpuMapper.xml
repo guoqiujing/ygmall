@@ -29,8 +29,8 @@
     <result column="attributes_name" property="spu.attributesName" jdbcType="VARCHAR" />
     <result column="subtitle" property="spu.subtitle" jdbcType="VARCHAR" />
     <result column="status" property="spu.status" jdbcType="TINYINT" />
-    <association property="categoriesName" select="cn.myzqu.ygmall.dao.CategoriesMapper.completeCategoriesSpu" column="id"></association>
-    <association property="spuImgList" select="cn.myzqu.ygmall.dao.SpuDetailMapper.selectBySPUId" column="id"></association>
+    <association property="categoriesName" select="cn.myzqu.ygmall.dao.CategoriesMapper.completeCategoriesSpu" column="id" fetchType="eager"></association>
+    <association property="spuImgList" select="cn.myzqu.ygmall.dao.SpuDetailMapper.selectBySPUId" column="id" fetchType="eager"></association>
   </resultMap>
   <sql id="Base_Column_List" >
     id, name, category_id, brand_id, createtime, sale_count, comment_count,

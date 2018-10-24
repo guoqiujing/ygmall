@@ -89,8 +89,8 @@ public class SpuServiceImpl implements SpuService{
 //        }
         List<SpuDetailVO> spuList=spuMapper.selectAll(map);
         for(int i=0;i<spuList.size();i++){
-            spuList.get(i).setSpuImgList(spuList.get(i).getSpuImgList());
-            spuList.get(i).setCategoriesName(spuList.get(i).getCategoriesName());
+//            spuList.get(i).setSpuImgList(spuList.get(i).getSpuImgList());
+//            spuList.get(i).setCategoriesName(spuList.get(i).getCategoriesName());
             spuList.get(i).setBrandName(brandService.findBrandById(spuList.get(i).getSpu().getBrandId()).getName());
         }
         int total = (int)page.getTotal();
