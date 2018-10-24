@@ -16,6 +16,11 @@ public interface BrandService {
      * @return
      */
     List<Brand> findAllBrand();
+    /**
+     * 查找前num个品牌
+     * @return
+     */
+    List<Brand> findTopBrand(Integer num);
 
     public Brand findBrandById(Integer id);
     /**

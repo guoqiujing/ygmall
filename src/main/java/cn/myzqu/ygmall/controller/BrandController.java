@@ -32,6 +32,18 @@ public class BrandController {
         }
         return ResultVOUtil.success(brandList);
     }
+    /**
+     * 查找全部品牌
+     * @return
+     */
+    @GetMapping("/findTop")
+    public Result findTopBrand(Integer num){
+        List<Brand> brandList=brandService.findTopBrand(num);
+        if(brandList==null){
+            return ResultVOUtil.error("找不到品牌记录");
+        }
+        return ResultVOUtil.success(brandList);
+    }
 
     /**
      * 根据条件分页查找品牌

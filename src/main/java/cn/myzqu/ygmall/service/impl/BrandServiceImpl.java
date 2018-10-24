@@ -31,6 +31,15 @@ public class BrandServiceImpl implements BrandService{
         }
         return brandList;
     }
+    //查找全部品牌
+    @Override
+    public List<Brand> findTopBrand(Integer num){
+        List<Brand> brandList = brandMapper.selectTopBrand(num);
+        if(brandList.isEmpty()){
+            return null;
+        }
+        return brandList;
+    }
     //查找单个品牌
     @Override
     public Brand findBrandById(Integer id){

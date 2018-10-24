@@ -7,6 +7,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<!-- VENDOR CSS -->
+	<link rel="stylesheet" href="../../css/bootstrap-table.css" >
 	<link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="assets/vendor/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="assets/vendor/linearicons/style.css">
@@ -25,6 +26,9 @@
 	<style>
 		.unchexkedFileInput{
 			padding: 80px 0;width: 100%; height: 200px;border: 2px dashed #aeaeae;background: #eaeaea;font-size: 20px;color: #8f8f8f;
+		}
+		.search{
+			width:100% !important;
 		}
 	</style>
 </head>
@@ -198,7 +202,7 @@
 												</label>
 											</template>
 										</div>
-										<a href="javascript:void(0)" onclick="showAllBrand(this)" style="margin-left: 90%">展开所有</a>
+										<a data-toggle='modal' data-target='#ModalGetBrand' href="javascript:void(0)" onclick="showAllBrand(this)" style="margin-left: 90%">查看更多</a>
 									</div>
 								</div>
 							</div>
@@ -244,10 +248,28 @@
 										</label>
 										<input type="file" id="exampleInputFile" v-on:change="getFile($event),showImg($event)" multiple="multiple" accept="image/*" style="display: none">
 									</div>
-										<!--<input v-on:click="uploadImg()" type="button" class="btn" style="color:#fff;background-color: #B4995D;" value="上传">-->
 								</div>
 							</div>
 						</div>
+
+
+						<div class="modal fade" id="ModalGetBrand" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										<h4 class="modal-title" id="ModalLabel">选择商品品牌</h4>
+									</div>
+									<div class="modal-body">
+										<table id="getGoodsBrand"></table>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
 					</form>
 					<button type="button" class="btn btn-primary" style="min-width: 200px;" onclick="submitAnd(0)">提交并上传商品</button>
 					<button type="button" class="btn btn-default" style="width: 200px;" onclick="submitAnd(1)">仅提交</button>
@@ -272,6 +294,8 @@
 	<script src="../../js/spuVUE.js"></script>
 	<script src="../../js/categoriesVUE.js"></script>
 	<script src="../../js/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="../../js/bootstrap-table.js" ></script>
+	<script type="text/javascript" src="../../js/bootstrap-table-zh-CN.js"></script>
 
 </body>
 

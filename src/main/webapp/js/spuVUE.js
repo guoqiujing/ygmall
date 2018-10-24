@@ -34,16 +34,38 @@ function clickCategoriesRadio(target){
     $(".spuCategories>.panel-heading").css("color","#676a6d");
 }
 function showAllBrand(target){
-    if($(target).html()=="展开所有"){
-        $("#brandVUE").css("height","auto");
-        $(target).html("收起");
-    }
-    else{
-        $("#brandVUE").css("height","100px");
-        $(target).html("收起");
-    }
+    $("#ModalGetBrand").on('show.bs.modal', function () {
+        $('#getGoodsBrand').bootstrapTable({
+            url:"/brand/findAll",
+            search:true,
+            searchAlign:"left",
+            method:'get',
+            pagination: true,
+            dataType: "json",
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+            columns:
+                [{
+                    field: 'id',
+                    title: '编号',
+                }, {
+                    field: 'name',
+                    title: '品牌',
+                }, {
+                    field: 'operation',
+                    title: '操作',
+                    formatter:
+                        function formatterOperate(value, row, index){
+                            return "<a type='button' class='btn btn-default' onclick=\"selectBrand('"+row.id+"','"+row.name+"')\">选择</a>";
+                        }
+                }]
+        });
+    });
 }
-
+function selectBrand(id,name){
+    $("#brandVUE").html("<label for='"+id+"' class='style-radio-label checked'> <input type='radio' id='"+id+"' value='"+id+"' name='brandId'/><span>"+name+"</span></label>");
+    $('#ModalGetBrand').modal('hide');
+}
 function submitAnd(mark){
     var name=$(".inputname").val();
     var subtitle=$(".inputsubtitle").val();
@@ -171,7 +193,7 @@ var page = new Vue({
     created: function (data) {
         var that = this;
         $.ajax({
-            url:'/brand/findAll',
+            url:'/brand/findTop?num=5',
             type: 'get',
             dataType:'json',
             success:function(data){

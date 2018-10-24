@@ -37,6 +37,14 @@
         from brand
     </select>
 
+  <!--查询前num个品牌-->
+  <select id="selectTopBrand" resultMap="BaseResultMap" parameterType="int">
+    select
+    <include refid="Base_Column_List" />
+    from brand
+    limit #{num}
+  </select>
+
   <!--根据id删除品牌记录-->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from brand
